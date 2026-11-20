@@ -111,3 +111,17 @@ def alliance_colour(img, box):
     red = float(np.count_nonzero(vivid & ((hh < 8) | (hh > 170))))
     blue = float(np.count_nonzero(vivid & (hh >= 100) & (hh <= 125)))
     return (red - blue) / (red + blue + 0.02 * hsv.shape[0] * hsv.shape[1])
+
+LOOKS = {
+    # hue bins of colour_feature are 22.5 deg (OpenCV 0-180) wide: 5 = 112-135, 6 = 135-157
+    "purple": {"hue": (6,), "min_sat": 1},
+}
+
+def look_score(feat, look):
+    """Share of a box's colourful pixels that fall in a team's signature colour."""
+    L = LOOKS[look]
+    f = np.asarray(feat, float)[:32].reshape(8, 4)
+    total = f[:, L["min_sat"]:].sum()
+    if total <= 0:
+        return 0.0
+    return float(f[list(L["hue"]), L["min_sat"]:].sum() / total)

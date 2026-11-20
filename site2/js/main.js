@@ -269,14 +269,40 @@ function scoutBlock(id) {
     ["Autonomous", `${Math.round(st.auton_ft)} ft`, "Moved in the first 15 seconds"],
   ];
   return `<div class="scout"><div class="scout-head"><b>Scouted by vexvision</b><span>from ${st.n} match${st.n === 1 ? "" : "es"} where we could name it</span></div>
-    <div class="scout-grid"><canvas class="heat" width="240" height="240" data-team="${esc(id)}" aria-label="Where ${esc(id)} drives"></canvas>
+    <div class="scout-grid"><div class="scout-maps">
+      <figure><canvas class="heat" width="240" height="240" data-team="${esc(id)}" aria-label="Where ${esc(id)} drives"></canvas><figcaption>Where it drives</figcaption></figure>
+      ${st.autons?.length ? `<figure><canvas class="heat auton" width="240" height="240" data-team="${esc(id)}" aria-label="${esc(id)}'s autonomous routes"></canvas><figcaption>Autonomous routes, ${st.autons.length} match${st.autons.length === 1 ? "" : "es"}</figcaption></figure>` : ""}
+      <p class="scout-note small">Turned so its own side is always bottom left.</p></div>
     <div class="scout-tiles">${tiles.map(([k, v, d]) => `<div class="fact"><div class="k">${k}</div><b>${v}</b><span>${d}</span></div>`).join("")}</div></div>
     ${watch}</div>`;
 }
+function fieldLines(g, W) {
+  g.strokeStyle = "rgba(239,233,221,.55)"; g.lineWidth = 1.5;
+  const P = (x, y) => [(x / 1.8288 + 1) / 2 * W, (1 - (y / 1.8288 + 1) / 2) * W];
+  const line = (pts) => { g.beginPath(); pts.forEach((p, i) => { const [u, v] = P(...p); i ? g.lineTo(u, v) : g.moveTo(u, v); }); g.stroke(); };
+  line([[-1.79, -1.79], [-0.3, -0.3]]); line([[0.3, 0.3], [1.79, 1.79]]); line([[-1.79, 1.79], [-0.3, 0.3]]); line([[0.3, -0.3], [1.79, -1.79]]);
+  line([[0.61, 0], [0, 0.61], [-0.61, 0], [0, -0.61], [0.61, 0]]);
+  g.strokeRect(1, 1, W - 2, W - 2);
+  return P;
+}
+function drawAutons(c, st) {
+  const g = c.getContext("2d"), W = c.width;
+  g.fillStyle = "#1c1a17"; g.fillRect(0, 0, W, W);
+  const P = fieldLines(g, W);
+  const col = ["#f2c230", "#ef3b45", "#4c86ff", "#5fd08a", "#c792ea", "#ff9e57"];
+  st.autons.forEach((a, i) => {
+    g.strokeStyle = col[i % col.length]; g.lineWidth = 2.5; g.lineJoin = "round"; g.globalAlpha = 0.9;
+    g.beginPath(); a.path.forEach(([x, y], j) => { const [u, v] = P(x, y); j ? g.lineTo(u, v) : g.moveTo(u, v); }); g.stroke();
+    const [u0, v0] = P(...a.path[0]); g.fillStyle = col[i % col.length]; g.beginPath(); g.arc(u0, v0, 4.5, 0, 7); g.fill();
+    const [u1, v1] = P(...a.path[a.path.length - 1]); g.beginPath(); g.arc(u1, v1, 3, 0, 7); g.lineWidth = 2; g.stroke();
+  });
+  g.globalAlpha = 1;
+}
 function drawHeat(c, st) {
+  if (c.classList.contains("auton")) return drawAutons(c, st);
   const g = c.getContext("2d"), W = c.width, n = st.heat.length, k = W / n;
   g.fillStyle = "#1c1a17"; g.fillRect(0, 0, W, W);
-  const red = st.matches.filter((m) => m.alliance === "red").length >= st.matches.length / 2;
+  const red = true;                         // turned to its own side, which sits where red's does
   const off = document.createElement("canvas"); off.width = off.height = n;
   const og = off.getContext("2d"), im = og.createImageData(n, n), col = red ? [239, 59, 69] : [76, 134, 255];
   for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
@@ -286,12 +312,7 @@ function drawHeat(c, st) {
   og.putImageData(im, 0, 0);
   g.imageSmoothingEnabled = true; g.imageSmoothingQuality = "high"; g.filter = "blur(4px)";
   g.drawImage(off, 0, 0, W, W); g.filter = "none";
-  g.strokeStyle = "rgba(239,233,221,.55)"; g.lineWidth = 1.5;
-  const P = (x, y) => [(x / 1.8288 + 1) / 2 * W, (1 - (y / 1.8288 + 1) / 2) * W];
-  const line = (pts) => { g.beginPath(); pts.forEach((p, i) => { const [u, v] = P(...p); i ? g.lineTo(u, v) : g.moveTo(u, v); }); g.stroke(); };
-  line([[-1.79, -1.79], [-0.3, -0.3]]); line([[0.3, 0.3], [1.79, 1.79]]); line([[-1.79, 1.79], [-0.3, 0.3]]); line([[0.3, -0.3], [1.79, -1.79]]);
-  line([[0.61, 0], [0, 0.61], [-0.61, 0], [0, -0.61], [0.61, 0]]);
-  g.strokeRect(1, 1, W - 2, W - 2);
+  const P = fieldLines(g, W);
   for (const [x, y, c2] of [[-0.6, -1.2, "#ef3b45"], [-1.2, -0.6, "#ef3b45"], [0.6, 1.2, "#4c86ff"], [1.2, 0.6, "#4c86ff"]]) { const [u, v] = P(x, y); g.fillStyle = c2; g.beginPath(); g.arc(u, v, 4, 0, 7); g.fill(); }
 }
 function showTeam(id) {

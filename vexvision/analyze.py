@@ -274,7 +274,7 @@ def repair_swaps(tracker, assigns, det_log, mid, near=700.0, z_min=5.0, max_swap
     tracker.swaps = done
     return done
 
-def reason(P, official=None):
+def reason(P, official=None, looks=None):
     """Everything after perception: tracking, team names, events, score check.
     Runs from a saved perception log in seconds, so the tracker can be improved
     without re-reading the video."""
@@ -318,6 +318,14 @@ def reason(P, official=None):
             tids = [tr.tid for tr in tracker.tracks if tr.alliance == a]
             if len(tids) == 2 and len(teams.get(a, [])) == 2:
                 m, conf = TM.assign_alliance(tids, teams[a], plates)
+                known = [t for t in teams[a] if t in (looks or {})]
+                if known:                     # a team told us what its robot looks like
+                    k = known[0]
+                    sc = {tid: look_of(tid, looks[k], assigns, P["det_log"]) for tid in tids}
+                    hi, lo = sorted(tids, key=lambda x: -sc[x])
+                    if sc[hi] > 0.08 and sc[hi] > 1.6 * sc[lo]:
+                        other = [t for t in teams[a] if t != k][0]
+                        m, conf = {hi: k, lo: other}, 0.9
                 for tid, team in m.items():
                     names[tid] = {"team": team, "confidence": round(conf, 3)}
     robots_out = []
@@ -342,6 +350,15 @@ def reason(P, official=None):
             "robots": robots_out, "events": ev, "final_state": state, "score_check": report,
             "overlay": overlay_reads[-1][1] if overlay_reads else None,
             "cal_log": cal_log, "box_log": box_log, "raw_tracks": {tr.tid: [(round(p[0], 2), round(p[1]), round(p[2]), p[3]) for p in tr.history] for tr in tracker.tracks}}
+
+def look_of(tid, look, assigns, det_log):
+    """Average signature-colour score of everything a track was matched to."""
+    v = []
+    for (t, a), (_, rows, feats) in zip(assigns, det_log):
+        j = a.get(tid)
+        if j is not None and feats[j] is not None:
+            v.append(TM.look_score(feats[j], look))
+    return float(np.mean(v)) if v else 0.0
 
 def driver_start(overlay_reads, t_start):
     """Driver control doesn't start when autonomous ends: the field is reset and

@@ -40,13 +40,18 @@ def stats_for(track, alliance, t0, td=None):
     opp = float(np.mean(side[driver] != alliance)) if driver.any() else 0.0
     mid = float(np.mean([abs(xi) + abs(yi) <= F.MIDFIELD_R for xi, yi in zip(x[driver], y[driver])])) if driver.any() else 0.0
     au = step[(t[1:] - t0) < 15][ok[(t[1:] - t0) < 15]].sum() / 304.8
+    # from here on, turn the field so the team's own side is always the same corner (red's),
+    # so a team that played red in one match and blue in another adds up in one picture
+    if alliance == "blue":
+        x, y = -x, -y
+    ap = [[round(xi / 1000, 2), round(yi / 1000, 2)] for ti, xi, yi in zip(t, x, y) if ti - t0 <= 15][::2]
     heat = np.zeros((G, G))
     for xi, yi, s in zip(x, y, seen):
         if not s:
             continue
         i = int(np.clip((F.HALF - yi) / (2 * F.HALF) * G, 0, G - 1)); j = int(np.clip((xi + F.HALF) / (2 * F.HALF) * G, 0, G - 1))
         heat[i, j] += 1
-    return {"ft": dist, "top": top, "opp": opp, "mid": mid, "auton_ft": au, "heat": heat, "seen": float(seen.mean())}
+    return {"ft": dist, "top": top, "opp": opp, "mid": mid, "auton_ft": au, "heat": heat, "seen": float(seen.mean()), "auton_path": ap}
 
 def main():
     ap = argparse.ArgumentParser()
@@ -75,6 +80,7 @@ def main():
                 continue     # only count a robot's driving once we know which of the two it was
             s = stats_for(r["raw_tracks"][str(rb["track"])], rb["alliance"], t0, r.get("t_driver"))
             if s:
+                s["match"] = {"id": meta["id"], "match": meta.get("match"), "event": meta.get("event")}
                 T["_s"].append(s)
     out = {}
     for team, T in teams.items():
@@ -89,7 +95,8 @@ def main():
                      "opp_side": round(float(np.mean([s["opp"] for s in S])), 3),
                      "midfield": round(float(np.mean([s["mid"] for s in S])), 3),
                      "auton_ft": round(float(np.mean([s["auton_ft"] for s in S])), 1),
-                     "heat": [[round(float(v), 2) for v in row] for row in heat]}
+                     "heat": [[round(float(v), 2) for v in row] for row in heat],
+                     "autons": [{**s["match"], "path": s["auton_path"]} for s in S if len(s["auton_path"]) > 3]}
     json.dump(out, open(a.out, "w"), separators=(",", ":"))
     print(len(out), "teams from", len(items), "matches")
 
