@@ -191,15 +191,19 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
     out["perception"] = perception
     return out
 
+import os as _os
+W_COL = float(_os.environ.get("VV_WCOL", "0"))      # off: see docs/LOG.md (Nov 20)
+REPAIR = _os.environ.get("VV_REPAIR", "0") == "1"
+
 def run_tracker(det_log):
-    tracker = T.FourRobotTracker()
+    tracker = T.FourRobotTracker(w_col=W_COL)
     assigns = []
     cols = [r[7] for _, rows, _ in det_log for r in rows]
     mid = float(np.median(cols)) if cols else 0.0       # some fields and robots read redder overall
     for t, rows, feats in det_log:
         dets = [(r[0], r[1], None if f is None else np.asarray(f), r[7] - mid, r[2]) for r, f in zip(rows, feats)]
         assigns.append((t, tracker.step(t, dets)))
-    repair_swaps(tracker, assigns, det_log, mid)
+    tracker.swaps = repair_swaps(tracker, assigns, det_log, mid) if REPAIR else []
     return tracker, assigns
 
 def repair_swaps(tracker, assigns, det_log, mid, near=700.0, z_min=5.0, max_swaps=6, log=None):

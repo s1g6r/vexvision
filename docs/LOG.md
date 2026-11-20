@@ -61,21 +61,20 @@
   - Distance is measured from the better of the predicted spot and the last sighting.
   - A lost robot slows to a stop where it was, and is clamped inside the walls.
   - Two boxes on one robot are merged.
-  - Each box gets a red-vs-blue reading (alliance plates and the cones it carries). The reading is centred per match because some fields read redder overall, then used as a small cost.
-- **Whole-match swap repair.** After tracking, if a red and a blue track met and the red one kept reading blue (and the blue one red) until they met again, the two are exchanged for that stretch.
-  - Run on the old tracker's output, it finds and fixes the swaps seen by eye.
-  - On the new tracker's output it finds none on the two test matches.
-- **Results**
+  - Each box also gets a red-vs-blue reading, and there is a whole-match pass that exchanges a red and a blue track if, after they met, each kept reading as the other alliance. **Both are switched off.**
+    - Checked by eye on Highlander Final 1-1, the repair pass moved the red robot (its 12125A plate is readable in the crops) onto a blue track for a minute. Without it, the red track keeps that robot.
+    - The reading is a plain red/blue pixel count, and it mostly measures the cones a robot is carrying and its own red parts, not its alliance plate.
+    - A proper plate-colour classifier could turn this back on.
+- **Results** (new tracker, colour reading off)
 
-  | Match | Tracker | Robots seen | Boxes on the wrong alliance | Jumps over 2.5 m/s |
-  |---|---|---|---|---|
-  | Highlander R16 2-1 | old | 0.93 | 22% | 8 |
-  | Highlander R16 2-1 | new | 0.97 | 15% | 2 |
-  | Speedway Final 1-1 | old | 0.76 | 18% | 30 |
-  | Speedway Final 1-1 | new | 0.83 | 8% | 16 |
+  | Match | Robots seen (old → new) | Jumps over 2.5 m/s (old → new) |
+  |---|---|---|
+  | Highlander R16 2-1 | 0.93 → 0.97 | 8 → 0 |
+  | Highlander Final 1-1 | 0.85 → 0.95 | 27 → 4 |
+  | Highlander Final 1-3 | 0.81 → 0.81 | 25 → 3 |
+  | Speedway Final 1-1 | 0.76 → 0.83 | 30 → 15 |
 
-  - The wrong-alliance share counts single-frame colour readings, which are noisy, so it never reaches zero.
-  - At Speedway, robots are hidden behind a monitor stand and people in front of the field, so fewer robots are seen there.
+  - At Speedway, robots are hidden behind a monitor stand and people in front of the field, so fewer are seen there.
 - **Perception logs.** The video pass now saves everything the models saw (`raw/<id>.perc.json`): every robot box with its floor point, colour reading and appearance, plus plate reads, goal and toggle reads, and the overlay.
   - `tools/retrack.py` redoes tracking, names, events and the replay export from those logs in seconds.
 - **Replays.**
