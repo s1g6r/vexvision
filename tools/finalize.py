@@ -18,6 +18,8 @@ def main():
         R = json.load(open(p)) if os.path.exists(p) else None
         if R and R["stills"]["n"] >= R["t1"] - R["stills"]["t0"]:
             continue
+        if "robots" not in json.load(open(os.path.join(raw, i + ".json"))):
+            continue
         e = idx[i]
         meta = {k: e.get(k) for k in ("event", "match", "red", "blue", "video")}
         run("tools.export_replay", os.path.join(raw, i + ".json"), os.path.join(vids, i + ".mp4"),
