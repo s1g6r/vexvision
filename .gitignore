@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+out/
+runs/
+data/yt/
+data/clips/
+data/auto_robots/
+*.mp4

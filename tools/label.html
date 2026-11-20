@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>vexvision labeler</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --bg:#111418; --panel:#1b2027; --ink:#e8ecf1; --muted:#9aa4b1; --line:#2c333d; --red:#e5484d; --blue:#3e8ef7; --yellow:#f5c518; --ok:#3ecf8e; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:14px/1.4 system-ui, -apple-system, Segoe UI, sans-serif; background:var(--bg); color:var(--ink); display:grid; grid-template-columns: 1fr 330px; height:100vh; }
+  #stage { position:relative; overflow:hidden; background:#000; }
+  canvas { position:absolute; top:0; left:0; cursor:crosshair; }
+  aside { background:var(--panel); border-left:1px solid var(--line); padding:14px; overflow:auto; }
+  h1 { font-size:15px; margin:0 0 8px; }
+  h2 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:16px 0 6px; }
+  button, select, input[type=number] { background:#262d36; color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:5px 8px; font:inherit; }
+  button:hover { border-color:#4a5563; }
+  button.on { background:#2f4a3c; border-color:var(--ok); }
+  .row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:4px 0; }
+  .lm { padding:3px 7px; font-size:12px; }
+  .lm.done { border-color:var(--ok); color:var(--ok); }
+  .muted { color:var(--muted); font-size:12px; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  td { padding:2px 3px; border-bottom:1px solid var(--line); }
+  td input { width:42px; }
+  kbd { background:#262d36; border:1px solid var(--line); border-radius:4px; padding:0 4px; font-size:11px; }
+  #file { width:100%; }
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="cv"></canvas></div>
+<aside>
+  <h1>vexvision labeler</h1>
+  <div class="muted">Open match frames (1280×720 JPGs). Labels are kept in this browser while you work; export when done.</div>
+  <div class="row"><input type="file" id="file" multiple accept="image/*"></div>
+  <div class="row">
+    <button id="prev">◀ Prev</button><span id="pos" class="muted">0 / 0</span><button id="next">Next ▶</button>
+  </div>
+  <div class="muted" id="fname"></div>
+
+  <h2>Mode</h2>
+  <div class="row">
+    <button id="mLand" class="on">Landmarks <kbd>L</kbd></button>
+    <button id="mBox">Robot boxes <kbd>R</kbd></button>
+  </div>
+
+  <h2>Landmarks (pick, then click)</h2>
+  <div class="muted">Goal names follow the field with red Alliance Goals bottom-left: N is the quadrant with a neutral goal (NW) and a blue goal (NE). Click the centre of the goal base where it meets the tiles. At least 4 per frame, spread out.</div>
+  <div class="row" id="lmButtons"></div>
+  <div class="muted">D_ = Midfield diamond corners, J_ = where a diagonal meets the diamond, K_ = floor corners at the walls.</div>
+
+  <h2>Goal stacks (visible pin halves)</h2>
+  <table id="stacks"></table>
+
+  <h2>Shortcuts</h2>
+  <div class="muted"><kbd>←</kbd>/<kbd>→</kbd> frame · <kbd>Del</kbd> remove last item · drag in box mode to draw · right-click an item to delete it · scroll to zoom</div>
+
+  <h2>Export</h2>
+  <div class="row">
+    <button id="exp">Download labels JSON</button>
+    <label class="muted"><input type="file" id="imp" accept=".json" style="display:none">
+      <button onclick="document.getElementById('imp').click()">Import</button></label>
+  </div>
+  <div class="muted">Produces <code>{"landmarks":{...},"robots":{...},"stacks":{...}}</code>. Split it with <code>tools/import_labels.py</code>.</div>
+</aside>
+<script>
+const LANDMARKS = ["C","NW","NE","EN","ES","SE","SW","WS","WN","D_N","D_E","D_S","D_W","J_NE","J_NW","J_SE","J_SW","K_NW","K_NE","K_SE","K_SW"];
+const KIND = {C:"#ffffff",NW:"#888",ES:"#888",SE:"#888",WN:"#888",NE:"#3e8ef7",EN:"#3e8ef7",SW:"#e5484d",WS:"#e5484d"};
+const GOALS = ["C","NW","NE","EN","ES","SE","SW","WS","WN"];
+const cv = document.getElementById("cv"), ctx = cv.getContext("2d"), stage = document.getElementById("stage");
+let files = [], idx = 0, img = null, mode = "land", pick = "C";
+let view = { s: 1, x: 0, y: 0 };
+let labels = JSON.parse(localStorage.getItem("vexvision-labels") || '{"landmarks":{},"robots":{},"stacks":{}}');
+let drag = null;
+
+function save() { try { localStorage.setItem("vexvision-labels", JSON.stringify(labels)); } catch (e) {} }
+function name() { return files[idx] ? files[idx].name : null; }
+function L() { const n = name(); return (labels.landmarks[n] = labels.landmarks[n] || {}); }
+function R() { const n = name(); return (labels.robots[n] = labels.robots[n] || []); }
+function S() { const n = name(); return (labels.stacks[n] = labels.stacks[n] || {}); }
+
+function buildButtons() {
+  const box = document.getElementById("lmButtons"); box.innerHTML = "";
+  for (const k of LANDMARKS) {
+    const b = document.createElement("button"); b.className = "lm"; b.textContent = k;
+    b.onclick = () => { pick = k; setMode("land"); paintButtons(); };
+    b.dataset.k = k; box.appendChild(b);
+  }
+  paintButtons();
+}
+function paintButtons() {
+  const l = name() ? L() : {};
+  for (const b of document.querySelectorAll(".lm")) {
+    b.classList.toggle("done", !!l[b.dataset.k]);
+    b.classList.toggle("on", b.dataset.k === pick);
+  }
+}
+function buildStacks() {
+  const t = document.getElementById("stacks"); t.innerHTML = "<tr><td>goal</td><td>red</td><td>blue</td><td>yellow</td></tr>";
+  if (!name()) return;
+  const s = S();
+  for (const g of GOALS) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${g}</td>` + ["red","blue","yellow"].map(c =>
+      `<td><input type="number" min="0" max="40" data-g="${g}" data-c="${c}" value="${(s[g]||{})[c] ?? ""}"></td>`).join("");
+    t.appendChild(tr);
+  }
+  for (const inp of t.querySelectorAll("input")) inp.onchange = e => {
+    const g = e.target.dataset.g, c = e.target.dataset.c, v = e.target.value;
+    S()[g] = S()[g] || {}; if (v === "") delete S()[g][c]; else S()[g][c] = +v; save();
+  };
+}
+function setMode(m) {
+  mode = m;
+  document.getElementById("mLand").classList.toggle("on", m === "land");
+  document.getElementById("mBox").classList.toggle("on", m === "box");
+}
+function fit() {
+  cv.width = stage.clientWidth; cv.height = stage.clientHeight;
+  if (img) { view.s = Math.min(cv.width / img.width, cv.height / img.height); view.x = (cv.width - img.width * view.s) / 2; view.y = (cv.height - img.height * view.s) / 2; }
+  draw();
+}
+function toImg(e) { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left - view.x) / view.s, (e.clientY - r.top - view.y) / view.s]; }
+function toScr(p) { return [p[0] * view.s + view.x, p[1] * view.s + view.y]; }
+function draw() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  if (!img) { ctx.fillStyle = "#9aa4b1"; ctx.fillText("Open frames on the right →", 20, 30); return; }
+  ctx.drawImage(img, view.x, view.y, img.width * view.s, img.height * view.s);
+  ctx.lineWidth = 2; ctx.font = "12px system-ui";
+  for (const [i, b] of R().entries()) {
+    const a = toScr([b[0], b[1]]), c = toScr([b[2], b[3]]);
+    ctx.strokeStyle = "#3ecf8e"; ctx.strokeRect(a[0], a[1], c[0] - a[0], c[1] - a[1]);
+    ctx.fillStyle = "#3ecf8e"; ctx.fillText("robot " + (i + 1), a[0] + 3, a[1] - 4);
+  }
+  if (drag) { const a = toScr(drag.a), c = toScr(drag.b); ctx.strokeStyle = "#f5c518"; ctx.strokeRect(a[0], a[1], c[0] - a[0], c[1] - a[1]); }
+  for (const [k, p] of Object.entries(L())) {
+    const q = toScr(p); ctx.strokeStyle = "#000"; ctx.fillStyle = KIND[k] || "#f5c518";
+    ctx.beginPath(); ctx.arc(q[0], q[1], 5, 0, 7); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#fff"; ctx.strokeStyle = "#000"; ctx.lineWidth = 3; ctx.strokeText(k, q[0] + 7, q[1] - 6); ctx.fillText(k, q[0] + 7, q[1] - 6); ctx.lineWidth = 2;
+  }
+}
+function load(i) {
+  if (!files.length) return;
+  idx = (i + files.length) % files.length;
+  const url = URL.createObjectURL(files[idx]); const im = new Image();
+  im.onload = () => { img = im; fit(); };
+  im.src = url;
+  document.getElementById("pos").textContent = `${idx + 1} / ${files.length}`;
+  document.getElementById("fname").textContent = files[idx].name;
+  paintButtons(); buildStacks();
+}
+function nearest(p) {
+  let best = null;
+  for (const [k, q] of Object.entries(L())) { const d = Math.hypot(q[0] - p[0], q[1] - p[1]); if (d < 15 / view.s && (!best || d < best.d)) best = { kind: "lm", k, d }; }
+  R().forEach((b, i) => { if (p[0] > b[0] && p[0] < b[2] && p[1] > b[1] && p[1] < b[3]) best = best || { kind: "box", i }; });
+  return best;
+}
+cv.addEventListener("mousedown", e => {
+  if (!img || e.button !== 0) return;
+  const p = toImg(e);
+  if (mode === "land") {
+    L()[pick] = [Math.round(p[0]), Math.round(p[1])]; save();
+    const order = LANDMARKS; const next = order.find(k => !L()[k]); if (next) pick = next;
+    paintButtons(); draw();
+  } else drag = { a: p, b: p };
+});
+cv.addEventListener("mousemove", e => { if (drag) { drag.b = toImg(e); draw(); } });
+cv.addEventListener("mouseup", () => {
+  if (!drag) return;
+  const x0 = Math.min(drag.a[0], drag.b[0]), y0 = Math.min(drag.a[1], drag.b[1]), x1 = Math.max(drag.a[0], drag.b[0]), y1 = Math.max(drag.a[1], drag.b[1]);
+  if (x1 - x0 > 6 && y1 - y0 > 6) { R().push([x0, y0, x1, y1].map(Math.round)); save(); }
+  drag = null; draw();
+});
+cv.addEventListener("contextmenu", e => {
+  e.preventDefault(); const n = nearest(toImg(e)); if (!n) return;
+  if (n.kind === "lm") delete L()[n.k]; else R().splice(n.i, 1);
+  save(); paintButtons(); draw();
+});
+cv.addEventListener("wheel", e => {
+  e.preventDefault(); const r = cv.getBoundingClientRect(); const mx = e.clientX - r.left, my = e.clientY - r.top;
+  const f = e.deltaY < 0 ? 1.15 : 1 / 1.15; view.x = mx - (mx - view.x) * f; view.y = my - (my - view.y) * f; view.s *= f; draw();
+}, { passive: false });
+window.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT") return;
+  if (e.key === "ArrowRight") load(idx + 1);
+  if (e.key === "ArrowLeft") load(idx - 1);
+  if (e.key === "l" || e.key === "L") setMode("land");
+  if (e.key === "r" || e.key === "R") setMode("box");
+  if (e.key === "Delete" || e.key === "Backspace") { if (mode === "box") R().pop(); else { const ks = Object.keys(L()); if (ks.length) delete L()[ks[ks.length - 1]]; } save(); paintButtons(); draw(); }
+});
+window.addEventListener("resize", fit);
+document.getElementById("file").onchange = e => { files = [...e.target.files].sort((a, b) => a.name.localeCompare(b.name)); load(0); };
+document.getElementById("prev").onclick = () => load(idx - 1);
+document.getElementById("next").onclick = () => load(idx + 1);
+document.getElementById("mLand").onclick = () => setMode("land");
+document.getElementById("mBox").onclick = () => setMode("box");
+document.getElementById("exp").onclick = () => {
+  const blob = new Blob([JSON.stringify(labels, null, 1)], { type: "application/json" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "vexvision-labels.json"; a.click();
+};
+document.getElementById("imp").onchange = async e => {
+  const t = await e.target.files[0].text(); const d = JSON.parse(t);
+  for (const k of ["landmarks", "robots", "stacks"]) labels[k] = Object.assign(labels[k] || {}, d[k] || {});
+  save(); load(idx);
+};
+buildButtons(); fit();
+</script>
+</body>
+</html>
