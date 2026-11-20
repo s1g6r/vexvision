@@ -71,3 +71,22 @@ def test_placement_and_credit():
     assert rep["vision_score"]["red"] == 10 and rep["gap"]["red"] == 15
     cr = R.credit(ev, state, alliances, rep)
     assert cr[0]["seen"] == 10 and abs(cr[0]["inferred"] - 15) < 1e-6
+
+def test_mirror_symmetry_and_canonical():
+    """The field maps onto itself across y = x with every goal keeping its colour,
+    so a calibration and its mirror draw the same; canonical() picks the real one."""
+    from vexvision import calibrate as C
+    mirror = {(g.y, g.x): g.kind for g in F.GOALS}
+    for g in F.GOALS:
+        assert mirror[(g.x, g.y)] == g.kind
+    # a plausible camera view
+    cam = C._look_at_camera(1100.0, np.radians(-90), np.radians(35), 5200.0, 0, 0, 0, (1280, 720))
+    H = C.h_from_camera(cam)
+    assert C.signed_area(H) < 0
+    Hm = H @ C.MIRROR
+    assert C.signed_area(Hm) > 0
+    assert np.allclose(C.canonical(Hm), H)
+    # goal pixels are the same set either way
+    a = sorted(map(tuple, np.round(C.to_img(H, C.GOAL_XY), 3)))
+    b = sorted(map(tuple, np.round(C.to_img(Hm, C.GOAL_XY), 3)))
+    assert np.allclose(a, b)

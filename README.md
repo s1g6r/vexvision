@@ -63,7 +63,23 @@ Data: the auto-generated 1280x720 frames YouTube keeps for every video (3 per
 video), from 123 Override match videos across about 15 events. See
 `tools/collect_youtube_frames.py` and `tools/collect_channel.py`.
 
-RESULTS_TABLE
+| What | Result | How it was checked |
+|---|---|---|
+| Overlay: match name | 94% right (78/83); all 5 misses were "Final 2" read where the title says "Final #1-2" | 185 live-match frames, against video titles |
+| Overlay: team numbers | 89% of the title's teams read (295/332), 8 wrong reads | same frames; one "wrong" read was a typo in the video title |
+| Overlay: alliance split | 90% right (62/69) | titles written "A & B vs C & D" |
+| Overlay: running score | read when the producer shows it; 5 of 6 alliance scores right on 3 frames checked by eye | standard Tournament Manager overlay |
+| Goal detector | mAP50 0.54 on 2 cameras it never saw | 27 training frames from 10 cameras |
+| Robot detector | mAP50 0.80 on a camera it never saw (small test: 3 frames, 12 robots) | 11 training frames |
+| Automatic calibration, accuracy | median 1.3 in off across the field (5 of 5 frames, 2 unseen cameras) | against hand-marked or reviewed calibrations, 121-point grid |
+| Automatic calibration, coverage | 26 of 64 match frames calibrated; 22 of those look right by eye; about 7 in 10 full-field views work | the rest are mostly close-ups, bracket screens and title cards |
+| Field model | Midfield radius measured 608-631 mm on 4 frames, model 609.6 mm | tape pixels mapped onto the field |
+| Logic | 7 tests pass: four-robot tracking through 20% missed detections, team naming from misread plates, scoring, credit, and a full run of `analyze()` on real frames | `pytest tests` |
+
+One bug found and fixed on the way: the Override field is a mirror image of
+itself across its red/blue diagonal, so goal matching could return a mirrored
+calibration that looks identical on screen but puts the camera under the floor.
+Before the fix, automatic calibration was 50 inches off on held-out frames.
 
 Not measured yet, because it needs full match video (see "Run it on a Mac"):
 tracking accuracy, placement and Toggle event recall, plate reading on
@@ -90,7 +106,7 @@ python -m vexvision frame some_frame.jpg --weights models/goals.pt,models/robots
 
 ## Make the models better (the part that matters most)
 
-The models in `models/` were trained on 32 frames (goals) and 14 frames
+The models in `models/` were trained on 27 frames (goals) and 11 frames
 (robots). More labelled data is the biggest lever.
 
 1. **Robots from video, no hand labels:** cut a match clip
@@ -142,3 +158,11 @@ The models in `models/` were trained on 32 frames (goals) and 14 frames
 - **Training data from YouTube thumbnails.** These are frames YouTube already
   serves publicly; the full-video steps download nothing beyond the frames
   ffmpeg reads while seeking.
+
+## Rebuild the training data
+
+```bash
+./tools/fetch_frames.sh                                             # 369 frames from 123 videos
+python tools/labels_from_calib.py data/calib_reference.json data/yt/frames lab/
+python tools/build_dataset.py --labels lab/labels --frames data/yt/frames --out ds_goals --val-videos FSpOd3gBuqM,DMktAlZUHxA
+```

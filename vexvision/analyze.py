@@ -27,21 +27,25 @@ class Calibrator:
         self.recheck_every, self.min_q = recheck_every, min_q
         self.ref = None
 
-    def solve(self, img, dets):
+    def solve(self, img, dets, min_q=0.4):
+        """Calibrate from goal detections: try the best goal-to-layout matchings,
+        snap each to the tape, keep the one the tape agrees with most."""
         pts = goal_points(dets)
-        H, n = C.h_from_goals(pts, img.shape[1::-1]) if len(pts) >= 4 else (None, 0)
-        if H is None:
+        size = img.shape[1::-1]
+        best = None
+        for H, inl, fp, ip in C.goal_hypotheses(pts, size):
+            Hs, _ = C.snap_to_tape(H, img, anchors=(np.array(fp), np.array(ip)) if len(fp) >= 4 else None)
+            if not C.plausible(Hs, size):
+                continue
+            q = C.fit_quality(Hs, C.tape_mask(img, Hs))
+            score = q + 0.02 * inl
+            if best is None or score > best[0]:
+                best = (score, q, Hs)
+        if best is None or best[1] < min_q:
             return False
-        fp = []; ip = []
-        for u, v, k in pts:
-            d = np.linalg.norm(C.to_img(H, C.GOAL_XY) - [u, v], axis=1)
-            j = int(np.argmin(d))
-            if d[j] < 0.04 * img.shape[1]:
-                fp.append(C.GOAL_XY[j]); ip.append([u, v])
-        H, _ = C.snap_to_tape(H, img, anchors=(np.array(fp), np.array(ip)) if len(fp) >= 4 else None)
-        if not C.plausible(H, img.shape[1::-1]):
-            return False
-        self.H, self.cam, self.ref = H, C.camera_from_h(H, img.shape[1::-1]), img.copy()
+        H = best[2]
+        self.H, self.cam, self.ref = H, C.camera_from_h(H, size), img.copy()
+        self.quality = best[1]
         return True
 
     def update(self, t, img, dets):

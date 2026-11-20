@@ -208,26 +208,30 @@ def camera_from_h(H, size):
 GOAL_XY = np.array([[g.x, g.y] for g in F.GOALS])
 GOAL_KIND = [g.kind for g in F.GOALS]
 
-def h_from_goals(dets, img_size, min_inliers=4, tol_px=None):
+def goal_hypotheses(dets, img_size, min_inliers=4, tol_px=None, top=8):
     """dets: list of (u, v, kind) goal base centres; kind in red/blue/neutral/center/None.
 
     Tries assignments of detections to the known goals that respect colour,
-    using 4-point RANSAC hypotheses, and keeps the homography with the most
-    inliers. Colour makes the 180-degree ambiguity of the layout go away.
+    using 4-point hypotheses, and returns the best few distinct homographies
+    (by inliers, then error), each refitted on its inliers. Colour removes the
+    180-degree ambiguity of the layout; the caller picks among hypotheses by
+    how well the tape fits.
     """
     if len(dets) < 4:
-        return None, 0
+        return []
     tol_px = tol_px or 0.03 * img_size[0]
     uv = np.array([[d[0], d[1]] for d in dets], float)
     kinds = [d[2] for d in dets]
     def ok(i, j):
         k = kinds[i]
-        return k is None or k == GOAL_KIND[j] or (k == "neutral" and GOAL_KIND[j] == "center")
-    best = (None, 0, 1e18)
+        return k is None or k == GOAL_KIND[j]
+    allowed = np.array([[ok(i, j) for j in range(9)] for i in range(len(dets))])
+    hyps = []
     di = range(len(dets))
     for quad in itertools.combinations(di, 4):
-        for perm in itertools.permutations(range(9), 4):
-            if not all(ok(quad[a], perm[a]) for a in range(4)):
+        cand = [np.nonzero(allowed[i])[0] for i in quad]
+        for perm in itertools.product(*cand):
+            if len(set(perm)) < 4:
                 continue
             src = GOAL_XY[list(perm)].astype(np.float32)
             dst = uv[list(quad)].astype(np.float32)
@@ -235,34 +239,54 @@ def h_from_goals(dets, img_size, min_inliers=4, tol_px=None):
                 Hc = cv2.getPerspectiveTransform(src, dst)
             except cv2.error:
                 continue
-            if not np.all(np.isfinite(Hc)):
+            if not np.all(np.isfinite(Hc)) or not plausible(Hc, img_size):
                 continue
             proj = to_img(Hc, GOAL_XY)
             d = np.linalg.norm(proj[None, :, :] - uv[:, None, :], axis=2)
-            for i in di:
-                for j in range(9):
-                    if not ok(i, j):
-                        d[i, j] = 1e9
+            d[~allowed] = 1e9
             m = d.min(1)
-            inl = (m < tol_px).sum()
-            err = np.minimum(m, tol_px).sum()
-            if inl > best[1] or (inl == best[1] and err < best[2]):
-                best = (Hc, inl, err)
-    Hc, inl, _ = best
-    if Hc is None or inl < min_inliers:
-        return None, inl
-    # least-squares on all inliers
-    proj = to_img(Hc, GOAL_XY)
-    pairs = []
-    for i in di:
-        d = np.linalg.norm(proj - uv[i], axis=1)
-        j = int(np.argmin(d))
-        if d[j] < tol_px and ok(i, j):
-            pairs.append((GOAL_XY[j], uv[i]))
-    src = np.array([p[0] for p in pairs], np.float32)
-    dst = np.array([p[1] for p in pairs], np.float32)
-    Hl, _ = cv2.findHomography(src, dst, 0)
-    return (Hl if Hl is not None else Hc), len(pairs)
+            inl = int((m < tol_px).sum())
+            if inl >= min_inliers:
+                hyps.append((inl, float(np.minimum(m, tol_px).sum()), Hc))
+    hyps.sort(key=lambda h: (-h[0], h[1]))
+    out = []
+    for inl, err, Hc in hyps:
+        proj = to_img(Hc, GOAL_XY)
+        pairs = []
+        for i in di:
+            d = np.linalg.norm(proj - uv[i], axis=1)
+            d[~allowed[i]] = 1e9
+            j = int(np.argmin(d))
+            if d[j] < tol_px:
+                pairs.append((GOAL_XY[j], uv[i]))
+        Hl = None
+        if len(pairs) >= 4:
+            Hl, _ = cv2.findHomography(np.array([p[0] for p in pairs], np.float32), np.array([p[1] for p in pairs], np.float32), 0)
+        H = canonical(Hl if Hl is not None else Hc)
+        # distinct from the ones kept already?
+        if all(np.abs(field_polygon(H) - field_polygon(o[0])).max() > 15 for o in out):
+            out.append((H, inl, [p[0] for p in pairs], [p[1] for p in pairs]))
+        if len(out) >= top:
+            break
+    return out
+
+def h_from_goals(dets, img_size, min_inliers=4, tol_px=None):
+    hs = goal_hypotheses(dets, img_size, min_inliers, tol_px, top=1)
+    return (hs[0][0], hs[0][1]) if hs else (None, 0)
+
+MIRROR = np.array([[0, 1.0, 0], [1.0, 0, 0], [0, 0, 1.0]])
+
+def signed_area(H):
+    p = field_polygon(H)
+    x, y = p[:, 0], p[:, 1]
+    return 0.5 * float(np.sum(x * np.roll(y, -1) - np.roll(x, -1) * y))
+
+def canonical(H):
+    """The Override field is mirror-symmetric across its red/blue diagonal (y = x):
+    goals, tape and Midfield all map onto same-coloured copies. So goal matching
+    can return a mirrored H that draws identically but puts the camera under the
+    floor (heights then project downwards). Swap x and y to get the real one."""
+    return H @ MIRROR if signed_area(H) > 0 else H
 
 def plausible(H, img_size):
     """Reject degenerate fits: field must be in front of the camera, mostly in frame, convex."""
@@ -472,4 +496,4 @@ def transfer(H_a, img_a, img_b, field_margin=200):
         return None, 0.0
     Sm = np.diag([s, s, 1.0])
     Wf = np.linalg.inv(Sm) @ W.astype(float) @ Sm      # maps a-pixels -> b-pixels
-    return Wf @ H_a, float(cc)
+    return canonical(Wf @ H_a), float(cc)

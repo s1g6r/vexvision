@@ -16,7 +16,7 @@ def main():
     ap.add_argument("--weights", required=True); ap.add_argument("--calib", required=True)
     ap.add_argument("--frames", required=True); ap.add_argument("--videos", required=True)
     a = ap.parse_args()
-    det = Detector(a.weights, conf=0.2)
+    det = Detector(a.weights, conf=0.1)
     cal = json.load(open(a.calib))
     vids = set(a.videos.split(","))
     g = np.linspace(-1500, 1500, 11)

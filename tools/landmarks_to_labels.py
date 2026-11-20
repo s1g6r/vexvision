@@ -32,6 +32,8 @@ def solve(marks, img, refine=True):
     H0, _ = cv2.findHomography(fp, ip, 0)
     if H0 is None:
         return None, {}
+    if C.signed_area(H0) > 0:
+        raise ValueError("marks give a mirrored field: check goal names (N is the quadrant with NW neutral + NE blue)")
     info = {"n_marks": len(names), "mark_err0": float(np.linalg.norm(C.to_img(H0, fp) - ip, axis=1).mean())}
     H = H0
     if refine:
