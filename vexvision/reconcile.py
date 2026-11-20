@@ -42,7 +42,7 @@ def score_jumps(running, hold=0.5):
     """running: [(t, red, blue)] -> {alliance: [(t, delta)]}"""
     out = {}
     for i, a in enumerate(("red", "blue")):
-        ser = stable_series([(t, r[i + 1]) for t, *r in [(x[0], x[1], x[2]) for x in running] if r[i + 1] is not None], hold)
+        ser = stable_series([(x[0], x[i + 1]) for x in running if x[i + 1] is not None], hold)
         out[a] = [(t1, v1 - v0) for (t0, v0), (t1, v1) in zip(ser, ser[1:]) if v1 != v0]
     return out
 
