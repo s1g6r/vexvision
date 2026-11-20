@@ -4,6 +4,20 @@
 import * as C from "./ml/calib.js";
 import { loadModel, detect } from "./ml/detect.js";
 import * as THREE from "./vendor/three.module.js";
+import { GOALS } from "./ml/field.js";
+
+// detected goal bases that sit on a projected goal of the same kind (same rule as vexvision/calibrate.py)
+function goalAgreement(H, pts, w) {
+  const proj = C.toImg(H, GOALS.map((g) => [g.x, g.y]));
+  let n = 0;
+  for (const [u, v, kind] of pts) {
+    let j = 0, best = Infinity;
+    proj.forEach(([x, y], k) => { const d = Math.hypot(x - u, y - v); if (d < best) { best = d; j = k; } });
+    const gk = GOALS[j].kind;
+    if (best < 0.03 * w && (gk === kind || (["neutral", "center"].includes(gk) && ["neutral", "center"].includes(kind)))) n++;
+  }
+  return n;
+}
 
 let models = null;
 async function getModels(status) {
@@ -29,10 +43,13 @@ function calibrate(im, w, h, goalsDet) {
     const dt = C.distMap(C.tapeMask(px, sw, sh, hy.H, s), sw, sh);
     const sn = C.snapToTape(hy.H, dt, sw, sh, s);
     if (!C.plausible(sn.H, w, h)) continue;
-    const score = sn.quality + 0.02 * hy.inl;
-    if (!best || score > best.score) best = { ...sn, score };
+    const agree = goalAgreement(sn.H, pts, w), q = sn.quality;
+    const ok = pts.length >= 4 ? (agree >= 4 && q >= 0.25) || (agree >= 3 && q >= 0.4) : q >= 0.5;
+    if (!ok) continue;
+    const score = agree + q + 0.02 * hy.inl;
+    if (!best || score > best.score) best = { ...sn, score, agree };
   }
-  return best && best.quality >= 0.35 ? best : null;
+  return best;
 }
 
 // field (mm, z up) camera -> three.js pose, same convention as tools/build_site2_data.py
