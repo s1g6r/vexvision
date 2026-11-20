@@ -40,6 +40,17 @@ def event_name(title, ocr_title):
 
 TEAM_OK = re.compile(r"^\d{2,5}[A-Z]$")
 
+def cap_robots(rs):
+    """A match has exactly four robots, two per alliance, each starting and mostly
+    staying on its own side. Keep the most confident four, at most three per side
+    (robots do cross the Autonomous Line during driver control)."""
+    out, side = [], {"red": 0, "blue": 0}
+    for r in sorted(rs, key=lambda r: -r["conf"]):
+        sd = F.side_of(*r["floor"])
+        if len(out) < 4 and side[sd] < 3:
+            out.append(r); side[sd] += 1
+    return out
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--proposals", required=True); ap.add_argument("--frames", required=True)
@@ -75,8 +86,8 @@ def main():
         S = np.diag([s, s, 1.0])
         H = (S @ np.array(r["H"])).tolist()
         sc = lambda b: [round(x * s, 1) for x in b]
-        robots = [{"box": sc(x["box"]), "conf": round(x["conf"], 2), "floor": x["floor"]} for x in r["robots"]
-                  if x["conf"] >= 0.35 and "floor" in x and max(abs(x["floor"][0]), abs(x["floor"][1])) < F.HALF + 150]
+        robots = cap_robots([{"box": sc(x["box"]), "conf": round(x["conf"], 2), "floor": x["floor"]} for x in r["robots"]
+                  if x["conf"] >= 0.35 and "floor" in x and max(abs(x["floor"][0]), abs(x["floor"][1])) < F.HALF + 150])
         goals = [{"box": sc(x["box"]), "conf": round(x["conf"], 2), "cls": x["cls"]} for x in r["goals"] if x["conf"] >= 0.25]
         rd = overlay.parse(ocr[fn], (w, h)) if fn in ocr else None
         rec = {"frame": fn, "img": f"data/frames/{fn}", "w": 960, "h": small.shape[0], "H": [[round(x, 8) for x in row] for row in H],

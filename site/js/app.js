@@ -1,6 +1,7 @@
 import { GOALS, TOGGLES, TOGGLE_LEN, TILE, HALF, WALL, tapeSegments, allianceScore, quadrantOf, sideOf, QUADRANT_COLOR } from "./field.js";
 import * as C from "./calib.js";
 import { loadModel, detect } from "./detect.js";
+import { initHero } from "./hero.js";
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -78,20 +79,25 @@ function drawOverlay(cv, w, h, { H, goals = [], robots = [] }) {
 }
 
 /* ---------- data ------------------------------------------------------------------- */
-let GALLERY = [], FACTS = null;
+let GALLERY = [], FACTS = null, HERO = null;
 async function loadData() {
+  try { const r = await fetch("data/hero.json"); if (r.ok) HERO = await r.json(); } catch {}
   try { const r = await fetch("data/gallery.json"); if (r.ok) GALLERY = await r.json(); } catch {}
   try { const r = await fetch("data/facts.json"); if (r.ok) FACTS = await r.json(); } catch {}
 }
 
 /* ---------- router ----------------------------------------------------------------- */
-const VIEWS = ["analyze", "matches", "replay", "scoring", "how"];
+const VIEWS = ["home", "matches", "replay", "scoring"], ANCHORS = { analyze: "analyze", how: "how", read: "read" };
+let lastView = null;
 function route() {
-  const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "analyze";
+  const h = location.hash.slice(1);
+  const v = VIEWS.includes(h) ? h : "home";
   document.querySelectorAll(".view").forEach(s => (s.hidden = s.dataset.view !== v));
   document.querySelectorAll(".top nav a").forEach(a => { if (a.getAttribute("href") === "#" + v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
   if (v === "matches") renderMatches();
-  window.scrollTo(0, 0);
+  if (ANCHORS[h]) requestAnimationFrame(() => document.getElementById(ANCHORS[h]).scrollIntoView({ behavior: reduced ? "auto" : "smooth" }));
+  else if (v !== lastView) window.scrollTo(0, 0);
+  lastView = v;
 }
 
 /* ---------- analyze ---------------------------------------------------------------- */
@@ -116,10 +122,22 @@ function showResult({ src, w, h, H, goals, robots, caption, matchedNames, qualit
   $("#a-cap").innerHTML = caption || "";
   const placed = robots.filter(r => r.floor);
   const inch = v => Math.round(v / 25.4);
-  $("#a-read").innerHTML = `<h3>${placed.length ? `${placed.length} robot${placed.length > 1 ? "s" : ""} on the field` : H ? "No robots placed" : "Field not mapped"}</h3>
-    <ul>${placed.map(r => `<li><b>${esc(r.label)}</b><span>${esc(quadName(quadrantOf(...r.floor)))}, ${sideOf(...r.floor)} side · ${Math.abs(inch(r.floor[0]))} in ${r.floor[0] >= 0 ? "east" : "west"}, ${Math.abs(inch(r.floor[1]))} in ${r.floor[1] >= 0 ? "north" : "south"} of centre</span></li>`).join("")}</ul>
-    <p class="stat"><span><strong>${matchedNames?.size ?? 0} of 9</strong> goals matched</span>${quality != null ? `<span><strong>${Math.round(quality * 100)}%</strong> of visible tape on the model</span>` : ""}</p>`;
-  if (!reduced) { const s = $("#stage"); s.animate([{ opacity: .35, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 380, easing: "cubic-bezier(.2,.7,.2,1)" }); }
+  $("#a-read").innerHTML = `<h3>${placed.length ? `${placed.length} of 4 robots on the map` : H ? "No robots placed" : "Field not mapped"}</h3>
+    <ul>${placed.map(r => `<li><b>${esc(r.label)}</b><span>${esc(quadName(quadrantOf(...r.floor)))}, ${sideOf(...r.floor)} side<small>${Math.abs(inch(r.floor[0]))} in ${r.floor[0] >= 0 ? "east" : "west"} and ${Math.abs(inch(r.floor[1]))} in ${r.floor[1] >= 0 ? "north" : "south"} of the centre goal</small></span></li>`).join("")}</ul>
+    <p class="meta"><span><strong>${matchedNames?.size ?? 0} of 9</strong> goals matched</span>${quality != null ? `<span><strong>${Math.round(quality * 100)}%</strong> of the visible tape on the model</span>` : ""}</p>`;
+  if (!reduced) { const s = document.querySelector(".a-right"); s.animate([{ opacity: .35, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 380, easing: "cubic-bezier(.2,.7,.2,1)" }); }
+}
+
+// A match has exactly four robots on the field: keep the four most confident detections,
+// with no more than three on one side of the Autonomous Line.
+function capRobots(rs) {
+  const out = [], side = { red: 0, blue: 0 };
+  for (const r of [...rs].sort((a, b) => b.conf - a.conf)) {
+    const sd = r.floor ? sideOf(...r.floor) : null;
+    if (out.length >= 4 || (sd && side[sd] >= 3)) continue;
+    out.push(r); if (sd) side[sd]++;
+  }
+  return out;
 }
 
 function matchedGoalNames(H, goals, w) {
@@ -132,18 +150,20 @@ function matchedGoalNames(H, goals, w) {
 }
 
 function showGalleryItem(it, extra = "") {
-  const robots = it.robots.map((r, i) => ({ ...r, label: String(i + 1) }));
+  const robots = capRobots(it.robots).map((r, i) => ({ ...r, label: String(i + 1) }));
   showResult({ src: it.img, w: it.w, h: it.h, H: it.H, goals: it.goals, robots, quality: it.q, matchedNames: matchedGoalNames(it.H, it.goals, it.w),
     caption: `${esc(it.event || it.title)}${it.match ? " · " + esc(it.match) : ""} · <a href="https://www.youtube.com/watch?v=${esc(it.video)}" target="_blank" rel="noopener">source video</a>${extra}` });
 }
 
 async function analyzeFile(file) {
-  const status = (m, err) => { const s = $("#status"); s.textContent = m; s.classList.toggle("err", !!err); };
+  const status = (m, err, ok) => { const s = $("#status"); s.textContent = m; s.classList.toggle("err", !!err); s.classList.toggle("ok", !!ok); };
+  const scan = $("#a-scan");
   if (!file || !file.type.startsWith("image/")) return status("That file is not an image. Use a PNG or JPG screenshot.", true);
   const url = URL.createObjectURL(file), im = new Image();
   im.src = url;
   try { await im.decode(); } catch { return status("Could not open that image.", true); }
   const w = im.naturalWidth, h = im.naturalHeight;
+  $("#a-img").src = url; drawOverlay($("#a-cv"), w, h, {}); scan.classList.add("on");
   try {
     const m = await getModels(status);
     status("Finding goals and robots…");
@@ -152,16 +172,18 @@ async function analyzeFile(file) {
     status("Working out where the camera is…");
     await new Promise(r => setTimeout(r, 0));
     const res = calibrate(im, w, h, goalsDet);
-    const robots = robotsDet.map((r, i) => ({ ...r, label: String(i + 1) }));
-    if (res) { const cam = C.cameraFromH(res.H, w, h); robots.forEach(r => { const p = C.robotFloor(r.box, res.H, cam); if (C.inField(...p)) r.floor = p; }); }
+    let robots = robotsDet.map(r => ({ ...r }));
+    if (res) { const cam = C.cameraFromH(res.H, w, h); robots.forEach(r => { const p = C.robotFloor(r.box, res.H, cam); if (C.inField(...p)) r.floor = p; }); robots = robots.filter(r => r.floor); }
+    robots = capRobots(robots).map((r, i) => ({ ...r, label: String(i + 1) }));
+    scan.classList.remove("on");
     const secs = ((performance.now() - t0) / 1000).toFixed(1);
     showResult({ src: url, w, h, H: res?.H, goals: goalsDet, robots, quality: res?.quality ?? null, matchedNames: matchedGoalNames(res?.H, goalsDet, w),
-      caption: `Your screenshot · ${goalsDet.length} goals and ${robotsDet.length} robots found in ${secs} s` });
-    document.querySelectorAll(".btn.sample").forEach(b => b.setAttribute("aria-pressed", "false"));
-    if (!res) status("Robots found, but the field could not be mapped. It needs at least four goals in view; a wide shot of the whole field works best.", true);
-    else status(`Field mapped: ${Math.round(res.quality * 100)}% of the visible tape lines up with the model.`);
+      caption: `Your screenshot · read in ${secs} s` });
+    document.querySelectorAll(".sample").forEach(b => b.setAttribute("aria-pressed", "false"));
+    if (!res) status("The field could not be mapped. It needs at least four goals in view; a wide shot of the whole field works best.", true);
+    else status(`Field mapped and ${robots.length} robot${robots.length === 1 ? "" : "s"} placed.`, false, true);
   } catch (e) {
-    console.error(e);
+    console.error(e); scan.classList.remove("on");
     status("The detection models could not run in this browser. The gallery and the other tools still work.", true);
   }
 }
@@ -195,16 +217,14 @@ function initAnalyze() {
   drop.addEventListener("drop", e => analyzeFile(e.dataTransfer.files[0]));
   document.addEventListener("paste", e => { const f = [...(e.clipboardData?.files || [])][0]; if (f && location.hash.replace("#", "") in { "": 1, analyze: 1 }) analyzeFile(f); });
   const picks = GALLERY.filter(g => g.featured).slice(0, 4);
-  $("#samples").innerHTML = picks.map((p, i) => `<button class="btn sample" data-i="${i}" aria-pressed="${i === 0}">${esc(p.short)}</button>`).join("");
+  $("#samples").innerHTML = picks.map((p, i) => `<button class="sample" data-i="${i}" aria-pressed="${i === 0}"><img src="${esc(p.img)}" alt="" loading="lazy"><span><b>${esc(p.match)}</b><small>${esc(p.event)}</small></span></button>`).join("");
   $("#samples").addEventListener("click", e => {
-    const b = e.target.closest(".btn.sample"); if (!b) return;
-    document.querySelectorAll(".btn.sample").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    const b = e.target.closest(".sample"); if (!b) return;
+    document.querySelectorAll(".sample").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
     showGalleryItem(picks[+b.dataset.i]); $("#status").textContent = "";
   });
   if (picks[0]) showGalleryItem(picks[0]);
   else fieldSVG($("#a-map"));
-  const f = FACTS?.facts || [];
-  $("#facts").innerHTML = f.map(x => `<div class="fact"><b>${esc(x.value)}</b><span>${esc(x.label)}</span><p>${esc(x.detail)}</p></div>`).join("");
 }
 
 /* ---------- matches ---------------------------------------------------------------- */
@@ -216,21 +236,23 @@ function renderMatches() {
     $("#m-event").innerHTML += ev.map(e => `<option>${esc(e)}</option>`).join("");
     ["#m-team", "#m-event", "#m-robots"].forEach(s => $(s).addEventListener("input", renderMatches));
     $("#m-cards").addEventListener("click", e => { const c = e.target.closest(".card"); if (c) openDetail(GALLERY[+c.dataset.i]); });
-    $("#m-close").addEventListener("click", () => $("#m-detail").close());
   }
   const team = $("#m-team").value.trim().toUpperCase(), ev = $("#m-event").value, four = $("#m-robots").checked;
-  const list = GALLERY.map((g, i) => [g, i]).filter(([g]) => (!team || [...(g.red || []), ...(g.blue || [])].some(t => t.startsWith(team))) && (!ev || g.event === ev) && (!four || g.robots.filter(r => r.floor).length === 4));
+  const list = GALLERY.map((g, i) => [g, i]).filter(([g]) => (!team || [...(g.red || []), ...(g.blue || [])].some(t => t.startsWith(team))) && (!ev || g.event === ev) && (!four || capRobots(g.robots).length === 4));
   $("#m-count").textContent = `${GALLERY.length} calibrated frames from ${new Set(GALLERY.map(g => g.video)).size} match videos. Each one shows the robots it found on the field.`;
   $("#m-empty").hidden = list.length > 0;
-  $("#m-cards").innerHTML = list.slice(0, 240).map(([g, i]) => `<button class="card" data-i="${i}">
-      <div class="thumb"><img loading="lazy" src="${esc(g.img)}" alt=""><svg class="mini" viewBox="-1950 -1950 3900 3900" data-mini="${i}"></svg></div>
-      <div class="meta"><h3>${esc(g.match ? `${g.match} · ${g.event}` : g.event || "Match frame")}</h3><small>${g.robots.length} robot${g.robots.length === 1 ? "" : "s"} placed · ${Math.round(g.q * 100)}% tape fit</small>
+  renderCards($("#m-cards"), list.slice(0, 240));
+}
+function renderCards(el, list) {
+  el.innerHTML = list.map(([g, i]) => `<button class="card" data-i="${i}">
+      <div class="thumb"><img decoding="async" src="${esc(g.img)}" alt=""><svg class="mini" viewBox="-1950 -1950 3900 3900" data-mini="${i}"></svg></div>
+      <div class="meta"><h3>${esc(g.match ? `${g.match} · ${g.event}` : g.event || "Match frame")}</h3><small>${capRobots(g.robots).length} of 4 robots placed · ${Math.round(g.q * 100)}% tape fit</small>
       <div class="chips">${(g.red || []).map(t => `<span class="chip red">${esc(t)}</span>`).join("")}${(g.blue || []).map(t => `<span class="chip blue">${esc(t)}</span>`).join("")}${g.score ? `<span class="chip">${esc(g.score)}</span>` : ""}</div></div></button>`).join("");
-  document.querySelectorAll("svg[data-mini]").forEach(s => { const g = GALLERY[+s.dataset.mini]; fieldSVG(s, { rot: viewRotation(g.H, g.w, g.h), robots: g.robots.filter(r => r.floor).map((r, k) => ({ x: r.floor[0], y: r.floor[1], label: "" })), matched: new Set() }); });
+  el.querySelectorAll("svg[data-mini]").forEach(s => { const g = GALLERY[+s.dataset.mini]; fieldSVG(s, { rot: viewRotation(g.H, g.w, g.h), robots: capRobots(g.robots).map(r => ({ x: r.floor[0], y: r.floor[1], label: "" })) }); });
 }
 function openDetail(g) {
   const d = $("#m-detail"), img = $("#d-img");
-  const robots = g.robots.map((r, i) => ({ ...r, label: String(i + 1) }));
+  const robots = capRobots(g.robots).map((r, i) => ({ ...r, label: String(i + 1) }));
   img.src = g.img; img.alt = `${g.event || ""} ${g.match || ""}`;
   d.showModal();
   drawOverlay($("#d-cv"), g.w, g.h, { H: g.H, goals: g.goals, robots });
@@ -330,18 +352,49 @@ function initScoring() {
   renderScoring();
 }
 
-/* ---------- how -------------------------------------------------------------------- */
-function initHow() {
+/* ---------- home: stats, ticker, cards, how ---------------------------------------- */
+const ICONS = [
+  `<rect x="6" y="12" width="52" height="34" rx="7" fill="none" stroke="currentColor" stroke-width="3"/><path d="M14 22h14M14 30h9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><rect x="38" y="20" width="14" height="16" rx="3" fill="var(--pin)"/><path d="M24 52h16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>`,
+  `<path d="M23 8h18l12 12v18L41 50H23L11 38V20z" fill="none" stroke="currentColor" stroke-width="3"/><rect x="21" y="18" width="22" height="22" rx="5" fill="none" stroke="var(--pin)" stroke-width="3"/><circle cx="32" cy="29" r="4" fill="var(--pin)"/>`,
+  `<path d="M16 14h32l12 38H4z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M10 50L46 15M18 15l36 36" stroke="var(--pin)" stroke-width="2.6"/><path d="M32 26l7 7-7 7-7-7z" fill="none" stroke="currentColor" stroke-width="2.4"/>`,
+  `<path d="M8 50c8-10 12-24 24-26s16 14 24 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 6"/><rect x="4" y="44" width="12" height="12" rx="3" fill="var(--red)"/><rect x="50" y="20" width="12" height="12" rx="3" fill="var(--blue)"/><rect x="26" y="18" width="12" height="12" rx="3" fill="var(--pin)"/>`,
+  `<rect x="6" y="18" width="52" height="26" rx="6" fill="none" stroke="currentColor" stroke-width="3"/><text x="32" y="38" text-anchor="middle" font-family="Barlow Condensed" font-weight="800" font-size="18" fill="var(--pin)">2360A</text>`,
+  `<path d="M14 54h16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><rect x="18" y="38" width="8" height="14" rx="3" fill="var(--red)"/><rect x="18" y="24" width="8" height="13" rx="3" fill="var(--pin)"/><rect x="18" y="10" width="8" height="13" rx="3" fill="var(--blue)"/><path d="M40 44l16-14v28z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>`,
+  `<rect x="6" y="14" width="24" height="30" rx="6" fill="var(--red)"/><rect x="34" y="14" width="24" height="30" rx="6" fill="var(--blue)"/><text x="18" y="36" text-anchor="middle" font-family="Barlow Condensed" font-weight="800" font-size="16" fill="#fff">52</text><text x="46" y="36" text-anchor="middle" font-family="Barlow Condensed" font-weight="800" font-size="16" fill="#fff">47</text><path d="M22 52l6 5 14-12" fill="none" stroke="var(--pin)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>`,
+];
+function initHome() {
   const H = FACTS?.how || {};
-  $("#h-steps").innerHTML = (H.steps || []).map(s => `<li><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.figure ? `<p class="fig">${esc(s.figure)}</p>` : ""}</li>`).join("");
+  $("#h-steps").innerHTML = (H.steps || []).map((st, i) => `<div class="step"><svg viewBox="0 0 64 64" aria-hidden="true" style="color:var(--muted)">${ICONS[i] || ""}</svg><h3>${esc(st.title)}</h3><p>${esc(st.text)}</p>${st.figure ? `<p class="fig">${esc(st.figure)}</p>` : ""}</div>`).join("");
   $("#h-cmp tbody").innerHTML = (H.compare || []).map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("");
   $("#h-limits").innerHTML = (H.limits || []).map(l => `<li>${esc(l)}</li>`).join("");
+  // ticker of matches read
+  const items = GALLERY.filter(g => g.match && (g.red || []).length === 2 && (g.blue || []).length === 2);
+  const one = items.map(g => `<span class="tk"><em>${esc(g.match)}</em><span class="r">${esc(g.red.join(" "))}</span><span class="vs">vs</span><span class="b">${esc(g.blue.join(" "))}</span><span class="vs">${esc(g.event)}</span></span>`).join("");
+  $("#ticker").innerHTML = one + one;
+  // cards
+  const four = GALLERY.map((g, i) => [g, i]).filter(([g]) => capRobots(g.robots).length >= 3);
+  renderCards($("#home-cards"), four.slice(0, 6));
+  $("#home-cards").addEventListener("click", e => { const c = e.target.closest(".card"); if (c) openDetail(GALLERY[+c.dataset.i]); });
+  $("#m-close").addEventListener("click", () => $("#m-detail").close());
+  // counters
+  const io = new IntersectionObserver(es => es.forEach(en => {
+    if (!en.isIntersecting) return;
+    io.unobserve(en.target);
+    const el = en.target, to = +el.dataset.count, dec = +(el.dataset.dec || 0), suf = el.dataset.suf || "";
+    const fmt = v => (dec ? v.toFixed(dec) : Math.round(v).toLocaleString("en-US")) + suf;
+    if (reduced) { el.textContent = fmt(to); return; }
+    const t0 = performance.now(), d = 1300;
+    const step = now => { const k = Math.min(1, (now - t0) / d), e = 1 - (1 - k) ** 3; el.textContent = fmt(to * e); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }), { threshold: .4 });
+  document.querySelectorAll("[data-count]").forEach(el => io.observe(el));
+  if (HERO) initHero(HERO, viewRotation(HERO.H, HERO.w, HERO.h), reduced);
 }
 
 /* ---------- start ------------------------------------------------------------------ */
 {
   await loadData();
-  initAnalyze(); initReplay(); initScoring(); initHow();
+  initAnalyze(); initReplay(); initScoring(); initHome();
   addEventListener("hashchange", route);
   route();
 }

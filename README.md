@@ -86,6 +86,31 @@ tracking accuracy, placement and Toggle event recall, plate reading on
 robots, and the score check. The goal-stack reader is a colour heuristic until
 a goal close-up model is trained from stack counts made in the labeling tool.
 
+## The website
+
+`site/` is a static site (no build step, no server) with five views:
+
+| View | What it does |
+|---|---|
+| Analyze | Drop or paste a screenshot of an Override broadcast. The goal and robot models run in the browser (onnxruntime-web, WASM), the field is mapped from the goals and snapped to the tape, and every robot is placed on a top-down map with its quadrant and position in inches. |
+| Matches | Every confidently calibrated frame from the collected videos, with the overlay's match name and teams, filterable by team or event. Each opens to the frame, its map and what was read. |
+| Replay | Open a match JSON from `python -m vexvision analyze` and watch the four robots move with events and the score check. Includes the test-suite match (scripted robots on a real frame, labelled as not real). |
+| Scoring | Override score calculator on an interactive field: Toggles, pin halves per quadrant, Midfield robots, autonomous bonus. |
+| How it works | The pipeline, what is measured, Scout's own claims next to ours, and what isn't finished. |
+
+**Publish on GitHub Pages:** the workflow in `.github/workflows/pages.yml` deploys `site/` plus
+`models/*.onnx` and onnxruntime-web on every push to `main`. Turn it on once in the repo's
+Settings → Pages → Source: GitHub Actions. (GitHub only serves Pages from a private repo on a
+paid plan; otherwise make the repo public.) For a team subdomain such as `vision.2360arachnid.com`,
+add a CNAME record pointing to `s1g6r.github.io` (DNS only) and set it as the custom domain in Settings → Pages.
+
+**Run locally:** `./tools/build_site.sh && python3 -m http.server -d build/site 8000`.
+**Rebuild the gallery** after a new self-training round:
+`python tools/build_site_data.py --proposals proposals.jsonl --frames data/yt/frames --videos data/yt/videos.json --ocr data/yt/ocr.json --facts data/facts.json --site site`.
+
+The browser calibration (`site/js/calib.js`) is a port of `vexvision/calibrate.py`; `site/test/calib.test.mjs`
+checks it against the Python results on real frames (median 2.1 in apart on 20 frames).
+
 ## Run it on a Mac
 
 ```bash
@@ -139,7 +164,8 @@ The models in `models/` were trained on 27 frames (goals) and 11 frames
 | `vexvision/reconcile.py` | Check against official / running score, credit per robot |
 | `vexvision/stream.py` | Seek into streams without downloading; find a match |
 | `vexvision/analyze.py` | One match end to end |
-| `tools/` | Data collection, labeling tool, training data, evaluation |
+| `tools/` | Data collection, labeling tool, self-training, training data, evaluation, site data |
+| `site/` | The website (see above) |
 | `data/` | Hand marks (`landmarks.json`), robot boxes (`robots.json`) |
 | `models/` | Trained weights |
 

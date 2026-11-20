@@ -3,94 +3,155 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>vexvision</title>
+<title>vexvision · Override from above</title>
+<meta name="description" content="Turns VEX V5RC Override broadcast video into a top-down field map: every robot, in inches.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cpath d=%22M12 3h16l9 9v16l-9 9H12l-9-9V12z%22 fill=%22%2314171c%22/%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%225%22 fill=%22%23f5c400%22/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cpath d=%22M12 3h16l9 9v16l-9 9H12l-9-9V12z%22 fill=%22%230b0d10%22 stroke=%22%23f5c400%22 stroke-width=%223%22/%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%225%22 fill=%22%23f5c400%22/%3E%3C/svg%3E">
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="#analyze" aria-label="vexvision home">
-    <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 3h16l9 9v16l-9 9H12l-9-9V12z" fill="var(--panel)" stroke="var(--ink)" stroke-width="2.5"/><path d="M9 31L31 9" stroke="var(--tape)" stroke-width="3"/><path d="M11 12l17 17M13 10l17 17" stroke="var(--ink)" stroke-width="1.6" opacity=".55"/><circle cx="20" cy="20" r="4.2" fill="var(--pin)"/></svg>
+  <a class="brand" href="#home" aria-label="vexvision home">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 3h16l9 9v16l-9 9H12l-9-9V12z" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M10 30L30 10" stroke="currentColor" stroke-width="2" opacity=".5"/><circle cx="20" cy="20" r="4.6" fill="var(--pin)"/></svg>
     <span>vexvision</span>
   </a>
   <nav class="scroll" aria-label="Sections">
-    <a href="#analyze">Analyze</a><a href="#matches">Matches</a><a href="#replay">Replay</a><a href="#scoring">Scoring</a><a href="#how">How it works</a>
+    <a href="#home">Home</a><a href="#matches">Matches</a><a href="#replay">Replay</a><a href="#scoring">Scoring</a>
   </nav>
+  <a class="btn primary sm" href="#analyze">Analyze a screenshot</a>
 </header>
 
 <main>
-<!-- ANALYZE ---------------------------------------------------------------- -->
-<section id="v-analyze" class="view" data-view="analyze">
-  <div class="band analyze">
-    <div class="intro">
-      <h1>See any Override broadcast from above</h1>
-      <p class="lede">Drop a screenshot of a VEX V5RC Override match stream. vexvision finds the goals, works out where the camera is, and places every robot it sees on the field, in inches.</p>
-      <div class="drop" id="drop" tabindex="0" role="button" aria-describedby="drop-hint">
-        <input type="file" id="file" accept="image/*" hidden>
-        <strong>Drop a screenshot here</strong>
-        <span id="drop-hint">or choose a file · PNG or JPG, a full-field view works best</span>
+<!-- HOME ------------------------------------------------------------------- -->
+<section class="view" data-view="home">
+
+  <div class="hero" id="hero">
+    <div class="hero-pin">
+      <div class="hero-stage" id="h-stage">
+        <div class="hero-world" id="h-world">
+          <img id="h-full" alt="" class="h-full">
+          <div class="h-warp" id="h-warp">
+            <img id="h-img" alt="A real Override broadcast frame from the Great Planes Signature Event">
+            <svg id="h-over" class="h-over" aria-hidden="true"></svg>
+          </div>
+          <svg id="h-top" class="h-top" aria-hidden="true"></svg>
+        </div>
       </div>
-      <div class="row samples" id="samples" aria-label="Try a real frame"></div>
-      <p class="status" id="status" role="status" aria-live="polite"></p>
-    </div>
-    <div class="stage" id="stage">
-      <figure class="frame">
-        <div class="frame-box"><img id="a-img" alt=""><canvas id="a-cv"></canvas></div>
-        <figcaption id="a-cap"></figcaption>
-      </figure>
-      <figure class="map">
-        <svg id="a-map" viewBox="-1950 -1950 3900 3900" role="img" aria-label="Top-down field map"></svg>
-        <figcaption id="a-mapcap">The same moment from above, camera side at the bottom</figcaption>
-      </figure>
-      <div class="readout" id="a-read" aria-live="polite"></div>
+      <div class="hero-copy" id="h-copy">
+        <p class="kicker">VEX V5RC · Override · <span id="h-live">reading a real match</span></p>
+        <h1>The stream you already watch, turned into a scouting map</h1>
+        <p class="lede">vexvision reads Override broadcasts frame by frame: it finds the field, works out where the camera stands, and puts every robot on the carpet in inches.</p>
+        <div class="row"><a class="btn primary" href="#analyze">Try it on a screenshot</a><a class="btn ghost" href="#matches">See matches it read</a></div>
+      </div>
+      <div class="hero-end" id="h-end">
+        <p class="kicker">Qual 19 · Great Planes Signature Event</p>
+        <h2>One broadcast frame, four robots on the map</h2>
+        <ul></ul>
+        <a class="btn primary" href="#analyze">Map your own screenshot</a>
+      </div>
+      <ol class="phases" id="h-phases" aria-hidden="true">
+        <li data-p="0"><b>Broadcast frame</b><span>Qual 19 at the Great Planes Signature Event, straight from the stream</span></li>
+        <li data-p="1"><b>Field found</b><span>Goals matched to the layout, white tape traced to within an inch</span></li>
+        <li data-p="2"><b>Four robots</b><span>Never more than four: two per alliance, followed the whole match</span></li>
+        <li data-p="3"><b>Camera undone</b><span>The same pixels laid flat, using the camera position it worked out</span></li>
+        <li data-p="4"><b>On the map</b><span>Every robot placed on the field, ready for paths, zones and scoring</span></li>
+      </ol>
+      <div class="hero-scrub" aria-hidden="true"><i id="h-bar"></i></div>
+      <p class="scrollhint" id="h-hint">Scroll to watch it work</p>
     </div>
   </div>
-  <div class="band facts">
-    <h2>What it reads in a frame, and how often it is right</h2>
-    <div class="factgrid" id="facts"></div>
-    <p class="note">Measured on real Override broadcasts (frames YouTube serves for each match video). Full-match tracking needs the video pipeline in the repo, run on a computer.</p>
+
+  <div class="band stats" id="stats">
+    <div class="stat"><b data-count="1.2" data-dec="1">0</b><span>inches median error mapping the field, on cameras it never trained on</span></div>
+    <div class="stat"><b data-count="94" data-suf="%">0</b><span>of match names read right off the broadcast overlay</span></div>
+    <div class="stat"><b data-count="2913">0</b><span>broadcast frames collected from 982 match videos</span></div>
+    <div class="stat"><b data-count="78.8" data-dec="1" data-suf="%">0</b><span>of match winners called by our predictions, against 70% claimed elsewhere</span></div>
+  </div>
+
+  <div class="ticker" aria-label="Matches read"><div class="ticker-track" id="ticker"></div></div>
+
+  <div class="band analyze" id="analyze">
+    <div class="a-head">
+      <h2>Drop in a screenshot from any Override stream</h2>
+      <p class="lede">The models run right here in your browser. A wide shot of the whole field works best; nothing leaves your computer.</p>
+    </div>
+    <div class="a-grid">
+      <div class="a-left">
+        <div class="drop" id="drop" tabindex="0" role="button" aria-describedby="drop-hint">
+          <input type="file" id="file" accept="image/*" hidden>
+          <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="9" width="38" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M5 31l11-9 8 6 7-5 12 9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="33" cy="17" r="3.4" fill="var(--pin)"/></svg>
+          <strong>Drop or paste a screenshot</strong>
+          <span id="drop-hint">or click to choose a PNG or JPG</span>
+        </div>
+        <p class="sub">Or start from a real frame</p>
+        <div class="samples" id="samples"></div>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </div>
+      <div class="a-right">
+        <figure class="frame">
+          <div class="frame-box"><img id="a-img" alt=""><canvas id="a-cv"></canvas><div class="scanline" id="a-scan"></div></div>
+          <figcaption id="a-cap"></figcaption>
+        </figure>
+        <div class="a-out">
+          <figure class="map">
+            <svg id="a-map" viewBox="-1950 -1950 3900 3900" role="img" aria-label="Top-down field map"></svg>
+          </figure>
+          <div class="readout" id="a-read" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="band read" id="read">
+    <div class="head-row">
+      <h2>Matches it has already read</h2>
+      <a class="btn ghost" href="#matches">Browse all of them</a>
+    </div>
+    <div class="cards" id="home-cards"></div>
+  </div>
+
+  <div class="band how" id="how">
+    <h2>What happens between the stream and the map</h2>
+    <div class="steps" id="h-steps"></div>
+  </div>
+
+  <div class="band cmp-band">
+    <h2>Next to the other VEX vision tool</h2>
+    <p class="lede">scout.questionative.dev (also @vrc.ai on Instagram) is invite-only and runs on its owner's computer. Its column is its own claims; ours is measured as described.</p>
+    <div class="scroll"><table class="stack cmp" id="h-cmp"><thead><tr><th>Step</th><th>Scout says</th><th>vexvision</th></tr></thead><tbody></tbody></table></div>
+    <h3 class="limits-h">Still in progress</h3>
+    <ul class="limits" id="h-limits"></ul>
   </div>
 </section>
 
 <!-- MATCHES ---------------------------------------------------------------- -->
-<section id="v-matches" class="view" data-view="matches" hidden>
+<section class="view" data-view="matches" hidden>
   <div class="band">
     <div class="head-row">
       <h1>Matches read so far</h1>
       <p class="lede" id="m-count"></p>
     </div>
     <div class="filters">
-      <label>Team <input id="m-team" inputmode="text" autocomplete="off" placeholder="e.g. 2145X"></label>
+      <label>Team <input id="m-team" autocomplete="off" placeholder="e.g. 2145X"></label>
       <label>Event <select id="m-event"><option value="">All events</option></select></label>
-      <label class="chk"><input type="checkbox" id="m-robots"> Only frames with all four robots found</label>
+      <label class="chk"><input type="checkbox" id="m-robots"> All four robots placed</label>
     </div>
     <div class="cards" id="m-cards"></div>
     <p class="empty" id="m-empty" hidden>No frames match. Try another team number or clear the filters.</p>
   </div>
-  <dialog id="m-detail" class="detail" aria-label="Frame detail">
-    <div class="detail-in">
-      <button class="btn ghost close" id="m-close">Close</button>
-      <div class="detail-grid">
-        <div class="frame-box"><img id="d-img" alt=""><canvas id="d-cv"></canvas></div>
-        <svg id="d-map" viewBox="-1950 -1950 3900 3900" role="img" aria-label="Top-down field map"></svg>
-      </div>
-      <div id="d-info" class="d-info"></div>
-    </div>
-  </dialog>
 </section>
 
 <!-- REPLAY ----------------------------------------------------------------- -->
-<section id="v-replay" class="view" data-view="replay" hidden>
+<section class="view" data-view="replay" hidden>
   <div class="band replay">
     <div class="intro">
       <h1>Replay an analysed match</h1>
       <p class="lede">The video pipeline writes one JSON file per match. Open it here to watch the four robots move, see each scoring event, and compare what the camera saw with the official score.</p>
       <div class="row">
-        <label class="btn primary file-btn">Open match JSON<input type="file" id="r-file" accept=".json,application/json" hidden></label>
-        <button class="btn" id="r-sample">Load the test-suite match</button>
+        <label class="btn primary">Open match JSON<input type="file" id="r-file" accept=".json,application/json" hidden></label>
+        <button class="btn ghost" id="r-sample">Load the test-suite match</button>
       </div>
       <p class="note" id="r-note"></p>
     </div>
@@ -104,17 +165,17 @@
     </div>
   </div>
   <div class="band two">
-    <div><h2>Robots</h2><div class="scroll"><table class="stack" id="r-robots"><thead><tr><th>Team</th><th>Alliance</th><th>Driven</th><th>Placed</th><th>Toggles</th><th>Points seen</th><th>Inferred</th><th>Midfield</th></tr></thead><tbody></tbody></table></div></div>
+    <div><h2>Robots</h2><div class="scroll"><table class="stack" id="r-robots"><thead><tr><th>Team</th><th>Alliance</th><th class="n">Driven</th><th class="n">Placed</th><th class="n">Toggles</th><th class="n">Points seen</th><th class="n">Inferred</th><th>Midfield</th></tr></thead><tbody></tbody></table></div></div>
     <div><h2>Events</h2><ol class="events" id="r-events"></ol><div id="r-check"></div></div>
   </div>
 </section>
 
 <!-- SCORING ---------------------------------------------------------------- -->
-<section id="v-scoring" class="view" data-view="scoring" hidden>
+<section class="view" data-view="scoring" hidden>
   <div class="band scoring">
     <div class="intro">
       <h1>Work out an Override score</h1>
-      <p class="lede">Set the Toggles, the pin halves scored in each quadrant and the Midfield, and both alliance scores update as you go. Tap a Toggle to cycle its colour.</p>
+      <p class="lede">Set the Toggles, the pin halves in each quadrant and the Midfield; both totals update as you go. Tap a Toggle on the field to cycle its colour.</p>
       <div class="totals" aria-live="polite">
         <div class="total red"><span>Red</span><b id="s-red">0</b></div>
         <div class="total blue"><span>Blue</span><b id="s-blue">0</b></div>
@@ -126,34 +187,25 @@
       <div class="qgrid" id="s-quads"></div>
       <p class="note">Point values from VEX's game page: 5 per alliance-colour pin half, 10 per yellow half the alliance owns, 8 per robot in the Midfield, 12 for the autonomous bonus (6 each on a tie). Yellow halves in the Midfield go to the alliance with more robots there.</p>
     </div>
-    <div class="scorer">
-      <svg id="s-map" viewBox="-1950 -1950 3900 3900" role="img" aria-label="Interactive field"></svg>
-    </div>
+    <div class="scorer"><svg id="s-map" viewBox="-1950 -1950 3900 3900" role="img" aria-label="Interactive field"></svg></div>
   </div>
 </section>
 
-<!-- HOW -------------------------------------------------------------------- -->
-<section id="v-how" class="view" data-view="how" hidden>
-  <div class="band how">
-    <h1>How vexvision reads a match</h1>
-    <ol class="steps" id="h-steps"></ol>
+<dialog id="m-detail" class="detail" aria-label="Frame detail">
+  <div class="detail-in">
+    <button class="btn ghost close" id="m-close">Close</button>
+    <div class="detail-grid">
+      <div class="frame-box"><img id="d-img" alt=""><canvas id="d-cv"></canvas></div>
+      <svg id="d-map" viewBox="-1950 -1950 3900 3900" role="img" aria-label="Top-down field map"></svg>
+    </div>
+    <dl id="d-info" class="d-info"></dl>
   </div>
-  <div class="band">
-    <h2>Next to the other VEX vision tool</h2>
-    <p class="lede">scout.questionative.dev (also on Instagram as @vrc.ai) is invite-only and runs on its owner's computer. Its numbers below are its own claims; ours are measured as described.</p>
-    <div class="scroll"><table class="stack cmp" id="h-cmp"><thead><tr><th>Step</th><th>Scout says</th><th>vexvision</th></tr></thead><tbody></tbody></table></div>
-  </div>
-  <div class="band">
-    <h2>What is not finished yet</h2>
-    <ul class="limits" id="h-limits"></ul>
-    <p>The code, models and training tools are in the <a href="https://github.com/s1g6r/vexvision">vexvision repository</a>. Match predictions live on <a href="https://stats.2360arachnid.com">stats.2360arachnid.com</a>.</p>
-  </div>
-</section>
+</dialog>
 </main>
 
 <footer class="foot">
-  <span>Built by 2360A Arachnid</span>
-  <span>Frames in the gallery are from public match videos on YouTube; each links to its source.</span>
+  <span>Built by 2360A Arachnid · code at <a href="https://github.com/s1g6r/vexvision">github.com/s1g6r/vexvision</a> · predictions at <a href="https://stats.2360arachnid.com">stats.2360arachnid.com</a></span>
+  <span>Frames are from public match videos on YouTube; each one links to its source.</span>
 </footer>
 <script type="module" src="js/app.js"></script>
 </body>

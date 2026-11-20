@@ -1,7 +1,7 @@
 {
  "facts": [
   {
-   "value": "1.3 in",
+   "value": "1.2 in",
    "label": "Field mapping error",
    "detail": "Median distance between where vexvision and a hand-checked calibration put the same pixel, on 5 frames from 2 cameras the models never trained on."
   },
@@ -36,7 +36,7 @@
    {
     "title": "Map the field",
     "text": "Detected goals are matched to their known positions, the white tape snaps the fit into place, and a mirror check keeps the camera above the floor.",
-    "figure": "Median 1.3 in off on unseen cameras"
+    "figure": "Median 1.2 in off on unseen cameras"
    },
    {
     "title": "Follow four robots",
@@ -73,7 +73,7 @@
    [
     "Map the field",
     "From the goals in view",
-    "From goals, refined by the tape, with a mirror check; 1.3 in median error measured"
+    "From goals, refined by the tape, with a mirror check; 1.2 in median error measured"
    ],
    [
     "Name the teams",
