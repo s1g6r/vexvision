@@ -1,5 +1,23 @@
 [
 {
+"id": "W3tB4duDNoo",
+"event": "Highlander Summit Signature",
+"match": "R16 2-1",
+"red": [
+"20850G",
+"3150Z"
+],
+"blue": [
+"2627E",
+"62880A"
+],
+"video": "W3tB4duDNoo",
+"calibrated": 0.94,
+"seen": 1.0,
+"named": 4,
+"sure": 0
+},
+{
 "id": "uXTJGJ-eFLU",
 "event": "Speedway Signature",
 "match": "Final 1-1",
@@ -12,9 +30,9 @@
 "1239E"
 ],
 "video": "uXTJGJ-eFLU",
-"seconds": 399,
-"calibrated": 0.78,
-"seen": 0.7,
-"named": 4
+"calibrated": 0.76,
+"seen": 0.82,
+"named": 4,
+"sure": 0
 }
 ]

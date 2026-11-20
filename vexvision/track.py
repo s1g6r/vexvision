@@ -75,7 +75,7 @@ class FourRobotTracker:
     appearance term and an alliance-colour term. A detection is only allowed if the
     robot could have driven there since it was last seen. A robot that is lost
     slows to a stop where it was rather than coasting off the field."""
-    def __init__(self, n_per_alliance=2, w_app=0.6, w_col=0.8):
+    def __init__(self, n_per_alliance=2, w_app=0.6, w_col=0.0):
         self.n = n_per_alliance
         self.w_app, self.w_col = w_app, w_col
         self.tracks = []
