@@ -12,7 +12,7 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd", required=True)
     f = sub.add_parser("find"); f.add_argument("url"); f.add_argument("match")
     a = sub.add_parser("analyze"); a.add_argument("url"); a.add_argument("match")
-    af = sub.add_parser("analyze-file"); af.add_argument("path"); af.add_argument("--start", type=float, default=0.0)
+    af = sub.add_parser("analyze-file"); af.add_argument("path"); af.add_argument("--start", type=float, default=0.0); af.add_argument("--dur", type=float, default=None)
     fr = sub.add_parser("frame"); fr.add_argument("image")
     for p in (a, af, fr):
         p.add_argument("--weights", default="models/vexvision.pt")
@@ -60,7 +60,7 @@ def main(argv=None):
         frames = stream.frames(media, max(0, t0 - 3), 128, fps=args.fps)
         name = args.match.replace(" ", "")
     else:
-        frames = stream.video_frames(args.path, args.start, None, fps=args.fps)
+        frames = stream.video_frames(args.path, args.start, args.dur, fps=args.fps)
         name = os.path.splitext(os.path.basename(args.path))[0]
     res = AN.analyze(frames, det, teams=teams, official=official)
     jp = os.path.join(args.out, f"{name}.json")

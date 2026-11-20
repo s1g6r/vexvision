@@ -1,4 +1,5 @@
 import { createField } from "./field3d.js";
+import { mountReplay } from "./replay.js";
 
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -185,7 +186,7 @@ function pickMatch(i) {
 }
 function setMode(m, instant) {
   sMode = m;
-  [...document.querySelectorAll(".seg button")].forEach((b) => b.setAttribute("aria-pressed", b.dataset.v === m));
+  [...document.querySelectorAll("#read .seg button")].forEach((b) => b.setAttribute("aria-pressed", b.dataset.v === m));
   const boxes = [...$("#s-marks").children];
   if (m === "three") {
     S.snapPhoto(); S.setLabelMode("photo");
@@ -199,7 +200,7 @@ function setMode(m, instant) {
 }
 $("#matches").innerHTML = frames.map((f, i) => `<button type="button" aria-pressed="false"><img src="${f.img}" alt="" loading="lazy"><span><b>${esc(f.match)}</b><span>${esc(f.event)}</span></span></button>`).join("");
 [...$("#matches").children].forEach((b, i) => b.addEventListener("click", () => pickMatch(i)));
-document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => b.dataset.v !== sMode && setMode(b.dataset.v)));
+document.querySelectorAll("#read .seg button").forEach((b) => b.addEventListener("click", () => b.dataset.v !== sMode && setMode(b.dataset.v)));
 pickMatch(1 < frames.length ? 1 : 0);
 // open on the rebuilt view the first time the section is seen
 new IntersectionObserver(([e], o) => { if (e.isIntersecting) { o.disconnect(); setTimeout(() => sMode === "photo" && setMode("three"), 700); } }, { threshold: 0.5 }).observe(stage);
@@ -266,4 +267,7 @@ function route() {
   if (h.startsWith("team-")) { const id = h.slice(5).toUpperCase(); q.value = id; sugg.classList.remove("open"); showTeam(id); $("#teams").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); }
 }
 addEventListener("hashchange", route); route();
+document.getElementById("rp").addEventListener("replay-meta", (e) => { const R = e.detail;
+  document.getElementById("rp-sub").innerHTML = `${esc(R.match)} at ${esc(R.event)}: <span style="color:var(--red)">${R.red.join(" &amp; ")}</span> vs <span style="color:var(--blue)">${R.blue.join(" &amp; ")}</span>, followed for the whole match from one YouTube video. The broadcast plays in the corner with the same four robots marked, so you can check it against the real thing.`; });
+mountReplay(document.getElementById("rp"), "data/replays/q19.json", { reduced }).catch((e) => console.error(e));
 window.__ready = true; window.done = true;

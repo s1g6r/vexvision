@@ -70,22 +70,13 @@ def frames(media, t0, dur, fps=8, size=(1280, 720)):
     p.wait()
 
 def video_frames(path, t0=0.0, dur=None, fps=8):
-    """Same as frames() for a local file, using OpenCV."""
-    cap = cv2.VideoCapture(path)
-    src_fps = cap.get(cv2.CAP_PROP_FPS) or 30
-    cap.set(cv2.CAP_PROP_POS_MSEC, t0 * 1000)
-    step = max(1, int(round(src_fps / fps)))
-    i = 0
-    while True:
-        ok, f = cap.read()
-        if not ok:
-            break
-        t = t0 + i / src_fps
-        if dur is not None and t > t0 + dur:
-            break
-        if i % step == 0:
-            yield t, cv2.resize(f, (1280, 720)) if f.shape[1] != 1280 else f
-        i += 1
+    """Same as frames() for a local file. ffmpeg decodes it, so AV1 and other
+    codecs OpenCV cannot read still work."""
+    if dur is None:
+        out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path],
+                             capture_output=True, text=True).stdout.strip()
+        dur = max(0.0, float(out or 0) - t0)
+    yield from frames(path, t0, dur, fps=fps)
 
 def read_at(media, t, valid=None):
     img = grab(media, t)

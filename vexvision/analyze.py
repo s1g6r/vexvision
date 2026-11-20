@@ -49,19 +49,27 @@ class Calibrator:
         return True
 
     def update(self, t, img, dets):
+        """True when self.H describes this frame. Every frame is checked against
+        the tape, so a cut to a close-up or replay is caught right away; those
+        frames return False and the tracks coast instead of jumping."""
+        self.last_check = t
         if self.H is None:
             return self.solve(img, dets)
-        if t - self.last_check < self.recheck_every:
-            return True
-        self.last_check = t
-        mask = C.tape_mask(img, self.H)
-        if C.fit_quality(self.H, mask) >= self.min_q:
+        q = C.fit_quality(self.H, C.tape_mask(img, self.H))
+        if q >= self.min_q:
+            self.quality = q
             return True
         Hb, cc = C.transfer(self.H, self.ref, img)       # camera panned or zoomed
-        if Hb is not None and C.plausible(Hb, img.shape[1::-1]) and C.fit_quality(Hb, C.tape_mask(img, Hb)) >= self.min_q:
-            self.H, self.cam, self.ref = Hb, C.camera_from_h(Hb, img.shape[1::-1]), img.copy()
+        if Hb is not None and C.plausible(Hb, img.shape[1::-1]):
+            qb = C.fit_quality(Hb, C.tape_mask(img, Hb))
+            if qb >= self.min_q:
+                self.H, self.cam, self.ref, self.quality = Hb, C.camera_from_h(Hb, img.shape[1::-1]), img.copy(), qb
+                return True
+        old = (self.H, self.cam, self.ref, getattr(self, "quality", None))
+        if self.solve(img, dets):
             return True
-        return self.solve(img, dets) or True
+        self.H, self.cam, self.ref, self.quality = old
+        return False
 
 def robot_floor_point(box, H, cam):
     x0, y0, x1, y1 = box
@@ -86,7 +94,8 @@ def read_plates(img, box):
             out.append((tok, it["conf"]))
     return out
 
-def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_hint=6, log=print):
+def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_hint=6, log=print,
+            every_overlay=2.0, every_plate=2.0, every_read=1.0):
     """frames: iterable of (t, img). teams: {"red": [a, b], "blue": [c, d]} (from schedule or overlay)."""
     cal = Calibrator(detector)
     tracker = T.FourRobotTracker()
@@ -95,13 +104,14 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
     plates = {}
     running = []
     overlay_reads = []
+    cal_log = []
     t_start = None
     last_read = -1e9; last_plate = -1e9; last_ov = -1e9
     n = 0
     t0w = time.time()
     for t, img in frames:
         n += 1
-        if t - last_ov >= 1.0:
+        if t - last_ov >= every_overlay:
             last_ov = t
             r = overlay.read(img, valid_teams)
             overlay_reads.append((t, r.as_dict()))
@@ -115,6 +125,7 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
         if not cal.update(t, img, dets):
             continue
         H, cam = cal.H, cal.cam
+        cal_log.append((round(t, 2), np.round(H, 8).tolist()))
         robots = [d for d in dets if d["cls"] == "robot"]
         pts = []
         for d in robots:
@@ -122,7 +133,7 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
             if np.all(np.abs(p) < F.HALF + 200):
                 pts.append((p[0], p[1], TM.colour_feature(img, d["box"])))
         assign = tracker.step(t, pts)
-        if tracker.tracks and t - last_plate >= 1.0:
+        if tracker.tracks and t - last_plate >= every_plate:
             last_plate = t
             inv = {}
             for tid, j in assign.items():
@@ -132,7 +143,7 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
                     reads = read_plates(img, d["box"])
                     if reads:
                         plates.setdefault(inv[j], []).extend(reads)
-        if t - last_read >= 0.5:
+        if t - last_read >= every_read:
             last_read = t
             for g in F.GOALS:
                 c, _ = readers.read_stack(img, H, cam, g)
@@ -181,7 +192,8 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
         e["t"] = round(e["t"] - (t_start or 0), 2)
     return {"teams": teams, "t_start": t_start, "frames": n, "seconds_to_run": round(time.time() - t0w, 1),
             "robots": robots_out, "events": ev, "final_state": state, "score_check": report,
-            "overlay": overlay_reads[-1][1] if overlay_reads else None}
+            "overlay": overlay_reads[-1][1] if overlay_reads else None,
+            "cal_log": cal_log, "raw_tracks": {tr.tid: [(round(p[0], 2), round(p[1]), round(p[2]), p[3]) for p in tr.history] for tr in tracker.tracks}}
 
 def start_by_motion(tracker, thresh=150.0):
     """Auton start = first moment the robots, together, have moved > thresh mm from their spots."""

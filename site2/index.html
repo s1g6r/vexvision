@@ -120,6 +120,40 @@ p{margin:0}.mute{color:var(--mute)}
 .fact span{font-size:13px;color:#c9c2b5}
 .vs{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline;margin-top:16px;font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:24px}
 .vs .r{color:var(--red)}.vs .b{color:var(--blue)}.vs .m{color:var(--mute);font-size:16px}
+/* replay */
+.replay{background:#100f0d;border-block:1px solid var(--line)}
+.rp-stage{position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#141210;box-shadow:0 0 0 1px var(--line),0 40px 90px -40px rgba(0,0,0,.9)}
+.rp-stage canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
+.rp-labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.pin{position:absolute;left:0;top:0;will-change:transform}
+.pin b{position:absolute;transform:translate(-50%,calc(-100% - 9px));background:var(--gold);color:#111;font:700 12.5px/1 Geist,sans-serif;padding:5px 7px;border-radius:6px;white-space:nowrap}
+.pin::after{content:"";position:absolute;left:-1px;top:-9px;width:2px;height:9px;background:var(--gold)}
+.pin.red b{background:var(--red);color:#fff}.pin.red::after{background:var(--red)}
+.pin.blue b{background:var(--blue);color:#fff}.pin.blue::after{background:var(--blue)}
+.rp-top{position:absolute;left:14px;right:14px;top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.rp-clock b{font-weight:600;color:var(--ink);margin-right:4px}
+.rp-pip{position:absolute;right:14px;bottom:14px;width:min(30%,320px);margin:0;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px var(--line),0 20px 40px -12px rgba(0,0,0,.8);background:#000}
+.rp-still{display:block;width:100%;aspect-ratio:16/9;background:#000 no-repeat}
+.rp-pipmarks{position:absolute;left:0;top:0;right:0;aspect-ratio:16/9;pointer-events:none}
+.rp-pipmarks i{position:absolute;left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;border:2px solid var(--gold);transition:opacity .2s}
+.rp-pipmarks i.red{border-color:var(--red)}.rp-pipmarks i.blue{border-color:var(--blue)}
+.rp-pip figcaption{position:absolute;left:8px;top:8px;font-size:11.5px;background:rgba(12,11,10,.7);padding:3px 7px;border-radius:999px;color:#d7d0c3}
+.rp-bar{display:flex;align-items:center;gap:16px;margin-top:14px}
+.rp-play{min-width:92px;justify-content:center}
+.rp-scrub{position:relative;flex:1;height:44px;display:flex;align-items:center}
+.rp-scrub::before{content:"";position:absolute;left:0;right:0;height:6px;border-radius:9px;background:rgba(239,233,221,.12)}
+.rp-fill{position:absolute;left:0;height:6px;border-radius:9px;background:var(--ink);pointer-events:none}
+.rp-ticks{position:absolute;left:0;right:0;height:6px;pointer-events:none}
+.rp-ticks .auton{position:absolute;top:0;height:6px;background:rgba(242,194,48,.45);border-radius:9px}
+.rp-range{position:absolute;inset:0;width:100%;margin:0;opacity:0;cursor:pointer}
+.rp-range:focus-visible+*{outline:none}.rp-scrub:focus-within{outline:2px solid var(--gold);outline-offset:4px;border-radius:9px}
+.rp-teams{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+.rp-team{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:2px}
+.rp-team .k{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--mute)}.rp-team .k i{width:9px;height:9px;border-radius:3px;background:var(--c)}
+.rp-team b{font-family:"Big Shoulders Display",sans-serif;font-size:28px;font-weight:800;line-height:1.05}
+.rp-team span{font-size:13px;color:#c9c2b5}
+@media(max-width:960px){.rp-teams{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.rp-stage{aspect-ratio:4/5}.rp-pip{width:44%}.rp-bar{flex-wrap:wrap}.rp-scrub{order:3;flex-basis:100%}.rp-view button{padding:7px 10px;font-size:12.5px}}
 /* lookup */
 .look{background:#100f0d;border-top:1px solid var(--line)}
 .find{display:flex;gap:10px;max-width:640px;position:relative}
@@ -158,7 +192,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 
 <body>
 <nav class="nav" id="nav"><div class="wrap">
   <a class="brand" href="#top">vex<i>vision</i></a>
-  <a class="l" href="#read">Read a match</a>
+  <a class="l" href="#replay">Replay</a><a class="l" href="#read">Read a frame</a>
   <a class="l" href="#teams">Teams</a>
   <a class="btn ghost" href="#teams">Look up a team</a>
 </div></nav>
@@ -183,6 +217,27 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 
 </header>
 
 <div class="ticker" aria-label="Recent Override matches"><div class="track" id="ticker"></div></div>
+
+<section class="sec replay" id="replay"><div class="wrap">
+  <div class="head">
+    <h2>A whole match, rebuilt from the stream</h2>
+    <p id="rp-sub">Every robot, followed for the full two minutes from one YouTube video. The broadcast plays in the corner with the same four robots marked, so you can check it against the real thing.</p>
+  </div>
+  <div class="rp" id="rp">
+    <div class="rp-stage">
+      <canvas aria-label="The match replayed on a 3D field"></canvas>
+      <div class="rp-labels"></div>
+      <div class="rp-top"><span class="rp-clock tag"></span><div class="seg rp-view" role="group" aria-label="Camera"><button type="button" data-v="broadcast" aria-pressed="true">Broadcast camera</button><button type="button" data-v="orbit" aria-pressed="false">Walk around</button></div></div>
+      <figure class="rp-pip"><div class="rp-still" role="img" aria-label="The broadcast at this moment"></div><div class="rp-pipmarks"></div><figcaption>The broadcast</figcaption></figure>
+    </div>
+    <div class="rp-bar">
+      <button class="btn solid rp-play" type="button">Play</button>
+      <div class="rp-scrub"><div class="rp-ticks"></div><div class="rp-fill"></div><input class="rp-range" type="range" aria-label="Match time"></div>
+      <div class="seg rp-speed" role="group" aria-label="Speed"><button type="button" data-s="1" aria-pressed="true">1×</button><button type="button" data-s="2" aria-pressed="false">2×</button><button type="button" data-s="4" aria-pressed="false">4×</button></div>
+    </div>
+    <div class="rp-teams"></div>
+  </div>
+</div></section>
 
 <section class="sec" id="read"><div class="wrap">
   <div class="head">
