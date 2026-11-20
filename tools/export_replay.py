@@ -73,7 +73,6 @@ def smooth(path, win=1.0):
             for ti, p, h, sv in zip(t, out, head, a[:, 3] > 0.5)]
 
 COLS, ROWS, SW, SH = 8, 6, 400, 225
-MATCH_END = 121.0     # 15 s autonomous + 105 s driver control, plus a second
 
 def stills(video, out_dir, t0, t1):
     """One frame a second, packed 48 to a sheet (8 x 6 tiles of 400x225)."""
@@ -102,13 +101,15 @@ def main():
     a = ap.parse_args()
     r = json.load(open(a.result))
     ts = r.get("t_start") or 0.0
+    drv = (r.get("t_driver") or (ts + 15.0)) - ts      # driver control starts this long after autonomous did
+    end = drv + 106.0
     alli = {str(x["track"]): x["alliance"] for x in r["robots"]}
     team = {str(x["track"]): x.get("team") for x in r["robots"]}
     robots = []
     for tid, hist in r["raw_tracks"].items():
         hist = [(p[0] - ts, p[1], p[2], p[3]) for p in hist]
         if r.get("t_start") is not None:         # the match itself: after the buzzer people walk on and lift robots
-            hist = [p for p in hist if -3.0 <= p[0] <= MATCH_END]
+            hist = [p for p in hist if -3.0 <= p[0] <= end]
         x = next(x for x in r["robots"] if str(x["track"]) == tid)
         robots.append({"team": team[tid], "alliance": alli[tid], "named": (x.get("confidence") or 0) >= 0.75, "path": smooth(hist),
                        "distance_ft": x.get("distance_ft"), "seen_share": x.get("seen_share"),
@@ -132,7 +133,7 @@ def main():
         n = stills(a.video, os.path.join(a.out, a.id), ts + t_first, ts + t_last + 1)
     ev = [{k: e[k] for k in ("t", "type", "goal", "colour", "team", "auton") if k in e} for e in r["events"]
           if e["type"] in ("placement", "toggle")]
-    out = {"id": a.id, **json.loads(a.meta), "t0": round(t_first, 2), "t1": round(t_last, 2),
+    out = {"id": a.id, **json.loads(a.meta), "t0": round(t_first, 2), "t1": round(t_last, 2), "driver": round(drv, 2), "auton_seen": r.get("auton_seen", True),
            "stills": {"n": n, "t0": round(s_abs - ts, 2), "abs": round(s_abs, 2), "dir": f"data/replays/{a.id}/", "cols": COLS, "rows": ROWS},
            "robots": robots, "events": ev, "cams": cams,
            "vision_score": r.get("score_check", {}).get("vision_score")}

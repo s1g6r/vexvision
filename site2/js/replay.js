@@ -132,6 +132,7 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
 
   // scrubber: event ticks
   const t0 = Math.max(R.t0, -3), t1 = R.t1, span = t1 - t0;
+  const DRV = R.driver ?? AUTON;                         // driver control start, seconds after autonomous started
   const ticks = $(".rp-ticks");
   ticks.innerHTML = `<span class="auton" style="left:${((0 - t0) / span) * 100}%;width:${(AUTON / span) * 100}%"></span>`;
   const range = $(".rp-range");
@@ -190,7 +191,11 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
     requestAnimationFrame(frame);
     const dt = Math.min(0.1, (now - last) / 1000); last = now;
     if (!visible) return;
-    if (playing) { t += dt * speed; if (t >= t1) { t = t1; setPlaying(false); } }
+    if (playing) {
+      t += dt * speed;
+      if (t > (R.auton_seen === false ? t0 + 2 : AUTON + 2) && t < DRV - 2) t = DRV - 2;      // skip the field reset between autonomous and driver control
+      if (t >= t1) { t = t1; setPlaying(false); }
+    }
     range.value = t;
     $(".rp-fill").style.width = `${((t - t0) / span) * 100}%`;
 
@@ -221,7 +226,7 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
     });
 
     // clock
-    clock.innerHTML = R.final && t >= t1 - 9 ? `<b>Final</b> <span style="color:var(--red)">${R.final.red}</span> – <span style="color:var(--blue)">${R.final.blue}</span>` : t < 0 ? `<b>Starting</b>` : t < AUTON ? `<b>Autonomous</b> ${mmss(AUTON - t)}` : `<b>Driver control</b> ${mmss(t)} in`;
+    clock.innerHTML = R.final && t >= t1 - 9 ? `<b>Final</b> <span style="color:var(--red)">${R.final.red}</span> – <span style="color:var(--blue)">${R.final.blue}</span>` : R.auton_seen === false && t < DRV ? `<b>Before driver control</b>` : t < 0 ? `<b>Starting</b>` : t < AUTON ? `<b>Autonomous</b> ${mmss(AUTON - t)}` : t < DRV ? `<b>Between periods</b>` : `<b>Driver control</b> ${mmss(105 - (t - DRV))}`;
 
     // broadcast still, with the tracked robots marked on it
     const si = clamp(Math.floor(t - R.stills.t0), 0, R.stills.n - 1);

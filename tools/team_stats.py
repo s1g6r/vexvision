@@ -20,8 +20,10 @@ from tools.export_replay import smooth
 G = 24
 SURE = 0.75      # naming confidence needed before a robot's driving counts toward its team
 
-def stats_for(track, alliance, t0):
-    h = [p for p in track if t0 <= p[0] <= t0 + 120]      # the match only, not robots being carried off
+def stats_for(track, alliance, t0, td=None):
+    """t0: autonomous starts; td: driver control starts (there is a pause between)."""
+    td = td if td is not None else t0 + 15
+    h = [p for p in track if t0 <= p[0] <= t0 + 15 or td <= p[0] <= td + 105]   # the match, not the pause or the carry-off
     if len(h) < 10:
         return None
     sm = smooth(h)                       # same smoothing as the replay, so jitter isn't counted as driving
@@ -33,7 +35,7 @@ def stats_for(track, alliance, t0):
     sp = step[ok] / np.maximum(dt[ok], 1e-3)
     top = float(np.percentile(sp, 95)) / 304.8 if len(sp) else 0.0
     auton = (t - t0) < 15
-    driver = ~auton
+    driver = t >= td
     side = np.array([F.side_of(xi, yi) for xi, yi in zip(x, y)])
     opp = float(np.mean(side[driver] != alliance)) if driver.any() else 0.0
     mid = float(np.mean([abs(xi) + abs(yi) <= F.MIDFIELD_R for xi, yi in zip(x[driver], y[driver])])) if driver.any() else 0.0
@@ -71,7 +73,7 @@ def main():
                                  "alliance": rb["alliance"], "named": sure})
             if not sure or rb.get("seen_share", 0) < 0.55:
                 continue     # only count a robot's driving once we know which of the two it was
-            s = stats_for(r["raw_tracks"][str(rb["track"])], rb["alliance"], t0)
+            s = stats_for(r["raw_tracks"][str(rb["track"])], rb["alliance"], t0, r.get("t_driver"))
             if s:
                 T["_s"].append(s)
     out = {}

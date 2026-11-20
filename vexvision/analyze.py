@@ -299,8 +299,11 @@ def reason(P, official=None):
     if not tracker.tracks:
         return {"error": "no calibration or robots found", "frames": n}
     if t_start is None:
-        t_start = start_by_motion(tracker)
-    t_end = t_start + 15 + 105 + 2 if t_start is not None else max(p[0] for tr in tracker.tracks for p in tr.history)
+        td = driver_start(overlay_reads, None)
+        # a video that starts in driver control has no autonomous to see: count back from the clock
+        t_start = td - 15 if td is not None else start_by_motion(tracker)
+    t_driver = driver_start(overlay_reads, t_start)
+    t_end = t_driver + 105 + 2 if t_driver is not None else max(p[0] for tr in tracker.tracks for p in tr.history)
     paths = {tr.tid: tr.history for tr in tracker.tracks}
     alliances = {tr.tid: tr.alliance for tr in tracker.tracks}
     auton_end = (t_start or 0) + 15
@@ -335,10 +338,21 @@ def reason(P, official=None):
         if e.get("robot") is not None:
             e["team"] = names.get(e["robot"], {}).get("team")
         e["t"] = round(e["t"] - (t_start or 0), 2)
-    return {"teams": teams, "t_start": t_start, "frames": n, "seconds_to_run": P.get("seconds"),
+    return {"teams": teams, "t_start": t_start, "t_driver": t_driver, "auton_seen": P["t_start"] is not None, "frames": n, "seconds_to_run": P.get("seconds"),
             "robots": robots_out, "events": ev, "final_state": state, "score_check": report,
             "overlay": overlay_reads[-1][1] if overlay_reads else None,
             "cal_log": cal_log, "box_log": box_log, "raw_tracks": {tr.tid: [(round(p[0], 2), round(p[1]), round(p[2]), p[3]) for p in tr.history] for tr in tracker.tracks}}
+
+def driver_start(overlay_reads, t_start):
+    """Driver control doesn't start when autonomous ends: the field is reset and
+    scored in between, often for 15-35 s. Read its start off the broadcast clock."""
+    c = [t - (105 - r["clock"]) for t, r in overlay_reads
+         if r.get("period") == "driver" and r.get("clock") is not None and 0 < r["clock"] < 105]
+    if c:
+        td = float(np.median(c))
+        if t_start is None or td >= t_start + 14:
+            return td
+    return t_start + 15 if t_start is not None else None
 
 def start_by_motion(tracker, thresh=150.0):
     """Auton start = first moment the robots, together, have moved > thresh mm from their spots."""
