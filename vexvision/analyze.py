@@ -183,7 +183,11 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
     perception = {"det_log": det_log, "plate_log": plate_log, "goal_obs": goal_obs, "toggle_obs": toggle_obs,
                   "running": running, "overlay_reads": overlay_reads, "teams": teams, "t_start": t_start,
                   "cal_log": cal_log, "frames": n, "seconds": round(time.time() - t0w, 1)}
-    out = reason(perception, official=official)
+    try:
+        out = reason(perception, official=official)
+    except Exception as e:                       # keep what the models saw; reasoning can be rerun once fixed
+        import traceback
+        out = {"error": f"reasoning failed: {e}", "trace": traceback.format_exc()[-1500:], "frames": n}
     out["perception"] = perception
     return out
 
