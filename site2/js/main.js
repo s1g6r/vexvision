@@ -15,9 +15,10 @@ const where = (r) => {
   return `${zone} · ${ft(d)} ft from centre`;
 };
 
-const [frames, videos] = await Promise.all([
+const [frames, videos, TS] = await Promise.all([
   fetch("data/frames.json").then((r) => r.json()),
   fetch("data/videos.json").then((r) => r.json()).catch(() => []),
+  fetch("data/team_stats.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
 ]);
 
 /* ---------- a field view with an orbit you can drag ---------- */
@@ -252,6 +253,42 @@ $("#picks").innerHTML = `<span>Most filmed so far</span>` + top.map((t) => `<a h
 const yt = (id) => `https://www.youtube.com/watch?v=${id}`;
 const rank = (m) => { const x = (m || "").match(/^(R16|QF|SF|Final) (\d+)-(\d+)/); if (x) return { R16: 1, QF: 2, SF: 3, Final: 4 }[x[1]] * 100 + +x[2]; const q = (m || "").match(/Qual (\d+)/); return q ? -1000 + +q[1] : 900; };
 const tlink = (t, me) => `<a href="#team-${t}"${t === me ? ' style="color:var(--gold)"' : ""}>${t}</a>`;
+const pct = (v) => `${Math.round(v * 100)}%`;
+function scoutBlock(id) {
+  const st = TS[id];
+  if (!st) return "";
+  const tiles = [
+    ["Driven per match", `${Math.round(st.ft_per_match)} ft`, "Distance along its tracked path"],
+    ["On the other side", pct(st.opp_side), "Of driver control past the Autonomous Line"],
+    ["In the Midfield", pct(st.midfield), "Of driver control inside the diamond"],
+    ["Autonomous", `${Math.round(st.auton_ft)} ft`, "Moved in the first 15 seconds"],
+  ];
+  return `<div class="scout"><div class="scout-head"><b>Scouted by vexvision</b><span>from ${st.n} tracked match${st.n === 1 ? "" : "es"}</span></div>
+    <div class="scout-grid"><canvas class="heat" width="240" height="240" data-team="${esc(id)}" aria-label="Where ${esc(id)} drives"></canvas>
+    <div class="scout-tiles">${tiles.map(([k, v, d]) => `<div class="fact"><div class="k">${k}</div><b>${v}</b><span>${d}</span></div>`).join("")}</div></div>
+    <div class="scout-replays">${st.matches.map((m) => `<button type="button" class="btn ghost" data-replay="${esc(m.id)}">Watch ${esc(m.match || "match")} in 3D</button>`).join("")}</div></div>`;
+}
+function drawHeat(c, st) {
+  const g = c.getContext("2d"), W = c.width, n = st.heat.length, k = W / n;
+  g.fillStyle = "#1c1a17"; g.fillRect(0, 0, W, W);
+  const red = st.matches.filter((m) => m.alliance === "red").length >= st.matches.length / 2;
+  const off = document.createElement("canvas"); off.width = off.height = n;
+  const og = off.getContext("2d"), im = og.createImageData(n, n), col = red ? [239, 59, 69] : [76, 134, 255];
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+    const v = st.heat[i][j], o = (i * n + j) * 4;
+    im.data[o] = col[0]; im.data[o + 1] = col[1]; im.data[o + 2] = col[2]; im.data[o + 3] = Math.min(255, Math.pow(v, 0.4) * 460);
+  }
+  og.putImageData(im, 0, 0);
+  g.imageSmoothingEnabled = true; g.imageSmoothingQuality = "high"; g.filter = "blur(4px)";
+  g.drawImage(off, 0, 0, W, W); g.filter = "none";
+  g.strokeStyle = "rgba(239,233,221,.55)"; g.lineWidth = 1.5;
+  const P = (x, y) => [(x / 1.8288 + 1) / 2 * W, (1 - (y / 1.8288 + 1) / 2) * W];
+  const line = (pts) => { g.beginPath(); pts.forEach((p, i) => { const [u, v] = P(...p); i ? g.lineTo(u, v) : g.moveTo(u, v); }); g.stroke(); };
+  line([[-1.79, -1.79], [-0.3, -0.3]]); line([[0.3, 0.3], [1.79, 1.79]]); line([[-1.79, 1.79], [-0.3, 0.3]]); line([[0.3, -0.3], [1.79, -1.79]]);
+  line([[0.61, 0], [0, 0.61], [-0.61, 0], [0, -0.61], [0.61, 0]]);
+  g.strokeRect(1, 1, W - 2, W - 2);
+  for (const [x, y, c2] of [[-0.6, -1.2, "#ef3b45"], [-1.2, -0.6, "#ef3b45"], [0.6, 1.2, "#4c86ff"], [1.2, 0.6, "#4c86ff"]]) { const [u, v] = P(x, y); g.fillStyle = c2; g.beginPath(); g.arc(u, v, 4, 0, 7); g.fill(); }
+}
 function showTeam(id) {
   const t = T.get(id), out = $("#result");
   if (!t) {
@@ -264,6 +301,7 @@ function showTeam(id) {
   const partners = [...t.with].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k]) => k);
   out.innerHTML = `<h3 class="tname disp">${esc(id)}</h3>
     <div class="tstats"><span><b>${matches.length}</b> match${matches.length === 1 ? "" : "es"} on video</span><span><b>${t.events.size}</b> event${t.events.size === 1 ? "" : "s"}</span>${partners.length ? `<span>Partnered with ${partners.map((p) => tlink(p)).join(", ")}</span>` : ""}</div>
+    ${scoutBlock(id)}
     ${matches.map((v) => {
       const mine = v.r?.includes(id) ? ["r", v.r, v.b] : v.b?.includes(id) ? ["b", v.b, v.r] : null;
       return `<div class="mrow"><a class="th" href="${yt(v.id)}"><img src="data/thumbs/${v.id}.jpg" alt="" loading="lazy"></a><div><div class="ev">${esc(v.e || "")}</div><div class="rd">${esc(v.m || "Match")}</div>
@@ -272,6 +310,13 @@ function showTeam(id) {
     }).join("")}
     ${other.length ? `<div class="vids">${other.map((v) => `<a class="vid" href="${yt(v.id)}"><span class="th"><img src="data/thumbs/${v.id}.jpg" alt="" loading="lazy"></span>${esc(v.t)}<br><small>${esc(v.c)}</small></a>`).join("")}</div>` : ""}`;
 }
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-replay]"); if (!b) return;
+  document.getElementById("replay").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+  loadReplay(b.dataset.replay, true);
+});
+new MutationObserver(() => document.querySelectorAll("canvas.heat:not([data-drawn])").forEach((c) => { c.dataset.drawn = 1; drawHeat(c, TS[c.dataset.team]); }))
+  .observe(document.getElementById("result"), { childList: true, subtree: true });
 const q = $("#q"), sugg = $("#sugg");
 let list = [], cur = 0;
 q.addEventListener("input", () => {
@@ -305,7 +350,7 @@ let current = null;
 async function loadReplay(id, autoplay) {
   if (current) { current.destroy(); const c = rpRoot.querySelector("canvas"), n = c.cloneNode(); c.replaceWith(n); }
   rpRoot.querySelector(".rp-play").replaceWith(rpRoot.querySelector(".rp-play").cloneNode(true));
-  rpRoot.querySelectorAll(".rp-view button, .rp-speed button").forEach((b) => b.replaceWith(b.cloneNode(true)));
+  rpRoot.querySelectorAll(".rp-view button, .rp-speed button, .rp-heat").forEach((b) => b.replaceWith(b.cloneNode(true)));
   rpRoot.querySelector(".rp-range").replaceWith(rpRoot.querySelector(".rp-range").cloneNode(true));
   document.querySelectorAll("#rp-list button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.id === id));
   current = await mountReplay(rpRoot, `data/replays/${id}.json`, { reduced, autoplay });

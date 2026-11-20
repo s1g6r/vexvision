@@ -105,6 +105,7 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
     running = []
     overlay_reads = []
     cal_log = []
+    box_log = []; last_box = -1e9
     t_start = None
     last_read = -1e9; last_plate = -1e9; last_ov = -1e9
     n = 0
@@ -132,13 +133,17 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
             p = robot_floor_point(d["box"], H, cam)
             if np.all(np.abs(p) < F.HALF + 200):
                 pts.append((p[0], p[1], TM.colour_feature(img, d["box"])))
+        kept = [d for d in robots if np.all(np.abs(robot_floor_point(d["box"], H, cam)) < F.HALF + 200)]
         assign = tracker.step(t, pts)
+        if t - last_box >= 1.0 and assign:
+            last_box = t
+            box_log.append((round(t, 2), {tid: [round(v) for v in kept[j]["box"]] for tid, j in assign.items() if j is not None and j < len(kept)}))
         if tracker.tracks and t - last_plate >= every_plate:
             last_plate = t
             inv = {}
             for tid, j in assign.items():
                 inv[j] = tid
-            for j, d in enumerate(robots):
+            for j, d in enumerate(kept):          # indices match pts / assign
                 if j in inv:
                     reads = read_plates(img, d["box"])
                     if reads:
@@ -193,7 +198,7 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
     return {"teams": teams, "t_start": t_start, "frames": n, "seconds_to_run": round(time.time() - t0w, 1),
             "robots": robots_out, "events": ev, "final_state": state, "score_check": report,
             "overlay": overlay_reads[-1][1] if overlay_reads else None,
-            "cal_log": cal_log, "raw_tracks": {tr.tid: [(round(p[0], 2), round(p[1]), round(p[2]), p[3]) for p in tr.history] for tr in tracker.tracks}}
+            "cal_log": cal_log, "box_log": box_log, "raw_tracks": {tr.tid: [(round(p[0], 2), round(p[1]), round(p[2]), p[3]) for p in tr.history] for tr in tracker.tracks}}
 
 def start_by_motion(tracker, thresh=150.0):
     """Auton start = first moment the robots, together, have moved > thresh mm from their spots."""

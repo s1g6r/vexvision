@@ -64,6 +64,38 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
     });
   }
 
+  // heatmap: where each alliance spent the match, painted on a plane just above the floor
+  const heatTex = (() => {
+    const N = 256, c = document.createElement("canvas"); c.width = c.height = N;
+    const g = c.getContext("2d"), HALF = 1.8288, toPx = (v) => ((v + HALF) / (2 * HALF)) * N;
+    for (const side of ["red", "blue"]) {
+      const grid = new Float32Array(N * N), rr = 7;
+      for (const r of robots.filter((x) => x.side === side)) for (const p of r.path) {
+        if (p[0] < 0 || !p[4]) continue;
+        const cx = toPx(p[1]), cy = N - toPx(p[2]);
+        for (let y = Math.max(0, cy - rr | 0); y < Math.min(N, cy + rr); y++) for (let x = Math.max(0, cx - rr | 0); x < Math.min(N, cx + rr); x++) {
+          const d2 = ((x - cx) ** 2 + (y - cy) ** 2) / (rr * rr); if (d2 < 1) grid[y * N + x] += (1 - d2) ** 2;
+        }
+      }
+      let mx = 0; for (const v of grid) mx = Math.max(mx, v);
+      const img = g.getImageData(0, 0, N, N), col = side === "red" ? [255, 69, 80] : [76, 134, 255];
+      for (let i = 0; i < N * N; i++) {
+        const a = Math.min(1, Math.pow(grid[i] / (mx || 1), 0.6) * 1.25);
+        if (a <= 0.02) continue;
+        const k = i * 4, A = img.data[k + 3] / 255, out = a + A * (1 - a);
+        for (let j = 0; j < 3; j++) img.data[k + j] = (col[j] * a + img.data[k + j] * A * (1 - a)) / out;
+        img.data[k + 3] = out * 255;
+      }
+      g.putImageData(img, 0, 0);
+    }
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+  })();
+  const heat = new THREE.Mesh(new THREE.PlaneGeometry(2 * 1.8288, 2 * 1.8288), new THREE.MeshBasicMaterial({ map: heatTex, transparent: true, opacity: 0, depthWrite: false, toneMapped: false, blending: THREE.AdditiveBlending }));
+  heat.rotation.x = -Math.PI / 2; heat.position.y = 0.005; heat.renderOrder = 1; F.world.add(heat);
+  let heatOn = false, heatA = 0;
+  const heatBtn = $(".rp-heat");
+  heatBtn.addEventListener("click", () => { heatOn = !heatOn; heatBtn.setAttribute("aria-pressed", heatOn); });
+
   // scoring flashes at goals
   const GOALS = { C: [0, 0], NW: [-0.6, 1.2], NE: [0.6, 1.2], EN: [1.2, 0.6], ES: [1.2, -0.6], SE: [0.6, -1.2], SW: [-0.6, -1.2], WS: [-1.2, -0.6], WN: [-1.2, 0.6] };
   const ringGeo = new THREE.RingGeometry(0.09, 0.115, 40);
@@ -161,6 +193,7 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
       cards[i].querySelector(".d").textContent = `${Math.round(dist[i][j] * 3.28084)} ft driven`;
     });
     drawTrails(t);
+    heatA += ((heatOn ? 1 : 0) - heatA) * Math.min(1, dt * 6); heat.material.opacity = heatA;
     flashes.forEach(({ e, m }) => { const a = t - e.t; m.material.opacity = a >= 0 && a < 1.2 ? 1 - a / 1.2 : 0; m.scale.setScalar(1 + Math.max(0, a) * 1.6); });
 
     // camera
