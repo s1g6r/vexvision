@@ -355,6 +355,7 @@ def reason(P, official=None, looks=None):
             "toggles": sum(1 for e in ev if e.get("robot") == tr.tid and e["type"] == "toggle"),
             "ended_in_midfield": tr.tid in state["midfield_robots"],
             "auton_moved_ft": round(au.get("distance_ft", 0), 1),
+            "carry": carry_mix(tr.tid, assigns, P["det_log"], t_driver, (t_driver + 105) if t_driver else None),
             **{k: (round(v, 1) if isinstance(v, float) else v) for k, v in st.items()},
             "path": [(round(p[0] - (t_start or 0), 2), round(p[1]), round(p[2])) for p in tr.history[::2]],
         })
@@ -377,6 +378,24 @@ def look_of(tid, look, assigns, det_log, t0=None, t1=None):
         if j is not None and feats[j] is not None:
             v.append(TM.look_score(feats[j], look))
     return float(np.mean(v)) if v else 0.0
+
+def carry_mix(tid, assigns, det_log, t0, t1):
+    """Colours of the cones a robot carries, from its boxes in driver control: yellow, red and
+    blue shares of strongly coloured pixels above that robot's own quietest level (its own
+    paint and parts). Rough: a red or blue robot reads partly as its own colour."""
+    S = []
+    for (t, a), (_, rows, feats) in zip(assigns, det_log):
+        if (t0 is not None and t < t0) or (t1 is not None and t > t1):
+            continue
+        j = a.get(tid)
+        if j is None or feats[j] is None:
+            continue
+        h = np.asarray(feats[j][:32]).reshape(8, 4); tot = h.sum() + 1e-9
+        S.append([h[1, 2:].sum() / tot, (h[0, 2:].sum() + h[7, 2:].sum()) / tot, (h[4, 2:].sum() + h[5, 2:].sum()) / tot])
+    if len(S) < 30:
+        return None
+    S = np.array(S); ex = np.clip(S - np.percentile(S, 15, axis=0), 0, None).mean(0)
+    return {"yellow": round(float(ex[0]), 4), "red": round(float(ex[1]), 4), "blue": round(float(ex[2]), 4), "n": len(S)}
 
 def resolve_look(pair, assigns, det_log, look, t0=None, t1=None, near=800.0):
     """Which of an alliance's two robots is the team with a known look, frame by frame.

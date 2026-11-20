@@ -45,6 +45,18 @@ def goal_kind(g, alliance):
         return "neutral"
     return "own" if g.kind == alliance else "opp"
 
+OWN_NAMES = {"C": "the Center Goal", "SW": "its own bottom Alliance Goal", "WS": "its own left Alliance Goal",
+             "NE": "the other alliance's top Goal", "EN": "the other alliance's right Goal",
+             "NW": "the top-left neutral Goal", "WN": "the left neutral Goal", "ES": "the right neutral Goal",
+             "SE": "the bottom-right neutral Goal"}
+FLIP = {"C": "C", "SW": "NE", "WS": "EN", "NE": "SW", "EN": "WS", "NW": "SE", "WN": "ES", "ES": "WN", "SE": "NW"}
+
+def goal_name(gname, alliance):
+    """Name a goal as seen from the team's own side (own side at bottom left)."""
+    return OWN_NAMES[gname if alliance == "red" else FLIP[gname]]
+
+TOGGLE_NAMES = {"S": "its own bottom Toggle", "W": "its own left Toggle", "N": "the other alliance's top Toggle", "E": "the other alliance's right Toggle"}
+
 def match_features(r, rb, meta):
     t0 = r.get("t_start") or 0.0
     td = (r.get("t_driver") or (t0 + AUTON)) - t0
@@ -107,6 +119,41 @@ def match_features(r, rb, meta):
     ex, ey = (x[end].mean(), y[end].mean()) if end.any() else (np.nan, np.nan)
     elim = bool(re.match(r"(QF|SF|R16|Final|Semifinal|Finals)", meta.get("match") or ""))
     step = np.hypot(np.diff(x), np.diff(y)); ok = step < 2500 * np.maximum(np.diff(t), 1e-3) * 1.5
+    # speed, from samples where the robot was actually seen at both ends
+    seen = me[:, 3] > 0.5
+    v = []
+    for i in range(len(t) - 1):
+        if driver[i] and seen[i] and seen[i + 1] and 0 < t[i + 1] - t[i] <= 0.7:
+            v.append(step[i] / (t[i + 1] - t[i]) / 304.8)
+    v = np.array(v)
+    moving = v[v > 0.5]
+    # goal and toggle visits: in the zone at least 1 s, after being away at least 2 s
+    visits = []
+    for g in F.GOALS:
+        inz = driver & (np.hypot(x - g.x, y - g.y) < NEAR_GOAL)
+        k = goal_kind(g, al); name = goal_name(g.name, al)
+        i, last_out = 0, -1e9
+        while i < len(t):
+            if inz[i]:
+                j = i
+                while j < len(t) and inz[j]:
+                    j += 1
+                if t[min(j, len(t) - 1)] - t[i] >= 1.0 and t[i] - last_out >= 2.0:
+                    visits.append((float(t[i]), k, name))
+                last_out = t[min(j, len(t) - 1)]; i = j
+            else:
+                i += 1
+    visits.sort()
+    starts = [v_[0] for v_ in visits]
+    tv = 0
+    for q, (qx, qy) in F.TOGGLES.items():
+        inz = driver & (np.hypot(x - qx, y - qy) < NEAR_TOGGLE)
+        tv += int(np.sum(inz[1:] & ~inz[:-1]))
+    carry = rb.get("carry")
+    if carry:
+        own = carry["red"] if al == "red" else carry["blue"]; oth = carry["blue"] if al == "red" else carry["red"]
+        tot = own + oth + carry["yellow"]
+        carry = {"own": round(own / tot, 3), "yellow": round(carry["yellow"] / tot, 3), "other": round(oth / tot, 3)} if tot > 0.002 else None
     return {
         "id": meta["id"], "match": meta.get("match"), "event": meta.get("event"), "alliance": al, "elim": elim,
         "partner": next((x2["team"] for x2 in r["robots"] if x2["alliance"] == al and x2["track"] != rb["track"]), None),
@@ -124,60 +171,142 @@ def match_features(r, rb, meta):
         "defence_t": None if best_t is None else round(float(best_t), 1), "defence_len": round(float(best), 1),
         "route": None if route is None else [[round(float(a) / 1000, 2), round(float(b) / 1000, 2)] for a, b in route],
         "driver_at": round(float(td), 1),
+        "top_fps": round(float(np.percentile(v, 95)), 2) if len(v) > 20 else None,
+        "cruise_fps": round(float(np.median(moving)), 2) if len(moving) > 20 else None,
+        "moving": round(float(len(moving) / max(1, len(v))), 3),
+        "visits": [[round(a, 1), k, n_] for a, k, n_ in visits],
+        "cycle_s": round(float(np.median(np.diff(starts))), 1) if len(starts) >= 3 else None,
+        "toggle_visits": tv,
+        "carry": carry,
     }
 
 def describe_point(x, y):
     """Plain words for a spot on the field, own side at bottom left (metres)."""
-    best = min(F.GOALS, key=lambda g: np.hypot(x * 1000 - g.x, y * 1000 - g.y))
-    # name goals as seen from the team's own side (red frame)
-    names = {"C": "the Center Goal", "SW": "its own bottom Alliance Goal", "WS": "its own left Alliance Goal",
-             "NE": "the other alliance's top Goal", "EN": "the other alliance's right Goal",
-             "NW": "the neutral Goal top-left", "WN": "the neutral Goal on the left", "ES": "the neutral Goal on the right",
-             "SE": "the neutral Goal bottom-right"}
-    d = np.hypot(x * 1000 - best.x, y * 1000 - best.y)
-    if d < 700:
-        return names[best.name]
-    if abs(x) + abs(y) <= F.MIDFIELD_R / 1000:
+    X, Y = x * 1000, y * 1000
+    g = min(F.GOALS, key=lambda g: np.hypot(X - g.x, Y - g.y))
+    if np.hypot(X - g.x, Y - g.y) < 600:
+        return OWN_NAMES[g.name]
+    q = min(F.TOGGLES, key=lambda k: np.hypot(X - F.TOGGLES[k][0], Y - F.TOGGLES[k][1]))
+    if np.hypot(X - F.TOGGLES[q][0], Y - F.TOGGLES[q][1]) < 600:
+        return TOGGLE_NAMES[q]
+    if abs(X) + abs(Y) <= F.MIDFIELD_R:
         return "the Midfield"
-    return "its own side" if x + y < 0 else "the other side"
+    corner = ("left" if X < -900 else "right" if X > 900 else "middle") if abs(X) > abs(Y) else ("bottom" if Y < -900 else "top" if Y > 900 else "middle")
+    side = "its own side" if X + Y < 0 else "the other side"
+    return f"the {corner} of {side}" if corner != "middle" else side
 
-def route_groups(ms):
-    """Which matches ran (nearly) the same autonomous: pairwise mean distance < 0.45 m."""
+def auton_steps(route):
+    """Turn a 15 s route (own-side frame, 0.5 s samples) into a short list of places it stops at."""
+    r = np.array(route)
+    sp = np.r_[0, np.hypot(*np.diff(r, axis=0).T) / 0.5]
+    steps, i = [], 1
+    while i < len(r):
+        if sp[i] < 0.25:
+            j = i
+            while j < len(r) and sp[j] < 0.25:
+                j += 1
+            if j - i >= 2:
+                place = describe_point(*r[(i + j) // 2])
+                if not steps or steps[-1][1] != place:
+                    steps.append((round(i * 0.5, 1), place))
+            i = j
+        else:
+            i += 1
+    start = describe_point(*r[0]); end = describe_point(*r[-1])
+    crosses = bool(np.any(r[:, 0] + r[:, 1] > 0.15))
+    moved = float(np.sum(np.hypot(*np.diff(r, axis=0).T)))
+    stops = [s_ for s_ in steps if s_[1] not in (start,)]
+    if stops and stops[-1][1] == end:
+        stops = stops[:-1]
+    return {"start": start, "stops": stops, "end": end, "crosses": crosses, "moved_m": round(moved, 1)}
+
+def auton_text(st):
+    if st["moved_m"] < 0.6:
+        return f"stays at {st['start']}"
+    parts = [f"starts at {st['start']}"]
+    for t_, p in st["stops"][:3]:
+        parts.append(f"stops at {p} ({t_:.0f} s)")
+    parts.append(f"ends at {st['end']}")
+    txt = ", ".join(parts[:-1]) + " and " + parts[-1]
+    if st["crosses"]:
+        txt += ", crossing the Autonomous Line"
+    return txt
+
+def route_clusters(ms):
+    """Group matches that ran (nearly) the same autonomous: mean distance under 0.45 m."""
     R = [(m, np.array(m["route"])) for m in ms if m["route"]]
-    if len(R) < 2:
-        return R, [m for m, _ in R], (R[0][0] if R else None)
-    n = len(R); D = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            D[i, j] = np.mean(np.hypot(*(R[i][1] - R[j][1]).T))
-    medoid = int(np.argmin(np.sum(D, 1)))
-    same = [R[i][0] for i in range(n) if D[medoid, i] < 0.45]
-    return R, same, R[medoid][0]
+    left, out = list(range(len(R))), []
+    while left:
+        D = np.array([[np.mean(np.hypot(*(R[i][1] - R[j][1]).T)) for j in left] for i in left])
+        k = int(np.argmax((D < 0.45).sum(1) - 1e-3 * D.sum(1)))
+        mem = [left[j] for j in range(len(left)) if D[k, j] < 0.45]
+        out.append({"typical": R[left[k]][0], "members": [R[i][0] for i in mem]})
+        left = [i for i in left if i not in mem]
+    return out
 
 def pct(v):
     return f"{round(v * 100)}%"
 
+def mean(xs):
+    xs = [x for x in xs if x is not None]
+    return float(np.mean(xs)) if xs else None
+
 def summarise(team, ms):
     out, sec = [], {}
     n = len(ms)
-    # autonomous
-    R, same, med = route_groups(ms)
-    if med is not None:
-        start = describe_point(*med["route"][0]); finish = describe_point(*med["route"][-1])
-        moved = sum(np.hypot(*(np.diff(np.array(med["route"]), axis=0)).T))
-        if len(R) == 1:
-            out.append(f"Autonomous (seen once): starts by {start} and ends at {finish}.")
-        elif len(same) >= 2 and len(same) >= 0.6 * len(R):
-            out.append(f"Runs the same autonomous in {len(same)} of {len(R)} matches: starts by {start} and ends at {finish}.")
-        elif moved < 0.6:
-            out.append(f"Barely moves in autonomous in most matches.")
+    # --- autonomous: which route it runs most, and what that route does
+    cl = route_clusters(ms)
+    if cl:
+        seen = sum(len(c["members"]) for c in cl)
+        routes = []
+        for i, c in enumerate(cl):
+            st = auton_steps(c["typical"]["route"])
+            routes.append({"label": "ABCDEFG"[i], "count": len(c["members"]), "typical": c["typical"]["id"],
+                           "members": [m["id"] for m in c["members"]], "steps": st, "text": auton_text(st)})
+        top = routes[0]
+        if seen == 1:
+            out.append(f"Autonomous (seen once): {top['text']}.")
+        elif top["count"] >= 2:
+            out.append(f"Most-run autonomous ({top['count']} of {seen} matches): {top['text']}.")
         else:
-            out.append(f"Changes its autonomous from match to match ({len(R)} seen).")
-        sec["auton"] = {"same": [m["id"] for m in same], "typical": med["id"], "start": start, "finish": finish, "seen": len(R)}
-    # defence
+            out.append(f"Ran a different autonomous in each of the {seen} matches seen. In {top['members'][0] and 'one'}, it {top['text']}.".replace("In one, it", "In one it"))
+        sec["auton"] = {"seen": seen, "routes": routes}
+    # --- what it scores: which goals it goes to, how often, and what it carries
+    vis = [m["visits"] for m in ms]
+    per = np.mean([len(v) for v in vis])
+    names = {}
+    kinds = {"own": 0, "neutral": 0, "center": 0, "opp": 0}
+    for v in vis:
+        for _, k, nm in v:
+            names[nm] = names.get(nm, 0) + 1; kinds[k] += 1
+    fav = sorted(names, key=lambda k: -names[k])[:2]
+    cyc = mean([m["cycle_s"] for m in ms])
+    if per >= 1:
+        km = {k: v / max(1, n) for k, v in kinds.items()}
+        parts = [f"{km['own']:.0f} of its own Alliance Goals", f"{km['neutral']:.0f} neutral", f"{km['center']:.0f} at the Center Goal", f"{km['opp']:.0f} of the other alliance's"]
+        parts = [p_ for p_, k in zip(parts, ["own", "neutral", "center", "opp"]) if round(km[k]) >= 1]
+        txt = f"Works about {per:.0f} Goals a match ({', '.join(parts)})"
+        if cyc:
+            txt += f", moving to a new Goal every {cyc:.0f} s or so"
+        txt += f". Its favourite is {fav[0]}"
+        out.append(txt + ".")
+    carry = [m["carry"] for m in ms if m.get("carry")]
+    cm = None
+    if len(carry) >= 1:
+        cm = {k: float(np.mean([c[k] for c in carry])) for k in ("own", "yellow", "other")}
+        big = max(cm, key=cm.get)
+        cw = {"own": "its own colour", "yellow": "yellows", "other": "the other alliance's colour"}
+        rest = [k for k in ("own", "yellow") if k != big]
+        out.append(f"Mostly handles {cw[big]}: {pct(cm[big])} of the cone colour seen on the robot, {cw[rest[0]]} {pct(cm[rest[0]])} (a rough read from the video).")
+    sec["scoring"] = {"visits_per_match": round(float(per), 1), "cycle_s": cyc, "by_kind": {k: round(v / max(1, n), 1) for k, v in kinds.items()},
+                      "favourites": [[k, round(names[k] / n, 1)] for k in sorted(names, key=lambda k: -names[k])[:5]], "carry": cm}
+    # --- the robot itself
+    top_ = mean([m["top_fps"] for m in ms]); cru = mean([m["cruise_fps"] for m in ms]); mov = mean([m["moving"] for m in ms])
+    sec["robot"] = {"top_fps": top_, "cruise_fps": cru, "moving": mov, "ft": mean([m["ft"] for m in ms]), "toggle_visits": mean([m["toggle_visits"] for m in ms])}
+    # --- defence
     os_ = np.mean([m["other_side"] for m in ms]); no = np.mean([m["near_opp_their_side"] for m in ms])
     if os_ >= 0.3 and no >= 0.08:
-        out.append(f"Plays defence: {pct(os_)} of driver control on the other side, much of it right up against an opponent.")
+        out.append(f"Plays defence: {pct(os_)} of driver control on the other side, often right up against an opponent.")
     elif os_ >= 0.3:
         out.append(f"Spends {pct(os_)} of driver control on the other side of the field.")
     elif os_ <= 0.12:
@@ -185,39 +314,53 @@ def summarise(team, ms):
     else:
         out.append(f"Mostly plays its own side ({pct(1 - os_)} of driver control), crossing over now and then.")
     sec["defence"] = {"other_side": round(float(os_), 3), "near_opp_their_side": round(float(no), 3)}
-    # toggles
+    # --- toggles
     to = np.mean([m["toggles"]["own"] + m["toggles"]["opp"] for m in ms]); topp = np.mean([m["toggles"]["opp"] for m in ms])
+    tv = sec["robot"]["toggle_visits"] or 0
     if to >= 0.08:
         which = "including the other alliance's" if topp >= 0.03 else "mostly its own"
-        out.append(f"Goes after Toggles: {pct(to)} of driver control right by a Toggle, {which}.")
+        out.append(f"Goes after Toggles: about {tv:.0f} trips a match, {pct(to)} of driver control right by one, {which}.")
     elif to <= 0.02:
         out.append("Rarely goes to the Toggles.")
-    sec["toggles"] = {"share": round(float(to), 3), "opp": round(float(topp), 3)}
-    # goals
-    gk = {k: float(np.mean([m["goals"][k] for m in ms])) for k in ("own", "neutral", "center", "opp")}
-    top = max(gk, key=gk.get)
-    words = {"own": "its own Alliance Goals", "neutral": "the neutral Quadrant Goals", "center": "the Center Goal", "opp": "the other alliance's Goals"}
-    if sum(gk.values()) > 0.05:
-        out.append(f"Works {words[top]} most ({pct(gk[top])} of driver control there).")
-    sec["goals"] = {k: round(v, 3) for k, v in gk.items()}
-    # endgame
+    sec["toggles"] = {"share": round(float(to), 3), "opp": round(float(topp), 3), "trips": tv}
+    # --- endgame
     mid = np.mean([m["midfield_end"] for m in ms])
     if mid >= 0.5:
         out.append(f"Ends in the Midfield in {sum(m['midfield_end'] for m in ms)} of {n} matches.")
     sec["endgame"] = {"midfield": round(float(mid), 3)}
-    # quals vs elims
+    # --- quals vs elims
     q = [m for m in ms if not m["elim"]]; e = [m for m in ms if m["elim"]]
     if q and e:
         dq, de = np.mean([m["other_side"] for m in q]), np.mean([m["other_side"] for m in e])
         tq = np.mean([m["toggles"]["own"] + m["toggles"]["opp"] for m in q]); te = np.mean([m["toggles"]["own"] + m["toggles"]["opp"] for m in e])
+        vq, ve = np.mean([len(m["visits"]) for m in q]), np.mean([len(m["visits"]) for m in e])
         bits = []
         if abs(de - dq) >= 0.1:
-            bits.append(f"{'more' if de > dq else 'less'} time on the other side ({pct(dq)} in quals, {pct(de)} in elims)")
+            bits.append(f"{'more' if de > dq else 'less'} time on the other side ({pct(dq)} → {pct(de)})")
         if abs(te - tq) >= 0.05:
             bits.append(f"{'more' if te > tq else 'less'} time at Toggles ({pct(tq)} → {pct(te)})")
-        out.append(("In eliminations it plays differently: " + " and ".join(bits) + ".") if bits else "Plays the same way in eliminations as in qualifications.")
+        if abs(ve - vq) >= 2:
+            bits.append(f"{'more' if ve > vq else 'fewer'} Goal visits ({vq:.0f} → {ve:.0f} a match)")
+        out.append(("In eliminations it plays differently: " + ", ".join(bits) + ".") if bits else "Plays the same way in eliminations as in qualifications.")
         sec["split"] = {"quals": len(q), "elims": len(e)}
     return out, sec
+
+def ranks(out):
+    """How a team compares with every other tracked team (share of teams it beats)."""
+    def rank(key, f, higher=True):
+        vals = {t: f(r) for t, r in out.items() if f(r) is not None}
+        xs = sorted(vals.values())
+        for t, v in vals.items():
+            below = sum(1 for x in xs if (x < v if higher else x > v))
+            out[t]["sections"].setdefault("ranks", {})[key] = round(below / max(1, len(xs) - 1), 2) if len(xs) > 1 else None
+    rank("top_fps", lambda r: r["sections"]["robot"]["top_fps"])
+    rank("visits", lambda r: r["sections"]["scoring"]["visits_per_match"])
+    rank("cycle", lambda r: r["sections"]["scoring"]["cycle_s"], higher=False)
+    for t, r in out.items():
+        k = r["sections"].get("ranks", {}).get("top_fps"); sp = r["sections"]["robot"]["top_fps"]
+        if k is not None and sp:
+            word = "One of the fastest robots we tracked" if k >= 0.8 else "Quicker than most robots we tracked" if k >= 0.6 else "Slower than most robots we tracked" if k <= 0.2 else "Middle of the pack for speed"
+            r["summary"].insert(min(3, len(r["summary"])), f"{word}: faster than {round(k * 100)}% of the {len(out)} teams.")
 
 def main():
     ap = argparse.ArgumentParser()
@@ -240,6 +383,7 @@ def main():
     for team, ms in teams.items():
         summary, sec = summarise(team, ms)
         out[team] = {"n": len(ms), "summary": summary, "sections": sec, "matches": ms}
+    ranks(out)
     json.dump(out, open(a.out, "w"), separators=(",", ":"))
     print(len(out), "teams with a report")
 

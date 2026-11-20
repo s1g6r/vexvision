@@ -102,3 +102,10 @@
   - **Naming 2360A.** The robot is black and purple, the only one like that at the event. A per-track "dark" score (share of very dark pixels in its boxes, during the match only) picks it: it led its partner by 1.4–3.5× in every match checked, and crop sheets confirm it.
   - Team pages list these matches and link to the right minute of the stream.
 - **Hosting limit.** The site holds at most 512 files, so each match's broadcast stills are now one 8×24 sheet of 320×180 tiles (under iOS's 16.7 MP image limit) instead of 3–4 sheets.
+
+### Nov 20 — deeper scouting reports
+
+- **Autonomous routes** are grouped. Two matches count as the same route when the paths stay within 0.45 m of each other on average over the 15 s. Each route is written out step by step: where it starts, where it stops (a stop is at least 1 s below 0.25 m/s), where it ends, and whether it crosses the Autonomous Line. Places are named from the team's own side, for example "its own left Alliance Goal". The most-run route is listed first. For 2360A it was run in 4 of 6 matches.
+- **Goals worked** counts a Goal visit when the robot is near a Goal for at least 1 s, after being away for at least 2 s. The report shows visits per match, which kind of Goal (own, neutral, Center, the other alliance's), the favourites, and the median time between visits.
+- **Cone colours** come from the robot's box during driver control. For each colour (yellow, red, blue) we take the share of strongly coloured pixels above that robot's own quietest level (the 15th percentile), which removes its own paint. It is labelled rough on the site: alliance plates and flags still add a little of the robot's own colour. We are not using the placement events for this yet, because most of them have no team attached.
+- **Speed** is the 95th percentile of frame-to-frame speed, using only frames where the robot was seen at both ends. The absolute numbers come out low (a median of about 2.3 ft/s), probably because of the 3 fps sampling and the tracker smoothing, so the site only shows each team's rank against all 61 tracked teams and never quotes ft/s.

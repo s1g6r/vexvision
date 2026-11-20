@@ -234,6 +234,18 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 
 .num{text-align:right;font-variant-numeric:tabular-nums}
 .goalsplit{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;align-items:center}.goalsplit .k{width:100%;font-size:15.5px}
 .goalsplit .g{background:var(--panel2);border-radius:14px;padding:10px 14px;font-size:14px;color:#c9c2b5}.goalsplit .g b{display:block;font:800 26px "Big Shoulders Display",sans-serif;color:var(--ink)}
+.variants{display:grid;gap:14px}
+.variant{background:var(--panel2);border-radius:18px;padding:16px 18px}
+.v-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.v-head i{width:12px;height:12px;border-radius:50%}.v-head b{font-size:17px}.v-head span{color:var(--mute);font-size:14px}
+.steps{margin:0 0 14px;padding-left:22px;display:grid;gap:6px;font-size:15.5px;line-height:1.45}.steps small{color:var(--mute);font-size:13px;margin-left:6px}
+.bignums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:20px}
+.bignums div{background:var(--panel2);border-radius:16px;padding:14px}.bignums b{display:block;font:800 34px/1 "Big Shoulders Display",sans-serif}.bignums span{display:block;color:var(--mute);font-size:13.5px;margin-top:6px}
+.colours{display:flex;height:16px;border-radius:99px;overflow:hidden;margin-bottom:16px;gap:2px}.colours span{min-width:2px}
+.c-own,.bar.own i{background:linear-gradient(90deg,var(--red),var(--blue))}.c-yel{background:var(--gold)}.c-oth{background:#6d675e}
+.bar.oth i{background:#8a8378}
+h4.mt{margin-top:30px!important}
+.rt{display:inline-flex;align-items:center;gap:6px;font-weight:600}.rt i{width:10px;height:10px;border-radius:50%}
+@media(max-width:760px){.bignums{gap:8px}.bignums div{padding:12px 10px}.bignums b{font-size:28px}.bignums span{font-size:12.5px}}
 .cmp,.mtab{width:100%;border-collapse:collapse;font-size:15px}
 .cmp th,.cmp td,.mtab th,.mtab td{text-align:left;padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
 .cmp thead th,.mtab thead th{border-top:0;color:var(--mute);font-weight:500;font-size:13.5px}
