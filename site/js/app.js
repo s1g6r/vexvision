@@ -1,7 +1,6 @@
 import { GOALS, TOGGLES, TOGGLE_LEN, TILE, HALF, WALL, tapeSegments, allianceScore, quadrantOf, sideOf, QUADRANT_COLOR } from "./field.js";
 import * as C from "./calib.js";
 import { loadModel, detect } from "./detect.js";
-import { initHero } from "./hero.js";
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -375,7 +374,11 @@ function initHome() {
     requestAnimationFrame(step);
   }), { threshold: .4 });
   document.querySelectorAll("[data-count]").forEach(el => io.observe(el));
-  if (HERO) initHero(HERO, viewRotation(HERO.H, HERO.w, HERO.h), reduced);
+  if (HERO) {
+    const img = $("#h-img"); img.src = HERO.img;
+    const draw = () => drawOverlay($("#h-cv"), HERO.w, HERO.h, { robots: HERO.robots.map((r, i) => ({ box: r.box, label: String(i + 1) })) });
+    img.decode ? img.decode().then(draw, draw) : draw();
+  }
 }
 
 /* ---------- start ------------------------------------------------------------------ */

@@ -37,8 +37,8 @@ a{color:inherit;text-underline-offset:3px}
 
 /* header */
 .top{position:fixed;inset:0 0 auto;z-index:20;display:flex;align-items:center;gap:20px;padding:12px max(4vw,16px);background:linear-gradient(rgb(8 9 11/.92),rgb(8 9 11/.6));backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid rgb(255 255 255/.06)}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 25px "Barlow Condensed",sans-serif;color:var(--ink)}
-.brand svg{width:32px;height:32px;color:var(--ink)}
+.brand{text-decoration:none;font:800 26px/1 "Barlow Condensed",sans-serif;color:var(--ink);letter-spacing:.01em}
+.brand span{color:var(--pin)}
 .top nav{display:flex;gap:2px;margin-left:auto}
 .top nav a{flex:none;text-decoration:none;font:600 17px "Barlow Condensed",sans-serif;padding:9px 14px;border-radius:999px;color:var(--muted);transition:color .15s,background .15s}
 .top nav a:hover{color:var(--ink)}
@@ -59,44 +59,11 @@ input,select{font:16px Barlow,sans-serif;min-height:46px;padding:9px 14px;border
 input::placeholder{color:var(--faint)}
 label{font-weight:500;display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--muted)}
 
-/* HERO: pinned, scroll-driven */
-.hero{height:240vh;position:relative}
-.hero-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(120% 90% at 70% 40%,#11141a 0%,var(--bg) 60%)}
-.hero-stage{position:absolute;inset:0}
-.hero-world{position:absolute;left:0;top:0;transform-origin:0 0}
-.hero-world img{display:block;user-select:none;-webkit-user-drag:none}
-.h-full{position:absolute;inset:0;width:100%;height:100%}
-.h-warp{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
-.h-warp img{width:100%;height:100%}
-.h-over,.h-top{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-.h-over .trace{fill:none;stroke:var(--pin);stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px rgb(255 204 0/.7))}
-.h-over .goalpt{fill:var(--pin);stroke:#000;stroke-width:2}
-.h-over .rbox{fill:rgb(255 204 0/.08);stroke:var(--pin);stroke-width:4}
-.h-over .rtag{fill:var(--pin)}
-.h-over .rtxt{font:800 30px "Barlow Condensed",sans-serif;fill:var(--pin-ink)}
-.h-top .tok rect{fill:var(--pin);stroke:#0b0d10;stroke-width:4}
-.h-top .tok text{font:800 34px "Barlow Condensed",sans-serif;fill:var(--pin-ink)}
-.h-top .ring{fill:none;stroke:var(--pin);stroke-width:3}
-.hero-copy{position:absolute;left:max(5vw,18px);bottom:clamp(90px,14vh,170px);max-width:min(640px,88vw);z-index:3}
-.hero-copy::before{content:"";position:absolute;inset:-40vh -30vw -20vh -10vw;z-index:-1;background:radial-gradient(60% 60% at 25% 60%,rgb(8 9 11/.92),rgb(8 9 11/.55) 55%,transparent 80%);pointer-events:none}
-.hero-copy .lede{color:#c3c9d1}
-.hero-end{position:absolute;left:max(5vw,18px);top:50%;translate:0 -46%;width:min(400px,30vw);z-index:3;opacity:0}
-.hero-end h2{font-size:clamp(30px,3vw,44px)}
-.hero-end ul{list-style:none;margin:18px 0 24px;padding:0;display:grid;gap:8px}
-.hero-end li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center;padding:9px 12px;border-radius:14px;background:rgb(20 23 28/.8);border:1px solid var(--line);font-weight:600}
-.hero-end li b{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--pin);color:var(--pin-ink);font:800 19px "Barlow Condensed",sans-serif}
-.hero-end li small{display:block;font-weight:400;color:var(--muted);font-size:13px}
-.phases{position:absolute;right:max(4vw,16px);bottom:clamp(36px,7vh,70px);margin:0;padding:0;list-style:none;width:min(380px,90vw);z-index:3}
-.phases li{position:absolute;right:0;bottom:0;width:100%;padding:14px 18px;border-radius:16px;background:rgb(14 16 20/.84);backdrop-filter:blur(10px);border:1px solid rgb(255 255 255/.08);opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s}
-.phases li.on{opacity:1;transform:none}
-.phases b{display:block;font:700 22px "Barlow Condensed",sans-serif;color:var(--pin)}
-.phases span{font-size:15px;color:#c3c9d1}
-.hero-scrub{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgb(255 255 255/.06);z-index:3}
-.hero-scrub i{display:block;height:100%;width:0;background:var(--pin);box-shadow:0 0 12px var(--pin)}
-.scrollhint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);margin:0;font:600 14px Barlow,sans-serif;color:var(--muted);z-index:3;transition:opacity .3s}
-.scrollhint::after{content:"";display:block;width:2px;height:22px;margin:8px auto 0;background:linear-gradient(var(--pin),transparent);animation:drip 1.4s infinite}
-@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-
+/* HERO: static */
+.hero{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr);gap:clamp(24px,4vw,64px);align-items:center;max-width:1360px;margin:0 auto;padding:clamp(110px,14vh,150px) max(5vw,18px) clamp(40px,6vw,80px)}
+.hero h1{margin-bottom:.35em}
+.hero .lede{color:#c3c9d1}
+.hero-shot .frame-box{box-shadow:0 30px 80px -30px rgb(0 0 0/.9)}
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding-block:clamp(48px,6vw,90px)}
 .stat{padding:8px clamp(14px,2vw,28px);border-left:1px solid var(--line)}
@@ -249,6 +216,7 @@ dialog::backdrop{background:rgb(0 0 0/.72);backdrop-filter:blur(4px)}
 .trail{fill:none;stroke-width:22;stroke-linecap:round;stroke-linejoin:round;opacity:.55}
 
 @media (max-width:1060px){
+  .hero{grid-template-columns:minmax(0,1fr)}
   .a-grid{grid-template-columns:minmax(0,1fr)}
   .a-left{position:static}
   .samples{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
@@ -262,14 +230,7 @@ dialog::backdrop{background:rgb(0 0 0/.72);backdrop-filter:blur(4px)}
   .a-out{grid-template-columns:minmax(0,1fr)}
   .a-out .map{max-width:420px}
   .detail-grid{grid-template-columns:minmax(0,1fr)}
-  .hero-copy{bottom:auto;top:78px}
-  .hero-copy h1{font-size:38px}
-  .hero-copy .lede{font-size:15px}
-  .hero-copy .row .ghost{display:none}
-  .phases{left:16px;right:16px;width:auto;bottom:48px}
-  .hero-end{left:16px;right:16px;width:auto;top:auto;bottom:22px;translate:none}
-  .hero-end h2,.hero-end .kicker,.hero-end ul{display:none}
-  .scrollhint{display:none}
+  .hero h1{font-size:40px}
   table{font-size:13px}
   .stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}
   .stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start;white-space:normal}
