@@ -84,3 +84,21 @@
   - On these streams the plates can't be read: OCR on 720p crops returned nothing, and on a 1080p download it still returned nothing.
   - Robots are now named only when plate reads decide it (confidence ≥ 0.75). Otherwise they show as Red 1 / Red 2, and their card says "20850G or 3150Z".
   - Team driving stats only count named matches. A team without any says so and still links to its replays.
+
+### Nov 20: driver-control timing, autonomous routes, 2360A at Cornfield Clash
+- **Driver control starts late.** There is a 15–75 s pause between autonomous and driver control while the field is reset and scored.
+  - Replays had assumed 120 s straight and were cutting off the end of every match.
+  - Driver-control start is now read off the broadcast clock (median of all "driver" clock reads), and playback skips the pause.
+  - Videos that begin in driver control count back from the clock and mark autonomous as not seen.
+- **Bugs found while the batch ran**
+  - The score-series reader crashed whenever the overlay showed a score (read the wrong columns). Fixed. Analysis now keeps the perception log even if reasoning fails, so nothing has to be re-read from video.
+  - Video ids starting with "-" broke the export call.
+- **Team pages**
+  - Every named match adds its 15-second autonomous path to a mini field.
+  - Maps are turned so a team's own side is always the same corner, so red and blue matches add up.
+- **2360A (Cornfield Clash Jr., Nov 7 2026).** No single-match uploads exist, only the 7.4-hour livestream.
+  - Read the team panel of one 480p frame every 30 s (887 frames, fetched through the Mac in parallel bursts), and found 2360A in 10 matches: Quals 13, 26, 34, 40, 44, 50, two earlier quals, QF 3-1 and SF 2-1.
+  - Cut those 10 stretches at 720p (in 30 s pieces, 20+ at a time, because YouTube throttles each connection) and tracked them like any other match (`tools/cc_run.py`).
+  - **Naming 2360A.** The robot is black and purple, the only one like that at the event. A per-track "dark" score (share of very dark pixels in its boxes, during the match only) picks it: it led its partner by 1.4–3.5× in every match checked, and crop sheets confirm it.
+  - Team pages list these matches and link to the right minute of the stream.
+- **Hosting limit.** The site holds at most 512 files, so each match's broadcast stills are now one 8×24 sheet of 320×180 tiles (under iOS's 16.7 MP image limit) instead of 3–4 sheets.
