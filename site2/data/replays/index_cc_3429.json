@@ -1,0 +1,70 @@
+[
+{
+"id": "cc-sf2-1",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "SF 2-1",
+"red": [
+"8995H",
+"2360A"
+],
+"blue": [
+"2827S",
+"2827A"
+],
+"video": "cc-sf2-1",
+"calibrated": 0.72,
+"seen": 0.93,
+"named": 4
+},
+{
+"id": "cc-qual34",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 34",
+"red": [
+"2827A",
+"355T"
+],
+"blue": [
+"2360A",
+"3695D"
+],
+"video": "cc-qual34",
+"calibrated": 0.99,
+"seen": 0.78,
+"named": 4
+},
+{
+"id": "cc-qual44",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 44",
+"red": [
+"3695A",
+"3695B"
+],
+"blue": [
+"2360A",
+"88976A"
+],
+"video": "cc-qual44",
+"calibrated": 0.99,
+"seen": 0.65,
+"named": 4
+},
+{
+"id": "cc-early-5610",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qualification",
+"red": [
+"355P",
+"2827S"
+],
+"blue": [
+"2360V",
+"2360A"
+],
+"video": "cc-early-5610",
+"calibrated": 0.96,
+"seen": 0.85,
+"named": 4
+}
+]

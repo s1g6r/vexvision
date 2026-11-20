@@ -1,0 +1,558 @@
+[
+{
+"id": "EA3kR3YaUxg",
+"event": "Highlander Summit Signature",
+"match": "Final 1-3",
+"red": [
+"12125A",
+"96Z"
+],
+"blue": [
+"9909M",
+"1862A"
+],
+"video": "EA3kR3YaUxg",
+"seconds": 500,
+"calibrated": 0.94,
+"seen": 0.82,
+"named": 4
+},
+{
+"id": "hILmQMxBN60",
+"event": "Highlander Summit Signature",
+"match": "QF 2-2",
+"red": [
+"295A",
+"20850W"
+],
+"blue": [
+"12125A",
+"96Z"
+],
+"video": "hILmQMxBN60",
+"seconds": 401,
+"calibrated": 0.94,
+"seen": 0.93,
+"named": 4
+},
+{
+"id": "TtPqLKFAym8",
+"event": "Highlander Summit Signature",
+"match": "R16 6-1",
+"red": [
+"9909M",
+"1862A"
+],
+"blue": [
+"169C",
+"2145V"
+],
+"video": "TtPqLKFAym8",
+"seconds": 441,
+"calibrated": 0.94,
+"seen": 0.92,
+"named": 4
+},
+{
+"id": "e2-dbeV-7ws",
+"event": "Highlander Summit Signature",
+"match": "Qual 12",
+"red": [
+"9909M",
+"10702X"
+],
+"blue": [
+"66556Z",
+"7405A"
+],
+"video": "e2-dbeV-7ws",
+"seconds": 457,
+"calibrated": 1.0,
+"seen": 0.95,
+"named": 4
+},
+{
+"id": "-T4mfTU4CUw",
+"event": "Highlander Summit Signature",
+"match": "SF 1-1",
+"red": [
+"2982X",
+"20850Z"
+],
+"blue": [
+"12125A",
+"96Z"
+],
+"video": "-T4mfTU4CUw",
+"seconds": 463,
+"calibrated": 0.95,
+"seen": 0.95,
+"named": 4
+},
+{
+"id": "v0y9WBQ2EN8",
+"event": "Harbor Havoc Signature",
+"match": "Final 1-1",
+"red": [
+"10102Z",
+"1698Z"
+],
+"blue": [
+"1764P",
+"197E"
+],
+"video": "v0y9WBQ2EN8",
+"seconds": 869,
+"calibrated": 0.63,
+"seen": 0.9,
+"named": 4
+},
+{
+"id": "YXWlzas-Te4",
+"event": "Harbor Havoc Signature",
+"match": "QF 1-1",
+"red": [
+"10102Z",
+"1698Z"
+],
+"blue": [
+"56K",
+"2055A"
+],
+"video": "YXWlzas-Te4",
+"seconds": 642,
+"calibrated": 0.76,
+"seen": 0.93,
+"named": 4
+},
+{
+"id": "nQC49ljs6Xk",
+"event": "Harbor Havoc Signature",
+"match": "QF 3-1",
+"red": [
+"2142X",
+"1764X"
+],
+"blue": [
+"56S",
+"7701S"
+],
+"video": "nQC49ljs6Xk",
+"seconds": 733,
+"calibrated": 0.76,
+"seen": 0.9,
+"named": 4
+},
+{
+"id": "g2w_-x11kAM",
+"event": "Harbor Havoc Signature",
+"match": "R16 1-1",
+"red": [
+"10102Z",
+"1698Z"
+],
+"blue": [
+"5327V",
+"3134G"
+],
+"video": "g2w_-x11kAM",
+"seconds": 678,
+"calibrated": 0.8,
+"seen": 0.88,
+"named": 4
+},
+{
+"id": "4Msbln_rpCw",
+"event": "Harbor Havoc Signature",
+"match": "R16 3-1",
+"red": [
+"4189R",
+"10102C"
+],
+"blue": [
+"74947J",
+"20004N"
+],
+"video": "4Msbln_rpCw",
+"seconds": 695,
+"calibrated": 0.75,
+"seen": 0.8,
+"named": 4
+},
+{
+"id": "6CHLvioz39s",
+"event": "Harbor Havoc Signature",
+"match": "R16 5-1",
+"red": [
+"2982B",
+"1584A"
+],
+"blue": [
+"2142X",
+"1764X"
+],
+"video": "6CHLvioz39s",
+"seconds": 715,
+"calibrated": 0.74,
+"seen": 0.92,
+"named": 4
+},
+{
+"id": "LrJK0D96CGc",
+"event": "Harbor Havoc Signature",
+"match": "R16 7-1",
+"red": [
+"1764P",
+"197E"
+],
+"blue": [
+"56T",
+"20005Z"
+],
+"video": "LrJK0D96CGc",
+"seconds": 792,
+"calibrated": 0.7,
+"seen": 0.88,
+"named": 4
+},
+{
+"id": "SwwxtP-eWlM",
+"event": "Harbor Havoc Signature",
+"match": "SF 1-1",
+"red": [
+"10102Z",
+"1698Z"
+],
+"blue": [
+"77678A",
+"12914X"
+],
+"video": "SwwxtP-eWlM",
+"seconds": 586,
+"calibrated": 0.74,
+"seen": 0.75,
+"named": 4
+},
+{
+"id": "-bXlVMTj8Ng",
+"event": "Great Planes Signature",
+"match": "Qual 103",
+"red": [
+"1010Z",
+"1028A"
+],
+"blue": [
+"5069Y",
+"74100A"
+],
+"video": "-bXlVMTj8Ng",
+"seconds": 432,
+"calibrated": 1.0,
+"seen": 0.83,
+"named": 4
+},
+{
+"id": "Eaci3su0JpA",
+"event": "Blank.'s Beginnings",
+"match": "Qual 5",
+"red": [
+"81819C",
+"8062A"
+],
+"blue": [
+"8059Y",
+"8059S"
+],
+"video": "Eaci3su0JpA",
+"seconds": 449,
+"calibrated": 0.97,
+"seen": 0.85,
+"named": 4
+},
+{
+"id": "mUtlNfCeYnw",
+"event": "Blank.'s Beginnings",
+"match": "Semifinals",
+"red": [
+"8068E",
+"8059E"
+],
+"blue": [
+"81819C",
+"81819E"
+],
+"video": "mUtlNfCeYnw",
+"seconds": 575,
+"calibrated": 0.9,
+"seen": 0.9,
+"named": 4
+},
+{
+"id": "3ewUQFU8J9M",
+"event": "Mall of America Signature",
+"match": "Qual 62",
+"red": [
+"471B",
+"10102A"
+],
+"blue": [
+"1468A",
+"2145X"
+],
+"video": "3ewUQFU8J9M",
+"seconds": 874,
+"calibrated": 0.83,
+"seen": 0.75,
+"named": 4
+},
+{
+"id": "SyF45yHVpTU",
+"event": "Smoky Mountain Forge Signature",
+"match": "Qual 77",
+"red": [
+"99040B",
+"20850S"
+],
+"blue": [
+"96668W",
+"2701Z"
+],
+"video": "SyF45yHVpTU",
+"seconds": 1386,
+"error": "no calibration or robots found"
+},
+{
+"id": "_3ooER9wOl4",
+"event": "The Silk Road Link",
+"match": "Final 1-2",
+"red": [
+"2731K",
+"9123S"
+],
+"blue": [
+"54001A",
+"18190X"
+],
+"video": "_3ooER9wOl4",
+"seconds": 926,
+"calibrated": 0.42,
+"seen": 0.8,
+"named": 4
+},
+{
+"id": "aelhzLIgKNg",
+"event": "The Silk Road Link",
+"match": "QF 3-1",
+"red": [
+"94201A",
+"12993S"
+],
+"blue": [
+"10188S",
+"68678M"
+],
+"video": "aelhzLIgKNg",
+"seconds": 774,
+"calibrated": 0.78,
+"seen": 0.9,
+"named": 4
+},
+{
+"id": "bDkINvmThVw",
+"event": "The Silk Road Link",
+"match": "SF 1-1",
+"red": [
+"2731K",
+"9123S"
+],
+"blue": [
+"86800X",
+"3283A"
+],
+"video": "bDkINvmThVw",
+"seconds": 905,
+"calibrated": 0.85,
+"seen": 0.75,
+"named": 4
+},
+{
+"id": "YQOnyagi2SI",
+"event": "GHOST Halloween Spotlight",
+"match": "Finals",
+"red": [
+"3468D",
+"10702X"
+],
+"blue": [
+"654X",
+"654J"
+],
+"video": "YQOnyagi2SI",
+"seconds": 943,
+"calibrated": 0.96,
+"seen": 0.97,
+"named": 4
+},
+{
+"id": "Z2keejXtF6w",
+"event": "Speedway Signature",
+"match": "Final 1-2",
+"red": [
+"3946E",
+"471B"
+],
+"blue": [
+"2393S",
+"1239E"
+],
+"video": "Z2keejXtF6w",
+"seconds": 492,
+"calibrated": 0.74,
+"seen": 0.85,
+"named": 4
+},
+{
+"id": "5_-_k1Ni4K8",
+"event": "Speedway Signature",
+"match": "QF 2-1",
+"red": [
+"5069Y",
+"1028A"
+],
+"blue": [
+"10666A",
+"252W"
+],
+"video": "5_-_k1Ni4K8",
+"seconds": 461,
+"calibrated": 0.74,
+"seen": 0.85,
+"named": 4
+},
+{
+"id": "bP2U2ud1a6w",
+"event": "Speedway Signature",
+"match": "QF 4-1",
+"red": [
+"80001C",
+"1082M"
+],
+"blue": [
+"2011F",
+"2145V"
+],
+"video": "bP2U2ud1a6w",
+"seconds": 552,
+"calibrated": 0.68,
+"seen": 0.72,
+"named": 4
+},
+{
+"id": "CXVFEZx2cjk",
+"event": "Speedway Signature",
+"match": "R16 1-1",
+"red": [
+"3946E",
+"471B"
+],
+"blue": [
+"7447X",
+"68699A"
+],
+"video": "CXVFEZx2cjk",
+"seconds": 499,
+"calibrated": 0.68,
+"seen": 0.65,
+"named": 4
+},
+{
+"id": "oVvGarZ_Nus",
+"event": "Speedway Signature",
+"match": "R16 3-1",
+"red": [
+"5069Y",
+"1028A"
+],
+"blue": [
+"2011A",
+"3150A"
+],
+"video": "oVvGarZ_Nus",
+"seconds": 507,
+"calibrated": 0.67,
+"seen": 0.85,
+"named": 4
+},
+{
+"id": "gGUtG7EqS2Y",
+"event": "Speedway Signature",
+"match": "R16 5-1",
+"red": [
+"54010A",
+"10B"
+],
+"blue": [
+"99904E",
+"2145Y"
+],
+"video": "gGUtG7EqS2Y",
+"seconds": 534,
+"calibrated": 0.65,
+"seen": 0.9,
+"named": 4
+},
+{
+"id": "YMpwouE94q4",
+"event": "Speedway Signature",
+"match": "R16 7-1",
+"red": [
+"2623K",
+"8682A"
+],
+"blue": [
+"80001C",
+"1082M"
+],
+"video": "YMpwouE94q4",
+"seconds": 434,
+"calibrated": 0.84,
+"seen": 0.8,
+"named": 4
+},
+{
+"id": "r2f9HOsQR6c",
+"event": "Speedway Signature",
+"match": "SF 1-1",
+"red": [
+"3946E",
+"471B"
+],
+"blue": [
+"10666A",
+"252W"
+],
+"video": "r2f9HOsQR6c",
+"seconds": 504,
+"calibrated": 0.74,
+"seen": 0.85,
+"named": 4
+},
+{
+"id": "4NooGAaRqRU",
+"event": "Tri-Valley",
+"match": "Finals",
+"red": [
+"68699A",
+"1468A"
+],
+"blue": [
+"49842A",
+"18886X"
+],
+"video": "4NooGAaRqRU",
+"seconds": 840,
+"calibrated": 0.33,
+"seen": 0.5,
+"named": 4
+}
+]

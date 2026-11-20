@@ -282,6 +282,22 @@ def reason(P, official=None, looks=None):
     looks = looks or P.get("looks")
     overlay_reads, cal_log, n, t0w = P["overlay_reads"], P["cal_log"], P["frames"], time.time()
     tracker, assigns = run_tracker(P["det_log"])
+    looked = {}                                    # team -> (tid, agreement) for teams with a known look
+    if looks and teams:
+        td0 = driver_start(overlay_reads, t_start)
+        for a in ("red", "blue"):
+            for k in [t for t in teams.get(a, []) if t in looks]:
+                pair = [tr for tr in tracker.tracks if tr.alliance == a]
+                if len(pair) == 2:
+                    w1 = (td0 + 105) if td0 else None
+                    res = resolve_look(pair, assigns, P["det_log"], looks[k], t_start, w1)
+                    if res:
+                        # a robot that looks unlike any other on the field should also be the one
+                        # that looks most like itself; if another robot scores higher, the track
+                        # probably never had it (hidden in a corner, say), so don't name it
+                        sc = {tr.tid: look_of(tr.tid, looks[k], assigns, P["det_log"], t_start, w1) for tr in tracker.tracks}
+                        if sc[res[0]] >= max(sc.values()):
+                            looked[k] = res
     rows_at = {round(t, 2): rows for t, rows, _ in P["det_log"]}
     who = {}                                       # (t, det index) -> tid
     box_log, last_box = [], -1e9
@@ -319,16 +335,13 @@ def reason(P, official=None, looks=None):
             tids = [tr.tid for tr in tracker.tracks if tr.alliance == a]
             if len(tids) == 2 and len(teams.get(a, [])) == 2:
                 m, conf = TM.assign_alliance(tids, teams[a], plates)
-                known = [t for t in teams[a] if t in (looks or {})]
+                known = [t for t in teams[a] if t in looked]
                 if known:                     # a team told us what its robot looks like
                     k = known[0]
-                    w0 = t_start if t_start is not None else None
-                    w1 = t_driver + 105 if t_driver is not None else None
-                    sc = {tid: look_of(tid, looks[k], assigns, P["det_log"], w0, w1) for tid in tids}
-                    hi, lo = sorted(tids, key=lambda x: -sc[x])
-                    if sc[hi] > 0.08 and sc[hi] > 1.4 * sc[lo]:
+                    tid_k, agree = looked[k]
+                    if agree >= 0.8 and tid_k in tids:
                         other = [t for t in teams[a] if t != k][0]
-                        m, conf = {hi: k, lo: other}, 0.9
+                        m, conf = {tid_k: k, [x for x in tids if x != tid_k][0]: other}, 0.9
                 for tid, team in m.items():
                     names[tid] = {"team": team, "confidence": round(conf, 3)}
     robots_out = []
@@ -364,6 +377,69 @@ def look_of(tid, look, assigns, det_log, t0=None, t1=None):
         if j is not None and feats[j] is not None:
             v.append(TM.look_score(feats[j], look))
     return float(np.mean(v)) if v else 0.0
+
+def resolve_look(pair, assigns, det_log, look, t0=None, t1=None, near=800.0):
+    """Which of an alliance's two robots is the team with a known look, frame by frame.
+
+    Two states per frame: the first track is that team, or the second is. Each frame where
+    both robots were seen votes by which box looks more like the team; staying in a state
+    is free, and switching (the tracker swapped the two) costs little when they are close
+    together and a lot when they are apart. The best state sequence (Viterbi) says where
+    the tracker swapped them; those stretches are exchanged so the first track is the team
+    all match. Returns (tid, share of informative frames that agree), or None."""
+    a, b = pair
+    n = len(a.history)
+    if n == 0 or len(b.history) != n:
+        return None
+    by = {round(t, 2): i for i, (t, _) in enumerate(assigns)}
+    ts = [h[0] for h in a.history]
+    e = np.zeros(n); close = np.zeros(n, bool)
+    for i in range(n):
+        ha, hb = a.history[i], b.history[i]
+        close[i] = np.hypot(ha[1] - hb[1], ha[2] - hb[2]) < near
+        if (t0 is not None and ts[i] < t0) or (t1 is not None and ts[i] > t1):
+            continue
+        f = by.get(round(ts[i], 2))
+        if f is None:
+            continue
+        m = assigns[f][1]; ja, jb = m.get(a.tid), m.get(b.tid); feats = det_log[f][2]
+        if ja is None or jb is None or feats[ja] is None or feats[jb] is None:
+            continue
+        e[i] = np.clip((TM.look_score(feats[ja], look) - TM.look_score(feats[jb], look)) / 0.08, -3, 3)
+    info = np.abs(e) > 0.5
+    if info.sum() < 30:
+        return None
+    C = np.array([-e[0], e[0]]); back = np.zeros((n, 2), int)
+    for i in range(1, n):
+        sw = 6.0 if close[i] else 30.0
+        new = np.zeros(2)
+        for s_ in (0, 1):
+            stay, move = C[s_], C[1 - s_] + sw
+            back[i, s_] = s_ if stay <= move else 1 - s_
+            new[s_] = min(stay, move) + (-e[i] if s_ == 0 else e[i])
+        C = new
+    path = np.zeros(n, int); s_ = int(np.argmin(C))
+    for i in range(n - 1, -1, -1):
+        path[i] = s_; s_ = back[i, s_]
+    agree = float(np.mean([(e[i] > 0) == (path[i] == 0) for i in range(n) if info[i]]))
+    # exchange the stretches where the second track was the team
+    i = 0
+    while i < n:
+        if path[i] == 1:
+            j = i
+            while j < n and path[j] == 1:
+                j += 1
+            a.history[i:j], b.history[i:j] = b.history[i:j], a.history[i:j]
+            t_lo, t_hi = ts[i], ts[j - 1]
+            for f in range(len(assigns)):
+                if t_lo - 1e-6 <= assigns[f][0] <= t_hi + 1e-6:
+                    m = assigns[f][1]; ja, jb = m.pop(a.tid, None), m.pop(b.tid, None)
+                    if jb is not None: m[a.tid] = jb
+                    if ja is not None: m[b.tid] = ja
+            i = j
+        else:
+            i += 1
+    return a.tid, agree
 
 def driver_start(overlay_reads, t_start):
     """Driver control doesn't start when autonomous ends: the field is reset and

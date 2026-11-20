@@ -1257,9 +1257,9 @@
 ],
 "video": "cc-qual40",
 "calibrated": 0.99,
-"seen": 0.85,
+"seen": 0.88,
 "named": 4,
-"sure": 0
+"sure": 2
 },
 {
 "id": "cc-qual50",
@@ -1331,7 +1331,7 @@
 "calibrated": 0.96,
 "seen": 0.85,
 "named": 4,
-"sure": 0
+"sure": 2
 },
 {
 "id": "kxSY83THpHw",
