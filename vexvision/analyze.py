@@ -279,6 +279,7 @@ def reason(P, official=None, looks=None):
     Runs from a saved perception log in seconds, so the tracker can be improved
     without re-reading the video."""
     goal_obs, toggle_obs, running, teams, t_start = P["goal_obs"], P["toggle_obs"], P["running"] or [], P["teams"], P["t_start"]
+    looks = looks or P.get("looks")
     overlay_reads, cal_log, n, t0w = P["overlay_reads"], P["cal_log"], P["frames"], time.time()
     tracker, assigns = run_tracker(P["det_log"])
     rows_at = {round(t, 2): rows for t, rows, _ in P["det_log"]}
