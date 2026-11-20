@@ -15,6 +15,21 @@ import argparse, json, os, subprocess
 import numpy as np
 from tools.build_site2_data import pose
 
+VMAX = 2300.0   # mm/s, about 7.5 ft/s: faster than any Override drive train really moves
+
+def speed_limit(t, xy, vmax=VMAX):
+    """A tracker can lose a robot and pick it up again across the field. Rather than
+    letting the 3D robot jump, ramp it there at a believable top speed. Run the limiter
+    forwards and backwards and average, so the ramp is centred on the jump."""
+    def run(order):
+        f = xy.copy()
+        for a, b in zip(order, order[1:]):
+            d = xy[b] - f[a]; lim = vmax * abs(t[b] - t[a]); n = np.hypot(*d)
+            f[b] = f[a] + d * (lim / n) if n > lim else xy[b]
+        return f
+    idx = list(range(len(xy)))
+    return (run(idx) + run(idx[::-1])) / 2
+
 def smooth(path, win=1.0):
     """path: [(t, x, y, seen)] at the analysis rate. Gaussian smoothing in time,
     seen points weighted far above coasting ones, then heading from velocity."""
@@ -29,6 +44,7 @@ def smooth(path, win=1.0):
         p = (k[:, None] * xy).sum(0) / s if s > 0 else xy[i]
         out.append(p)
     out = np.clip(np.array(out), -1790 + 150, 1790 - 150)
+    out = speed_limit(t, out)
     head = []
     for i in range(len(out)):
         j0, j1 = max(0, i - 2), min(len(out) - 1, i + 2)
