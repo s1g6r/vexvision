@@ -10,13 +10,13 @@ def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--look")]
     looks = dict(a[len("--look="):].split("=", 1) for a in sys.argv[1:] if a.startswith("--look="))
     man, clips, raw, rep = args[:4]
-    only = set(args[4:])
+    only = args[4:]
     det = Detector("/home/claude/work/runs/goals_r3/weights/best.pt,/home/claude/work/robots_r4.pt")
-    idx_p = os.path.join(rep, "index_cc.json")
+    idx_p = os.path.join(rep, f"index_cc_{os.getpid()}.json")
     index = json.load(open(idx_p)) if os.path.exists(idx_p) else []
-    for m in json.load(open(man)):
-        if only and m["id"] not in only:
-            continue
+    mans = {m["id"]: m for m in json.load(open(man))}
+    for mid in (only or list(mans)):             # in the order given
+        m = mans[mid]
         clip = os.path.join(clips, m["id"] + ".mp4")
         if not os.path.exists(clip):
             print(m["id"], "no clip"); continue

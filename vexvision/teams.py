@@ -118,7 +118,11 @@ LOOKS = {
 }
 
 def look_score(feat, look):
-    """Share of a box's colourful pixels that fall in a team's signature colour."""
+    """Share of a box's colourful pixels that fall in a team's signature colour.
+    "black": share of the box's pixels that are dark (brightness under 64)."""
+    if look == "black":
+        v = np.asarray(feat, float)[32:36]
+        return float(v[0] / (v.sum() + 1e-9))
     L = LOOKS[look]
     f = np.asarray(feat, float)[:32].reshape(8, 4)
     total = f[:, L["min_sat"]:].sum()

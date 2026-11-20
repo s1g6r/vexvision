@@ -322,9 +322,11 @@ def reason(P, official=None, looks=None):
                 known = [t for t in teams[a] if t in (looks or {})]
                 if known:                     # a team told us what its robot looks like
                     k = known[0]
-                    sc = {tid: look_of(tid, looks[k], assigns, P["det_log"]) for tid in tids}
+                    w0 = t_start if t_start is not None else None
+                    w1 = t_driver + 105 if t_driver is not None else None
+                    sc = {tid: look_of(tid, looks[k], assigns, P["det_log"], w0, w1) for tid in tids}
                     hi, lo = sorted(tids, key=lambda x: -sc[x])
-                    if sc[hi] > 0.08 and sc[hi] > 1.6 * sc[lo]:
+                    if sc[hi] > 0.08 and sc[hi] > 1.4 * sc[lo]:
                         other = [t for t in teams[a] if t != k][0]
                         m, conf = {hi: k, lo: other}, 0.9
                 for tid, team in m.items():
@@ -352,10 +354,12 @@ def reason(P, official=None, looks=None):
             "overlay": overlay_reads[-1][1] if overlay_reads else None,
             "cal_log": cal_log, "box_log": box_log, "raw_tracks": {tr.tid: [(round(p[0], 2), round(p[1]), round(p[2]), p[3]) for p in tr.history] for tr in tracker.tracks}}
 
-def look_of(tid, look, assigns, det_log):
-    """Average signature-colour score of everything a track was matched to."""
+def look_of(tid, look, assigns, det_log, t0=None, t1=None):
+    """Average signature-colour score of everything a track was matched to (during the match)."""
     v = []
     for (t, a), (_, rows, feats) in zip(assigns, det_log):
+        if (t0 is not None and t < t0) or (t1 is not None and t > t1):
+            continue
         j = a.get(tid)
         if j is not None and feats[j] is not None:
             v.append(TM.look_score(feats[j], look))
