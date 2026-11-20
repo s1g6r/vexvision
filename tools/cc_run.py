@@ -31,6 +31,7 @@ def main():
             e["calibrated"] = round(len(res["cal_log"]) / max(1, res["frames"]), 2)
             e["seen"] = round(sum(r["seen_share"] for r in res["robots"]) / 4, 2)
             e["named"] = sum(1 for r in res["robots"] if r.get("team"))
+            e["sure"] = sum(1 for r in res["robots"] if (r.get("confidence") or 0) >= 0.75)
             meta = {k: e[k] for k in ("event", "match", "red", "blue", "video")}
             subprocess.run([sys.executable, "-m", "tools.export_replay", os.path.join(raw, m["id"] + ".json"), clip,
                             "--out", rep, f"--id={m['id']}", "--meta", json.dumps(meta)], check=False)

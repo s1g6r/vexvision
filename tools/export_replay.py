@@ -72,7 +72,7 @@ def smooth(path, win=1.0):
     return [[round(float(ti), 2), round(float(p[0]) / 1000, 3), round(float(p[1]) / 1000, 3), round(float(h), 2), int(bool(sv))]
             for ti, p, h, sv in zip(t, out, head, a[:, 3] > 0.5)]
 
-COLS, ROWS, SW, SH = 8, 6, 400, 225
+COLS, ROWS, SW, SH = 8, 24, 320, 180
 
 def stills(video, out_dir, t0, t1):
     """One frame a second, packed 48 to a sheet (8 x 6 tiles of 400x225)."""

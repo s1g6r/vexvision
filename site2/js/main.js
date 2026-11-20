@@ -330,11 +330,11 @@ function showTeam(id) {
     ${scoutBlock(id)}
     ${matches.map((v) => {
       const mine = v.r?.includes(id) ? ["r", v.r, v.b] : v.b?.includes(id) ? ["b", v.b, v.r] : null;
-      return `<div class="mrow"><a class="th" href="${yt(v.id)}"><img src="data/thumbs/${v.id}.jpg" alt="" loading="lazy"></a><div><div class="ev">${esc(v.e || "")}</div><div class="rd">${esc(v.m || "Match")}</div>
+      return `<div class="mrow"><a class="th" href="${v.u || yt(v.id)}"><img src="data/thumbs/${v.id}.jpg" alt="" loading="lazy"></a><div><div class="ev">${esc(v.e || "")}</div><div class="rd">${esc(v.m || "Match")}</div>
       ${mine ? `<div class="al"><span class="side-${mine[0]}">${mine[0] === "r" ? "Red" : "Blue"}</span> with ${mine[1].filter((x) => x !== id).map((x) => tlink(x)).join(" & ") || "partner not named"} <span class="mute">vs</span> ${mine[2].map((x) => tlink(x)).join(" & ")}</div>` : ""}</div>
-      <a class="w" href="${yt(v.id)}">Watch${v.l ? " · " + v.l : ""}</a></div>`;
+      <a class="w" href="${v.u || yt(v.id)}">Watch${v.l ? " · " + v.l : ""}</a></div>`;
     }).join("")}
-    ${other.length ? `<div class="vids">${other.map((v) => `<a class="vid" href="${yt(v.id)}"><span class="th"><img src="data/thumbs/${v.id}.jpg" alt="" loading="lazy"></span>${esc(v.t)}<br><small>${esc(v.c)}</small></a>`).join("")}</div>` : ""}`;
+    ${other.length ? `<div class="vids">${other.map((v) => `<a class="vid" href="${v.u || yt(v.id)}"><span class="th"><img src="data/thumbs/${v.id}.jpg" alt="" loading="lazy"></span>${esc(v.t)}<br><small>${esc(v.c)}</small></a>`).join("")}</div>` : ""}`;
 }
 document.addEventListener("click", (e) => {
   const b = e.target.closest("[data-replay]"); if (!b) return;
@@ -383,12 +383,17 @@ async function loadReplay(id, autoplay) {
 }
 fetch("data/replays/index.json").then((r) => (r.ok ? r.json() : [])).catch(() => []).then((idx) => {
   const good = idx.filter((x) => !x.error && x.calibrated >= 0.6 && x.seen >= 0.6);
-  const list = [{ id: "q19", event: "Great Planes Signature", match: "Qual 19", video: "FSpOd3gBuqM" }, ...good.filter((x) => x.video !== "FSpOd3gBuqM")];
+  // Matches we could put names on come first: eliminations before qualifications.
+  const rank = (x) => (/^SF|^Final/.test(x.match || "") ? 0 : /^QF/.test(x.match || "") ? 1 : /^R16/.test(x.match || "") ? 2 : 3);
+  const named = good.filter((x) => (x.sure || 0) >= 2).sort((a, b) => rank(a) - rank(b));
+  const rest = good.filter((x) => (x.sure || 0) < 2 && x.video !== "FSpOd3gBuqM");
+  const list = [...named, { id: "q19", event: "Great Planes Signature", match: "Qual 19", video: "FSpOd3gBuqM" }, ...rest];
+  const first = list[0].id;
+  loadReplay(first).catch((e) => console.error(e));
   const el = document.getElementById("rp-list");
   if (list.length > 1) {
-    el.innerHTML = list.map((x) => `<button type="button" data-id="${x.id}" aria-pressed="${x.id === "q19"}"><img src="data/thumbs/${x.video}.jpg" alt="" loading="lazy"><span><b>${esc(x.match || "Match")}</b><span>${esc((x.event || "").replace(/ Signature$/, ""))}</span></span></button>`).join("");
+    el.innerHTML = list.map((x) => `<button type="button" data-id="${x.id}" aria-pressed="${x.id === first}"><img src="data/thumbs/${x.video}.jpg" alt="" loading="lazy"><span><b>${esc(x.match || "Match")}</b><span>${esc((x.event || "").replace(/ Signature$/, "").replace(/^Illini /, "").replace(/ \(Fall 2026\)$/, ""))}</span></span></button>`).join("");
     el.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => loadReplay(b.dataset.id, true)));
   }
 });
-loadReplay("q19").catch((e) => console.error(e));
 window.__ready = true; window.done = true;

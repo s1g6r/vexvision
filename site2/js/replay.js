@@ -134,7 +134,8 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
   const t0 = Math.max(R.t0, -3), t1 = R.t1, span = t1 - t0;
   const DRV = R.driver ?? AUTON;                         // driver control start, seconds after autonomous started
   const ticks = $(".rp-ticks");
-  ticks.innerHTML = `<span class="auton" style="left:${((0 - t0) / span) * 100}%;width:${(AUTON / span) * 100}%"></span>`;
+  const a0 = Math.max(0, -t0), a1 = Math.max(a0, AUTON - t0);   // the autonomous band, kept inside the bar
+  ticks.innerHTML = a1 > a0 ? `<span class="auton" style="left:${(a0 / span) * 100}%;width:${((Math.min(a1, span) - a0) / span) * 100}%"></span>` : "";
   const range = $(".rp-range");
   range.min = t0; range.max = t1; range.step = 0.1;
 
