@@ -1,5 +1,6 @@
 import { createField } from "./field3d.js";
 import { mountReplay } from "./replay.js";
+import { analyzeImage } from "./analyze.js";
 
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -171,10 +172,11 @@ $("#ticker").innerHTML = tick + tick;
 /* ---------- read a match ---------- */
 const stage = $("#stage"), sphoto = $("#s-photo");
 const S = stageField($("#s-canvas"), $("#s-marks"), frames[1] || frames[0], { idle: 0, fov: 32 });
+window.__S = S;
 let sMode = "photo", sIndex = 1;
 function pickMatch(i) {
   sIndex = i; const f = frames[i];
-  [...$("#matches").children].forEach((b, k) => b.setAttribute("aria-pressed", k === i));
+  $("#matches").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.i === String(i)));
   sphoto.src = f.img; sphoto.alt = `${f.match} at ${f.event}, as broadcast`;
   S.setFrame(f);
   setMode("photo", true);
@@ -198,8 +200,37 @@ function setMode(m, instant) {
     if (instant) { S.snapPhoto(); finish(); } else S.toPhoto(1100, finish);
   }
 }
-$("#matches").innerHTML = frames.map((f, i) => `<button type="button" aria-pressed="false"><img src="${f.img}" alt="" loading="lazy"><span><b>${esc(f.match)}</b><span>${esc(f.event)}</span></span></button>`).join("");
-[...$("#matches").children].forEach((b, i) => b.addEventListener("click", () => pickMatch(i)));
+function renderMatchList() {
+  $("#matches").innerHTML = `<button type="button" class="mine" id="own" aria-pressed="false"><span class="up">Your screenshot</span><span><b>Try your own</b><span>Drop, paste or pick a broadcast frame</span></span></button>` +
+    frames.map((f, i) => `<button type="button" aria-pressed="false" data-i="${i}"><img src="${f.img}" alt="" loading="lazy"><span><b>${esc(f.match)}</b><span>${esc(f.event)}</span></span></button>`).join("");
+  $("#matches").querySelectorAll("[data-i]").forEach((b) => b.addEventListener("click", () => pickMatch(+b.dataset.i)));
+  $("#own").addEventListener("click", () => $("#own-file").click());
+}
+renderMatchList();
+const ownStatus = (m, err) => { const s = $("#own-status"); s.textContent = m; s.classList.toggle("err", !!err); s.hidden = !m; };
+async function useFile(file) {
+  if (!file || !file.type.startsWith("image/")) return ownStatus("That isn't an image. Use a PNG or JPG screenshot of a broadcast.", true);
+  $("#read").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+  stage.classList.add("busy");
+  try {
+    const f = await analyzeImage(file, (m) => ownStatus(m));
+    stage.classList.remove("busy");
+    if (f.error) { sphoto.src = f.url; stage.classList.remove("three"); $("#s-marks").innerHTML = ""; return ownStatus(f.error, true); }
+    const at = frames.findIndex((x) => x.mine);
+    if (at >= 0) frames.splice(at, 1);
+    frames.unshift(f); renderMatchList(); pickMatch(0);
+    ownStatus(f.robots.length ? `Found ${f.robots.length} robot${f.robots.length === 1 ? "" : "s"} and lined up the field. Switch to "Rebuilt in 3D" to walk around it.` : "Lined up the field but didn't find robots in this shot.");
+    setTimeout(() => setMode("three"), 600);
+  } catch (e) {
+    console.error(e); stage.classList.remove("busy");
+    ownStatus("This browser couldn't run the models. The rest of the site still works.", true);
+  }
+}
+$("#own-file").addEventListener("change", (e) => useFile(e.target.files[0]));
+["dragenter", "dragover"].forEach((t) => stage.addEventListener(t, (e) => { e.preventDefault(); stage.classList.add("over"); }));
+["dragleave", "drop"].forEach((t) => stage.addEventListener(t, (e) => { e.preventDefault(); stage.classList.remove("over"); }));
+stage.addEventListener("drop", (e) => useFile(e.dataTransfer.files[0]));
+document.addEventListener("paste", (e) => { const f = [...(e.clipboardData?.files || [])][0]; if (f) useFile(f); });
 document.querySelectorAll("#read .seg button").forEach((b) => b.addEventListener("click", () => b.dataset.v !== sMode && setMode(b.dataset.v)));
 pickMatch(1 < frames.length ? 1 : 0);
 // open on the rebuilt view the first time the section is seen
@@ -267,7 +298,26 @@ function route() {
   if (h.startsWith("team-")) { const id = h.slice(5).toUpperCase(); q.value = id; sugg.classList.remove("open"); showTeam(id); $("#teams").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); }
 }
 addEventListener("hashchange", route); route();
-document.getElementById("rp").addEventListener("replay-meta", (e) => { const R = e.detail;
+const rpRoot = document.getElementById("rp");
+rpRoot.addEventListener("replay-meta", (e) => { const R = e.detail;
   document.getElementById("rp-sub").innerHTML = `${esc(R.match)} at ${esc(R.event)}: <span style="color:var(--red)">${R.red.join(" &amp; ")}</span> vs <span style="color:var(--blue)">${R.blue.join(" &amp; ")}</span>, followed for the whole match from one YouTube video. The broadcast plays in the corner with the same four robots marked, so you can check it against the real thing.`; });
-mountReplay(document.getElementById("rp"), "data/replays/q19.json", { reduced }).catch((e) => console.error(e));
+let current = null;
+async function loadReplay(id, autoplay) {
+  if (current) { current.destroy(); const c = rpRoot.querySelector("canvas"), n = c.cloneNode(); c.replaceWith(n); }
+  rpRoot.querySelector(".rp-play").replaceWith(rpRoot.querySelector(".rp-play").cloneNode(true));
+  rpRoot.querySelectorAll(".rp-view button, .rp-speed button").forEach((b) => b.replaceWith(b.cloneNode(true)));
+  rpRoot.querySelector(".rp-range").replaceWith(rpRoot.querySelector(".rp-range").cloneNode(true));
+  document.querySelectorAll("#rp-list button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.id === id));
+  current = await mountReplay(rpRoot, `data/replays/${id}.json`, { reduced, autoplay });
+}
+fetch("data/replays/index.json").then((r) => (r.ok ? r.json() : [])).catch(() => []).then((idx) => {
+  const good = idx.filter((x) => !x.error && x.calibrated >= 0.6 && x.seen >= 0.6);
+  const list = [{ id: "q19", event: "Great Planes Signature", match: "Qual 19", video: "FSpOd3gBuqM" }, ...good.filter((x) => x.video !== "FSpOd3gBuqM")];
+  const el = document.getElementById("rp-list");
+  if (list.length > 1) {
+    el.innerHTML = list.map((x) => `<button type="button" data-id="${x.id}" aria-pressed="${x.id === "q19"}"><img src="data/thumbs/${x.video}.jpg" alt="" loading="lazy"><span><b>${esc(x.match || "Match")}</b><span>${esc((x.event || "").replace(/ Signature$/, ""))}</span></span></button>`).join("");
+    el.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => loadReplay(b.dataset.id, true)));
+  }
+});
+loadReplay("q19").catch((e) => console.error(e));
 window.__ready = true; window.done = true;

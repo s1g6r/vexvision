@@ -23,7 +23,7 @@ function camAt(cams, t) {
 }
 const zoneName = (x, y) => Math.abs(x) + Math.abs(y) <= 0.6096 ? "Midfield" : (x + y < 0 ? "Red side" : "Blue side");
 
-export async function mountReplay(root, url, { reduced = false } = {}) {
+export async function mountReplay(root, url, { reduced = false, autoplay = false } = {}) {
   const R = await fetch(url).then((r) => r.json());
   root.dispatchEvent(new CustomEvent("replay-meta", { detail: R, bubbles: true }));
   const $ = (s) => root.querySelector(s);
@@ -130,17 +130,20 @@ export async function mountReplay(root, url, { reduced = false } = {}) {
   root.querySelectorAll(".rp-speed button").forEach((b) => b.addEventListener("click", () => {
     speed = +b.dataset.s; root.querySelectorAll(".rp-speed button").forEach((x) => x.setAttribute("aria-pressed", x === b));
   }));
-  new IntersectionObserver(([e]) => {
+  const io = new IntersectionObserver(([e]) => {
     visible = e.isIntersecting;
-    if (visible && !started && !reduced) { started = true; setPlaying(true); }
-  }, { threshold: 0.35 }).observe(canvas);
+    if (visible && !started && (!reduced || autoplay)) { started = true; setPlaying(true); }
+  }, { threshold: 0.35 });
+  io.observe(canvas);
   addEventListener("resize", () => F.resize());
 
   const clock = $(".rp-clock"), pipCard = $(".rp-pip");
   let stillIdx = -1;
   const helper = new THREE.PerspectiveCamera(30, 16 / 9, 0.05, 60);
 
+  let dead = false;
   function frame(now) {
+    if (dead) return;
     requestAnimationFrame(frame);
     const dt = Math.min(0.1, (now - last) / 1000); last = now;
     if (!visible) return;
@@ -196,5 +199,8 @@ export async function mountReplay(root, url, { reduced = false } = {}) {
   }
   for (let k = 0; k * R.stills.cols * R.stills.rows < R.stills.n; k++) new Image().src = `${R.stills.dir}s${k}.jpg`;   // preload sheets
   requestAnimationFrame((n) => { last = n; frame(n); });
-  return { setPlaying, seek: (x) => (t = x), get t() { return t; } };
+  return {
+    setPlaying, seek: (x) => (t = x), get t() { return t; },
+    destroy() { dead = true; io.disconnect(); F.renderer.forceContextLoss(); F.dispose(); },
+  };
 }

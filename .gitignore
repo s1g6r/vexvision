@@ -9,3 +9,5 @@ data/auto_robots/
 *.mp4
 build/
 site/test/node_modules/
+site2/models/
+site2/ort/

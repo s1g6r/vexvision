@@ -317,6 +317,7 @@ export function createField(canvas, opts = {}) {
     camera.aspect = v.ofs.fw / v.ofs.fh;
     camera.setViewOffset(v.ofs.fw, v.ofs.fh, v.ofs.x, v.ofs.y, W, H);
     camera.updateProjectionMatrix();
+    camera.updateMatrixWorld(true);
   }
   function mix(a, b, t) {
     return { pos: a.pos.clone().lerp(b.pos, t), quat: a.quat.clone().slerp(b.quat, t), fov: a.fov + (b.fov - a.fov) * t,
@@ -333,7 +334,7 @@ export function createField(canvas, opts = {}) {
     setRobots, photoView, freeView, apply, mix, resize,
     get size() { return [W, H]; },
     render() { renderer.render(scene, camera); },
-    project(x, y, h = 0) { const v = at(x, y, h).project(camera); return [(v.x + 1) / 2 * W, (1 - v.y) / 2 * H]; },
+    project(x, y, h = 0) { camera.updateMatrixWorld(true); const v = at(x, y, h).project(camera); return [(v.x + 1) / 2 * W, (1 - v.y) / 2 * H]; },
     dispose() { renderer.dispose(); pm.dispose(); },
   };
 }
