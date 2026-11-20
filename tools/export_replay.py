@@ -73,6 +73,7 @@ def smooth(path, win=1.0):
             for ti, p, h, sv in zip(t, out, head, a[:, 3] > 0.5)]
 
 COLS, ROWS, SW, SH = 8, 6, 400, 225
+MATCH_END = 121.0     # 15 s autonomous + 105 s driver control, plus a second
 
 def stills(video, out_dir, t0, t1):
     """One frame a second, packed 48 to a sheet (8 x 6 tiles of 400x225)."""
@@ -106,6 +107,8 @@ def main():
     robots = []
     for tid, hist in r["raw_tracks"].items():
         hist = [(p[0] - ts, p[1], p[2], p[3]) for p in hist]
+        if r.get("t_start") is not None:         # the match itself: after the buzzer people walk on and lift robots
+            hist = [p for p in hist if -3.0 <= p[0] <= MATCH_END]
         x = next(x for x in r["robots"] if str(x["track"]) == tid)
         robots.append({"team": team[tid], "alliance": alli[tid], "named": (x.get("confidence") or 0) >= 0.75, "path": smooth(hist),
                        "distance_ft": x.get("distance_ft"), "seen_share": x.get("seen_share"),

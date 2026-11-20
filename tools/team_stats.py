@@ -21,7 +21,7 @@ G = 24
 SURE = 0.75      # naming confidence needed before a robot's driving counts toward its team
 
 def stats_for(track, alliance, t0):
-    h = [p for p in track if p[0] >= t0]
+    h = [p for p in track if t0 <= p[0] <= t0 + 120]      # the match only, not robots being carried off
     if len(h) < 10:
         return None
     sm = smooth(h)                       # same smoothing as the replay, so jitter isn't counted as driving
