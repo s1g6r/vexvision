@@ -195,7 +195,76 @@ def run_tracker(det_log):
     for t, rows, feats in det_log:
         dets = [(r[0], r[1], None if f is None else np.asarray(f), r[7] - mid, r[2]) for r, f in zip(rows, feats)]
         assigns.append((t, tracker.step(t, dets)))
+    repair_swaps(tracker, assigns, det_log, mid)
     return tracker, assigns
+
+def repair_swaps(tracker, assigns, det_log, mid, near=700.0, z_min=5.0, max_swaps=6, log=None):
+    """Second look at the whole match. When a red and a blue robot meet, the tracker
+    can come away with them exchanged. Each alliance's robots read redder or bluer on
+    average, so if after some meeting a red track has kept reading blue (and the blue
+    track red), exchange the two from that meeting on."""
+    if not tracker.tracks:
+        return []
+    by_t = {round(t, 2): i for i, (t, _) in enumerate(assigns)}
+    rows = [r for _, r, _ in det_log]
+    tr = tracker.tracks
+    n = len(tr[0].history)
+    if any(len(x.history) != n for x in tr):
+        return []
+    ts = [h[0] for h in tr[0].history]
+    fi = [by_t.get(round(t, 2)) for t in ts]
+    def col(k, i):                              # centred colour of what track k matched at history step i, or None
+        f = fi[i]
+        if f is None:
+            return None
+        j = assigns[f][1].get(tr[k].tid)
+        return None if j is None else rows[f][j][7] - mid
+    done = []
+    for _ in range(max_swaps):
+        best = None
+        for a in range(len(tr)):
+            for b in range(len(tr)):
+                if tr[a].alliance != "red" or tr[b].alliance != "blue":
+                    continue
+                C = [(col(a, i), col(b, i)) for i in range(n)]
+                # suffix sums of evidence for "a and b are exchanged from step i on"
+                gain, cnt = np.zeros(n + 1), np.zeros(n + 1)
+                for i in range(n - 1, -1, -1):
+                    ca, cb = C[i]
+                    g = 0.0; c = 0
+                    if ca is not None: g -= ca; c += 1      # a is red: a blue-looking box is evidence of a swap
+                    if cb is not None: g += cb; c += 1
+                    gain[i] = gain[i + 1] + g; cnt[i] = cnt[i + 1] + c
+                # a swap has to start where they met, and ends either where they met again or at the end
+                E = [i for i in range(1, n - 5) if np.hypot(tr[a].history[i][1] - tr[b].history[i][1],
+                                                             tr[a].history[i][2] - tr[b].history[i][2]) <= near]
+                ends = E + [n]
+                for i in E:
+                    for j in ends:
+                        if j <= i:
+                            continue
+                        c = cnt[i] - cnt[j]
+                        if c < 20:
+                            continue
+                        z = (gain[i] - gain[j]) / (0.35 * np.sqrt(c))
+                        if z > z_min and (best is None or z > best[0]):
+                            best = (z, a, b, i, j)
+        if best is None:
+            break
+        z, a, b, i, j = best
+        A, B = tr[a], tr[b]
+        A.history[i:j], B.history[i:j] = B.history[i:j], A.history[i:j]
+        t_end = ts[j] if j < n else 1e18
+        for f in range(len(assigns)):
+            if ts[i] - 1e-6 <= assigns[f][0] < t_end - 1e-6:
+                m = assigns[f][1]
+                ja, jb = m.get(A.tid), m.get(B.tid)
+                m.pop(A.tid, None); m.pop(B.tid, None)
+                if jb is not None: m[A.tid] = jb
+                if ja is not None: m[B.tid] = ja
+        done.append((round(ts[i], 2), round(ts[j - 1], 2), A.tid, B.tid, round(float(z), 1)))
+    tracker.swaps = done
+    return done
 
 def reason(P, official=None):
     """Everything after perception: tracking, team names, events, score check.

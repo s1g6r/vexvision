@@ -30,11 +30,24 @@ def speed_limit(t, xy, vmax=VMAX):
     idx = list(range(len(xy)))
     return (run(idx) + run(idx[::-1])) / 2
 
+def fill_gaps(t, xy, seen, max_gap=8.0):
+    """While a robot is hidden (behind a stack, a person or the edge of the shot),
+    draw it moving straight from where it was last seen to where it was found again,
+    instead of wherever the filter guessed."""
+    xy = xy.copy()
+    idx = np.flatnonzero(seen)
+    for a, b in zip(idx, idx[1:]):
+        if b - a > 1 and t[b] - t[a] <= max_gap:
+            k = (t[a + 1:b] - t[a]) / (t[b] - t[a])
+            xy[a + 1:b] = xy[a] + k[:, None] * (xy[b] - xy[a])
+    return xy
+
 def smooth(path, win=1.0):
     """path: [(t, x, y, seen)] at the analysis rate. Gaussian smoothing in time,
     seen points weighted far above coasting ones, then heading from velocity."""
     a = np.array([[p[0], p[1], p[2], 1.0 if p[3] else 0.15] for p in path], float)
     t, xy, w = a[:, 0], a[:, 1:3], a[:, 3]
+    xy = fill_gaps(t, xy, w > 0.5)
     out = []
     sig = win / 2
     for i, ti in enumerate(t):
