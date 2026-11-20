@@ -23,7 +23,7 @@ function camAt(cams, t) {
 }
 const zoneName = (x, y) => Math.abs(x) + Math.abs(y) <= 0.6096 ? "Midfield" : (x + y < 0 ? "Red side" : "Blue side");
 
-export async function mountReplay(root, url, { reduced = false, autoplay = false } = {}) {
+export async function mountReplay(root, url, { reduced = false, autoplay = false, start = null } = {}) {
   const R = await fetch(url).then((r) => r.json());
   root.dispatchEvent(new CustomEvent("replay-meta", { detail: R, bubbles: true }));
   const $ = (s) => root.querySelector(s);
@@ -167,7 +167,7 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
   canvas.style.touchAction = "pan-y";
 
   // playback
-  let t = Math.max(t0, -1), playing = false, speed = 1, last = 0, visible = false, started = false;
+  let t = start != null ? clamp(start, t0, t1) : Math.max(t0, -1), playing = false, speed = 1, last = 0, visible = false, started = false;
   const play = $(".rp-play");
   function setPlaying(p) { playing = p; play.textContent = p ? "Pause" : "Play"; }
   play.addEventListener("click", () => { if (t >= t1 - 0.05) t = t0; setPlaying(!playing); });

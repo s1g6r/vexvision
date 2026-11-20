@@ -209,6 +209,38 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 
 @media(max-width:960px){.studio{grid-template-columns:minmax(0,1fr)}.matches{flex-direction:row;overflow-x:auto;padding-bottom:6px}.matches button{grid-template-columns:1fr;min-width:150px}.matches img{width:100%}.head{grid-template-columns:minmax(0,1fr)}.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.hero .copy{bottom:56px}.hero .lede{display:none}.hero .shade{height:58%}.hero .giant{top:13%}.hero h1{font-size:28px}.stagewrap .bar{position:static;margin-top:12px}.mrow{grid-template-columns:110px minmax(0,1fr)}.mrow .w{grid-column:2}.find{flex-direction:column}.stagewrap .bar{flex-direction:column;align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){.ticker .track{animation:none}*{transition-duration:.01s!important}}
+
+/* short read on the team page, and the full scouting report */
+.brief{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:8px;max-width:72ch}
+.brief li{font-size:16.5px;line-height:1.5;padding-left:18px;position:relative}.brief li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.report-btn{margin:0 0 20px}
+.report .back{display:inline-block;color:var(--mute);font-size:14px;margin-bottom:14px}
+.rep-head .kicker{font-size:14px;color:var(--gold);font-weight:600}
+.rep-sub{color:#c9c2b5;max-width:72ch;font-size:16px;line-height:1.55;margin:14px 0 0}
+.rep-sec{margin-top:36px;padding:22px;border-radius:22px;background:var(--panel);border:1px solid var(--line)}
+.rep-sec h4{font:800 30px/1 "Big Shoulders Display",sans-serif;margin:0 0 16px}
+.plays{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.plays li{font-size:18px;line-height:1.5;padding:12px 16px;border-radius:14px;background:var(--panel2)}
+.rep-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
+.heat.big{width:100%;max-width:360px;height:auto;aspect-ratio:1}
+.cap{color:var(--mute);font-size:14px;margin:8px 0 12px}
+.watches{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--panel2);border-radius:999px;padding:4px 4px 4px 12px;font-size:14px}.chip i{width:10px;height:10px;border-radius:50%}
+.watch{all:unset;cursor:pointer;font:600 13.5px Geist,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(239,233,221,.1);white-space:nowrap}.watch:hover{background:rgba(239,233,221,.2)}.watch:focus-visible{outline:2px solid var(--gold)}
+.meters{display:grid;gap:12px}
+.meter{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 52px;gap:14px;align-items:center}
+.meter .k{font-size:15.5px}.meter small{display:block;color:var(--mute);font-size:13px}
+.bar{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden}.bar i{display:block;height:100%;background:var(--gold);border-radius:99px}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.goalsplit{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;align-items:center}.goalsplit .k{width:100%;font-size:15.5px}
+.goalsplit .g{background:var(--panel2);border-radius:14px;padding:10px 14px;font-size:14px;color:#c9c2b5}.goalsplit .g b{display:block;font:800 26px "Big Shoulders Display",sans-serif;color:var(--ink)}
+.cmp,.mtab{width:100%;border-collapse:collapse;font-size:15px}
+.cmp th,.cmp td,.mtab th,.mtab td{text-align:left;padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+.cmp thead th,.mtab thead th{border-top:0;color:var(--mute);font-weight:500;font-size:13.5px}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mtab small{display:block;color:var(--mute);font-size:13px}
+.mtab td.w{display:flex;flex-wrap:wrap;gap:6px}
+@media(max-width:760px){.rep-grid{grid-template-columns:minmax(0,1fr)}.meter{grid-template-columns:minmax(0,1fr) 52px}.meter .bar{grid-column:1/-1;grid-row:2}.rep-sec{padding:16px}.plays li{font-size:16.5px}}
 </style>
 </head>
 <body>

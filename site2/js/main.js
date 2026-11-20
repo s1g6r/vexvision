@@ -20,6 +20,7 @@ const [frames, videos, TS] = await Promise.all([
   fetch("data/videos.json").then((r) => r.json()).catch(() => []),
   fetch("data/team_stats.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
 ]);
+const REP = await fetch("data/reports.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
 
 /* ---------- a field view with an orbit you can drag ---------- */
 function stageField(canvas, marks, frame, opts = {}) {
@@ -268,7 +269,10 @@ function scoutBlock(id) {
     ["In the Midfield", pct(st.midfield), "Of driver control inside the diamond"],
     ["Autonomous", `${Math.round(st.auton_ft)} ft`, "Moved in the first 15 seconds"],
   ];
-  return `<div class="scout"><div class="scout-head"><b>Scouted by vexvision</b><span>from ${st.n} match${st.n === 1 ? "" : "es"} where we could name it</span></div>
+  const rep = REP[id];
+  const brief = rep ? `<ul class="brief">${rep.summary.slice(0, 3).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <a class="btn solid report-btn" href="#report-${esc(id)}">Full scouting report</a>` : "";
+  return `<div class="scout"><div class="scout-head"><b>Scouted by vexvision</b><span>from ${st.n} match${st.n === 1 ? "" : "es"} where we could name it</span></div>${brief}
     <div class="scout-grid"><div class="scout-maps">
       <figure><canvas class="heat" width="240" height="240" data-team="${esc(id)}" aria-label="Where ${esc(id)} drives"></canvas><figcaption>Where it drives</figcaption></figure>
       ${st.autons?.length ? `<figure><canvas class="heat auton" width="240" height="240" data-team="${esc(id)}" aria-label="${esc(id)}'s autonomous routes"></canvas><figcaption>Autonomous routes, ${st.autons.length} match${st.autons.length === 1 ? "" : "es"}</figcaption></figure>` : ""}
@@ -299,7 +303,7 @@ function drawAutons(c, st) {
   g.globalAlpha = 1;
 }
 function drawHeat(c, st) {
-  if (c.classList.contains("auton")) return drawAutons(c, st);
+  if (c.classList.contains("auton")) return REP[c.dataset.team] && c.classList.contains("big") ? drawRoutes(c, REP[c.dataset.team]) : drawAutons(c, st);
   const g = c.getContext("2d"), W = c.width, n = st.heat.length, k = W / n;
   g.fillStyle = "#1c1a17"; g.fillRect(0, 0, W, W);
   const red = true;                         // turned to its own side, which sits where red's does
@@ -315,6 +319,66 @@ function drawHeat(c, st) {
   const P = fieldLines(g, W);
   for (const [x, y, c2] of [[-0.6, -1.2, "#ef3b45"], [-1.2, -0.6, "#ef3b45"], [0.6, 1.2, "#4c86ff"], [1.2, 0.6, "#4c86ff"]]) { const [u, v] = P(x, y); g.fillStyle = c2; g.beginPath(); g.arc(u, v, 4, 0, 7); g.fill(); }
 }
+/* ---------- full scouting report ---------- */
+const mmss2 = (s) => { s = Math.max(0, Math.round(s)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
+const watchBtn = (m, t, label) => `<button type="button" class="watch" data-replay="${esc(m.id)}" ${t != null ? `data-t="${(+t).toFixed(1)}"` : ""}>${esc(label)}</button>`;
+const bar = (v, cls = "") => `<span class="bar ${cls}"><i style="width:${Math.min(100, Math.round(v * 100))}%"></i></span><b class="num">${pct(v)}</b>`;
+function showReport(id) {
+  const R = REP[id], st = TS[id], out = $("#result");
+  if (!R) { out.innerHTML = `<div class="empty"><p><b>No scouting report for ${esc(id)} yet.</b> A report needs at least one match where we can tell which robot is ${esc(id)}.</p><a class="btn ghost" href="#team-${esc(id)}">Back to ${esc(id)}</a></div>`; return; }
+  const ms = R.matches, S = R.sections;
+  const events = [...new Set(ms.map((m) => (m.event || "").replace(/ \(Fall 2026\)$/, "")))];
+  const typical = S.auton ? ms.find((m) => m.id === S.auton.typical) : null;
+  const sum = (m) => m.goals.own + m.goals.neutral + m.goals.center + m.goals.opp;
+  const avg = (f, list = ms) => list.reduce((a, m) => a + f(m), 0) / Math.max(1, list.length);
+  const q = ms.filter((m) => !m.elim), e = ms.filter((m) => m.elim);
+  const rows = [
+    ["On the other side", (m) => m.other_side, "Share of driver control past the Autonomous Line"],
+    ["Up against an opponent there", (m) => m.near_opp_their_side, "On their side and within a robot's length of one of them"],
+    ["Near a Toggle", (m) => m.toggles.own + m.toggles.opp, "Within half a metre of either alliance's Toggle on the wall"],
+    ["Near the other alliance's Toggles", (m) => m.toggles.opp, ""],
+    ["At a Goal", sum, "Close enough to be scoring or descoring"],
+    ["Ends in the Midfield", (m) => (m.midfield_end ? 1 : 0), "Where it is in the last 10 seconds"],
+  ];
+  out.innerHTML = `<div class="report">
+    <a class="back" href="#team-${esc(id)}">Back to ${esc(id)}</a>
+    <div class="rep-head"><span class="kicker">Scouting report</span><h3 class="tname disp">${esc(id)}</h3>
+      <p class="rep-sub">From ${ms.length} match${ms.length === 1 ? "" : "es"} where we could tell which robot is ${esc(id)}${events.length ? `, at ${events.map(esc).join(", ")}` : ""}${e.length ? ` (${q.length} qualification, ${e.length} elimination)` : ""}. Everything here comes from where the robot drove, so it says how a team plays, not how many points it scored.</p></div>
+    <section class="rep-sec"><h4>How they play</h4><ul class="plays">${R.summary.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>
+    <section class="rep-sec rep-grid">
+      <div><h4>Autonomous</h4><canvas class="heat auton big" width="360" height="360" data-team="${esc(id)}" aria-label="${esc(id)}'s autonomous routes"></canvas>
+        <p class="cap">Own side bottom left. ${S.auton ? (S.auton.seen > 1 ? `The same route in ${S.auton.same.length} of ${S.auton.seen} matches.` : "Seen in one match.") : "Not seen."}</p>
+        <div class="watches">${ms.filter((m) => m.route).map((m, i) => `<span class="chip"><i style="background:${["#f2c230", "#ef3b45", "#4c86ff", "#5fd08a", "#c792ea", "#ff9e57"][i % 6]}"></i>${esc(m.match)}${watchBtn(m, -1, "Watch auton")}</span>`).join("")}</div></div>
+      <div><h4>Where it drives</h4>${st && st.heat ? `<canvas class="heat big" width="360" height="360" data-team="${esc(id)}" aria-label="Where ${esc(id)} drives"></canvas><p class="cap">Every second of driver control it was seen, own side bottom left.</p>` : ""}</div>
+    </section>
+    <section class="rep-sec"><h4>Driver control, on average</h4>
+      <div class="meters">${rows.map(([k, f, d]) => `<div class="meter"><span class="k">${k}${d ? `<small>${d}</small>` : ""}</span>${bar(avg(f))}</div>`).join("")}</div>
+      <div class="goalsplit"><span class="k">Which Goals it works</span>${["own", "neutral", "center", "opp"].map((k) => `<span class="g g-${k}"><b>${pct(avg((m) => m.goals[k]))}</b>${{ own: "its own Alliance Goals", neutral: "neutral Quadrant Goals", center: "Center Goal", opp: "the other alliance's Goals" }[k]}</span>`).join("")}</div>
+    </section>
+    ${q.length && e.length ? `<section class="rep-sec"><h4>Qualifications vs eliminations</h4><div class="scroll"><table class="cmp"><thead><tr><th></th><th>Quals (${q.length})</th><th>Elims (${e.length})</th></tr></thead><tbody>
+      ${rows.slice(0, 5).map(([k, f]) => `<tr><td>${k}</td><td class="n">${pct(avg(f, q))}</td><td class="n">${pct(avg(f, e))}</td></tr>`).join("")}
+      <tr><td>Driven per match</td><td class="n">${Math.round(avg((m) => m.ft, q))} ft</td><td class="n">${Math.round(avg((m) => m.ft, e))} ft</td></tr></tbody></table></div></section>` : ""}
+    <section class="rep-sec"><h4>Match by match</h4><div class="scroll"><table class="mtab"><thead><tr><th>Match</th><th>With</th><th class="n">Other side</th><th class="n">Toggles</th><th class="n">At Goals</th><th class="n">Driven</th><th>Watch</th></tr></thead><tbody>
+      ${ms.map((m) => `<tr><td><b>${esc(m.match)}</b><small>${esc((m.event || "").replace(/ Signature$| \(Fall 2026\)$/, ""))}</small></td>
+        <td><span class="side-${m.alliance[0]}">${m.alliance === "red" ? "Red" : "Blue"}</span> ${esc(m.partner || "")}</td>
+        <td class="n">${pct(m.other_side)}</td><td class="n">${pct(m.toggles.own + m.toggles.opp)}</td><td class="n">${pct(sum(m))}</td><td class="n">${Math.round(m.ft)} ft</td>
+        <td class="w">${watchBtn(m, -1, "Auton")}${watchBtn(m, m.driver_at, "Driver")}${m.defence_len >= 4 ? watchBtn(m, m.defence_t, "Crossing over") : ""}${m.toggle_first.opp != null ? watchBtn(m, m.toggle_first.opp, "Their Toggle") : ""}</td></tr>`).join("")}
+    </tbody></table></div></section>
+  </div>`;
+}
+function drawRoutes(c, R) {
+  const g = c.getContext("2d"), W = c.width;
+  g.fillStyle = "#1c1a17"; g.fillRect(0, 0, W, W);
+  const P = fieldLines(g, W);
+  const col = ["#f2c230", "#ef3b45", "#4c86ff", "#5fd08a", "#c792ea", "#ff9e57"];
+  R.matches.filter((m) => m.route).forEach((m, i) => {
+    g.strokeStyle = col[i % 6]; g.lineWidth = m.id === R.sections.auton?.typical ? 4 : 2.5; g.lineJoin = "round"; g.globalAlpha = 0.92;
+    g.beginPath(); m.route.forEach(([x, y], j) => { const [u, v] = P(x, y); j ? g.lineTo(u, v) : g.moveTo(u, v); }); g.stroke();
+    const [u0, v0] = P(...m.route[0]); g.fillStyle = col[i % 6]; g.beginPath(); g.arc(u0, v0, 5, 0, 7); g.fill();
+  });
+  g.globalAlpha = 1;
+}
+
 function showTeam(id) {
   const t = T.get(id), out = $("#result");
   if (!t) {
@@ -339,7 +403,7 @@ function showTeam(id) {
 document.addEventListener("click", (e) => {
   const b = e.target.closest("[data-replay]"); if (!b) return;
   document.getElementById("replay").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
-  loadReplay(b.dataset.replay, true);
+  loadReplay(b.dataset.replay, true, b.dataset.t != null ? +b.dataset.t : null);
 });
 new MutationObserver(() => document.querySelectorAll("canvas.heat:not([data-drawn])").forEach((c) => { c.dataset.drawn = 1; drawHeat(c, TS[c.dataset.team]); }))
   .observe(document.getElementById("result"), { childList: true, subtree: true });
@@ -366,6 +430,7 @@ $("#find").addEventListener("submit", (e) => {
 });
 function route() {
   const h = decodeURIComponent(location.hash.slice(1));
+  if (h.startsWith("report-")) { const id = h.slice(7).toUpperCase(); q.value = id; showReport(id); $("#teams").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); return; }
   if (h.startsWith("team-")) { const id = h.slice(5).toUpperCase(); q.value = id; sugg.classList.remove("open"); showTeam(id); $("#teams").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); }
 }
 addEventListener("hashchange", route); route();
@@ -373,13 +438,13 @@ const rpRoot = document.getElementById("rp");
 rpRoot.addEventListener("replay-meta", (e) => { const R = e.detail;
   document.getElementById("rp-sub").innerHTML = `${esc(R.match)} at ${esc(R.event)}: <span style="color:var(--red)">${R.red.join(" &amp; ")}</span> vs <span style="color:var(--blue)">${R.blue.join(" &amp; ")}</span>, followed for the whole match from one YouTube video. The broadcast plays in the corner with the same four robots marked, so you can check it against the real thing.${R.robots.some((r) => r.named === false) ? " Robot plates are too small to read on this stream, so partners we can't tell apart are shown as Red 1 and Red 2." : ""}`; });
 let current = null;
-async function loadReplay(id, autoplay) {
+async function loadReplay(id, autoplay, start = null) {
   if (current) { current.destroy(); const c = rpRoot.querySelector("canvas"), n = c.cloneNode(); c.replaceWith(n); }
   rpRoot.querySelector(".rp-play").replaceWith(rpRoot.querySelector(".rp-play").cloneNode(true));
   rpRoot.querySelectorAll(".rp-view button, .rp-speed button, .rp-heat").forEach((b) => b.replaceWith(b.cloneNode(true)));
   rpRoot.querySelector(".rp-range").replaceWith(rpRoot.querySelector(".rp-range").cloneNode(true));
   document.querySelectorAll("#rp-list button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.id === id));
-  current = await mountReplay(rpRoot, `data/replays/${id}.json`, { reduced, autoplay });
+  current = await mountReplay(rpRoot, `data/replays/${id}.json`, { reduced, autoplay, start });
 }
 fetch("data/replays/index.json").then((r) => (r.ok ? r.json() : [])).catch(() => []).then((idx) => {
   const good = idx.filter((x) => !x.error && x.calibrated >= 0.6 && x.seen >= 0.6);
