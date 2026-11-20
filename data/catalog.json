@@ -1,0 +1,4432 @@
+[
+{
+"id": "uiJ7wRVOYgQ",
+"title": "VEX Override | Blank.'s Beginnings '26 - Qual 37 (SCRT & 8059K vs 8068V & 8063A)",
+"channel": "VEX Vault",
+"length": "2:20",
+"published": "5mo ago",
+"event": "Blank.'s Beginnings",
+"match": "Qual 37",
+"red": [
+"8059K"
+],
+"blue": [
+"8068V"
+],
+"kind": "match",
+"teams": [
+"8059K",
+"8068V"
+]
+},
+{
+"id": "mUtlNfCeYnw",
+"title": "VEX Override | Semifinals - Blank.'s Beginnings '26 (8068E & 8059E vs 81819C & 81819E)",
+"channel": "VEX Vault",
+"length": "2:37",
+"published": "5mo ago",
+"event": "Blank.'s Beginnings",
+"match": "Semifinals",
+"red": [
+"8068E",
+"8059E"
+],
+"blue": [
+"81819C",
+"81819E"
+],
+"kind": "match",
+"teams": [
+"8068E",
+"8059E",
+"81819C",
+"81819E"
+]
+},
+{
+"id": "MPt4G9oxWk8",
+"title": "Vex Override | Blank.'s Beginnings '26 - Qual 36 (8059A & 6546C vs 8062A & 8051A)",
+"channel": "VEX Vault",
+"length": "2:39",
+"published": "5mo ago",
+"event": "Blank.'s Beginnings",
+"match": "Qual 36",
+"red": [
+"8059A",
+"6546C"
+],
+"blue": [
+"8062A",
+"8051A"
+],
+"kind": "match",
+"teams": [
+"8059A",
+"6546C",
+"8062A",
+"8051A"
+]
+},
+{
+"id": "M_DRNcrZAX0",
+"title": "Vex Override | Blank.'s Beginnings '26 - Qual 4 (8059E & 8068E vs SCRT & 8059X)",
+"channel": "VEX Vault",
+"length": "2:24",
+"published": "5mo ago",
+"event": "Blank.'s Beginnings",
+"match": "Qual 4",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": [
+"8059E",
+"8059X",
+"8068E"
+]
+},
+{
+"id": "Eaci3su0JpA",
+"title": "Vex Override | Blank.'s Beginnings '26 - Qual 5 (81819C & 8062A vs 8059Y & 8059S)",
+"channel": "VEX Vault",
+"length": "2:33",
+"published": "5mo ago",
+"event": "Blank.'s Beginnings",
+"match": "Qual 5",
+"red": [
+"81819C",
+"8062A"
+],
+"blue": [
+"8059Y",
+"8059S"
+],
+"kind": "match",
+"teams": [
+"81819C",
+"8062A",
+"8059Y",
+"8059S"
+]
+},
+{
+"id": "CpbT1wLyH0g",
+"title": "Vex Override | Blank.'s Beginnings '26 - Qual 6 (8068V & 8065C vs 6546A & 81819E)",
+"channel": "VEX Vault",
+"length": "2:31",
+"published": "5mo ago",
+"event": "Blank.'s Beginnings",
+"match": "Qual 6",
+"red": [
+"8068V",
+"8065C"
+],
+"blue": [
+"6546A",
+"81819E"
+],
+"kind": "match",
+"teams": [
+"8068V",
+"8065C",
+"6546A",
+"81819E"
+]
+},
+{
+"id": "YQOnyagi2SI",
+"title": "Finals | GHOST's Halloween Spotlight | 3468D & 10702X vs 654X & 654J | VEX V5 Override",
+"channel": "@vexroboticsvault",
+"length": null,
+"published": null,
+"event": "GHOST Halloween Spotlight",
+"match": "Finals",
+"red": [
+"3468D",
+"10702X"
+],
+"blue": [
+"654X",
+"654J"
+],
+"kind": "match",
+"teams": [
+"3468D",
+"10702X",
+"654X",
+"654J"
+]
+},
+{
+"id": "nlQg7xDrflM",
+"title": "GHOST\u2019s Halloween Override | Qual 16 | Override ",
+"length": "2:08",
+"published": "2w ago",
+"channel": "1412E Hypercharged! ",
+"event": "GHOST Halloween Spotlight",
+"match": "Qual 16",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "ksNQvrdogyM",
+"title": "GHOST\u2019s Halloween Override | Qual 23 | Override ",
+"length": "2:08",
+"published": "2w ago",
+"channel": "1412E Hypercharged! ",
+"event": "GHOST Halloween Spotlight",
+"match": "Qual 23",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "psReX8NnCGo",
+"title": "GHOST\u2019s Halloween Override | Qual 28 | Override ",
+"length": "2:08",
+"published": "2w ago",
+"channel": "1412E Hypercharged! ",
+"event": "GHOST Halloween Spotlight",
+"match": "Qual 28",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "atFmJxYsgAc",
+"title": "GHOST\u2019s Halloween Override | Qual 36 | Override ",
+"length": "2:08",
+"published": "2w ago",
+"channel": "1412E Hypercharged! ",
+"event": "GHOST Halloween Spotlight",
+"match": "Qual 36",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "q-u2FF9C5vc",
+"title": "GHOST\u2019s Halloween Override | Qual 56 | Override ",
+"length": "2:08",
+"published": "2w ago",
+"channel": "1412E Hypercharged! ",
+"event": "GHOST Halloween Spotlight",
+"match": "Qual 56",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "SajSo7Utm1Y",
+"title": "GHOST\u2019s Halloween Override | Qual 63 | Override ",
+"length": "2:08",
+"published": "2w ago",
+"channel": "1412E Hypercharged! ",
+"event": "GHOST Halloween Spotlight",
+"match": "Qual 63",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "fBvmBVRyUYE",
+"title": "GHOST\u2019s Halloween Override | Qual 7 | Override ",
+"length": "2:08",
+"published": "2w ago",
+"channel": "1412E Hypercharged! ",
+"event": "GHOST Halloween Spotlight",
+"match": "Qual 7",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "FSpOd3gBuqM",
+"title": "(not) New Endgame Tech? | 5069Y vs 21S - Great Planes Signature | VEX Override",
+"channel": "VEX Vault",
+"length": "2:49",
+"published": "1mo ago",
+"event": "Great Planes Signature",
+"match": null,
+"red": [
+"5069Y"
+],
+"blue": [
+"21S"
+],
+"kind": "match",
+"teams": [
+"5069Y",
+"21S"
+]
+},
+{
+"id": "-bXlVMTj8Ng",
+"title": "1010Z & 1028A vs 5069Y & 74100A | Great Planes Signature - Qual 103 | VEX Override",
+"channel": "VEX Vault",
+"length": "2:41",
+"published": "1mo ago",
+"event": "Great Planes Signature",
+"match": "Qual 103",
+"red": [
+"1010Z",
+"1028A"
+],
+"blue": [
+"5069Y",
+"74100A"
+],
+"kind": "match",
+"teams": [
+"1010Z",
+"1028A",
+"5069Y",
+"74100A"
+]
+},
+{
+"id": "c1HmsElqCnw",
+"title": "Full Finals | Great Planes Signature | 1069A After Hours & 5813R vs 67605X & 7686V | VEX Override",
+"channel": "@vexroboticsvault",
+"length": null,
+"published": null,
+"event": "Great Planes Signature",
+"match": "Full Finals",
+"red": [
+"1069A",
+"5813R"
+],
+"blue": [
+"67605X",
+"7686V"
+],
+"kind": "match",
+"teams": [
+"1069A",
+"5813R",
+"67605X",
+"7686V"
+]
+},
+{
+"id": "LqMGe2cy3l0",
+"title": "TenTon 1010Z & 2135A | Great Planes Signature - Qual 6 | VEX Override",
+"channel": "VEX Vault",
+"length": "2:37",
+"published": "1mo ago",
+"event": "Great Planes Signature",
+"match": "Qual 6",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": [
+"1010Z",
+"2135A"
+]
+},
+{
+"id": "2NlbEbMvByQ",
+"title": "Full Finals | Harbor Havoc Signature | 10102Z & 1698Z vs 1764P & 197E | VEX Override",
+"channel": "@vexroboticsvault",
+"length": null,
+"published": null,
+"event": "Harbor Havoc Signature",
+"match": "Full Finals",
+"red": [
+"10102Z",
+"1698Z"
+],
+"blue": [
+"1764P",
+"197E"
+],
+"kind": "match",
+"teams": [
+"10102Z",
+"1698Z",
+"1764P",
+"197E"
+]
+},
+{
+"id": "v0y9WBQ2EN8",
+"title": "Harbor Havoc 2026 | Final #1-1 | 10102Z & 1698Z vs 1764P & 197E",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Harbor Havoc Signature",
+"match": "Final 1-1",
+"red": [
+"10102Z",
+"1698Z"
+],
+"blue": [
+"1764P",
+"197E"
+],
+"kind": "match",
+"teams": [
+"10102Z",
+"1698Z",
+"1764P",
+"197E"
+]
+},
+{
+"id": "ByvAo2Zj1_Y",
+"title": "Harbor Havoc 2026 | Final #1-2 | 10102Z & 1698Z vs 1764P & 197E",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Harbor Havoc Signature",
+"match": "Final 1-2",
+"red": [
+"10102Z",
+"1698Z"
+],
+"blue": [
+"1764P",
+"197E"
+],
+"kind": "match",
+"teams": [
+"10102Z",
+"1698Z",
+"1764P",
+"197E"
+]
+},
+{
+"id": "YXWlzas-Te4",
+"title": "Harbor Havoc 2026 | QF #1-1 | 10102Z & 1698Z vs 56K & 2055A",
+"length": "2:44",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "QF 1-1",
+"red": [
+"10102Z",
+"1698Z"
+],
+"blue": [
+"56K",
+"2055A"
+],
+"kind": "match",
+"teams": [
+"10102Z",
+"1698Z",
+"56K",
+"2055A"
+]
+},
+{
+"id": "Sv0CNknjnLw",
+"title": "Harbor Havoc 2026 | QF #2-1 | 4189R & 10102C vs 77678A & 12914X",
+"length": "2:43",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "QF 2-1",
+"red": [
+"4189R",
+"10102C"
+],
+"blue": [
+"77678A",
+"12914X"
+],
+"kind": "match",
+"teams": [
+"4189R",
+"10102C",
+"77678A",
+"12914X"
+]
+},
+{
+"id": "nQC49ljs6Xk",
+"title": "Harbor Havoc 2026 | QF #3-1 | 2142X & 1764X vs 56S & 7701S",
+"length": "2:41",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "QF 3-1",
+"red": [
+"2142X",
+"1764X"
+],
+"blue": [
+"56S",
+"7701S"
+],
+"kind": "match",
+"teams": [
+"2142X",
+"1764X",
+"56S",
+"7701S"
+]
+},
+{
+"id": "7eeYUx2JsT0",
+"title": "Harbor Havoc 2026 | QF #4-1 | 1764P & 197E vs 4393A & 2982A",
+"length": "2:43",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "QF 4-1",
+"red": [
+"1764P",
+"197E"
+],
+"blue": [
+"4393A",
+"2982A"
+],
+"kind": "match",
+"teams": [
+"1764P",
+"197E",
+"4393A",
+"2982A"
+]
+},
+{
+"id": "g2w_-x11kAM",
+"title": "Harbor Havoc 2026 | R16 #1-1 | 10102Z & 1698Z vs 5327V & 3134G",
+"length": "3:00",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "R16 1-1",
+"red": [
+"10102Z",
+"1698Z"
+],
+"blue": [
+"5327V",
+"3134G"
+],
+"kind": "match",
+"teams": [
+"10102Z",
+"1698Z",
+"5327V",
+"3134G"
+]
+},
+{
+"id": "CDlAGT8gd0s",
+"title": "Harbor Havoc 2026 | R16 #2-1 | 56K & 2055A vs 2145X & 2145Y",
+"length": "3:02",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "R16 2-1",
+"red": [
+"56K",
+"2055A"
+],
+"blue": [
+"2145X",
+"2145Y"
+],
+"kind": "match",
+"teams": [
+"56K",
+"2055A",
+"2145X",
+"2145Y"
+]
+},
+{
+"id": "4Msbln_rpCw",
+"title": "Harbor Havoc 2026 | R16 #3-1 | 4189R & 10102C vs 74947J & 20004N",
+"length": "2:50",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "R16 3-1",
+"red": [
+"4189R",
+"10102C"
+],
+"blue": [
+"74947J",
+"20004N"
+],
+"kind": "match",
+"teams": [
+"4189R",
+"10102C",
+"74947J",
+"20004N"
+]
+},
+{
+"id": "4i26nf-cwCA",
+"title": "Harbor Havoc 2026 | R16 #4-1 | 77678A & 12914X vs 1764V & 2982Z",
+"length": "2:44",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "R16 4-1",
+"red": [
+"77678A",
+"12914X"
+],
+"blue": [
+"1764V",
+"2982Z"
+],
+"kind": "match",
+"teams": [
+"77678A",
+"12914X",
+"1764V",
+"2982Z"
+]
+},
+{
+"id": "6CHLvioz39s",
+"title": "Harbor Havoc 2026 | R16 #5-1 | 2982B & 1584A vs 2142X & 1764X",
+"length": "2:54",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "R16 5-1",
+"red": [
+"2982B",
+"1584A"
+],
+"blue": [
+"2142X",
+"1764X"
+],
+"kind": "match",
+"teams": [
+"2982B",
+"1584A",
+"2142X",
+"1764X"
+]
+},
+{
+"id": "Z56FSnlNoxg",
+"title": "Harbor Havoc 2026 | R16 #6-1 | 56S & 7701S vs 8030A & 1764M",
+"length": "3:07",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "R16 6-1",
+"red": [
+"56S",
+"7701S"
+],
+"blue": [
+"8030A",
+"1764M"
+],
+"kind": "match",
+"teams": [
+"56S",
+"7701S",
+"8030A",
+"1764M"
+]
+},
+{
+"id": "LrJK0D96CGc",
+"title": "Harbor Havoc 2026 | R16 #7-1 | 1764P & 197E vs 56T & 20005Z",
+"length": "2:41",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "R16 7-1",
+"red": [
+"1764P",
+"197E"
+],
+"blue": [
+"56T",
+"20005Z"
+],
+"kind": "match",
+"teams": [
+"1764P",
+"197E",
+"56T",
+"20005Z"
+]
+},
+{
+"id": "TOJ_e6C-dPM",
+"title": "Harbor Havoc 2026 | R16 #8-1 | 4393A & 2982A vs 2142S & 58676S",
+"length": "2:40",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Harbor Havoc Signature",
+"match": "R16 8-1",
+"red": [
+"4393A",
+"2982A"
+],
+"blue": [
+"2142S",
+"58676S"
+],
+"kind": "match",
+"teams": [
+"4393A",
+"2982A",
+"2142S",
+"58676S"
+]
+},
+{
+"id": "SwwxtP-eWlM",
+"title": "Harbor Havoc 2026 | SF #1-1 | 10102Z & 1698Z vs 77678A & 12914X",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Harbor Havoc Signature",
+"match": "SF 1-1",
+"red": [
+"10102Z",
+"1698Z"
+],
+"blue": [
+"77678A",
+"12914X"
+],
+"kind": "match",
+"teams": [
+"10102Z",
+"1698Z",
+"77678A",
+"12914X"
+]
+},
+{
+"id": "i-0MAXLpXPM",
+"title": "Harbor Havoc 2026 | SF #2-1 | 56S & 7701S vs 1764P & 197E",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Harbor Havoc Signature",
+"match": "SF 2-1",
+"red": [
+"56S",
+"7701S"
+],
+"blue": [
+"1764P",
+"197E"
+],
+"kind": "match",
+"teams": [
+"56S",
+"7701S",
+"1764P",
+"197E"
+]
+},
+{
+"id": "lARnTwHYdVQ",
+"title": "Full Finals | The Highlander Summit Signature | 12125A & 96Z vs 9909M & 1862A | VEX Override",
+"channel": "@vexroboticsvault",
+"length": null,
+"published": null,
+"event": "Highlander Summit Signature",
+"match": "Full Finals",
+"red": [
+"12125A",
+"96Z"
+],
+"blue": [
+"9909M",
+"1862A"
+],
+"kind": "match",
+"teams": [
+"12125A",
+"96Z",
+"9909M",
+"1862A"
+]
+},
+{
+"id": "e2-dbeV-7ws",
+"title": "Highlander Summit 2026 | 9909M & 10702X vs 66556Z & 7405A | Qual 12",
+"channel": "@vexroboticsvault",
+"length": null,
+"published": null,
+"event": "Highlander Summit Signature",
+"match": "Qual 12",
+"red": [
+"9909M",
+"10702X"
+],
+"blue": [
+"66556Z",
+"7405A"
+],
+"kind": "match",
+"teams": [
+"9909M",
+"10702X",
+"66556Z",
+"7405A"
+]
+},
+{
+"id": "Kx4bKVNEpjA",
+"title": "Highlander Summit 2026 | Final #1-1 | 12125A & 96Z vs 9909M & 1862A",
+"length": "2:45",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "Final 1-1",
+"red": [
+"12125A",
+"96Z"
+],
+"blue": [
+"9909M",
+"1862A"
+],
+"kind": "match",
+"teams": [
+"12125A",
+"96Z",
+"9909M",
+"1862A"
+]
+},
+{
+"id": "EA3kR3YaUxg",
+"title": "Highlander Summit 2026 | Final #1-3 | 12125A & 96Z vs 9909M & 1862A",
+"length": "2:31",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "Final 1-3",
+"red": [
+"12125A",
+"96Z"
+],
+"blue": [
+"9909M",
+"1862A"
+],
+"kind": "match",
+"teams": [
+"12125A",
+"96Z",
+"9909M",
+"1862A"
+]
+},
+{
+"id": "Zh_v1mk7ZLI",
+"title": "Highlander Summit 2026 | QF #1-1 | 2982X & 20850Z vs 20850G & 3150Z",
+"length": "2:37",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "QF 1-1",
+"red": [
+"2982X",
+"20850Z"
+],
+"blue": [
+"20850G",
+"3150Z"
+],
+"kind": "match",
+"teams": [
+"2982X",
+"20850Z",
+"20850G",
+"3150Z"
+]
+},
+{
+"id": "hILmQMxBN60",
+"title": "Highlander Summit 2026 | QF #2-2 | 295A & 20850W vs 12125A & 96Z",
+"length": "2:32",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "QF 2-2",
+"red": [
+"295A",
+"20850W"
+],
+"blue": [
+"12125A",
+"96Z"
+],
+"kind": "match",
+"teams": [
+"295A",
+"20850W",
+"12125A",
+"96Z"
+]
+},
+{
+"id": "xqY55iGJpOE",
+"title": "Highlander Summit 2026 | QF #3-1 | 1698A & 66556Z vs 9909M & 1862A",
+"length": "3:04",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "QF 3-1",
+"red": [
+"1698A",
+"66556Z"
+],
+"blue": [
+"9909M",
+"1862A"
+],
+"kind": "match",
+"teams": [
+"1698A",
+"66556Z",
+"9909M",
+"1862A"
+]
+},
+{
+"id": "n11q-B1Fzz0",
+"title": "Highlander Summit 2026 | R16 #1-1 | 2982X & 20850Z vs 2982B & 2982Z",
+"length": "2:17",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "R16 1-1",
+"red": [
+"2982X",
+"20850Z"
+],
+"blue": [
+"2982B",
+"2982Z"
+],
+"kind": "match",
+"teams": [
+"2982X",
+"20850Z",
+"2982B",
+"2982Z"
+]
+},
+{
+"id": "W3tB4duDNoo",
+"title": "Highlander Summit 2026 | R16 #2-1 | 20850G & 3150Z vs 2627E & 62880A",
+"length": "2:36",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "R16 2-1",
+"red": [
+"20850G",
+"3150Z"
+],
+"blue": [
+"2627E",
+"62880A"
+],
+"kind": "match",
+"teams": [
+"20850G",
+"3150Z",
+"2627E",
+"62880A"
+]
+},
+{
+"id": "Z-tTl-u1H7w",
+"title": "Highlander Summit 2026 | R16 #5-1 | 1698A & 66556Z vs 4610Z & 295Y",
+"length": "3:32",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "R16 5-1",
+"red": [
+"1698A",
+"66556Z"
+],
+"blue": [
+"4610Z",
+"295Y"
+],
+"kind": "match",
+"teams": [
+"1698A",
+"66556Z",
+"4610Z",
+"295Y"
+]
+},
+{
+"id": "TtPqLKFAym8",
+"title": "Highlander Summit 2026 | R16 #6-1 | 9909M & 1862A vs 169C & 2145V",
+"length": "2:33",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "R16 6-1",
+"red": [
+"9909M",
+"1862A"
+],
+"blue": [
+"169C",
+"2145V"
+],
+"kind": "match",
+"teams": [
+"9909M",
+"1862A",
+"169C",
+"2145V"
+]
+},
+{
+"id": "lt4lZLVAeWU",
+"title": "Highlander Summit 2026 | R16 #8-1 | 1769A & 1584A vs 197E & 4610W",
+"length": "2:36",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "R16 8-1",
+"red": [
+"1769A",
+"1584A"
+],
+"blue": [
+"197E",
+"4610W"
+],
+"kind": "match",
+"teams": [
+"1769A",
+"1584A",
+"197E",
+"4610W"
+]
+},
+{
+"id": "-T4mfTU4CUw",
+"title": "Highlander Summit 2026 | SF #1-1 | 2982X & 20850Z vs 12125A & 96Z",
+"length": "2:47",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "SF 1-1",
+"red": [
+"2982X",
+"20850Z"
+],
+"blue": [
+"12125A",
+"96Z"
+],
+"kind": "match",
+"teams": [
+"2982X",
+"20850Z",
+"12125A",
+"96Z"
+]
+},
+{
+"id": "XQm4iQ1-USA",
+"title": "Highlander Summit 2026 | SF #2-1 | 9909M & 1862A vs 9039J & 2145X",
+"length": "2:51",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit Signature",
+"match": "SF 2-1",
+"red": [
+"9909M",
+"1862A"
+],
+"blue": [
+"9039J",
+"2145X"
+],
+"kind": "match",
+"teams": [
+"9909M",
+"1862A",
+"9039J",
+"2145X"
+]
+},
+{
+"id": "IKKYp-Z6MZM",
+"title": "Sublime A & Ethereus vs Habibi & Demotorized | Highlander Summit 2026 - Qual 161",
+"channel": "@vexroboticsvault",
+"length": null,
+"published": null,
+"event": "Highlander Summit Signature",
+"match": "Qual 161",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "Ec-gH-wVFt0",
+"title": "Hong Kong Signature 2026 | Full Finals | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Hong Kong Signature",
+"match": "Full Finals",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "fZRQ6x0x1m8",
+"title": "Full Finals | The Lobstah Bowl Spotlight | 4886S & 74947J vs 1584V & 1584A | VEX Override",
+"channel": "@vexroboticsvault",
+"length": null,
+"published": null,
+"event": "Lobstah Bowl",
+"match": "Full Finals",
+"red": [
+"4886S",
+"74947J"
+],
+"blue": [
+"1584V",
+"1584A"
+],
+"kind": "match",
+"teams": [
+"4886S",
+"74947J",
+"1584V",
+"1584A"
+]
+},
+{
+"id": "7TZWE0wyJS4",
+"title": "Mall of America 2026: Semifinals & Finals | VEX V5 OVERRIDE",
+"length": "10:19",
+"published": "3mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Mall of America Signature",
+"match": "Semifinals",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "Rov6pimeq_k",
+"title": "Override Mall of America Finals w 1028A & 10102A",
+"length": "16:38",
+"published": "3mo ago",
+"channel": "Luke does robotics",
+"event": "Mall of America Signature",
+"match": "Finals",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": [
+"10102A",
+"1028A"
+]
+},
+{
+"id": "T0EeRxvtOS8",
+"title": "VEX Override | After Hours & Snacky Cakes | MOA Sig - Qual 56 (1069A & 16610A vs 56160A & 8110S)",
+"channel": "VEX Vault",
+"length": "2:37",
+"published": "3mo ago",
+"event": "Mall of America Signature",
+"match": "Qual 56",
+"red": [
+"1069A",
+"16610A"
+],
+"blue": [
+"56160A",
+"8110S"
+],
+"kind": "match",
+"teams": [
+"1069A",
+"16610A",
+"56160A",
+"8110S"
+]
+},
+{
+"id": "vWGDT1S9Z1Q",
+"title": "VEX Override | Defense and Toggles | MOA - Qual 70 (8110S & 8110Z vs 67100G & 9364E)",
+"channel": "VEX Vault",
+"length": "2:37",
+"published": "3mo ago",
+"event": "Mall of America Signature",
+"match": "Qual 70",
+"red": [
+"8110S",
+"8110Z"
+],
+"blue": [
+"67100G",
+"9364E"
+],
+"kind": "match",
+"teams": [
+"8110S",
+"8110Z",
+"67100G",
+"9364E"
+]
+},
+{
+"id": "3ewUQFU8J9M",
+"title": "VEX Override | Moonshot & Corean Khicken | Mall of America Qual 62 (471B & 10102A vs 1468A & 2145X)",
+"channel": "VEX Vault",
+"length": "2:27",
+"published": "3mo ago",
+"event": "Mall of America Signature",
+"match": "Qual 62",
+"red": [
+"471B",
+"10102A"
+],
+"blue": [
+"1468A",
+"2145X"
+],
+"kind": "match",
+"teams": [
+"471B",
+"10102A",
+"1468A",
+"2145X"
+]
+},
+{
+"id": "o8irbA40cHA",
+"title": "20261009 SmokyMountain Vex Override 40000C Q038",
+"channel": "Quanhu Sheng",
+"length": "3:16",
+"published": "1mo ago",
+"event": "Smoky Mountain Forge Signature",
+"match": "Qual 038",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": [
+"40000C"
+]
+},
+{
+"id": "SyF45yHVpTU",
+"title": "99040B & 20850S vs 96668W & 2701Z | Smoky Mountain Forge Sig - Qual 77 | VEX Override",
+"channel": "VEX Vault",
+"length": "2:41",
+"published": "4w ago",
+"event": "Smoky Mountain Forge Signature",
+"match": "Qual 77",
+"red": [
+"99040B",
+"20850S"
+],
+"blue": [
+"96668W",
+"2701Z"
+],
+"kind": "match",
+"teams": [
+"99040B",
+"20850S",
+"96668W",
+"2701Z"
+]
+},
+{
+"id": "DmoAvJhntcU",
+"title": "Apollo & ALT-W vs Artemis & Paragon | Smoky Mountain Forge Sig - Qual 125 | VEX Override",
+"channel": "VEX Vault",
+"length": "2:33",
+"published": "4w ago",
+"event": "Smoky Mountain Forge Signature",
+"match": "Qual 125",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "lcldfDJG3HQ",
+"title": "10666A Ctrl X vs 471B Moonshot | Speedway Override Sig 2026 - Qual 162",
+"channel": "VEX Vault",
+"length": "2:41",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "Qual 162",
+"red": [
+"10666A"
+],
+"blue": [
+"471B"
+],
+"kind": "match",
+"teams": [
+"10666A",
+"471B"
+]
+},
+{
+"id": "fT5HTKSHq9s",
+"title": "10B & 8682A vs 2011A & 1233N | Speedway Override Sig 2026 - Qual 189",
+"channel": "VEX Vault",
+"length": "2:45",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "Qual 189",
+"red": [
+"10B",
+"8682A"
+],
+"blue": [
+"2011A",
+"1233N"
+],
+"kind": "match",
+"teams": [
+"10B",
+"8682A",
+"2011A",
+"1233N"
+]
+},
+{
+"id": "C33eleAeJ8o",
+"title": "10B vs 32K | Speedway Override Sig 2026 - Qual 165",
+"channel": "VEX Vault",
+"length": "2:48",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "Qual 165",
+"red": [
+"10B"
+],
+"blue": [
+"32K"
+],
+"kind": "match",
+"teams": [
+"10B",
+"32K"
+]
+},
+{
+"id": "Fch7NPspibw",
+"title": "471B Moonshot vs 2623K Kingsman | Speedway Override Sig 2026 - Qual 110",
+"channel": "VEX Vault",
+"length": "3:12",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "Qual 110",
+"red": [
+"471B"
+],
+"blue": [
+"2623K"
+],
+"kind": "match",
+"teams": [
+"471B",
+"2623K"
+]
+},
+{
+"id": "f13MkFvCDMk",
+"title": "Full Finals | Speedway Override VEX Signature | 3946E & 471B vs 2393S & 1239E",
+"channel": "@vexroboticsvault",
+"length": null,
+"published": null,
+"event": "Speedway Signature",
+"match": "Full Finals",
+"red": [
+"3946E",
+"471B"
+],
+"blue": [
+"2393S",
+"1239E"
+],
+"kind": "match",
+"teams": [
+"3946E",
+"471B",
+"2393S",
+"1239E"
+]
+},
+{
+"id": "l2zJygPnNeQ",
+"title": "Speedway Signature Event 2026 - Finals | VEX V5 Override",
+"length": "5:15",
+"published": "1mo ago",
+"channel": "Hyperion Robotics ",
+"event": "Speedway Signature",
+"match": "Finals",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "uXTJGJ-eFLU",
+"title": "Speedway: Override 2026 | Final #1-1 | 3946E & 471B vs 2393S & 1239E",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:52",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "Final 1-1",
+"red": [
+"3946E",
+"471B"
+],
+"blue": [
+"2393S",
+"1239E"
+],
+"kind": "match",
+"teams": [
+"3946E",
+"471B",
+"2393S",
+"1239E"
+]
+},
+{
+"id": "Z2keejXtF6w",
+"title": "Speedway: Override 2026 | Final #1-2 | 3946E & 471B vs 2393S & 1239E",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:37",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "Final 1-2",
+"red": [
+"3946E",
+"471B"
+],
+"blue": [
+"2393S",
+"1239E"
+],
+"kind": "match",
+"teams": [
+"3946E",
+"471B",
+"2393S",
+"1239E"
+]
+},
+{
+"id": "1r-POswEj74",
+"title": "Speedway: Override 2026 | QF #1-1 | 3946E & 471B vs 884A & 9364E",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:38",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "QF 1-1",
+"red": [
+"3946E",
+"471B"
+],
+"blue": [
+"884A",
+"9364E"
+],
+"kind": "match",
+"teams": [
+"3946E",
+"471B",
+"884A",
+"9364E"
+]
+},
+{
+"id": "5_-_k1Ni4K8",
+"title": "Speedway: Override 2026 | QF #2-1 | 5069Y & 1028A vs 10666A & 252W",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:35",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "QF 2-1",
+"red": [
+"5069Y",
+"1028A"
+],
+"blue": [
+"10666A",
+"252W"
+],
+"kind": "match",
+"teams": [
+"5069Y",
+"1028A",
+"10666A",
+"252W"
+]
+},
+{
+"id": "H4TVbcDyd1s",
+"title": "Speedway: Override 2026 | QF #3-1 | 54010A & 10B vs 2393S & 1239E",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:43",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "QF 3-1",
+"red": [
+"54010A",
+"10B"
+],
+"blue": [
+"2393S",
+"1239E"
+],
+"kind": "match",
+"teams": [
+"54010A",
+"10B",
+"2393S",
+"1239E"
+]
+},
+{
+"id": "bP2U2ud1a6w",
+"title": "Speedway: Override 2026 | QF #4-1 | 80001C & 1082M vs 2011F & 2145V",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:37",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "QF 4-1",
+"red": [
+"80001C",
+"1082M"
+],
+"blue": [
+"2011F",
+"2145V"
+],
+"kind": "match",
+"teams": [
+"80001C",
+"1082M",
+"2011F",
+"2145V"
+]
+},
+{
+"id": "CXVFEZx2cjk",
+"title": "Speedway: Override 2026 | R16 #1-1 | 3946E & 471B vs 7447X & 68699A",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:40",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "R16 1-1",
+"red": [
+"3946E",
+"471B"
+],
+"blue": [
+"7447X",
+"68699A"
+],
+"kind": "match",
+"teams": [
+"3946E",
+"471B",
+"7447X",
+"68699A"
+]
+},
+{
+"id": "-k32ORRyM6s",
+"title": "Speedway: Override 2026 | R16 #2-1 | 884A & 9364E vs 6210M & 11101B",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:35",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "R16 2-1",
+"red": [
+"884A",
+"9364E"
+],
+"blue": [
+"6210M",
+"11101B"
+],
+"kind": "match",
+"teams": [
+"884A",
+"9364E",
+"6210M",
+"11101B"
+]
+},
+{
+"id": "oVvGarZ_Nus",
+"title": "Speedway: Override 2026 | R16 #3-1 | 5069Y & 1028A vs 2011A & 3150A",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:37",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "R16 3-1",
+"red": [
+"5069Y",
+"1028A"
+],
+"blue": [
+"2011A",
+"3150A"
+],
+"kind": "match",
+"teams": [
+"5069Y",
+"1028A",
+"2011A",
+"3150A"
+]
+},
+{
+"id": "2mhnQNIcuAA",
+"title": "Speedway: Override 2026 | R16 #4-1 | 10666A & 252W vs 3150V & 2145X",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:48",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "R16 4-1",
+"red": [
+"10666A",
+"252W"
+],
+"blue": [
+"3150V",
+"2145X"
+],
+"kind": "match",
+"teams": [
+"10666A",
+"252W",
+"3150V",
+"2145X"
+]
+},
+{
+"id": "gGUtG7EqS2Y",
+"title": "Speedway: Override 2026 | R16 #5-1 | 54010A & 10B vs 99904E & 2145Y",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:45",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "R16 5-1",
+"red": [
+"54010A",
+"10B"
+],
+"blue": [
+"99904E",
+"2145Y"
+],
+"kind": "match",
+"teams": [
+"54010A",
+"10B",
+"99904E",
+"2145Y"
+]
+},
+{
+"id": "kxSY83THpHw",
+"title": "Speedway: Override 2026 | R16 #6-2 | 12914X & 2577X vs 2393S & 1239E",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:38",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "R16 6-2",
+"red": [
+"12914X",
+"2577X"
+],
+"blue": [
+"2393S",
+"1239E"
+],
+"kind": "match",
+"teams": [
+"12914X",
+"2577X",
+"2393S",
+"1239E"
+]
+},
+{
+"id": "YMpwouE94q4",
+"title": "Speedway: Override 2026 | R16 #7-1 | 2623K & 8682A vs 80001C & 1082M",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:38",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "R16 7-1",
+"red": [
+"2623K",
+"8682A"
+],
+"blue": [
+"80001C",
+"1082M"
+],
+"kind": "match",
+"teams": [
+"2623K",
+"8682A",
+"80001C",
+"1082M"
+]
+},
+{
+"id": "LcmEbXvS0Yg",
+"title": "Speedway: Override 2026 | R16 #8-1 | 3150U & 10102Z vs 2011F & 2145V",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:49",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "R16 8-1",
+"red": [
+"3150U",
+"10102Z"
+],
+"blue": [
+"2011F",
+"2145V"
+],
+"kind": "match",
+"teams": [
+"3150U",
+"10102Z",
+"2011F",
+"2145V"
+]
+},
+{
+"id": "r2f9HOsQR6c",
+"title": "Speedway: Override 2026 | SF #1-1 | 3946E & 471B vs 10666A & 252W",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:39",
+"published": "1mo ago",
+"event": "Speedway Signature",
+"match": "SF 1-1",
+"red": [
+"3946E",
+"471B"
+],
+"blue": [
+"10666A",
+"252W"
+],
+"kind": "match",
+"teams": [
+"3946E",
+"471B",
+"10666A",
+"252W"
+]
+},
+{
+"id": "crEey8qMuqA",
+"title": "Speedway: Override 2026 | SF #2-1 | 2393S & 1239E vs 2011F & 2145V",
+"length": "2:37",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Speedway Signature",
+"match": "SF 2-1",
+"red": [
+"2393S",
+"1239E"
+],
+"blue": [
+"2011F",
+"2145V"
+],
+"kind": "match",
+"teams": [
+"2393S",
+"1239E",
+"2011F",
+"2145V"
+]
+},
+{
+"id": "lv85kivDa7w",
+"title": "Silk Road Link 2026 | Semifinals & Finals | VEX V5 Override",
+"length": "11:55",
+"published": "2mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "The Silk Road Link",
+"match": "Semifinals",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "sQXLaXF469Y",
+"title": "The Silk Road Link: Override\u2122 (HS) : Division 1 - Final #1-1 - 2731K & 9123S vs 54001A & 18190X - Au",
+"length": "2:22",
+"published": "3mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "The Silk Road Link",
+"match": "Final 1-1",
+"red": [
+"2731K",
+"9123S"
+],
+"blue": [
+"54001A",
+"18190X"
+],
+"kind": "match",
+"teams": [
+"2731K",
+"9123S",
+"54001A",
+"18190X"
+]
+},
+{
+"id": "_3ooER9wOl4",
+"title": "The Silk Road Link: Override\u2122 (HS) : Division 1 - Final #1-2 - 2731K & 9123S vs 54001A & 18190X - Au",
+"length": "2:16",
+"published": "3mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "The Silk Road Link",
+"match": "Final 1-2",
+"red": [
+"2731K",
+"9123S"
+],
+"blue": [
+"54001A",
+"18190X"
+],
+"kind": "match",
+"teams": [
+"2731K",
+"9123S",
+"54001A",
+"18190X"
+]
+},
+{
+"id": "PfJe0ZkNvHU",
+"title": "The Silk Road Link: Override\u2122 (HS) : Division 1 - Final #1-3 - 2731K & 9123S vs 54001A & 18190X - Au",
+"length": "2:25",
+"published": "3mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "The Silk Road Link",
+"match": "Final 1-3",
+"red": [
+"2731K",
+"9123S"
+],
+"blue": [
+"54001A",
+"18190X"
+],
+"kind": "match",
+"teams": [
+"2731K",
+"9123S",
+"54001A",
+"18190X"
+]
+},
+{
+"id": "aelhzLIgKNg",
+"title": "The Silk Road Link: Override\u2122 (HS) | Division A | QF #3-1 | 94201A & 12993S vs 10188S & 68678M",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"length": "2:19",
+"published": "3mo ago",
+"event": "The Silk Road Link",
+"match": "QF 3-1",
+"red": [
+"94201A",
+"12993S"
+],
+"blue": [
+"10188S",
+"68678M"
+],
+"kind": "match",
+"teams": [
+"94201A",
+"12993S",
+"10188S",
+"68678M"
+]
+},
+{
+"id": "mzrqSKqmVCg",
+"title": "The Silk Road Link: Override\u2122 (HS) | Division A | QF #4-1 | 54001A & 18190X vs 77776Z & 54001Z",
+"length": "2:21",
+"published": "3mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "The Silk Road Link",
+"match": "QF 4-1",
+"red": [
+"54001A",
+"18190X"
+],
+"blue": [
+"77776Z",
+"54001Z"
+],
+"kind": "match",
+"teams": [
+"54001A",
+"18190X",
+"77776Z",
+"54001Z"
+]
+},
+{
+"id": "bDkINvmThVw",
+"title": "The Silk Road Link: Override\u2122 (HS) | Division A | SF #1-1 | 2731K & 9123S vs 86800X & 3283A",
+"length": "2:20",
+"published": "3mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "The Silk Road Link",
+"match": "SF 1-1",
+"red": [
+"2731K",
+"9123S"
+],
+"blue": [
+"86800X",
+"3283A"
+],
+"kind": "match",
+"teams": [
+"2731K",
+"9123S",
+"86800X",
+"3283A"
+]
+},
+{
+"id": "0-5sAtgWImo",
+"title": "The Silk Road Link: Override\u2122 (HS) | Division A | SF #2-1 | 94201A & 12993S vs 54001A & 18190X",
+"length": "2:29",
+"published": "3mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "The Silk Road Link",
+"match": "SF 2-1",
+"red": [
+"94201A",
+"12993S"
+],
+"blue": [
+"54001A",
+"18190X"
+],
+"kind": "match",
+"teams": [
+"94201A",
+"12993S",
+"54001A",
+"18190X"
+]
+},
+{
+"id": "SGWf3ckdbcE",
+"title": "The Silk Road link grand finals 1-3 | vex override ",
+"length": "6:38",
+"published": "3mo ago",
+"channel": "Little Will",
+"event": "The Silk Road Link",
+"match": "finals",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "4NooGAaRqRU",
+"title": "VEX Override: Tri-Valley VEX V5 Robotics Competition #1 Finals 68699A, 1468A vs. 49842A, 18886X",
+"channel": "Neal",
+"length": "2:29",
+"published": "1mo ago",
+"event": "Tri-Valley",
+"match": "Finals",
+"red": [
+"68699A",
+"1468A"
+],
+"blue": [
+"49842A",
+"18886X"
+],
+"kind": "match",
+"teams": [
+"68699A",
+"1468A",
+"49842A",
+"18886X"
+]
+},
+{
+"id": "ETdrwIkQIuQ",
+"title": "Beach Brawl 2026: Semifinals + Championship Result | California Region 4 | VEX V5 Override",
+"length": "6:12",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": null,
+"match": "Semifinals",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "Bbh67QJNNys",
+"title": "Legacy Robotics Vex Override Upset Semi-Final - Blue Flips the Toggle",
+"channel": "Hayden",
+"length": "2:16",
+"published": "3w ago",
+"event": null,
+"match": "Semi-Final",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "7rYDpjTL2N8",
+"title": "Live Reaction and Breakdown of First Override Finals | Blanks Beginning VEX V5 Override",
+"length": "12:20",
+"published": "4mo ago",
+"channel": "The VEX Analyst",
+"event": null,
+"match": "Finals",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "gn5EOBgNL7A",
+"title": "Smoky Breakdown:THESE FINALS WERE SOO CLOSE! The Strategy Battle Behind Smoky Finals VEX V5 Override",
+"length": "25:55",
+"published": "1mo ago",
+"channel": "The VEX Analyst",
+"event": null,
+"match": "FINALS",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "XRD6k6iOwwk",
+"title": "VEX OVERRIDE AUTOMATE ROUND OF 16",
+"channel": "Hawks Robotics",
+"length": "2:27",
+"published": "4mo ago",
+"event": null,
+"match": "ROUND OF 16",
+"red": null,
+"blue": null,
+"kind": "match",
+"teams": []
+},
+{
+"id": "8UPbmxK7yx8",
+"title": "All Saints 2026: Final Four | Elite Local | Virginia | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "All Saints",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "rA8vgLTyy7w",
+"title": "Beach Brawl 2026: Final Four | Elite Local | California | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Beach Brawl",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "alY12Qicr0c",
+"title": "Elims at Blank.'s Beginnings - VRC Override Early Season Tournament",
+"length": "10:56",
+"published": "5mo ago",
+"channel": "Blank.",
+"event": "Blank.'s Beginnings",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "3xVfjc5xd4A",
+"title": "Bruin In The Den 2026: Final Four | Elite Local | Virginia | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Bruin In The Den",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "GfdeArE7UQ4",
+"title": "Caution Tape Halloween Qualifier 2026: Final Four | Elite Local | Ontario | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Caution Tape Halloween Qualifier",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "h6_VcLJ-vQk",
+"title": "Centennial roBOOtics SPOOKtacular 2026: Final Four | California | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Centennial roBOOtics SPOOKtacular",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "1wihzwBIJHo",
+"title": "GHOST Halloween Override UT Austin: Final Four | Spotlight | Texas | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "GHOST Halloween Override UT Austin",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "Q2mUChy7ybI",
+"title": "Great Planes 2026: Final Four | Semifinals & Finals | VEX V5 Override",
+"length": "10:26",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Great Planes",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "41ZuD9Y_0EU",
+"title": "10A | Great Planes Reveal | VEX Override",
+"channel": "Exothermic Absolute 10A",
+"length": "0:55",
+"published": "1mo ago",
+"event": "Great Planes Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"10A"
+]
+},
+{
+"id": "H4lv9Tgk4u4",
+"title": "17788F great planes reveal robotics override",
+"channel": "Frostbyte ",
+"length": "0:45",
+"published": "1mo ago",
+"event": "Great Planes Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"17788F"
+]
+},
+{
+"id": "4BDX1jRbqYE",
+"title": "40000A | Vex Override | Great Planes Robot Reveal",
+"channel": "Riley Markley",
+"length": "0:42",
+"published": "1mo ago",
+"event": "Great Planes Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"40000A"
+]
+},
+{
+"id": "7QdveVQ3H0A",
+"title": "67605X - Override 2026 Great Planes Teaser",
+"channel": "Phoenix Reforged",
+"length": "0:58",
+"published": "1mo ago",
+"event": "Great Planes Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"67605X"
+]
+},
+{
+"id": "Nv2zletJdKo",
+"title": "Great Planes Signature Event 2026 - Day 01",
+"length": "7:36:19",
+"published": "Streamed 1mo ago",
+"channel": "National Robotics Academy Inc.",
+"event": "Great Planes Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "pbNH35e8e4U",
+"title": "Great Planes Signature Event 2026 - Day 02",
+"length": "8:42:05",
+"published": "Streamed 1mo ago",
+"channel": "National Robotics Academy Inc.",
+"event": "Great Planes Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "kxFYcg0OeY8",
+"title": "Harbor Havoc 2026: Final Four | Signature | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Harbor Havoc",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "6Hccv0Fu1X0",
+"title": "Harbor Havoc Drivers Meeting Signature Event 2026-2027 Season",
+"length": "17:56",
+"published": "Streamed 1mo ago",
+"channel": "Robotics Institute of Maine",
+"event": "Harbor Havoc Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "swvgMjSPZUI",
+"title": "Harbor Havoc Drivers Signature Event Day 1 2026-2027 Season",
+"length": "7:48:16",
+"published": "Streamed 1mo ago",
+"channel": "Robotics Institute of Maine",
+"event": "Harbor Havoc Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "5ze98TtLdHI",
+"title": "Harbor Havoc Drivers Signature Event Day 2 2026-2027 Season",
+"length": "7:03:01",
+"published": "Streamed 1mo ago",
+"channel": "Robotics Institute of Maine",
+"event": "Harbor Havoc Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "VTL-Oi-GBzI",
+"title": "Highlander Summit 2026: Final Four | Semifinals & Finals | VEX V5 Override",
+"length": "13:45",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Highlander Summit",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "EcmxnRCRHB0",
+"title": "81390E | Vex Override | Highlander Summit Reveal",
+"channel": "Kyle Leong",
+"length": "0:35",
+"published": "1mo ago",
+"event": "Highlander Summit Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"81390E"
+]
+},
+{
+"id": "cP-qZiNhQno",
+"title": "Highlander Summit 2026 VEX V5 Robotics Signature Event! \ud83e\udd16 | BlinkNBuild",
+"length": "0:39",
+"published": "3mo ago",
+"channel": "BlinkNBuild",
+"event": "Highlander Summit Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "k2wyGixbOkI",
+"title": "HK SIG Reveal | Team 77776Z | VEX OverRide 2026-2027",
+"channel": "Hanasaku",
+"length": "0:57",
+"published": "4w ago",
+"event": "Hong Kong Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"77776Z"
+]
+},
+{
+"id": "wRF95FEOWWw",
+"title": "Legacy Robotics 2026: Final Four | Elite Local | California Region 4 | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Legacy Robotics",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "NU-6wBHg8rw",
+"title": "Lobstah Bowl 2026: Final Four | Spotlight | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Lobstah Bowl",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "OVd_Pbj6KbQ",
+"title": "10702X Milky Way Monkeys | MOA Reveal | VEX Override",
+"channel": "Milky Way Monkeys",
+"length": "0:53",
+"published": "3mo ago",
+"event": "Mall of America Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"10702X"
+]
+},
+{
+"id": "iW9KTQQv62k",
+"title": "2577X | Moa Reveal | Vex Override",
+"channel": "2577X - Funky Monkeys",
+"length": "1:01",
+"published": "3mo ago",
+"event": "Mall of America Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"2577X"
+]
+},
+{
+"id": "Kv2xpcYwasI",
+"title": "2982B Vex V5 Override MOA Reveal",
+"channel": "2982B",
+"length": "1:41",
+"published": "3mo ago",
+"event": "Mall of America Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"2982B"
+]
+},
+{
+"id": "sbiRQYbT0sU",
+"title": "2982X Mall Of America Reveal (Override)",
+"length": "1:14",
+"published": "3mo ago",
+"channel": "Ultra 2982X",
+"event": "Mall of America Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"2982X"
+]
+},
+{
+"id": "zeOvohYnvcc",
+"title": "66994V MOA Reveal VEX Override",
+"length": "0:50",
+"published": "3mo ago",
+"channel": "daVid",
+"event": "Mall of America Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"66994V"
+]
+},
+{
+"id": "cqio7C6Pyn8",
+"title": "72202Z QSE Robotics | MOA Reveal | VEX OVERRIDE",
+"length": "1:20",
+"published": "3mo ago",
+"channel": "QSE Robotics",
+"event": "Mall of America Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"72202Z"
+]
+},
+{
+"id": "2pY07MoJ5Nk",
+"title": "98548G VEX V5 OverRide MOA Reveal!",
+"channel": "2131Coder",
+"length": "0:55",
+"published": "5mo ago",
+"event": "Mall of America Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"98548G"
+]
+},
+{
+"id": "OGFiVFS4sSI",
+"title": "Can the World Champs Run it Back? | VEX Override MOA Highlights",
+"length": "4:34",
+"published": "3mo ago",
+"channel": "Bread(V5)",
+"event": "Mall of America Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "Miaa5JrWwNs",
+"title": "MOA Signature Winners Interview | 10102A & 1028A | Override",
+"length": "5:50",
+"published": "3mo ago",
+"channel": "FUN Robotics Network",
+"event": "Mall of America Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": [
+"10102A",
+"1028A"
+]
+},
+{
+"id": "1Ew8CKi8MPk",
+"title": "Mall Of America Finals Matches | Vex Override",
+"length": "5:29",
+"published": "3mo ago",
+"channel": "VRC 98807B",
+"event": "Mall of America Signature",
+"match": "Finals",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "mRDhHtAvPLM",
+"title": "Mall of America Signature: Finals Matches Watch Party /w Chat | Vex Override #vexrobotics #vex",
+"length": "3:32:38",
+"published": "Streamed 3mo ago",
+"channel": "VRC 98807B",
+"event": "Mall of America Signature",
+"match": "Finals",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "zdEoWPkMGeg",
+"title": "Vex Override | MOA Reveal | 3946E",
+"channel": "3946E Kent Denver Robotics",
+"length": "1:13",
+"published": "3mo ago",
+"event": "Mall of America Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"3946E"
+]
+},
+{
+"id": "-sDnBlhKM04",
+"title": "Mann Season Opener 2026: Final Four | RECF Achieve: Pinnacle | South Carolina",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Mann Season Opener",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "1R2UoHNeqsg",
+"title": "Night at the Museum 2026: Final Four | Spotlight | Oregon | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Night at the Museum",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "uNq5Wi2k9K4",
+"title": "North Union 2026: Final Four | Elite Local | Ohio | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "North Union",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "jiWL0sSz44k",
+"title": "OWL Firehouse Fall Classic 2026: Final Four | Virginia | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "OWL Firehouse Fall Classic",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "zVquDSowQ5U",
+"title": "SEMS Spooktacular HS 2026: Final Four | Elite Local | Tennessee | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "SEMS Spooktacular HS",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "IgzsF1AyQHg",
+"title": "SKG Boo Bash 2026: Final Four | Georgia | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "SKG Boo Bash",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "DMktAlZUHxA",
+"title": "San Diego MS 2026: Final Four | Elite Local | California Region 4 | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "San Diego MS",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "CCv__EqRE40",
+"title": "Saratoga #3 2026: Final Four | Elite Local | California | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Saratoga #3",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "aa-Wrc519N8",
+"title": "Smoky Mountain Forge 2026: Final Four | Semifinals & Finals | VEX V5 Override",
+"length": "11:13",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Smoky Mountain Forge",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "GPY78fFdjEg",
+"title": "1220X RoboRedux | Smoky Mountain Recap | VEX Override",
+"channel": "1220X RoboRedux",
+"length": "2:46",
+"published": "1mo ago",
+"event": "Smoky Mountain Forge Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": [
+"1220X"
+]
+},
+{
+"id": "DefxVi1egDg",
+"title": "Vex V5 Override Smoky Mountain Forge Signature Event Recap",
+"channel": "Innovation Robotics Team Ghost",
+"length": "2:44",
+"published": "1mo ago",
+"event": "Smoky Mountain Forge Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "ME5jv9cAaJg",
+"title": "Speedway 2026: Final Four | Semifinals & Finals | VEX V5 Override",
+"length": "10:33",
+"published": "1mo ago",
+"channel": "Robot Stats: VEX Scouting & Matches",
+"event": "Speedway",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "mCkA0zkZPTg",
+"title": "1028A \u00b7 5069Y | Speedway Reveal | Vex Override",
+"channel": "1028A",
+"length": "0:34",
+"published": "2mo ago",
+"event": "Speedway Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"1028A",
+"5069Y"
+]
+},
+{
+"id": "HwySSIICEMk",
+"title": "10702X Milky Way Monkeys | Speedway Reveal | VEX Override",
+"channel": "Milky Way Monkeys",
+"length": "0:55",
+"published": "2mo ago",
+"event": "Speedway Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"10702X"
+]
+},
+{
+"id": "MuEKOcZLOts",
+"title": "2577X | Speedway Reveal | Vex Override",
+"channel": "2577X - Funky Monkeys",
+"length": "0:54",
+"published": "2mo ago",
+"event": "Speedway Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"2577X"
+]
+},
+{
+"id": "zhGs-5gah_Y",
+"title": "Speedway: Override VEX V5 Signature Event - Day 1 (Live Stream Presented by Allegion)",
+"length": "7:41:00",
+"published": "Streamed 2mo ago",
+"channel": "Matthew LeBlanc",
+"event": "Speedway Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "KiElXboeVVc",
+"title": "Speedway: Override VEX V5 Signature Event - Day 2 (Live Stream Presented by Allegion)",
+"length": "9:04:10",
+"published": "Streamed 2mo ago",
+"channel": "Matthew LeBlanc",
+"event": "Speedway Signature",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "pW6_ov_p75Q",
+"title": "Starting Is EZ 2026: Final Four | Elite Local | California Region 4 | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Starting Is EZ",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "zcvcijKytNA",
+"title": "Supernova Spectacular 2026: Final Four | Elite Local | California | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Supernova Spectacular",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "suNEQ2Q8Cto",
+"title": "TAI-VEX HS 2026: Final Four | Elite Local | Taiwan | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "TAI-VEX HS",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "oF9dlWik8FY",
+"title": "Torque or Treat 2026: Final Four | Elite Local | Indiana | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Torque or Treat",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "9QdwSEQxYsQ",
+"title": "Trevecca Trojan 2026: Final Four | Elite Local | Tennessee | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "Trevecca Trojan",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "BMoxmKBfqBM",
+"title": "UGLY Robotics 2026: Final Four | Elite Local | California Region 2 | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": "UGLY Robotics",
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "xokblzRqVUI",
+"title": "Match 5 VEX War Eagle Override",
+"channel": "Lakeside Evans Robotics",
+"length": "2:33",
+"published": "9d ago",
+"event": "War Eagle",
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "yBhylY79_g0",
+"title": "1022A Early Season Reveal VEX V5 Override",
+"length": "1:01",
+"published": "4d ago",
+"channel": "Illia's Workshop",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"1022A"
+]
+},
+{
+"id": "fksF2rVTYBg",
+"title": "1069A After Hours | Pits & Parts | Override Robot",
+"length": "9:06",
+"published": "2mo ago",
+"channel": "FUN Robotics Network",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"1069A"
+]
+},
+{
+"id": "RBxjJEMgYz4",
+"title": "108 Prog Skills - Vex Override - 6741R",
+"length": "0:58",
+"published": "4w ago",
+"channel": "6741R Redacted",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": [
+"6741R"
+]
+},
+{
+"id": "5GrCem6MT8g",
+"title": "10909K Override Early Season Showcase",
+"channel": "Kosmik Kokonuts",
+"length": "1:15",
+"published": "2mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"10909K"
+]
+},
+{
+"id": "UxKQMLIDHtg",
+"title": "10909W V2 Reveal Teaser | VEX Override 26-27",
+"length": "0:26",
+"published": "2mo ago",
+"channel": "WD40 Robotics",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"10909W"
+]
+},
+{
+"id": "SAZdFa4tgUQ",
+"title": "10B Burnout | VEX Robotics | Override Early Season Reveal",
+"channel": "Burnout Robotics",
+"length": "0:39",
+"published": "3mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"10B"
+]
+},
+{
+"id": "q22AZehQ6TA",
+"title": "10G Greenish-Yellow Highlighter | VEX Robotics | Override Fall Reveal",
+"length": "1:04",
+"published": "1mo ago",
+"channel": "10G Greenish Yellow Highlighter",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"10G"
+]
+},
+{
+"id": "85o03iqMwJo",
+"title": "1220X RoboRedux | Early Season Reveal | VEX Override",
+"channel": "1220X RoboRedux",
+"length": "2:32",
+"published": "2mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"1220X"
+]
+},
+{
+"id": "1luSLL8834Y",
+"title": "128 Unofficial Skills._.VEX Override._.66994D #vex ",
+"channel": "Gigantic Marshmallow ",
+"length": "1:12",
+"published": "7d ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": [
+"66994D"
+]
+},
+{
+"id": "ETfgA5W4qHE",
+"title": "148 Driving Skills (Unofficial) | VEX OverRide 2026-2027",
+"channel": "Hanasaku",
+"length": "1:05",
+"published": "1mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": []
+},
+{
+"id": "5K1rNQ4MIOs",
+"title": "15167A SWITCH | VEX V5 Override | Robot Reveal",
+"length": "0:57",
+"published": "1mo ago",
+"channel": "SWITCH",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"15167A"
+]
+},
+{
+"id": "SW4OPUmhGzo",
+"title": "15801E Reveal Video. Vex Robotics 2026-2027 Override Season. #vex #vexrobotics #vexoverride #robot ",
+"channel": "The Mad Scientists ",
+"length": "0:43",
+"published": "5mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"15801E"
+]
+},
+{
+"id": "ZaVHQOwePOQ",
+"title": "1647P Snoopy | Smoky Forge Override Robot Explanation",
+"length": "3:12",
+"published": "2w ago",
+"channel": "Illst en.",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"1647P"
+]
+},
+{
+"id": "AuNkyH8FBdE",
+"title": "16610A Snacky Cakes | Early Season Reveal | VEX Robotics Override",
+"channel": "Snacky Cakes Robotics",
+"length": "1:08",
+"published": "3mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"16610A"
+]
+},
+{
+"id": "1CHDyUzr7wo",
+"title": "16610A Snacky Cakes | Pits & Parts | Override Robot",
+"length": "13:30",
+"published": "3mo ago",
+"channel": "FUN Robotics Network",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"16610A"
+]
+},
+{
+"id": "K5u0Czu_LWA",
+"title": "169A Override 128 Point Driver Skills",
+"channel": "Ahmed Obuz",
+"length": "1:28",
+"published": "3mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": [
+"169A"
+]
+},
+{
+"id": "gw3X_LM0odM",
+"title": "1965B: Big Brother | Vex Override Reveal",
+"length": "2:00",
+"published": "5d ago",
+"channel": "Vladimir Makarov",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"1965B"
+]
+},
+{
+"id": "luYHlpgHFeY",
+"title": "2026 North Union High School Qualifier : VEX V5 Robotics Competition Override",
+"length": "7:43:58",
+"published": "Streamed 3w ago",
+"channel": "Kristi Matlack",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "UFH_vG4Pr44",
+"title": "2026-2027 vex v5 override",
+"channel": "qinquan chen",
+"length": "0:29",
+"published": "4mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "f3_cdstL5-4",
+"title": "2027 San Diego Fifth Annual Last Chance Tournament Invitational | V5RC: Override",
+"length": null,
+"published": null,
+"channel": "SUHSD STEAM",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "GaxQh9T4MTY",
+"title": "20850Z Full Throttle | Pits & Parts | Override Robot",
+"length": "7:19",
+"published": "3mo ago",
+"channel": "FUN Robotics Network",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"20850Z"
+]
+},
+{
+"id": "mHVd5lLtXAw",
+"title": "2142S Snugglemuffins Early Season Override Robot Reveal",
+"length": "1:43",
+"published": "1mo ago",
+"channel": "2142S Snugglemuffins",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"2142S"
+]
+},
+{
+"id": "t6fsvPt1ESo",
+"title": "2145Z Pink Shinee Unicorns | Pits & Parts | Override Robot",
+"length": "10:57",
+"published": "3mo ago",
+"channel": "FUN Robotics Network",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"2145Z"
+]
+},
+{
+"id": "SjLbJZK9iZo",
+"title": "226 Official Skills | VEX Override | 95071V",
+"channel": "Saratoga Velocity",
+"length": "1:57",
+"published": "1mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": [
+"95071V"
+]
+},
+{
+"id": "QsyXX17kHh8",
+"title": "2360A Arachnid | Early Season Robot Explanation | VEX V5RC Override 2026\u201327",
+"length": "4:40",
+"published": "12d ago",
+"channel": "2360A Arachnid",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"2360A"
+]
+},
+{
+"id": "ej0u3LXp-VM",
+"title": "23851C | Vex Override | RECF Pinnacle | Robot Reveal",
+"channel": "The Aliens",
+"length": "0:44",
+"published": "1mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"23851C"
+]
+},
+{
+"id": "kP3eE1Z7eCs",
+"title": "2394V Formula 5 | Fall Reveal | Vex Override",
+"length": "1:01",
+"published": "3w ago",
+"channel": "2394V - Formula 5",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"2394V"
+]
+},
+{
+"id": "OVzlU0PE0RQ",
+"title": "256 points | Skills World Rank 2 | 63780D Starship | Vex Override",
+"channel": "StarshipRobotics",
+"length": "1:14",
+"published": "5d ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": [
+"63780D"
+]
+},
+{
+"id": "ns672JJ_KuM",
+"title": "2577X | June Reveal | Vex Override",
+"length": "0:46",
+"published": "5mo ago",
+"channel": "2577X - Funky Monkeys",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"2577X"
+]
+},
+{
+"id": "SFfyFCoagXI",
+"title": "31218W Wave | Early Season Reveal | VEX V5 Override",
+"channel": "The Moderately Sized Wave",
+"length": "2:47",
+"published": "3mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"31218W"
+]
+},
+{
+"id": "Am4mdhS1BFQ",
+"title": "3946E Enigma | Pits & Parts | Override Robot",
+"length": "10:18",
+"published": "2mo ago",
+"channel": "FUN Robotics Network",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"3946E"
+]
+},
+{
+"id": "NtKlTCkHTlA",
+"title": "4125A ASTRAL | Early Season Reveal | Vex Robotics Override",
+"length": "0:56",
+"published": "2w ago",
+"channel": "Astral4125A",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"4125A"
+]
+},
+{
+"id": "denfaddoyGE",
+"title": "471B Moonshot | Pits & Parts | Override Robot",
+"length": "8:16",
+"published": "3mo ago",
+"channel": "FUN Robotics Network",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"471B"
+]
+},
+{
+"id": "_6A6i2oW9mE",
+"title": "50 Seconds of driving VEX Override",
+"channel": "Joseph973",
+"length": "0:51",
+"published": "4mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "BdBDr09XiSM",
+"title": "55W DRIVETRAIN Explanation - By Joseph973 | VEX Override",
+"channel": "Joseph973",
+"length": "2:20",
+"published": "2mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"55W"
+]
+},
+{
+"id": "frHEYIU_wGw",
+"title": "6199D | Early-Season Teaser | Vex Override",
+"length": "0:34",
+"published": "13d ago",
+"channel": "6199D WiredCats",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"6199D"
+]
+},
+{
+"id": "bZ50GQcfuTg",
+"title": "66799T AST-onishing T | Pits & Parts | Override Robot",
+"length": "8:39",
+"published": "2mo ago",
+"channel": "FUN Robotics Network",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"66799T"
+]
+},
+{
+"id": "o7xxLx2F5Qk",
+"title": "66994V VEX Override Early Season Reveal",
+"length": "0:32",
+"published": "3mo ago",
+"channel": "daVid",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"66994V"
+]
+},
+{
+"id": "_9d_4D17R84",
+"title": "66994V \u00d7 66994D VEX Override Fall Robot Reveal",
+"length": "0:39",
+"published": "13d ago",
+"channel": "daVid and Gigantic Marshmallow ",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"66994D",
+"66994V"
+]
+},
+{
+"id": "Rk5Y4j4n2hQ",
+"title": "79491F - SWALR.XUS | VEX V5 OVERRIDE | ROBOT REVEAL",
+"length": "1:26",
+"published": "2w ago",
+"channel": "TEAM ROBOTICS SWALR XUS",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"79491F"
+]
+},
+{
+"id": "IVtqEZ5xbgA",
+"title": "80550A Recursion | Pits & Parts | V5RC Override Robot",
+"length": "12:03",
+"published": "3d ago",
+"channel": "FUN Robotics Network",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"80550A"
+]
+},
+{
+"id": "xbqURp5oiAc",
+"title": "8059blank. EARLY SEASON EXPLANATION - V5RC Override",
+"length": "9:13",
+"published": "5mo ago",
+"channel": "Blank.",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "R39NlWNx9ZQ",
+"title": "8059blank. EARLY SEASON REVEAL - V5RC Override",
+"channel": "Blank.",
+"length": "1:31",
+"published": "5mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "Z8oxWA7bbnQ",
+"title": "8076Y Fall Reveal | V5RC Override",
+"length": "0:54",
+"published": "2w ago",
+"channel": "8076 Robotics",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"8076Y"
+]
+},
+{
+"id": "oucLijecwl4",
+"title": "8501 VEX V5RC | Override November Reveal",
+"channel": "8501 Robotics",
+"length": "1:05",
+"published": "6d ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "4069AUYmcag",
+"title": "8501A Bullet | VEX V5RC | Override Early Season Skills",
+"channel": "8501 Robotics",
+"length": "1:26",
+"published": "4mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": [
+"8501A"
+]
+},
+{
+"id": "itxeSvQyUGY",
+"title": "8682A Apollo | Early Season Reveal | Vex Override",
+"channel": "Apollo8682A",
+"length": "0:57",
+"published": "2mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"8682A"
+]
+},
+{
+"id": "fUHE02P_EVM",
+"title": "8682A Apollo | Sig Rush Recap | Vex Override",
+"channel": "Apollo8682A",
+"length": "3:57",
+"published": "1mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": [
+"8682A"
+]
+},
+{
+"id": "8KwrjJ-qSug",
+"title": "8737M ROKKR 256 Skills World Record | VEX Override",
+"channel": "Max Sun",
+"length": "0:59",
+"published": "1mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": [
+"8737M"
+]
+},
+{
+"id": "hLG0n0SU9iA",
+"title": "88 Point Driver Skills | Vex Override | 23851C",
+"channel": "The Aliens",
+"length": "1:01",
+"published": "2w ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": [
+"23851C"
+]
+},
+{
+"id": "CJGtUT1ljg0",
+"title": "9181P Phantom l Override Fall Reveal | VEX Robotics",
+"length": "0:29",
+"published": "5\u00a0min ago",
+"channel": "9181P Phantom",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"9181P"
+]
+},
+{
+"id": "ZdHMdUeB7Xk",
+"title": "9185 Preseason Pancake Breakfast Tournament 2026-2027 Vex Override",
+"length": "5:01:49",
+"published": "4w ago",
+"channel": "9185 / FOAB Robotics",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "PH0htOURB24",
+"title": "94517A Brimstone - One World Reveal - VEX Override",
+"length": "0:53",
+"published": "5d ago",
+"channel": "Brimstone",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"94517A"
+]
+},
+{
+"id": "A1HNvKIgnXQ",
+"title": "9MotorGang Override Reveal",
+"length": "3:13",
+"published": "6mo ago",
+"channel": "9MotorGang",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "1X23qDlRMG4",
+"title": "Bear River Ice Cream Social 2026 | Final Four | VEX V5 Override",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": null,
+"match": "Final",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "w0rvYEMvawo",
+"title": "China Team 2876A|best robotics VEX override auton 88pts prog skills",
+"channel": "tz s",
+"length": "1:01",
+"published": "3mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": [
+"2876A"
+]
+},
+{
+"id": "gItyhDPMyVQ",
+"title": "Driver skill vex override (108 route)",
+"channel": "SVT - VEX Robotics",
+"length": "1:08",
+"published": "2mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": []
+},
+{
+"id": "nEVy2V2yq7Q",
+"title": "Early Season Robot Explanation | VEX Override | 95071V",
+"length": "8:22",
+"published": "2w ago",
+"channel": "Saratoga Velocity",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"95071V"
+]
+},
+{
+"id": "4VxWsxuEKts",
+"title": "Early Season Robot Reveal | VEX Override",
+"channel": "Joseph973",
+"length": "0:47",
+"published": "5mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "rhmNkoZrBSw",
+"title": "Fall Reveal | 4189R | Vex Override",
+"channel": "Corsaires R",
+"length": "1:06",
+"published": "1mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"4189R"
+]
+},
+{
+"id": "vXXv8TzmVYY",
+"title": "First US tournament of Override, VEX Automation Challenge",
+"length": "14:38",
+"published": "4mo ago",
+"channel": "SevenDollar SeventySevenCent SpicyChicken Sandwich",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "rLhODgf_sLA",
+"title": "Full Field Walkthrough!! | VEX Override 2026-27",
+"channel": "Joseph973",
+"length": "2:04",
+"published": "6mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "2Hwvc4OT2Gk",
+"title": "Halloween Override 2026 - UT Austin VEX Robotics Competition",
+"length": "8:23:58",
+"published": "Streamed 2w ago",
+"channel": "UT IEEE RAS",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "cyowYoaz7Y8",
+"title": "How to Build an Intake | VEX Override",
+"length": "5:20",
+"published": "4mo ago",
+"channel": "Joseph973",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "GgIhplLAOGg",
+"title": "IFT 60000X / 13880A / 88X Vex Override Chinese Nationals Reveal",
+"channel": "fawef",
+"length": "1:10",
+"published": "2w ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"13880A",
+"60000X",
+"88X"
+]
+},
+{
+"id": "TJ-vxqUB4F8",
+"title": "NEW ROBOT 88 Points Driver Skills | VEX Override",
+"channel": "Joseph973",
+"length": "1:13",
+"published": "3mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": []
+},
+{
+"id": "5-NcZCYBqaQ",
+"title": "NEW ROBOT 98 POINTS - By Joseph973 | VEX Override",
+"channel": "Joseph973",
+"length": "1:16",
+"published": "2mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": []
+},
+{
+"id": "nO6tXLNpd_0",
+"title": "OVERRIDE??? Vex 2026-2027 name reveal analysis!",
+"length": "6:33",
+"published": "7mo ago",
+"channel": "Lucky Ducks Robotics",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "mbBB18LPQ2Y",
+"title": "RATCHETING CLAW Explanation - By Joseph973 | VEX Override",
+"channel": "Joseph973",
+"length": "3:03",
+"published": "1mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "M-VIMP61KZQ",
+"title": "Rating and Explaining Every Lift Type In VEX Override",
+"length": "8:20",
+"published": "5mo ago",
+"channel": "RoboSTEM",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "O1LHk4RN2Rs",
+"title": "San Diego 12th Annual VEX Robotics Tournament | V5RC: Override",
+"length": null,
+"published": null,
+"channel": "SUHSD STEAM",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "tqH-xnrpsjU",
+"title": "Signature Finals Collection | 7 Events, 16 Matches | VEX V5 Override 2026",
+"channel": "@robotstats",
+"length": null,
+"published": null,
+"event": null,
+"match": "Finals",
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "3L6aXFMTIYU",
+"title": "Supernova Spectacular 2026: Two Matches You Need to See | VEX Override",
+"channel": "Hayden",
+"length": "3:04",
+"published": "8d ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "event",
+"teams": []
+},
+{
+"id": "luzTikrcFtE",
+"title": "The Best Vex Override Strategy (with sig winners)",
+"length": "14:51",
+"published": "1mo ago",
+"channel": "Luke does robotics",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "m9pmfSF7SvQ",
+"title": "V5RC Override Game Unveil at #vexworlds [4k] ",
+"length": "7:17",
+"published": "6mo ago",
+"channel": "VRC 98807B",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "Q7Rgj6tsxIY",
+"title": "VEX 2026 OVERRIDE 6508X auto ",
+"channel": "yan",
+"length": "0:50",
+"published": "3mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": [
+"6508X"
+]
+},
+{
+"id": "AALKYAaGqdI",
+"title": "VEX OVERRIDE Analysis!! ",
+"length": "5:53",
+"published": "6mo ago",
+"channel": "Lucky Ducks Robotics",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "Ga_etoKXC5U",
+"title": "VEX Override 128 Unofficial Auto Skills",
+"channel": "ragerbyt",
+"length": "1:03",
+"published": "1mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": []
+},
+{
+"id": "Z_6nM-qkuCs",
+"title": "VEX Override 138 3 sec stop time unofficial auto skills ",
+"channel": "ragerbyt",
+"length": "0:59",
+"published": "3w ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": []
+},
+{
+"id": "7dVupcnU_eI",
+"title": "VEX Override 66799T 10/25 official 256 skills",
+"channel": "Samuel Cheng",
+"length": "2:14",
+"published": "3w ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": [
+"66799T"
+]
+},
+{
+"id": "-x2cPDtc6T8",
+"title": "VEX Override MCC Robot | HERMIT",
+"channel": "5203G Gremlin",
+"length": "1:05",
+"published": "3mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "Q2EkDF5hYG8",
+"title": "VEX Override RI3D || CPSLO/80001B/2570R",
+"channel": "VRC 920B",
+"length": "0:51",
+"published": "5mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": [
+"2570R",
+"80001B"
+]
+},
+{
+"id": "P2MoY21YToo",
+"title": "VEX Override Ri3D // GATR1 // V5RC VURC",
+"channel": "Ace Robotics",
+"length": "1:32",
+"published": "5mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "FSYxCBV-2NI",
+"title": "VEX Override WD-40 Robot Reveal",
+"channel": "WD40 Robotics",
+"length": "1:49",
+"published": "3mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "_R2c0HZheI0",
+"title": "VEX Robotics LIVE | Override Meet 1 | Rio Hondo MS League",
+"length": "4:26:06",
+"published": "Streamed 1mo ago",
+"channel": "Oscar Manzanares Salinas",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "flvhlZiLAnc",
+"title": "VEX V5 OVERRIDE ROBOT REVEAL_15167A_SWITCH",
+"channel": "SWITCH",
+"length": "1:06",
+"published": "4mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "qO0Gg0UvGmc",
+"title": "VEX V5 Override Early Season Reveal - 89801B",
+"channel": "Elko Innovators",
+"length": "1:17",
+"published": "1mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"89801B"
+]
+},
+{
+"id": "4C5c5KXhgIc",
+"title": "VEX V5 Override Explained | VEX ROBOTICS 2026-2027 SEASON",
+"length": "14:04",
+"published": "6mo ago",
+"channel": "The VEX Analyst",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "oVS-CxnQk8k",
+"title": "VEX V5 Override Robot Reveal | Team 63780D Starship",
+"channel": "StarshipRobotics",
+"length": "2:26",
+"published": "6d ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"63780D"
+]
+},
+{
+"id": "ntUVSbnU_mY",
+"title": "VEX V5 Override Toggle Mechanism",
+"channel": "Robotics with Ethan",
+"length": "0:05",
+"published": "1mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "CvlMqdiZul0",
+"title": "VEX V5 Override | Hero Bot \"Flex\" | Part 1",
+"channel": "VEX Robotics",
+"length": "3:35",
+"published": "5mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "tG9OAyDp4Qw",
+"title": "VEX V5 Override\uff5c10102A Starts the Season as Champions! \ud83c\udfc6",
+"channel": "Vinci STEAM Educations",
+"length": "1:00",
+"published": "3mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": [
+"10102A"
+]
+},
+{
+"id": "68NxYIAzbkY",
+"title": "VEX V5 Robotics Competition : Override | 2026-2027 Game",
+"length": "5:02",
+"published": "6mo ago",
+"channel": "VEX Robotics",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "uRgOZGDC1f4",
+"title": "VEX WR Eagle Override Match 4 ",
+"channel": "Lakeside Evans Robotics",
+"length": "2:53",
+"published": "9d ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "4OS5vKmJ2fs",
+"title": "Vex NJROTC 98601Y Atlantis | Fall Reveal | Vex V5 Robotics Override",
+"length": "0:52",
+"published": "2d ago",
+"channel": "Atlantis",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"98601Y"
+]
+},
+{
+"id": "Arf7v_QhP1Y",
+"title": "Vex Override Game Manual Breakdown",
+"length": "48:30",
+"published": "6mo ago",
+"channel": "9MotorGang",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "kiw7QXst_PE",
+"title": "Vex Override Passive Roller Mech - Gremlin 5203G",
+"channel": "Conner Middlebrooks",
+"length": "0:11",
+"published": "6mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": [
+"5203G"
+]
+},
+{
+"id": "PoOJVEU-8II",
+"title": "Vex Override Robot Reveal 79298A Artemis 2026-2027 Season",
+"channel": "Le frogs",
+"length": "0:45",
+"published": "5mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"79298A"
+]
+},
+{
+"id": "5i1WvUpsZf4",
+"title": "Vex V5 Robotics Override Early Season Teaser#Override, #Vex, #earlyseason, #jamesbond, #Intake",
+"length": "0:19",
+"published": "2mo ago",
+"channel": "Innovation Robotics Team Ghost",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "M97L28-yj8o",
+"title": "Vex V5 override early-season reveal!",
+"length": "1:46",
+"published": "3mo ago",
+"channel": "No Limits Robotics",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "f2VsEmwhvpU",
+"title": "Vex V5 override game match",
+"channel": "Outstanding Warrants",
+"length": "2:12",
+"published": "2mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+},
+{
+"id": "yI2cSsM-Az8",
+"title": "Vex override unofficial 206 skills from 6210H",
+"channel": "6210H Halape\u00f1os",
+"length": "2:28",
+"published": "12d ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": [
+"6210H"
+]
+},
+{
+"id": "NGHxFLJ9MMM",
+"title": "Vsimulator 198 Skills | Vex Override",
+"channel": "kadyn",
+"length": "1:04",
+"published": "3mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": []
+},
+{
+"id": "qxzzvsY2JOU",
+"title": "Vsimulator 258 Skills | Vex Override",
+"length": "1:02",
+"published": "1mo ago",
+"channel": "kadyn",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "skills",
+"teams": []
+},
+{
+"id": "fEy9xMXOzBI",
+"title": "WHOOP 26 - 27 (VEXU Override Teaser)",
+"length": "0:59",
+"published": "3w ago",
+"channel": "Aggie Robotics",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": []
+},
+{
+"id": "EXWmxCneBrc",
+"title": "Winning Smoky | 20850S Skylight | VEX Override",
+"length": "5:37",
+"published": "1mo ago",
+"channel": "Skylight",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": [
+"20850S"
+]
+},
+{
+"id": "WgBmFLOWnDI",
+"title": "Worlds Reveal | Vex Override | 61119X",
+"channel": "Corsaire X",
+"length": "1:06",
+"published": "2mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"61119X"
+]
+},
+{
+"id": "Elbo3XjBcAQ",
+"title": "early season reveal wip bot | vex override | 13135F",
+"channel": "FPT C\u1ea7n Th\u01a1 Enterprise",
+"length": "0:28",
+"published": "1mo ago",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "robot",
+"teams": [
+"13135F"
+]
+},
+{
+"id": "mHsN8MACcGo",
+"title": "\ud83d\udd34Figuring out the meta. Override Blanks Beginning Scrim Breakdown. VEX V5 Override",
+"length": "2:24:41",
+"published": "Streamed 5mo ago",
+"channel": "The VEX Analyst",
+"event": null,
+"match": null,
+"red": null,
+"blue": null,
+"kind": "other",
+"teams": []
+}
+]

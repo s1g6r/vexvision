@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>vexvision scout</title>
+<meta name="description" content="Every VEX Override match, robot reveal and skills run on YouTube, sorted by team.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23121417'/%3E%3Crect x='6' y='12' width='20' height='9' rx='3' fill='%23ffe14a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+/* VOICE  a scout's working sheet: plain, quick, every fact checkable against a video
+   IDEA   the printed match schedule a scout carries, with the team you're watching run over in highlighter
+   PICTURE a real elimination bracket with one team's run highlighted, the same mark on every page
+   COLOUR field colours: white ground, ink, alliance red and blue for alliances only, highlighter yellow for the team you follow
+   TYPE   Archivo throughout: extra-condensed heavy for team numbers and titles, normal width for reading
+   LAYOUT search under a modest title, bracket as the first picture, then events and the team index */
+:root{color-scheme:light dark;
+  --bg:light-dark(#ffffff,#111315);--ink:light-dark(#121417,#eef0f2);--mute:light-dark(#5b616a,#a2a9b1);
+  --rule:light-dark(#e3e5e8,#2a2e33);--tile:light-dark(#f2f3f4,#191c1f);--card:light-dark(#ffffff,#15181b);
+  --red:light-dark(#c41d2b,#ff7075);--blue:light-dark(#1a56c4,#76a8ff);--line:light-dark(#c9cdd2,#3a3f45);--mark:#ffe14a;--onmark:#121417}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Archivo,system-ui,sans-serif;font-variation-settings:"wdth" 100;overflow-x:clip}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:max(4vw,16px)}
+.band{padding-block:clamp(28px,4vw,56px)}
+.tile{background:var(--tile)}
+.cond{font-variation-settings:"wdth" 62;font-weight:800;letter-spacing:-.005em}
+h1,h2,h3{margin:0;line-height:1.05;text-wrap:balance;font-variation-settings:"wdth" 70;font-weight:800}
+h1{font-size:clamp(34px,4.6vw,52px)}h2{font-size:clamp(26px,3vw,34px)}h3{font-size:21px}
+p{margin:0}.mute{color:var(--mute)}
+.num{font-variant-numeric:tabular-nums}
+/* header */
+header{border-bottom:1px solid var(--rule);position:sticky;top:0;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);z-index:5}
+header .wrap{display:flex;align-items:center;gap:20px;min-height:60px;flex-wrap:wrap}
+.brand{font-size:24px;text-decoration:none;font-variation-settings:"wdth" 70;font-weight:900;margin-right:auto}
+.brand b{font-weight:900;background:var(--mark);color:var(--onmark);border-radius:6px;padding:0 5px;margin-left:2px}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{text-decoration:none;padding:10px 12px;border-radius:999px;font-weight:600;font-size:15px;color:var(--mute)}
+nav a:hover,nav a[aria-current]{color:var(--ink);background:var(--tile)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+/* search */
+.lead{display:grid;gap:14px}.lead>p{max-width:64ch}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:18px clamp(28px,5vw,80px);align-items:start}
+.hero h1{grid-column:1/-1;font-size:clamp(36px,5.4vw,76px);max-width:1100px}
+.hero .left{display:grid;gap:16px}.hero .left p{font-size:18px;max-width:60ch}
+.top h3{font-size:15px;font-weight:700;color:var(--mute);font-variation-settings:"wdth" 100;margin-bottom:6px}
+.top a{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:8px 2px;border-top:1px solid var(--rule);text-decoration:none}
+.top a:hover b{text-decoration:underline}.top b{font-size:19px;font-variation-settings:"wdth" 70;font-weight:800}
+.top span{color:var(--mute);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:860px){.hero{grid-template-columns:minmax(0,1fr)}}
+.lead p{font-size:18px;max-width:62ch}
+form.find{position:relative;display:flex;gap:8px;margin-top:10px;max-width:620px}
+form.find input{flex:1;font:inherit;font-size:20px;font-weight:600;padding:14px 18px;border:1.5px solid var(--rule);border-radius:16px;background:var(--card);color:var(--ink);text-transform:uppercase}
+form.find input::placeholder{text-transform:none;font-weight:400;color:var(--mute)}
+form.find input:focus{border-color:var(--ink);outline:none}
+.btn{font:inherit;font-weight:700;font-size:16px;border:0;border-radius:999px;padding:0 24px;min-height:52px;background:var(--ink);color:var(--bg);cursor:pointer}
+.btn:hover{opacity:.88}.btn:active{transform:translateY(1px)}
+.sugg{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--rule);border-radius:14px;box-shadow:0 18px 40px -18px rgb(0 0 0/.35);padding:6px;display:none;z-index:4}
+.sugg.open{display:block}
+.sugg a{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:9px;text-decoration:none}
+.sugg a:hover,.sugg a.cur{background:var(--tile)}
+.picks{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px;font-size:15px}
+.chip{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--rule);text-decoration:none;font-weight:700;font-variation-settings:"wdth" 75;font-size:16px}
+.chip:hover{border-color:var(--ink)}
+/* highlighter */
+.hl{background:linear-gradient(var(--mark),var(--mark)) no-repeat 0 55%/100% 78%;color:var(--onmark);border-radius:3px;padding:0 .12em;margin:0 -.12em;animation:swipe .45s cubic-bezier(.2,.7,.2,1) both}
+@keyframes swipe{from{background-size:0% 78%}}
+@media (prefers-reduced-motion:reduce){.hl{animation:none}}
+/* bracket */
+.bhead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;margin-bottom:18px}
+.bracket{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 34px}
+.round{display:flex;flex-direction:column}
+.round>h4{margin:0 0 10px;font-size:14px;font-weight:700;color:var(--mute)}
+.slots{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:12px}
+.pair{position:relative;display:grid;grid-template-rows:1fr 1fr;gap:12px;flex:1}
+.pair>.m{align-self:center}
+.pair::after{content:"";position:absolute;right:-18px;top:25%;bottom:25%;border-right:1px solid var(--line)}
+.round+.round .m::before{content:"";position:absolute;right:100%;top:50%;width:16px;border-top:1px solid var(--line)}
+.pair>.m::after{content:"";position:absolute;left:100%;top:50%;width:18px;border-top:1px solid var(--line)}
+.more{display:none}
+.m{position:relative;background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:8px 10px;font-size:15px}
+.m.lit{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.m .al{display:flex;gap:10px;align-items:baseline;padding:2px 0;font-variation-settings:"wdth" 75;font-weight:600}
+.m .al a{text-decoration:none;color:var(--c)}.m .al a:hover{text-decoration:underline}
+.m .al.adv{font-weight:800}
+.red{--c:var(--red)}.blue{--c:var(--blue)}
+.m .g{border-top:1px solid var(--rule);margin-top:5px;padding-top:5px;font-size:13px;color:var(--mute);display:flex;gap:10px;flex-wrap:wrap}
+.m .g a{color:var(--ink);font-weight:600}
+.m.none{border-style:dashed;color:var(--mute);font-size:14px;min-height:74px;display:flex;align-items:center;justify-content:center;text-align:center}
+
+/* lists */
+.rows{border-top:1px solid var(--rule)}
+.row{display:grid;grid-template-columns:minmax(0,1.6fr) 90px 90px minmax(0,1fr);gap:16px;align-items:center;padding:14px 4px;border-bottom:1px solid var(--rule);text-decoration:none}
+a.row:hover{background:var(--tile)}
+.row b{font-size:18px;font-variation-settings:"wdth" 80}
+.row .n{text-align:right}
+.idx{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:6px}
+.idx a{display:flex;justify-content:space-between;align-items:baseline;padding:8px 10px;border-radius:10px;text-decoration:none;font-weight:700;font-variation-settings:"wdth" 75}
+.idx a:hover{background:var(--card)}
+.idx a span{font-size:12px;font-weight:500;color:var(--mute)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,4vw,56px)}
+/* team page */
+.thead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:12px 40px;align-items:end}
+.thead .pic{grid-row:1/4;grid-column:2;display:grid;gap:8px;font-size:14px;text-decoration:none}
+.thead .pic .thumb{border-radius:14px}
+@media (max-width:860px){.thead{grid-template-columns:minmax(0,1fr)}.thead .pic{grid-row:auto;grid-column:auto}}
+.big{font-size:clamp(72px,12vw,148px);line-height:.9;font-variation-settings:"wdth" 62;font-weight:900;margin:0}
+.facts{display:flex;flex-wrap:wrap;gap:6px 28px;font-size:17px}
+.facts b{font-variation-settings:"wdth" 75}
+.ev{margin-top:28px}.ev h3{margin-bottom:8px}.ev h3 a{text-decoration:none}.ev h3 a:hover{text-decoration:underline}
+.mrow{display:grid;grid-template-columns:136px minmax(0,1fr) auto;gap:16px;align-items:center;padding:12px 0;border-top:1px solid var(--rule)}
+.thumb{display:block;aspect-ratio:16/9;border-radius:9px;overflow:hidden;background:var(--tile)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.mrow .who{display:grid;gap:2px;font-variation-settings:"wdth" 80}
+.mrow .rd{font-weight:800;font-size:18px}
+.side{font-weight:700}
+.mrow .w{font-weight:700;white-space:nowrap}
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.vid{text-decoration:none;display:grid;gap:8px;font-size:15px;line-height:1.35}
+.vid:hover .thumb{outline:2px solid var(--ink)}
+.vid small{color:var(--mute)}
+.tally{display:grid;gap:4px}
+.tally a{display:grid;grid-template-columns:80px minmax(0,1fr) 28px;gap:10px;align-items:center;text-decoration:none;padding:4px 0;font-weight:700;font-variation-settings:"wdth" 75}
+.tally i{display:block;height:8px;border-radius:9px;background:var(--c)}
+.tally a:hover b{text-decoration:underline}
+.back{display:inline-block;margin-bottom:18px;font-weight:600;color:var(--mute);text-decoration:none;padding:6px 0}
+.back:hover{color:var(--ink)}
+.empty{padding:28px;border:1px dashed var(--rule);border-radius:16px;display:grid;gap:10px;max-width:640px}
+footer{border-top:1px solid var(--rule);font-size:14px;color:var(--mute)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-between;padding-block:28px}
+[hidden]{display:none!important}
+@media (max-width:860px){
+  .bracket{grid-template-columns:minmax(0,1fr);gap:22px}
+  .pair{display:contents}.pair::after,.pair>.m::after,.round+.round .m::before{display:none}
+  .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+  .bracket.path .m:not(.lit),.bracket.path .round:not(.has-lit){display:none}
+  .more{display:inline-flex;margin-top:16px;background:var(--card);color:var(--ink);border:1px solid var(--rule);min-height:44px}
+  .two{grid-template-columns:minmax(0,1fr)}
+  .row{grid-template-columns:minmax(0,1fr) auto}.row .x{display:none}
+}
+@media (max-width:600px){
+  form.find{flex-direction:column}.btn{width:100%}
+  .mrow{grid-template-columns:104px minmax(0,1fr)}.mrow .w{grid-column:2}
+  header .wrap{flex-wrap:nowrap;gap:8px}.brand{font-size:21px}nav a[href^=http]{display:none}nav{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}nav a{padding:8px 9px;white-space:nowrap;font-size:14px}nav a[data-nav=home]{display:none}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="brand" href="#home">vex<b>vision</b></a>
+  <nav>
+    <a href="#home" data-nav="home">Look up a team</a>
+    <a href="#events" data-nav="events">Events</a>
+    <a href="#teams" data-nav="teams">All teams</a>
+    <a href="https://claude.ai/artifact/4SgYNeQTW8E1md2v6i2i9o">Map a screenshot</a>
+  </nav>
+</div></header>
+
+<main id="app">
+  <section class="band"><div class="wrap lead">
+    <h1>Look up a team's Override matches before you play them</h1>
+    <p class="mute">Loading every match, reveal and skills run we've found on YouTube…</p>
+  </div></section>
+</main>
+
+<footer><div class="wrap">
+  <span>Built by 2360A Arachnid. Videos belong to their channels; every row links to the original.</span>
+  <span>A team shows up here once a video title names it. To place robots on the field from a broadcast screenshot, use <a href="https://claude.ai/artifact/4SgYNeQTW8E1md2v6i2i9o">the screenshot mapper</a>.</span>
+</div></footer>
+
+<script>
+{
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const app = $("#app");
+let V = [], T = new Map(), E = new Map(), hl = "";
+
+const ROUND = {R16: 1, QF: 2, SF: 3, Final: 4};
+const RNAME = {1: "Round of 16", 2: "Quarterfinals", 3: "Semifinals", 4: "Final"};
+function rank(m) {
+  if (!m) return [9, 0, 0];
+  let x = m.match(/^(R16|QF|SF|Final) (\d+)-(\d+)/);
+  if (x) return [ROUND[x[1]], +x[2], +x[3]];
+  if (/^Qual (\d+)/.test(m)) return [0, +m.slice(5), 0];
+  if (/semi/i.test(m)) return [3, 0, 0];
+  if (/quarter/i.test(m)) return [2, 0, 0];
+  if (/round of 16/i.test(m)) return [1, 0, 0];
+  if (/final/i.test(m)) return [4, 9, 0];
+  return [9, 0, 0];
+}
+const cmp = (a, b) => { const x = rank(a.m), y = rank(b.m); return x[0] - y[0] || x[1] - y[1] || x[2] - y[2]; };
+const yt = id => `https://www.youtube.com/watch?v=${id}`;
+const thumb = v => `<a class="thumb" href="${yt(v.id)}" aria-label="Watch on YouTube: ${esc(v.t)}"><img src="thumbs/${v.id}.jpg" alt="" loading="lazy" width="320" height="180"></a>`;
+const team = (t, cls = "") => `<a href="#team-${t}" class="${cls}">${t === hl ? `<span class="hl">${t}</span>` : t}</a>`;
+const plural = (n, w, ws = w + "s") => `${n} ${n === 1 ? w : ws}`;
+
+function index() {
+  for (const v of V) {
+    if (v.s) { if (!E.has(v.s)) E.set(v.s, {name: v.e, slug: v.s, vids: []}); E.get(v.s).vids.push(v); }
+    for (const t of v.tm || []) {
+      if (!T.has(t)) T.set(t, {id: t, vids: [], with: new Map(), vs: new Map(), events: new Set()});
+      const r = T.get(t); r.vids.push(v); if (v.e) r.events.add(v.e);
+      if (v.k === "match" && v.r && v.b) {
+        const mine = v.r.includes(t) ? v.r : v.b, other = mine === v.r ? v.b : v.r;
+        for (const p of mine) if (p !== t) r.with.set(p, (r.with.get(p) || 0) + 1);
+        for (const o of other) r.vs.set(o, (r.vs.get(o) || 0) + 1);
+      }
+    }
+  }
+}
+
+/* elimination bracket: slot k of a round is fed by slots 2k-1 and 2k of the round before */
+function bracket(ev) {
+  const slots = {1: {}, 2: {}, 3: {}, 4: {}}; let n = 0;
+  for (const v of ev.vids) {
+    if (v.k !== "match") continue;
+    const x = (v.m || "").match(/^(R16|QF|SF|Final) (\d+)-(\d+)/);
+    const full = /full finals|^finals?$/i.test(v.m || "") || /full finals/i.test(v.t);
+    const [r, k, g] = x ? [ROUND[x[1]], +x[2], +x[3]] : full ? [4, 1, 0] : [0];
+    if (!r) continue;
+    const s = slots[r][k] ||= {games: []};
+    if (v.r && v.b && v.r.length === 2 && !s.r) { s.r = v.r; s.b = v.b; }
+    s.games.push({g, id: v.id}); n++;
+  }
+  if (Object.keys(slots[1]).length + Object.keys(slots[2]).length + Object.keys(slots[3]).length < 4) return null;
+  const key = a => a && [...a].sort().join("&");
+  const later = r => new Set(Object.values(slots).slice(r).flatMap(o => Object.values(o)).flatMap(s => [key(s.r), key(s.b)]));
+  const sizes = {1: 8, 2: 4, 3: 2, 4: 1};
+  let html = "";
+  for (const r of [1, 2, 3, 4]) {
+    const after = r < 4 ? later(r) : new Set();
+    let cells = "", any = false;
+    for (let k = 1; k <= sizes[r]; k++) {
+      if (r < 4 && k % 2) cells += `<div class="pair">`;
+      const s = slots[r][k];
+      const close = r < 4 && !(k % 2) ? `</div>` : "";
+      if (!s || !s.r) { cells += `<div class="m none">${s ? games(s) : "No video of this match yet"}</div>` + close; continue; }
+      const lit = hl && [...s.r, ...s.b].includes(hl); any ||= lit;
+      const al = (a, c) => `<div class="al ${c}${after.has(key(a)) ? " adv" : ""}">${a.map(t => team(t)).join("")}</div>`;
+      cells += `<div class="m${lit ? " lit" : ""}">${al(s.r, "red")}${al(s.b, "blue")}<div class="g">${games(s)}</div></div>` + close;
+    }
+    html += `<div class="round${any ? " has-lit" : ""}"><h4>${RNAME[r]}</h4><div class="slots">${cells}</div></div>`;
+  }
+  return `<div class="bracket${hl ? " path" : ""}">${html}</div>${hl ? `<button class="btn more" type="button">Show all ${n} elimination videos</button>` : ""}`;
+}
+function games(s) {
+  return s.games.sort((a, b) => a.g - b.g).map(x => `<a href="${yt(x.id)}">${x.g ? "Game " + x.g : "Full finals"}</a>`).join("");
+}
+
+function searchForm(value = "") {
+  return `<form class="find" role="search" autocomplete="off">
+    <label for="q" hidden>Team number</label>
+    <input id="q" name="q" value="${esc(value)}" placeholder="Team number, like 471B" inputmode="text" spellcheck="false" aria-controls="sugg">
+    <button class="btn" type="submit">Look up</button>
+    <div class="sugg" id="sugg" role="listbox"></div></form>`;
+}
+function recent() { try { return JSON.parse(localStorage.getItem("vv-recent") || "[]"); } catch { return []; } }
+function remember(t) { try { localStorage.setItem("vv-recent", JSON.stringify([t, ...recent().filter(x => x !== t)].slice(0, 6))); } catch {} }
+
+function featured() {
+  // the event with the most elimination video, and its most-filmed team
+  let best = null, bn = 0;
+  for (const ev of E.values()) { const n = ev.vids.filter(v => /^(R16|QF|SF|Final) /.test(v.m || "")).length; if (n > bn) { bn = n; best = ev; } }
+  const c = new Map(); for (const v of best.vids) for (const t of v.tm || []) c.set(t, (c.get(t) || 0) + 1);
+  return [best, [...c].sort((a, b) => b[1] - a[1])[0][0]];
+}
+
+function home() {
+  const [ev, star] = featured();
+  hl = star;
+  const top = [...T.values()].sort((a, b) => b.vids.length - a.vids.length).slice(0, 5).map(t => t.id);
+  const rec = recent().filter(t => T.has(t));
+  const matches = V.filter(v => v.k === "match").length;
+  app.innerHTML = `
+  <section class="band"><div class="wrap hero">
+    <h1>Look up a team's Override matches before you play them</h1>
+    <div class="left">
+      <p class="mute">${V.length} Override videos from VEX Vault, Robot Stats and team channels, sorted by the ${T.size} teams they name. Type a number to see their matches, partners and robot.</p>
+      ${searchForm()}
+      ${rec.length ? `<div class="picks"><span class="mute">Recent</span>${rec.map(t => `<a class="chip" href="#team-${t}">${t}</a>`).join("")}</div>` : ""}
+    </div>
+    <div class="top"><h3>Most filmed so far</h3>${top.map(t => { const r = T.get(t); const ev = [...r.events]; return `<a href="#team-${t}"><b>${t}</b><span>${ev.slice(0, 2).map(e => e.replace(/ Signature$/, "")).join(", ")}</span><span class="num">${plural(r.vids.length, "video")}</span></a>`; }).join("")}</div>
+  </div></section>
+  <section class="band tile"><div class="wrap">
+    <div class="bhead"><h2>${esc(ev.name)} eliminations</h2>
+      <p class="mute">${star}'s run is highlighted and bold alliances advanced. Click any team to follow theirs.</p></div>
+    ${bracket(ev)}
+  </div></section>
+  <section class="band"><div class="wrap two">
+    <div><h2 style="margin-bottom:14px">Events with match video</h2>${eventRows(6)}<p style="margin-top:14px"><a href="#events">All ${E.size} events</a></p></div>
+    <div><h2 style="margin-bottom:14px">Robots you can see before you meet them</h2>${robotList(6)}</div>
+  </div></section>`;
+  wireSearch(); wireMore();
+}
+function wireMore() {
+  const b = $(".more"); if (!b) return;
+  b.addEventListener("click", () => { $(".bracket").classList.remove("path"); b.remove(); });
+}
+
+function eventRows(limit) {
+  const list = [...E.values()].map(e => ({...e, m: e.vids.filter(v => v.k === "match").length, t: new Set(e.vids.flatMap(v => v.tm || [])).size}))
+    .sort((a, b) => b.m - a.m || b.vids.length - a.vids.length).slice(0, limit || 999);
+  return `<div class="rows">${list.map(e => `<a class="row" href="#event-${e.slug}"><b>${esc(e.name)}</b><span class="n num">${plural(e.m, "match", "matches")}</span><span class="n num x">${plural(e.t, "team")}</span><span class="mute x">${plural(e.vids.length, "video")}</span></a>`).join("")}</div>`;
+}
+function robotList(limit) {
+  const r = V.filter(v => (v.k === "robot" || v.k === "skills") && (v.tm || []).length).slice(0, limit);
+  return `<div class="vids" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">${r.map(v => `<a class="vid" href="#team-${v.tm[0]}"><span class="thumb"><img src="thumbs/${v.id}.jpg" alt="" loading="lazy"></span><span><b>${v.tm.join(", ")}</b><br><small>${v.k === "skills" ? "Skills run" : "Robot video"}</small></span></a>`).join("")}</div>`;
+}
+
+function teamPage(id) {
+  const t = T.get(id); hl = id;
+  if (!t) {
+    const near = [...T.keys()].filter(k => k.startsWith(id.replace(/[A-Z]+$/, ""))).slice(0, 8);
+    app.innerHTML = `<section class="band"><div class="wrap"><a class="back" href="#home">Search again</a>
+      <div class="empty"><h2>No Override video names ${esc(id)} yet</h2>
+      <p class="mute">Teams appear once a match, reveal or skills video title includes their number. Check the number, or try a team from the same club.</p>
+      ${near.length ? `<div class="picks">${near.map(k => `<a class="chip" href="#team-${k}">${k}</a>`).join("")}</div>` : ""}
+      ${searchForm(id)}</div></div></section>`;
+    wireSearch(); return;
+  }
+  remember(id);
+  const matches = t.vids.filter(v => v.k === "match").sort(cmp), robot = t.vids.filter(v => v.k !== "match");
+  const byEv = new Map(); for (const v of matches) { const k = v.e || "Other matches"; if (!byEv.has(k)) byEv.set(k, []); byEv.get(k).push(v); }
+  const elim = matches.filter(v => rank(v.m)[0] >= 1 && rank(v.m)[0] <= 4);
+  const deepest = Math.max(0, ...elim.map(v => rank(v.m)[0]));
+  const pic = robot.find(v => v.k === "robot") || robot[0] || matches[matches.length - 1];
+  const tally = (m, cls) => [...m].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([k, n], i, a) =>
+    `<a href="#team-${k}" class="${cls}"><b>${k}</b><i style="width:${Math.round(n / a[0][1] * 100)}%"></i><span class="num mute">${n}</span></a>`).join("");
+  app.innerHTML = `
+  <section class="band"><div class="wrap thead">
+    <a class="back" href="#home">Look up another team</a>
+    <p class="big"><span class="hl">${id}</span></p>
+    <div class="facts">
+      <span>${matches.length ? `<b>${plural(matches.length, "match", "matches")}</b> on video` : "No matches on video yet"}</span>
+      ${t.events.size ? `<span><b>${plural(t.events.size, "event")}</b></span>` : ""}
+      ${deepest ? `<span>Furthest round on video: <b>${RNAME[deepest]}</b></span>` : ""}
+      ${robot.length ? `<span><b>${plural(robot.length, "robot or skills video")}</b></span>` : ""}
+    </div>
+    ${pic ? `<a class="pic" href="${yt(pic.id)}"><span class="thumb"><img src="thumbs/${pic.id}.jpg" alt=""></span><span class="mute">${esc(pic.t)}</span></a>` : ""}
+  </div></section>
+  ${matches.length ? `<section class="band" style="padding-top:0"><div class="wrap">
+    <h2>Matches</h2>
+    ${[...byEv].map(([e, vs]) => `<div class="ev"><h3>${vs[0].s ? `<a href="#event-${vs[0].s}">${esc(e)}</a>` : esc(e)}</h3>
+      ${vs.map(v => matchRow(v, id)).join("")}</div>`).join("")}
+  </div></section>` : ""}
+  ${robot.length ? `<section class="band tile"><div class="wrap"><h2 style="margin-bottom:18px">Robot, skills and other videos</h2>
+    <div class="vids">${robot.map(v => `<a class="vid" href="${yt(v.id)}"><span class="thumb"><img src="thumbs/${v.id}.jpg" alt="" loading="lazy"></span><span>${esc(v.t)}<br><small>${esc(v.c)}${v.l ? " · " + v.l : ""}</small></span></a>`).join("")}</div>
+  </div></section>` : ""}
+  ${t.with.size || t.vs.size ? `<section class="band"><div class="wrap two">
+    <div><h2 style="margin-bottom:14px">Partnered with</h2><div class="tally red">${tally(t.with, "") || `<p class="mute">No partners on video yet.</p>`}</div></div>
+    <div><h2 style="margin-bottom:14px">Played against</h2><div class="tally blue">${tally(t.vs, "") || `<p class="mute">No opponents on video yet.</p>`}</div></div>
+  </div></section>` : ""}`;
+}
+function matchRow(v, id) {
+  const mine = v.r && v.r.includes(id) ? ["red", v.r, v.b] : v.b && v.b.includes(id) ? ["blue", v.b, v.r] : null;
+  const who = mine ? `<span><span class="side ${mine[0]}" style="color:var(--c)">${mine[0] === "red" ? "Red" : "Blue"}</span> with ${mine[1].filter(x => x !== id).map(x => team(x)).join(" & ") || "partner not named"}</span>
+      <span class="mute">vs ${mine[2].map(x => team(x)).join(" & ")}</span>` : `<span class="mute">${esc(v.t)}</span>`;
+  return `<div class="mrow">${thumb(v)}<div class="who"><span class="rd">${esc(v.m || "Match")}</span>${who}</div><a class="w" href="${yt(v.id)}">Watch${v.l ? " · " + v.l : ""}</a></div>`;
+}
+
+function eventPage(slug) {
+  const ev = E.get(slug);
+  if (!ev) { location.hash = "events"; return; }
+  hl = "";
+  const b = bracket(ev);
+  const others = ev.vids.filter(v => !(b && /^(R16|QF|SF|Final) |full finals/i.test((v.m || "") + " " + v.t))).sort(cmp);
+  const teams = [...new Set(ev.vids.flatMap(v => v.tm || []))].sort((a, b) => parseInt(a) - parseInt(b));
+  app.innerHTML = `
+  <section class="band"><div class="wrap"><a class="back" href="#events">All events</a>
+    <h1>${esc(ev.name)}</h1><p class="mute" style="margin-top:8px">${plural(ev.vids.length, "video")} · ${plural(teams.length, "team")} named</p></div></section>
+  ${b ? `<section class="band tile"><div class="wrap"><div class="bhead"><h2>Eliminations</h2><p class="mute">Bold alliances show up again in a later round.</p></div>${b}</div></section>` : ""}
+  ${others.length ? `<section class="band"><div class="wrap"><h2 style="margin-bottom:6px">${b ? "Other videos" : "Videos"}</h2>
+    ${others.map(v => v.k === "match" && v.r && v.b ? `<div class="mrow">${thumb(v)}<div class="who"><span class="rd">${esc(v.m || "Match")}</span>
+      <span><span class="red" style="color:var(--c)">${v.r.map(x => team(x)).join(" & ")}</span> <span class="mute">vs</span> <span class="blue" style="color:var(--c)">${v.b.map(x => team(x)).join(" & ")}</span></span></div><a class="w" href="${yt(v.id)}">Watch${v.l ? " · " + v.l : ""}</a></div>`
+      : `<div class="mrow">${thumb(v)}<div class="who"><span>${esc(v.t)}</span><span class="mute">${esc(v.c)}</span></div><a class="w" href="${yt(v.id)}">Watch${v.l ? " · " + v.l : ""}</a></div>`).join("")}
+  </div></section>` : ""}
+  ${teams.length ? `<section class="band tile"><div class="wrap"><h2 style="margin-bottom:14px">Teams named at this event</h2><div class="idx">${teams.map(t => `<a href="#team-${t}">${t}<span>${T.get(t).vids.length}</span></a>`).join("")}</div></div></section>` : ""}`;
+}
+
+function eventsPage() {
+  const recaps = V.filter(v => v.k === "event" && !v.s);
+  app.innerHTML = `<section class="band"><div class="wrap"><h1 style="margin-bottom:22px">Events with Override video</h1>${eventRows()}</div></section>
+  ${recaps.length ? `<section class="band tile"><div class="wrap"><h2 style="margin-bottom:6px">Final Four recaps</h2><p class="mute" style="margin-bottom:14px">These cover several matches each, so they aren't sorted by team.</p>
+    <div class="vids">${recaps.map(v => `<a class="vid" href="${yt(v.id)}"><span class="thumb"><img src="thumbs/${v.id}.jpg" alt="" loading="lazy"></span><span>${esc(v.t.replace(/\s*\|\s*VEX V5 Override.*$/i, ""))}<br><small>${esc(v.c)}</small></span></a>`).join("")}</div></div></section>` : ""}`;
+}
+
+function teamsPage() {
+  const all = [...T.values()].sort((a, b) => parseInt(a.id) - parseInt(b.id) || a.id.localeCompare(b.id));
+  app.innerHTML = `<section class="band"><div class="wrap"><h1>Every team named in an Override video</h1>
+    <p class="mute" style="margin:8px 0 22px">${T.size} teams. The small number is how many videos name them.</p>
+    ${searchForm()}<div class="idx" style="margin-top:22px">${all.map(t => `<a href="#team-${t.id}">${t.id}<span>${t.vids.length}</span></a>`).join("")}</div></div></section>`;
+  wireSearch();
+}
+
+function wireSearch() {
+  const f = $("form.find"); if (!f) return;
+  const q = $("#q", f), box = $("#sugg", f);
+  let cur = 0, list = [];
+  const draw = () => {
+    const s = q.value.trim().toUpperCase();
+    list = s ? [...T.values()].filter(t => t.id.startsWith(s)).sort((a, b) => b.vids.length - a.vids.length).slice(0, 7) : [];
+    cur = 0;
+    box.innerHTML = list.map((t, i) => `<a href="#team-${t.id}" class="${i ? "" : "cur"}" role="option"><b>${t.id}</b><span class="mute">${plural(t.vids.length, "video")}</span></a>`).join("");
+    box.classList.toggle("open", list.length > 0);
+  };
+  q.addEventListener("input", draw);
+  q.addEventListener("keydown", e => {
+    if (!list.length || !["ArrowDown", "ArrowUp"].includes(e.key)) return;
+    e.preventDefault(); cur = (cur + (e.key === "ArrowDown" ? 1 : list.length - 1)) % list.length;
+    [...box.children].forEach((a, i) => a.classList.toggle("cur", i === cur));
+  });
+  q.addEventListener("blur", () => setTimeout(() => box.classList.remove("open"), 150));
+  f.addEventListener("submit", e => {
+    e.preventDefault();
+    const s = q.value.trim().toUpperCase().replace(/\s+/g, "");
+    if (!s) return q.focus();
+    location.hash = "team-" + (list[cur] && !T.has(s) ? list[cur].id : s);
+  });
+}
+
+function route() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  for (const a of document.querySelectorAll("nav a[data-nav]")) a.toggleAttribute("aria-current", a.dataset.nav === (h.split("-")[0] || "home"));
+  if (h.startsWith("team-")) teamPage(h.slice(5).toUpperCase());
+  else if (h.startsWith("event-")) eventPage(h.slice(6));
+  else if (h === "events") eventsPage();
+  else if (h === "teams") teamsPage();
+  else home();
+  if (h && h !== "home") window.scrollTo(0, 0);
+}
+
+fetch("videos.json").then(r => r.json()).then(d => { V = d; index(); route(); addEventListener("hashchange", route); })
+  .catch(() => { app.innerHTML = `<section class="band"><div class="wrap empty"><h2>The video list didn't load</h2><p class="mute">Reload the page to try again.</p></div></section>`; });
+}
+</script>
+</body>
+</html>
