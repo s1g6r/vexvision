@@ -197,7 +197,7 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
     flashes.forEach(({ e, m }) => { const a = t - e.t; m.material.opacity = a >= 0 && a < 1.2 ? 1 - a / 1.2 : 0; m.scale.setScalar(1 + Math.max(0, a) * 1.6); });
 
     // camera
-    const target = mode === "broadcast" ? F.photoView(frameFor(camAt(R.cams, t))) : (!dragging && !reduced && (orbit.az += 0.0006 * (playing ? 1 : 0.3)), orbitView());
+    const target = mode === "broadcast" ? F.photoView(frameFor(camAt(R.cams, t)), F.size[1] > F.size[0] * 0.7) : (!dragging && !reduced && (orbit.az += 0.0006 * (playing ? 1 : 0.3)), orbitView());
     if (blendT < 1) { blendT = Math.min(1, blendT + dt / 1.1); const k = blendT < 0.5 ? 4 * blendT ** 3 : 1 - (-2 * blendT + 2) ** 3 / 2; view = F.mix(blendFrom, target, k); }
     else view = target;
     F.apply(view);

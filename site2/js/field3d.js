@@ -303,8 +303,8 @@ export function createField(canvas, opts = {}) {
   // camera handling: a "view" is {pos, quat, fov, ofs:{fw,fh,x,y}} so a broadcast camera
   // (cropped like object-fit: cover) and a free camera interpolate smoothly
   let W = 1, H = 1;
-  function photoView(frame) {
-    const s = Math.max(W / frame.w, H / frame.h), fw = frame.w * s, fh = frame.h * s;
+  function photoView(frame, contain = false) {
+    const s = (contain ? Math.min : Math.max)(W / frame.w, H / frame.h), fw = frame.w * s, fh = frame.h * s;
     return { pos: new THREE.Vector3(...frame.pos), quat: new THREE.Quaternion(...frame.quat),
       fov: THREE.MathUtils.radToDeg(2 * Math.atan(frame.h / 2 / frame.f)), ofs: { fw, fh, x: (fw - W) / 2, y: (fh - H) / 2 } };
   }

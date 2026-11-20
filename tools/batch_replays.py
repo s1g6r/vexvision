@@ -28,17 +28,22 @@ def main():
     ap.add_argument("--weights", required=True); ap.add_argument("--raw", required=True)
     ap.add_argument("--out", default="site2/data/replays"); ap.add_argument("--fps", type=float, default=3)
     ap.add_argument("--limit", type=int, default=999)
+    ap.add_argument("--shard", default="0/1", help="i/n: this process takes every n-th match starting at i")
     a = ap.parse_args()
     os.makedirs(a.raw, exist_ok=True); os.makedirs(a.out, exist_ok=True)
     cat = [v for v in json.load(open(a.catalog)) if v["kind"] == "match" and v.get("red") and v.get("blue")
            and len(v["red"]) == 2 and len(v["blue"]) == 2 and os.path.exists(os.path.join(a.videos, v["id"] + ".mp4"))]
     det = Detector(a.weights)
-    idx_path = os.path.join(a.out, "index.json")
+    si, sn = map(int, a.shard.split("/"))
+    idx_path = os.path.join(a.out, "index.json" if sn == 1 else f"index_{si}.json")
     index = json.load(open(idx_path)) if os.path.exists(idx_path) else []
-    done = {x["id"] for x in index}
+    done = set()
+    for f in os.listdir(a.out):                     # matches any shard already finished
+        if f.startswith("index") and f.endswith(".json"):
+            done |= {x["id"] for x in json.load(open(os.path.join(a.out, f)))}
     n = 0
-    for v in order(cat):
-        if v["id"] in done or n >= a.limit:
+    for k, v in enumerate(order(cat)):
+        if k % sn != si or v["id"] in done or n >= a.limit:
             continue
         n += 1
         path = os.path.join(a.videos, v["id"] + ".mp4")
