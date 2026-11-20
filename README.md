@@ -57,7 +57,23 @@ The same stages, with choices that use what VEX rules guarantee:
    on held-out data (Push Back, 37,364 High School matches), against Scout's
    stated 70%.
 
-## What has been measured (real Override broadcasts, Nov 2026)
+## Where it stands (Nov 20, 2026)
+
+- **Full matches, end to end.** `python -m tools.batch_replays` downloads nothing itself; give it a folder of
+  match videos (720p from YouTube) and it tracks all four robots through each match, names them from the
+  title's alliances and plates, and exports a 3D replay for the site. About 6–7 minutes per match on 2 CPU cores.
+  `tools/track_check.py` draws the tracks back onto the video so every run can be checked by eye.
+- **Robot detector (round 3):** precision 0.96, recall 0.99, mAP50 0.99 on a held-out set of 24 frames from 15
+  videos no training frame came from (`data/robots_test.json`). Round 1, which the old site used, scores
+  0.88 / 0.81 / 0.91 on the same set.
+- **How well tracking holds up depends on the camera.** High overhead cameras (Highlander Summit) calibrate on
+  ~95% of frames with robots seen ~85% of the time. Low, purple-lit cameras with a monitor in the way
+  (Speedway) calibrate on ~75% and see robots only 35–70% of the time. The site only shows replays above 60%.
+- **The 3D site** (`site2/`) shows a full tracked replay next to the broadcast, rebuilds any screenshot in 3D in
+  the browser, and gives each team a scouting card (distance driven, time on the opponent's side and in the
+  Midfield, autonomous movement, a heatmap) from every tracked match. Work log and decisions: `docs/LOG.md`.
+
+## What was measured first (single frames, Nov 2026)
 
 Data: the auto-generated 1280x720 frames YouTube keeps for every video (3 per
 video), from 123 Override match videos across about 15 events. See

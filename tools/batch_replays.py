@@ -13,7 +13,7 @@ import numpy as np
 from vexvision import analyze as AN, stream
 from vexvision.detect import Detector
 
-PRIORITY = ["Speedway", "Harbor Havoc", "Highlander", "Great Planes", "Mall of America", "Smoky", "Silk Road", "Blank"]
+PRIORITY = ["Highlander", "Harbor Havoc", "Great Planes", "Blank", "Mall of America", "Smoky", "Silk Road", "GHOST", "Speedway"]
 
 def order(cat):
     def key(v):

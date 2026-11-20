@@ -9,6 +9,7 @@ Usage: python -m tools.review_sheet --props prop.jsonl --frames DIR --out DIR [-
 import argparse, json, os
 import cv2, numpy as np
 from vexvision import calibrate as C, field as F
+MINC = 0.2
 
 def draw(img, rec, w=480):
     s = w / img.shape[1]
@@ -20,7 +21,7 @@ def draw(img, rec, w=480):
             p = C.to_img(H, np.asarray(seg, float)) * s
             cv2.polylines(im, [p.astype(np.int32).reshape(-1, 1, 2)], False, col, 1, cv2.LINE_AA)
     for i, r in enumerate(sorted(rec["robots"], key=lambda r: -r["conf"])):
-        if r["conf"] < 0.2:
+        if r["conf"] < MINC:
             continue
         x0, y0, x1, y1 = [int(v * s) for v in r["box"]]
         c = (0, 255, 255) if r["conf"] >= 0.5 else (0, 120, 255)
@@ -33,9 +34,10 @@ def main():
     ap.add_argument("--props", required=True); ap.add_argument("--frames", required=True)
     ap.add_argument("--out", required=True); ap.add_argument("--per", type=int, default=12)
     ap.add_argument("--only", help="json list of frame names to include")
-    ap.add_argument("--w", type=int, default=480); ap.add_argument("--cols", type=int, default=3)
+    ap.add_argument("--w", type=int, default=480); ap.add_argument("--minc", type=float, default=0.2); ap.add_argument("--cols", type=int, default=3)
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
+    global MINC; MINC = a.minc
     recs = [json.loads(l) for l in open(a.props)]
     if a.only:
         keep = set(json.load(open(a.only))); recs = [r for r in recs if r["frame"] in keep]
