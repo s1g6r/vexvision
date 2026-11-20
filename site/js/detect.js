@@ -23,10 +23,16 @@ export function loadRuntime(base = new URL("ort/", location.href).href) {
 
 export async function loadModel(url, names) {
   const ort = await loadRuntime();
-  // Models ship as base64 inside JSON because the page host serves only common web file types.
-  const { b64 } = await (await fetch(url)).json();
-  const bin = atob(b64), bytes = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  // On GitHub Pages the models are plain .onnx files; where a host serves only common
+  // web types they ship as base64 inside .json.
+  let bytes;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`model ${url}: ${res.status}`);
+  if (url.endsWith(".json")) {
+    const { b64 } = await res.json(), bin = atob(b64);
+    bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  } else bytes = new Uint8Array(await res.arrayBuffer());
   const session = await ort.InferenceSession.create(bytes, { executionProviders: ["wasm"] });
   return { session, names };
 }

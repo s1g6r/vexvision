@@ -1,0 +1,36 @@
+# Publish the website (site/ + models/*.onnx + onnxruntime-web) to GitHub Pages on every push to main.
+name: Publish site
+on:
+  push:
+    branches: [main]
+    paths: ["site/**", "models/*.onnx", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency: { group: pages, cancel-in-progress: true }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Assemble
+        run: |
+          mkdir -p out/models out/ort
+          cp -r site/index.html site/style.css site/js site/data out/
+          cp models/goals.onnx models/robots.onnx out/models/
+          cd "$RUNNER_TEMP" && npm pack onnxruntime-web@1.30.0 && tar xzf onnxruntime-web-1.30.0.tgz
+          for f in ort.wasm.min.js ort-wasm-simd-threaded.mjs ort-wasm-simd-threaded.wasm; do cp package/dist/$f "$GITHUB_WORKSPACE/out/ort/"; done
+          touch "$GITHUB_WORKSPACE/out/.nojekyll"
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: out }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: "${{ steps.d.outputs.page_url }}" }
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4

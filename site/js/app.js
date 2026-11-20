@@ -99,9 +99,10 @@ let models = null;
 async function getModels(status) {
   if (models) return models;
   status("Loading the detection models (about 29 MB the first time)…");
+  const ext = await fetch("models/goals.onnx", { method: "HEAD" }).then(r => (r.ok ? "onnx" : "json"), () => "json");
   const [goals, robots] = await Promise.all([
-    loadModel("models/goals.json", ["goal_red", "goal_blue", "goal_neutral", "goal_center"]),
-    loadModel("models/robots.json", ["robot"]),
+    loadModel(`models/goals.${ext}`, ["goal_red", "goal_blue", "goal_neutral", "goal_center"]),
+    loadModel(`models/robots.${ext}`, ["robot"]),
   ]);
   models = { goals, robots };
   return models;
