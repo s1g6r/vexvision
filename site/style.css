@@ -60,7 +60,7 @@ input::placeholder{color:var(--faint)}
 label{font-weight:500;display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--muted)}
 
 /* HERO: pinned, scroll-driven */
-.hero{height:420vh;position:relative}
+.hero{height:240vh;position:relative}
 .hero-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(120% 90% at 70% 40%,#11141a 0%,var(--bg) 60%)}
 .hero-stage{position:absolute;inset:0}
 .hero-world{position:absolute;left:0;top:0;transform-origin:0 0}
@@ -267,7 +267,8 @@ dialog::backdrop{background:rgb(0 0 0/.72);backdrop-filter:blur(4px)}
   .hero-copy .lede{font-size:15px}
   .hero-copy .row .ghost{display:none}
   .phases{left:16px;right:16px;width:auto;bottom:48px}
-  .hero-end{display:none}
+  .hero-end{left:16px;right:16px;width:auto;top:auto;bottom:22px;translate:none}
+  .hero-end h2,.hero-end .kicker,.hero-end ul{display:none}
   .scrollhint{display:none}
   table{font-size:13px}
   .stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}

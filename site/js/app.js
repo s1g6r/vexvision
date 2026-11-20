@@ -87,7 +87,7 @@ async function loadData() {
 }
 
 /* ---------- router ----------------------------------------------------------------- */
-const VIEWS = ["home", "matches", "replay", "scoring"], ANCHORS = { analyze: "analyze", how: "how", read: "read" };
+const VIEWS = ["home", "matches", "replay", "scoring"], ANCHORS = { analyze: "analyze", read: "read" };
 let lastView = null;
 function route() {
   const h = location.hash.slice(1);
@@ -104,7 +104,7 @@ function route() {
 let models = null;
 async function getModels(status) {
   if (models) return models;
-  status("Loading the detection models (about 29 MB the first time)…");
+  status("Warming up (about 29 MB the first time)…");
   const ext = await fetch("models/goals.onnx", { method: "HEAD" }).then(r => (r.ok ? "onnx" : "json"), () => "json");
   const [goals, robots] = await Promise.all([
     loadModel(`models/goals.${ext}`, ["goal_red", "goal_blue", "goal_neutral", "goal_center"]),
@@ -124,7 +124,7 @@ function showResult({ src, w, h, H, goals, robots, caption, matchedNames, qualit
   const inch = v => Math.round(v / 25.4);
   $("#a-read").innerHTML = `<h3>${placed.length ? `${placed.length} of 4 robots on the map` : H ? "No robots placed" : "Field not mapped"}</h3>
     <ul>${placed.map(r => `<li><b>${esc(r.label)}</b><span>${esc(quadName(quadrantOf(...r.floor)))}, ${sideOf(...r.floor)} side<small>${Math.abs(inch(r.floor[0]))} in ${r.floor[0] >= 0 ? "east" : "west"} and ${Math.abs(inch(r.floor[1]))} in ${r.floor[1] >= 0 ? "north" : "south"} of the centre goal</small></span></li>`).join("")}</ul>
-    <p class="meta"><span><strong>${matchedNames?.size ?? 0} of 9</strong> goals matched</span>${quality != null ? `<span><strong>${Math.round(quality * 100)}%</strong> of the visible tape on the model</span>` : ""}</p>`;
+`;
   if (!reduced) { const s = document.querySelector(".a-right"); s.animate([{ opacity: .35, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 380, easing: "cubic-bezier(.2,.7,.2,1)" }); }
 }
 
@@ -166,10 +166,10 @@ async function analyzeFile(file) {
   $("#a-img").src = url; drawOverlay($("#a-cv"), w, h, {}); scan.classList.add("on");
   try {
     const m = await getModels(status);
-    status("Finding goals and robots…");
+    status("Looking for the robots…");
     const t0 = performance.now();
     const [goalsDet, robotsDet] = [await detect(m.goals, im, w, h, 0.1), await detect(m.robots, im, w, h, 0.35)];
-    status("Working out where the camera is…");
+    status("Placing them on the field…");
     await new Promise(r => setTimeout(r, 0));
     const res = calibrate(im, w, h, goalsDet);
     let robots = robotsDet.map(r => ({ ...r }));
@@ -180,11 +180,11 @@ async function analyzeFile(file) {
     showResult({ src: url, w, h, H: res?.H, goals: goalsDet, robots, quality: res?.quality ?? null, matchedNames: matchedGoalNames(res?.H, goalsDet, w),
       caption: `Your screenshot · read in ${secs} s` });
     document.querySelectorAll(".sample").forEach(b => b.setAttribute("aria-pressed", "false"));
-    if (!res) status("The field could not be mapped. It needs at least four goals in view; a wide shot of the whole field works best.", true);
-    else status(`Field mapped and ${robots.length} robot${robots.length === 1 ? "" : "s"} placed.`, false, true);
+    if (!res) status("Couldn't line up the field in that shot. Try a wider frame that shows most of the field.", true);
+    else status(`${robots.length} robot${robots.length === 1 ? "" : "s"} placed on the field.`, false, true);
   } catch (e) {
     console.error(e); scan.classList.remove("on");
-    status("The detection models could not run in this browser. The gallery and the other tools still work.", true);
+    status("This browser couldn't run the analyzer. Everything else on the site still works.", true);
   }
 }
 
@@ -239,14 +239,14 @@ function renderMatches() {
   }
   const team = $("#m-team").value.trim().toUpperCase(), ev = $("#m-event").value, four = $("#m-robots").checked;
   const list = GALLERY.map((g, i) => [g, i]).filter(([g]) => (!team || [...(g.red || []), ...(g.blue || [])].some(t => t.startsWith(team))) && (!ev || g.event === ev) && (!four || capRobots(g.robots).length === 4));
-  $("#m-count").textContent = `${GALLERY.length} calibrated frames from ${new Set(GALLERY.map(g => g.video)).size} match videos. Each one shows the robots it found on the field.`;
+  $("#m-count").textContent = `${GALLERY.length} moments from ${new Set(GALLERY.map(g => g.video)).size} matches, each with the robots on the field map.`;
   $("#m-empty").hidden = list.length > 0;
   renderCards($("#m-cards"), list.slice(0, 240));
 }
 function renderCards(el, list) {
   el.innerHTML = list.map(([g, i]) => `<button class="card" data-i="${i}">
       <div class="thumb"><img decoding="async" src="${esc(g.img)}" alt=""><svg class="mini" viewBox="-1950 -1950 3900 3900" data-mini="${i}"></svg></div>
-      <div class="meta"><h3>${esc(g.match ? `${g.match} · ${g.event}` : g.event || "Match frame")}</h3><small>${capRobots(g.robots).length} of 4 robots placed · ${Math.round(g.q * 100)}% tape fit</small>
+      <div class="meta"><h3>${esc(g.match ? `${g.match} · ${g.event}` : g.event || "Match frame")}</h3><small>${capRobots(g.robots).length} of 4 robots on the map${g.clock ? ` · ${esc(g.clock)} left` : ""}</small>
       <div class="chips">${(g.red || []).map(t => `<span class="chip red">${esc(t)}</span>`).join("")}${(g.blue || []).map(t => `<span class="chip blue">${esc(t)}</span>`).join("")}${g.score ? `<span class="chip">${esc(g.score)}</span>` : ""}</div></div></button>`).join("");
   el.querySelectorAll("svg[data-mini]").forEach(s => { const g = GALLERY[+s.dataset.mini]; fieldSVG(s, { rot: viewRotation(g.H, g.w, g.h), robots: capRobots(g.robots).map(r => ({ x: r.floor[0], y: r.floor[1], label: "" })) }); });
 }
@@ -258,7 +258,7 @@ function openDetail(g) {
   drawOverlay($("#d-cv"), g.w, g.h, { H: g.H, goals: g.goals, robots });
   fieldSVG($("#d-map"), { rot: viewRotation(g.H, g.w, g.h), robots: robots.filter(r => r.floor).map(r => ({ x: r.floor[0], y: r.floor[1], label: r.label })), matched: matchedGoalNames(g.H, g.goals, g.w) });
   const pos = robots.filter(r => r.floor).map(r => `${r.label}: ${quadName(quadrantOf(...r.floor))}, ${sideOf(...r.floor)} side`).join(" · ") || "No robot placed";
-  const rows = [["Event", g.event || g.title], ["Match", g.match || "not on screen"], ["Clock", g.clock ?? "not read"], ["Red", (g.red || []).join(" & ") || "not read"], ["Blue", (g.blue || []).join(" & ") || "not read"], ["Score on screen", g.score || "not shown"], ["Robots on the map", pos], ["Field fit", `${Math.round(g.q * 100)}% of visible tape on the model`]];
+  const rows = [["Event", g.event || g.title], ["Match", g.match || "not on screen"], ["Clock", g.clock ?? "not read"], ["Red", (g.red || []).join(" & ") || "not read"], ["Blue", (g.blue || []).join(" & ") || "not read"], ["Score on screen", g.score || "not shown"], ["Robots on the map", pos]];
   $("#d-info").innerHTML = rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("") + `<div><dt>Source</dt><dd><a href="https://www.youtube.com/watch?v=${esc(g.video)}" target="_blank" rel="noopener">${esc(g.channel || "YouTube")}</a></dd></div>`;
 }
 function quadName(q) { return { N: "North quadrant", E: "East quadrant", S: "South quadrant", W: "West quadrant", mid: "Midfield" }[q]; }
@@ -303,7 +303,7 @@ function drawReplay(t) {
 function initReplay() {
   $("#r-file").addEventListener("change", async e => { const f = e.target.files[0]; if (!f) return; try { loadReplay(JSON.parse(await f.text()), `Opened ${f.name}.`); } catch { $("#r-note").textContent = "That file could not be read as JSON."; } });
   $("#r-sample").addEventListener("click", async () => {
-    try { const d = await (await fetch("data/sample_replay.json")).json(); loadReplay(d, "Test-suite match: four scripted robots driven over a real broadcast frame, used to check the pipeline end to end. Not a real match."); }
+    try { const d = await (await fetch("data/sample_replay.json")).json(); loadReplay(d, "Practice file with made-up robots and team numbers. Not a real match."); }
     catch { $("#r-note").textContent = "The sample file is missing."; }
   });
   $("#r-t").addEventListener("input", e => drawReplay(+e.target.value / 10));
@@ -353,20 +353,7 @@ function initScoring() {
 }
 
 /* ---------- home: stats, ticker, cards, how ---------------------------------------- */
-const ICONS = [
-  `<rect x="6" y="12" width="52" height="34" rx="7" fill="none" stroke="currentColor" stroke-width="3"/><path d="M14 22h14M14 30h9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><rect x="38" y="20" width="14" height="16" rx="3" fill="var(--pin)"/><path d="M24 52h16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>`,
-  `<path d="M23 8h18l12 12v18L41 50H23L11 38V20z" fill="none" stroke="currentColor" stroke-width="3"/><rect x="21" y="18" width="22" height="22" rx="5" fill="none" stroke="var(--pin)" stroke-width="3"/><circle cx="32" cy="29" r="4" fill="var(--pin)"/>`,
-  `<path d="M16 14h32l12 38H4z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M10 50L46 15M18 15l36 36" stroke="var(--pin)" stroke-width="2.6"/><path d="M32 26l7 7-7 7-7-7z" fill="none" stroke="currentColor" stroke-width="2.4"/>`,
-  `<path d="M8 50c8-10 12-24 24-26s16 14 24 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 6"/><rect x="4" y="44" width="12" height="12" rx="3" fill="var(--red)"/><rect x="50" y="20" width="12" height="12" rx="3" fill="var(--blue)"/><rect x="26" y="18" width="12" height="12" rx="3" fill="var(--pin)"/>`,
-  `<rect x="6" y="18" width="52" height="26" rx="6" fill="none" stroke="currentColor" stroke-width="3"/><text x="32" y="38" text-anchor="middle" font-family="Barlow Condensed" font-weight="800" font-size="18" fill="var(--pin)">2360A</text>`,
-  `<path d="M14 54h16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><rect x="18" y="38" width="8" height="14" rx="3" fill="var(--red)"/><rect x="18" y="24" width="8" height="13" rx="3" fill="var(--pin)"/><rect x="18" y="10" width="8" height="13" rx="3" fill="var(--blue)"/><path d="M40 44l16-14v28z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>`,
-  `<rect x="6" y="14" width="24" height="30" rx="6" fill="var(--red)"/><rect x="34" y="14" width="24" height="30" rx="6" fill="var(--blue)"/><text x="18" y="36" text-anchor="middle" font-family="Barlow Condensed" font-weight="800" font-size="16" fill="#fff">52</text><text x="46" y="36" text-anchor="middle" font-family="Barlow Condensed" font-weight="800" font-size="16" fill="#fff">47</text><path d="M22 52l6 5 14-12" fill="none" stroke="var(--pin)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>`,
-];
 function initHome() {
-  const H = FACTS?.how || {};
-  $("#h-steps").innerHTML = (H.steps || []).map((st, i) => `<div class="step"><svg viewBox="0 0 64 64" aria-hidden="true" style="color:var(--muted)">${ICONS[i] || ""}</svg><h3>${esc(st.title)}</h3><p>${esc(st.text)}</p>${st.figure ? `<p class="fig">${esc(st.figure)}</p>` : ""}</div>`).join("");
-  $("#h-cmp tbody").innerHTML = (H.compare || []).map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("");
-  $("#h-limits").innerHTML = (H.limits || []).map(l => `<li>${esc(l)}</li>`).join("");
   // ticker of matches read
   const items = GALLERY.filter(g => g.match && (g.red || []).length === 2 && (g.blue || []).length === 2);
   const one = items.map(g => `<span class="tk"><em>${esc(g.match)}</em><span class="r">${esc(g.red.join(" "))}</span><span class="vs">vs</span><span class="b">${esc(g.blue.join(" "))}</span><span class="vs">${esc(g.event)}</span></span>`).join("");

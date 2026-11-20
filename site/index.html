@@ -42,32 +42,25 @@
       <div class="hero-copy" id="h-copy">
         <p class="kicker">VEX V5RC · Override · <span id="h-live">reading a real match</span></p>
         <h1>The stream you already watch, turned into a scouting map</h1>
-        <p class="lede">vexvision reads Override broadcasts frame by frame: it finds the field, works out where the camera stands, and puts every robot on the carpet in inches.</p>
+        <p class="lede">Every robot on the field, every match, pulled straight from the broadcast. See where teams drive, score and park before you ever meet them.</p>
         <div class="row"><a class="btn primary" href="#analyze">Try it on a screenshot</a><a class="btn ghost" href="#matches">See matches it read</a></div>
       </div>
       <div class="hero-end" id="h-end">
         <p class="kicker">Qual 19 · Great Planes Signature Event</p>
-        <h2>One broadcast frame, four robots on the map</h2>
+        <h2>Four robots, straight off the stream</h2>
         <ul></ul>
         <a class="btn primary" href="#analyze">Map your own screenshot</a>
       </div>
-      <ol class="phases" id="h-phases" aria-hidden="true">
-        <li data-p="0"><b>Broadcast frame</b><span>Qual 19 at the Great Planes Signature Event, straight from the stream</span></li>
-        <li data-p="1"><b>Field found</b><span>Goals matched to the layout, white tape traced to within an inch</span></li>
-        <li data-p="2"><b>Four robots</b><span>Never more than four: two per alliance, followed the whole match</span></li>
-        <li data-p="3"><b>Camera undone</b><span>The same pixels laid flat, using the camera position it worked out</span></li>
-        <li data-p="4"><b>On the map</b><span>Every robot placed on the field, ready for paths, zones and scoring</span></li>
-      </ol>
       <div class="hero-scrub" aria-hidden="true"><i id="h-bar"></i></div>
       <p class="scrollhint" id="h-hint">Scroll to watch it work</p>
     </div>
   </div>
 
   <div class="band stats" id="stats">
-    <div class="stat"><b data-count="1.2" data-dec="1">0</b><span>inches median error mapping the field, on cameras it never trained on</span></div>
-    <div class="stat"><b data-count="94" data-suf="%">0</b><span>of match names read right off the broadcast overlay</span></div>
-    <div class="stat"><b data-count="2913">0</b><span>broadcast frames collected from 982 match videos</span></div>
-    <div class="stat"><b data-count="78.8" data-dec="1" data-suf="%">0</b><span>of match winners called by our predictions, against 70% claimed elsewhere</span></div>
+    <div class="stat"><b data-count="982">0</b><span>Override match videos collected so far</span></div>
+    <div class="stat"><b data-count="671">0</b><span>teams playing in those matches</span></div>
+    <div class="stat"><b data-count="2913">0</b><span>broadcast frames read</span></div>
+    <div class="stat"><b data-count="78.8" data-dec="1" data-suf="%">0</b><span>of match winners called before the match is played</span></div>
   </div>
 
   <div class="ticker" aria-label="Matches read"><div class="ticker-track" id="ticker"></div></div>
@@ -75,7 +68,7 @@
   <div class="band analyze" id="analyze">
     <div class="a-head">
       <h2>Drop in a screenshot from any Override stream</h2>
-      <p class="lede">The models run right here in your browser. A wide shot of the whole field works best; nothing leaves your computer.</p>
+      <p class="lede">Grab a frame from any match stream and see all four robots on the field. A wide shot of the whole field works best, and your screenshot never leaves your computer.</p>
     </div>
     <div class="a-grid">
       <div class="a-left">
@@ -112,18 +105,6 @@
     <div class="cards" id="home-cards"></div>
   </div>
 
-  <div class="band how" id="how">
-    <h2>What happens between the stream and the map</h2>
-    <div class="steps" id="h-steps"></div>
-  </div>
-
-  <div class="band cmp-band">
-    <h2>Next to the other VEX vision tool</h2>
-    <p class="lede">scout.questionative.dev (also @vrc.ai on Instagram) is invite-only and runs on its owner's computer. Its column is its own claims; ours is measured as described.</p>
-    <div class="scroll"><table class="stack cmp" id="h-cmp"><thead><tr><th>Step</th><th>Scout says</th><th>vexvision</th></tr></thead><tbody></tbody></table></div>
-    <h3 class="limits-h">Still in progress</h3>
-    <ul class="limits" id="h-limits"></ul>
-  </div>
 </section>
 
 <!-- MATCHES ---------------------------------------------------------------- -->
@@ -148,10 +129,10 @@
   <div class="band replay">
     <div class="intro">
       <h1>Replay an analysed match</h1>
-      <p class="lede">The video pipeline writes one JSON file per match. Open it here to watch the four robots move, see each scoring event, and compare what the camera saw with the official score.</p>
+      <p class="lede">Open a match file to watch the four robots move, see each scoring play, and how the points split between partners.</p>
       <div class="row">
         <label class="btn primary">Open match JSON<input type="file" id="r-file" accept=".json,application/json" hidden></label>
-        <button class="btn ghost" id="r-sample">Load the test-suite match</button>
+        <button class="btn ghost" id="r-sample">Load a practice match</button>
       </div>
       <p class="note" id="r-note"></p>
     </div>
@@ -204,7 +185,7 @@
 </main>
 
 <footer class="foot">
-  <span>Built by 2360A Arachnid · code at <a href="https://github.com/s1g6r/vexvision">github.com/s1g6r/vexvision</a> · predictions at <a href="https://stats.2360arachnid.com">stats.2360arachnid.com</a></span>
+  <span>Built by 2360A Arachnid · match predictions at <a href="https://stats.2360arachnid.com">stats.2360arachnid.com</a></span>
   <span>Frames are from public match videos on YouTube; each one links to its source.</span>
 </footer>
 <script type="module" src="js/app.js"></script>

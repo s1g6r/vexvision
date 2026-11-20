@@ -1,6 +1,6 @@
 // The opening sequence: a real broadcast frame, the tape traced, the robots tagged, then the
 // same pixels laid flat onto the field using the frame's own homography. Scroll drives it.
-import { WALL, tapeSegments, quadrantOf } from "./field.js";
+import { WALL, TILE, GOALS, TOGGLE_LEN, TOGGLES, tapeSegments, quadrantOf } from "./field.js";
 const quadrant = f => quadrantOf(f[0], f[1]);
 import * as C from "./calib.js";
 import { homography } from "./linalg.js";
@@ -26,7 +26,6 @@ export function initHero(data, rotation, reduced) {
   const $ = s => document.querySelector(s);
   const hero = $("#hero"), world = $("#h-world"), warp = $("#h-warp"), full = $("#h-full"), img = $("#h-img");
   const over = $("#h-over"), top = $("#h-top"), copy = $("#h-copy"), bar = $("#h-bar"), hint = $("#h-hint");
-  const phases = [...document.querySelectorAll("#h-phases li")];
   const { w, h, H } = data;
   full.src = img.src = data.img;
   for (const el of [world, warp]) { el.style.width = w + "px"; el.style.height = h + "px"; }
@@ -59,8 +58,19 @@ export function initHero(data, rotation, reduced) {
 
   // tokens ride on the floor: each robot's floor point, pushed through the same warp
   const floorPx = data.robots.map(r => C.toImg(H, [r.floor])[0]);
-  top.innerHTML = data.robots.map((r, i) => `<g class="tok" opacity="0"><circle class="ring" r="34"/><rect x="-24" y="-24" width="48" height="48" rx="14"/><text text-anchor="middle" y="12">${i + 1}</text></g>`).join("");
-  const toks = [...top.querySelectorAll(".tok")];
+  const pt = q => sq(q).map(v => v.toFixed(1)).join(",");
+  let fld = `<g id="h-field" opacity="0"><polygon points="${[[-WALL - 40, -WALL - 40], [WALL + 40, -WALL - 40], [WALL + 40, WALL + 40], [-WALL - 40, WALL + 40]].map(pt).join(" ")}" fill="#59616c"/>`;
+  for (let i = -3; i < 3; i++) for (let j = -3; j < 3; j++) {
+    const x0 = i * TILE, y0 = j * TILE;
+    fld += `<polygon fill="${(i + j) & 1 ? "#353a43" : "#3b414a"}" points="${[[x0, y0], [x0 + TILE, y0], [x0 + TILE, y0 + TILE], [x0, y0 + TILE]].map(pt).join(" ")}"/>`;
+  }
+  tapeSegments(2).forEach(sg => { const a = sq(sg[0]), b = sq(sg[sg.length - 1]); fld += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#f2f4f7" stroke-width="4.5" stroke-linecap="round"/>`; });
+  const k8 = (x, y, r) => Array.from({ length: 8 }, (_, i) => { const a = Math.PI / 8 + i * Math.PI / 4; return pt([x + r * Math.cos(a), y + r * Math.sin(a)]); }).join(" ");
+  GOALS.forEach(g => (fld += `<polygon points="${k8(g.x, g.y, g.kind === "center" ? 150 : 115)}" fill="${g.kind === "red" ? "#ff4d55" : g.kind === "blue" ? "#3b8bff" : "#0a0b0e"}" stroke="#14171c" stroke-width="3"/>`));
+  Object.entries(TOGGLES).forEach(([q, [x, y]]) => { const d = q === "N" || q === "S" ? [TOGGLE_LEN / 2, 0] : [0, TOGGLE_LEN / 2]; const a = sq([x - d[0], y - d[1]]), b = sq([x + d[0], y + d[1]]); fld += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#7a828d" stroke-width="9" stroke-linecap="round"/>`; });
+  fld += "</g>";
+  top.innerHTML = fld + data.robots.map((r, i) => `<g class="tok" opacity="0"><circle class="ring" r="34"/><rect x="-24" y="-24" width="48" height="48" rx="14"/><text text-anchor="middle" y="12">${i + 1}</text></g>`).join("");
+  const toks = [...top.querySelectorAll(".tok")], fieldG = top.querySelector("#h-field");
   const end = document.querySelector("#h-end");
   if (end) {
     const q = r => ({ N: "North quadrant", E: "East quadrant", S: "South quadrant", W: "West quadrant", mid: "Midfield" })[quadrant(r.floor)];
@@ -91,7 +101,7 @@ export function initHero(data, rotation, reduced) {
     const p = reduced ? 1 : progress();
     if (p === lastP && fit0) return;
     lastP = p;
-    const k = ease(span(p, .5, .86));
+    const k = ease(span(p, .46, .8));
     // camera: zoom from full-bleed frame to the field square
     const f = { s: lerp(fit0.s, fit1.s, k), tx: lerp(fit0.tx, fit1.tx, k), ty: lerp(fit0.ty, fit1.ty, k) };
     world.style.transform = `translate(${f.tx}px,${f.ty}px) scale(${f.s})`;
@@ -99,20 +109,22 @@ export function initHero(data, rotation, reduced) {
     const Pk = P0.map((q, i) => [lerp(q[0], Q[i][0], k), lerp(q[1], Q[i][1], k)]);
     const G = homography(P0, Pk);
     warp.style.transform = matrix3d(G);
-    full.style.opacity = String(1 - span(p, .44, .62));
+    full.style.opacity = String(1 - span(p, .42, .58));
+    warp.style.opacity = String(1 - span(p, .62, .8));
+    fieldG.setAttribute("opacity", String(span(p, .6, .8)));
     full.style.filter = `brightness(${1 - .45 * span(p, .08, .3)})`;
     // tape trace and goals
-    const tp = span(p, .12, .32);
+    const tp = span(p, .1, .28);
     traces.forEach((t, i) => (t.style.strokeDashoffset = String(1 - clamp(tp * 1.4 - i * .04))));
-    goalpts.forEach((g, i) => g.setAttribute("r", String(9 * ease(span(p, .22 + i * .01, .3 + i * .01)) * (1 - span(p, .55, .7)))));
+    goalpts.forEach((g, i) => g.setAttribute("r", String(9 * ease(span(p, .2 + i * .01, .28 + i * .01)) * (1 - span(p, .5, .62)))));
     // robot boxes appear, then hand over to the tokens as the floor tilts
-    robs.forEach((g, i) => g.setAttribute("opacity", String(span(p, .32 + i * .025, .38 + i * .025) * (1 - span(p, .5, .6)))));
+    robs.forEach((g, i) => g.setAttribute("opacity", String(span(p, .3 + i * .025, .36 + i * .025) * (1 - span(p, .46, .56)))));
     toks.forEach((t, i) => {
       const [u, v] = floorPx[i], d = G[2][0] * u + G[2][1] * v + G[2][2];
       const x = (G[0][0] * u + G[0][1] * v + G[0][2]) / d, y = (G[1][0] * u + G[1][1] * v + G[1][2]) / d;
       t.setAttribute("transform", `translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${(0.95 / f.s).toFixed(3)})`);
-      t.setAttribute("opacity", String(span(p, .48, .56)));
-      t.querySelector(".ring").setAttribute("opacity", String(span(p, .86, .92) * (1 - span(p, .92, 1)) || 0));
+      t.setAttribute("opacity", String(span(p, .46, .54)));
+      t.querySelector(".ring").setAttribute("opacity", String(span(p, .8, .86) * (1 - span(p, .9, .98)) || 0));
     });
     over.querySelectorAll(".trace").forEach(t => (t.style.opacity = String(1 - .55 * span(p, .55, .8))));
     // copy and captions
@@ -120,10 +132,8 @@ export function initHero(data, rotation, reduced) {
     copy.style.transform = `translateY(${-30 * span(p, .04, .12)}px)`;
     copy.style.pointerEvents = p > .1 ? "none" : "";
     hint.style.opacity = String(1 - span(p, 0, .04));
-    const idx = p < .08 ? -1 : p < .2 ? 0 : p < .32 ? 1 : p < .48 ? 2 : p < .86 ? 3 : (vw < 700 ? 4 : -1);
-    phases.forEach((li, i) => li.classList.toggle("on", i === idx));
     bar.style.width = (p * 100).toFixed(2) + "%";
-    if (end) { const e = span(p, .86, .95); end.style.opacity = String(e); end.style.transform = `translateY(${(1 - e) * 16}px)`; }
+    if (end) { const e = span(p, .8, .9); end.style.opacity = String(e); end.style.transform = `translateY(${(1 - e) * 16}px)`; end.style.pointerEvents = e > .5 ? "" : "none"; }
   }
   const req = () => { if (!raf) raf = requestAnimationFrame(frame); };
   addEventListener("scroll", req, { passive: true });
