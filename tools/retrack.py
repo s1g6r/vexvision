@@ -10,9 +10,18 @@ def main():
     ids = sys.argv[3:] or sorted(f[:-10] for f in os.listdir(raw) if f.endswith(".perc.json"))
     idx_p = os.path.join(rep, "index.json")
     index = {x["id"]: x for x in json.load(open(idx_p))} if os.path.exists(idx_p) else {}
+    off_p = os.path.join(os.path.dirname(rep.rstrip("/")), "official.json")
+    OFF = json.load(open(off_p))["matches"] if os.path.exists(off_p) else {}
+    hint_p = os.path.join(raw, "names_hint.json")
+    HINT = json.load(open(hint_p)) if os.path.exists(hint_p) else {}
     for i in ids:
         P = json.load(open(os.path.join(raw, i + ".perc.json")))
-        res = AN.reason(P)
+        o = OFF.get(i)
+        if o:                       # the official schedule is the truth for who was on which alliance
+            P["teams"] = {"red": o["red"], "blue": o["blue"]}
+            if i in index:
+                index[i]["red"], index[i]["blue"] = o["red"], o["blue"]
+        res = AN.reason(P, official={"red": o["rs"], "blue": o["bs"]} if o else None, hint=HINT.get(i))
         json.dump(res, open(os.path.join(raw, i + ".json"), "w"), default=float)
         if "robots" not in res:
             print(i, res.get("error")); continue

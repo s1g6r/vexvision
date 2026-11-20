@@ -274,7 +274,7 @@ def repair_swaps(tracker, assigns, det_log, mid, near=700.0, z_min=5.0, max_swap
     tracker.swaps = done
     return done
 
-def reason(P, official=None, looks=None):
+def reason(P, official=None, looks=None, hint=None):
     """Everything after perception: tracking, team names, events, score check.
     Runs from a saved perception log in seconds, so the tracker can be improved
     without re-reading the video."""
@@ -342,6 +342,11 @@ def reason(P, official=None, looks=None):
                     if agree >= 0.8 and tid_k in tids:
                         other = [t for t in teams[a] if t != k][0]
                         m, conf = {tid_k: k, [x for x in tids if x != tid_k][0]: other}, 0.9
+                h = (hint or {}).get(a)       # decided across every match this event (tools.event_names)
+                if h and h["confidence"] > conf and set(h["map"].values()) == set(teams[a]):
+                    hm = {int(k): v for k, v in h["map"].items()}
+                    if set(hm) == set(tids):
+                        m, conf = hm, h["confidence"]
                 for tid, team in m.items():
                     names[tid] = {"team": team, "confidence": round(conf, 3)}
     robots_out = []
@@ -355,6 +360,7 @@ def reason(P, official=None, looks=None):
             "toggles": sum(1 for e in ev if e.get("robot") == tr.tid and e["type"] == "toggle"),
             "ended_in_midfield": tr.tid in state["midfield_robots"],
             "auton_moved_ft": round(au.get("distance_ft", 0), 1),
+            "desc": track_desc(tr.tid, assigns, P["det_log"], t_start, t_end),
             "carry": carry_mix(tr.tid, assigns, P["det_log"], t_driver, (t_driver + 105) if t_driver else None),
             **{k: (round(v, 1) if isinstance(v, float) else v) for k, v in st.items()},
             "path": [(round(p[0] - (t_start or 0), 2), round(p[1]), round(p[2])) for p in tr.history[::2]],
@@ -378,6 +384,28 @@ def look_of(tid, look, assigns, det_log, t0=None, t1=None):
         if j is not None and feats[j] is not None:
             v.append(TM.look_score(feats[j], look))
     return float(np.mean(v)) if v else 0.0
+
+DESC_DROP = [0 * 4 + 2, 0 * 4 + 3, 7 * 4 + 2, 7 * 4 + 3, 4 * 4 + 2, 4 * 4 + 3, 5 * 4 + 2, 5 * 4 + 3, 1 * 4 + 2, 1 * 4 + 3]
+
+def track_desc(tid, assigns, det_log, t0=None, t1=None):
+    """What a robot looks like apart from its bumpers and the cones it holds: the median of its
+    colour histograms with the strong red, blue and yellow bins taken out, so the same robot
+    looks the same whichever alliance it is on. Used to match robots across matches."""
+    V = []
+    for (t, a), (_, rows, feats) in zip(assigns, det_log):
+        if (t0 is not None and t < t0) or (t1 is not None and t > t1):
+            continue
+        j = a.get(tid)
+        if j is None or feats[j] is None:
+            continue
+        f = np.asarray(feats[j], float).copy()
+        f[DESC_DROP] = 0
+        h, v = f[:32], f[32:]
+        h = h / (h.sum() + 1e-9); v = v / (v.sum() + 1e-9)
+        V.append(np.sqrt(np.r_[h, v]))
+    if len(V) < 20:
+        return None
+    return [round(float(x), 4) for x in np.median(np.array(V), axis=0)]
 
 def carry_mix(tid, assigns, det_log, t0, t1):
     """Colours of the cones a robot carries, from its boxes in driver control: yellow, red and

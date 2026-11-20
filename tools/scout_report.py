@@ -305,11 +305,11 @@ def summarise(team, ms):
     sec["robot"] = {"top_fps": top_, "cruise_fps": cru, "moving": mov, "ft": mean([m["ft"] for m in ms]), "toggle_visits": mean([m["toggle_visits"] for m in ms])}
     # --- defence
     os_ = np.mean([m["other_side"] for m in ms]); no = np.mean([m["near_opp_their_side"] for m in ms])
-    if os_ >= 0.3 and no >= 0.08:
+    if os_ >= 0.55 and no >= 0.15:
         out.append(f"Plays defence: {pct(os_)} of driver control on the other side, often right up against an opponent.")
-    elif os_ >= 0.3:
+    elif os_ >= 0.45:
         out.append(f"Spends {pct(os_)} of driver control on the other side of the field.")
-    elif os_ <= 0.12:
+    elif os_ <= 0.15:
         out.append(f"Stays home: only {pct(os_)} of driver control on the other side.")
     else:
         out.append(f"Mostly plays its own side ({pct(1 - os_)} of driver control), crossing over now and then.")
@@ -317,11 +317,13 @@ def summarise(team, ms):
     # --- toggles
     to = np.mean([m["toggles"]["own"] + m["toggles"]["opp"] for m in ms]); topp = np.mean([m["toggles"]["opp"] for m in ms])
     tv = sec["robot"]["toggle_visits"] or 0
-    if to >= 0.08:
+    if to >= 0.3:
         which = "including the other alliance's" if topp >= 0.03 else "mostly its own"
         out.append(f"Goes after Toggles: about {tv:.0f} trips a match, {pct(to)} of driver control right by one, {which}.")
-    elif to <= 0.02:
+    elif to <= 0.1:
         out.append("Rarely goes to the Toggles.")
+    else:
+        out.append(f"Visits the Toggles now and then: about {tv:.0f} trips a match.")
     sec["toggles"] = {"share": round(float(to), 3), "opp": round(float(topp), 3), "trips": tv}
     # --- endgame
     mid = np.mean([m["midfield_end"] for m in ms])
@@ -344,6 +346,27 @@ def summarise(team, ms):
         out.append(("In eliminations it plays differently: " + ", ".join(bits) + ".") if bits else "Plays the same way in eliminations as in qualifications.")
         sec["split"] = {"quals": len(q), "elims": len(e)}
     return out, sec
+
+def tags(sec):
+    """A few words for what kind of robot this is, for lists and match cards."""
+    t = []
+    d = sec.get("defence", {}); g = sec.get("scoring", {}).get("by_kind", {}); tg = sec.get("toggles", {})
+    if d.get("other_side", 0) >= 0.55 and d.get("near_opp_their_side", 0) >= 0.15:
+        t.append("Plays defence")
+    elif d.get("other_side", 1) <= 0.15:
+        t.append("Stays home")
+    if tg.get("share", 0) >= 0.35:
+        t.append("Toggle runner")
+    if g:
+        k = max(g, key=g.get)
+        if g[k] >= 1:
+            t.append({"own": "Own Goals", "neutral": "Neutral Goals", "center": "Center Goal", "opp": "Their Goals"}[k])
+    if sec.get("endgame", {}).get("midfield", 0) >= 0.5:
+        t.append("Ends in Midfield")
+    a = sec.get("auton")
+    if a and a["routes"] and a["routes"][0]["steps"]["crosses"]:
+        t.append("Auton crosses over")
+    return t
 
 def ranks(out):
     """How a team compares with every other tracked team (share of teams it beats)."""
@@ -382,7 +405,7 @@ def main():
     out = {}
     for team, ms in teams.items():
         summary, sec = summarise(team, ms)
-        out[team] = {"n": len(ms), "summary": summary, "sections": sec, "matches": ms}
+        out[team] = {"n": len(ms), "summary": summary, "sections": sec, "matches": ms, "tags": tags(sec)}
     ranks(out)
     json.dump(out, open(a.out, "w"), separators=(",", ":"))
     print(len(out), "teams with a report")

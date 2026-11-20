@@ -610,12 +610,12 @@
 "event": "Mall of America Signature",
 "match": "Qual 56",
 "red": [
-"1069A",
-"16610A"
-],
-"blue": [
 "56160A",
 "8110S"
+],
+"blue": [
+"1069A",
+"16610A"
 ],
 "video": "T0EeRxvtOS8",
 "seconds": 686,
@@ -667,8 +667,8 @@
 "event": "Great Planes Signature",
 "match": "Qual 103",
 "red": [
-"1010Z",
-"1028A"
+"1028A",
+"1010Z"
 ],
 "blue": [
 "5069Y",
@@ -724,12 +724,12 @@
 "event": "Mall of America Signature",
 "match": "Qual 62",
 "red": [
-"471B",
-"10102A"
-],
-"blue": [
 "1468A",
 "2145X"
+],
+"blue": [
+"471B",
+"10102A"
 ],
 "video": "3ewUQFU8J9M",
 "seconds": 874,
@@ -743,12 +743,12 @@
 "event": "Smoky Mountain Forge Signature",
 "match": "Qual 77",
 "red": [
-"99040B",
-"20850S"
-],
-"blue": [
 "96668W",
 "2701Z"
+],
+"blue": [
+"20850S",
+"99040B"
 ],
 "video": "SyF45yHVpTU",
 "seconds": 1386,
@@ -911,12 +911,12 @@
 "event": "Speedway Signature",
 "match": "Qual 189",
 "red": [
-"10B",
-"8682A"
+"8682A",
+"10B"
 ],
 "blue": [
-"2011A",
-"1233N"
+"1233N",
+"2011A"
 ],
 "video": "fT5HTKSHq9s",
 "seconds": 508,
@@ -1169,7 +1169,7 @@
 "calibrated": 0.97,
 "seen": 0.9,
 "named": 4,
-"sure": 2
+"sure": 4
 },
 {
 "id": "cc-qf3-1",
@@ -1187,7 +1187,7 @@
 "calibrated": 0.99,
 "seen": 0.85,
 "named": 4,
-"sure": 2
+"sure": 4
 },
 {
 "id": "cc-sf2-1",
@@ -1241,7 +1241,7 @@
 "calibrated": 0.98,
 "seen": 0.9,
 "named": 4,
-"sure": 2
+"sure": 4
 },
 {
 "id": "cc-qual40",
@@ -1277,7 +1277,7 @@
 "calibrated": 0.99,
 "seen": 0.88,
 "named": 4,
-"sure": 0
+"sure": 2
 },
 {
 "id": "cc-qual34",
@@ -1331,7 +1331,7 @@
 "calibrated": 0.96,
 "seen": 0.85,
 "named": 4,
-"sure": 2
+"sure": 4
 },
 {
 "id": "kxSY83THpHw",
