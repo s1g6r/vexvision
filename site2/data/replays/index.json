@@ -1332,5 +1332,62 @@
 "seen": 0.85,
 "named": 4,
 "sure": 0
+},
+{
+"id": "kxSY83THpHw",
+"event": "Speedway Signature",
+"match": "R16 6-2",
+"red": [
+"12914X",
+"2577X"
+],
+"blue": [
+"2393S",
+"1239E"
+],
+"video": "kxSY83THpHw",
+"seconds": 6845,
+"calibrated": 0.8,
+"seen": 0.83,
+"named": 4,
+"sure": 0
+},
+{
+"id": "LcmEbXvS0Yg",
+"event": "Speedway Signature",
+"match": "R16 8-1",
+"red": [
+"3150U",
+"10102Z"
+],
+"blue": [
+"2011F",
+"2145V"
+],
+"video": "LcmEbXvS0Yg",
+"seconds": 394,
+"calibrated": 0.62,
+"seen": 0.8,
+"named": 4,
+"sure": 2
+},
+{
+"id": "crEey8qMuqA",
+"event": "Speedway Signature",
+"match": "SF 2-1",
+"red": [
+"2393S",
+"1239E"
+],
+"blue": [
+"2011F",
+"2145V"
+],
+"video": "crEey8qMuqA",
+"seconds": 394,
+"calibrated": 0.76,
+"seen": 0.9,
+"named": 4,
+"sure": 0
 }
 ]
