@@ -93,7 +93,8 @@ def credit(events, state, alliances, report, paths=None):
         if gap is None:
             continue
         already = sum(inferred[t] for t in alliances if alliances[t] == a)
-        rest = gap - already
+        # an over-count (negative gap) stays an alliance-level number; it isn't charged to robots
+        rest = max(0.0, gap - already)
         mates = [t for t in alliances if alliances[t] == a]
         tot = sum(max(0, seen[t]) for t in mates)
         for t in mates:

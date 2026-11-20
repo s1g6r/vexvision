@@ -1,0 +1,106 @@
+{
+ "facts": [
+  {
+   "value": "1.3 in",
+   "label": "Field mapping error",
+   "detail": "Median distance between where vexvision and a hand-checked calibration put the same pixel, on 5 frames from 2 cameras the models never trained on."
+  },
+  {
+   "value": "94%",
+   "label": "Match names read",
+   "detail": "Qual, elimination and final names read off the overlay on 83 frames; every miss was naming style (\"Final 2\" vs \"Final 1-2\")."
+  },
+  {
+   "value": "89%",
+   "label": "Team numbers read",
+   "detail": "Of the four teams named in each video title, on 332 team slots. With the event's team list, wrong reads drop out."
+  },
+  {
+   "value": "0.80",
+   "label": "Robot detector mAP50",
+   "detail": "On a camera it never trained on: a small test of 12 robots in 3 frames."
+  }
+ ],
+ "how": {
+  "steps": [
+   {
+    "title": "Find the match",
+    "text": "Reads the overlay's match name and clock, then bisects a long livestream to the start of autonomous without downloading it.",
+    "figure": "Match names right on 94% of live frames"
+   },
+   {
+    "title": "Find goals and robots",
+    "text": "Two YOLO models trained on Override broadcast frames find the nine goals (by colour) and the robots.",
+    "figure": "Goals mAP50 0.54, robots 0.80, on unseen cameras"
+   },
+   {
+    "title": "Map the field",
+    "text": "Detected goals are matched to their known positions, the white tape snaps the fit into place, and a mirror check keeps the camera above the floor.",
+    "figure": "Median 1.3 in off on unseen cameras"
+   },
+   {
+    "title": "Follow four robots",
+    "text": "Exactly four tracks for the whole match. Alliance comes from the starting side of the Autonomous Line, so identities can't swap or multiply.",
+    "figure": "Tested with 20% of detections missing"
+   },
+   {
+    "title": "Name the teams",
+    "text": "The schedule says which two teams are on each alliance, so naming is one yes-or-no per alliance, settled by licence-plate reads.",
+    "figure": "Misread plates like 2I45X still count for 2145X"
+   },
+   {
+    "title": "Read goals and Toggles",
+    "text": "Colour runs up each goal's stack become pin halves; the Toggle on each wall is read where it sits on the wall top.",
+    "figure": "Stack reading is a first heuristic, not yet measured"
+   },
+   {
+    "title": "Check the referees' score",
+    "text": "The running score on the broadcast and the official result show what the camera missed; seen and inferred points are kept apart.",
+    "figure": "Running score read on standard overlays"
+   }
+  ],
+  "compare": [
+   [
+    "Find the match",
+    "Under 30 s in a long stream",
+    "Overlay bisection, about 70 frame grabs for a 7-hour stream"
+   ],
+   [
+    "Detect",
+    "YOLO11, 4 frames a second, hand-labelled footage",
+    "YOLO11n goal and robot models, 6 frames a second, trained from broadcast frames"
+   ],
+   [
+    "Map the field",
+    "From the goals in view",
+    "From goals, refined by the tape, with a mirror check; 1.3 in median error measured"
+   ],
+   [
+    "Name the teams",
+    "97% on plate-checked robots",
+    "Two-way choice per alliance from the schedule plus plates; not yet measured on video"
+   ],
+   [
+    "Placements",
+    "89% of labelled placements found",
+    "Count-rises-and-holds on each goal; not yet measured on video"
+   ],
+   [
+    "Toggles",
+    "85% of flips found, 79% to the right team",
+    "Voted colour on each wall; not yet measured on video"
+   ],
+   [
+    "Predictions",
+    "70% of winners called",
+    "78.8% on held-out Push Back matches (VexPredict, stats.2360arachnid.com)"
+   ]
+  ],
+  "limits": [
+   "Full-match tracking, placement and Toggle events and plate reading are built and tested on scripted data, but not yet measured on real match video.",
+   "Goal stacks are read by a colour heuristic until a goal close-up model is trained from hand counts (the labeling tool records them).",
+   "The models learned from a few hundred frames. Wide, whole-field camera angles work best; tight close-ups can't be mapped.",
+   "The screenshot tool runs the models in your browser; the first run downloads about 29 MB."
+  ]
+ }
+}

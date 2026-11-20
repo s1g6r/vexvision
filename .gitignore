@@ -7,3 +7,5 @@ data/yt/
 data/clips/
 data/auto_robots/
 *.mp4
+build/
+site/test/node_modules/

@@ -61,6 +61,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="data/yt")
     ap.add_argument("--pages", type=int, default=6)
+    ap.add_argument("--all", action="store_true", help="keep every video, not just titles naming Override (filter later by calibration)")
     ap.add_argument("channels", nargs="+")
     a = ap.parse_args()
     idx = os.path.join(a.out, "videos.json")
@@ -69,7 +70,7 @@ def main():
         vs = channel_videos(ch, a.pages)
         new = 0
         for v in vs:
-            if is_override(v) and v["id"] not in videos:
+            if (a.all or is_override(v)) and v["id"] not in videos and "push back" not in v["title"].lower():
                 v["teams"] = TEAM_RE.findall(v["title"]); v["channel"] = ch; v["frames"] = []
                 videos[v["id"]] = v; new += 1
         print(ch, len(vs), "videos,", new, "new Override")
