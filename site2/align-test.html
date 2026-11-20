@@ -1,0 +1,19 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;height:100%;background:#111}#h{position:relative;width:100vw;height:100vh;overflow:hidden}
+#h img,#h canvas{position:absolute;inset:0;width:100%;height:100%}#h img{object-fit:cover}#h canvas{opacity:var(--o,.55)}
+</style></head><body><div id="h"><img id="p" style="display:var(--pd,block)"><canvas id="c"></canvas></div>
+<script type="module">
+import { createField } from "./js/field3d.js";
+const frames = await fetch("data/frames.json").then(r => r.json());
+const i = +(new URLSearchParams(location.search).get("i") || 0), f = frames[i];
+document.getElementById("p").src = f.img;
+const o = new URLSearchParams(location.search).get("o"); if (o) document.getElementById("c").style.setProperty("--o", o);
+const st = new URLSearchParams(location.search).get("st"); const F = createField(document.getElementById("c"), { twin: new URLSearchParams(location.search).has("twin") });
+F.setRobots(f.robots);
+F.lineMat.opacity = +(new URLSearchParams(location.search).get('l')||0);
+const mode = new URLSearchParams(location.search).get("v");
+if (mode === "hero") { document.getElementById("p").style.display="none"; document.body.style.background="radial-gradient(80% 70% at 50% 45%,#2a2622,#0e0d0c)"; }
+if (mode === "hero") F.apply(F.freeView(new F.THREE.Vector3(-2.7, 1.15, 3.0), new F.THREE.Vector3(0.25, 0.05, -0.3), 34));
+else F.apply(F.photoView(f));
+F.render(); window.F = F; window.done = true;
+</script></body></html>
