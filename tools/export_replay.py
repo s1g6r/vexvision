@@ -108,7 +108,7 @@ def main():
     robots = []
     for tid, hist in r["raw_tracks"].items():
         hist = [(p[0] - ts, p[1], p[2], p[3]) for p in hist]
-        if r.get("t_start") is not None:         # the match itself: after the buzzer people walk on and lift robots
+        if r.get("t_start") is not None and "t_driver" in r:   # the match itself: after the buzzer people walk on and lift robots
             hist = [p for p in hist if -3.0 <= p[0] <= end]
         x = next(x for x in r["robots"] if str(x["track"]) == tid)
         robots.append({"team": team[tid], "alliance": alli[tid], "named": (x.get("confidence") or 0) >= 0.75, "path": smooth(hist),

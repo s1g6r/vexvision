@@ -31,8 +31,255 @@
 ],
 "video": "uXTJGJ-eFLU",
 "calibrated": 0.76,
+"seen": 0.83,
+"named": 4,
+"sure": 0
+},
+{
+"id": "Kx4bKVNEpjA",
+"event": "Highlander Summit Signature",
+"match": "Final 1-1",
+"red": [
+"12125A",
+"96Z"
+],
+"blue": [
+"9909M",
+"1862A"
+],
+"video": "Kx4bKVNEpjA",
+"seconds": 523,
+"calibrated": 0.95,
+"seen": 0.95,
+"named": 4,
+"sure": 0
+},
+{
+"id": "Zh_v1mk7ZLI",
+"event": "Highlander Summit Signature",
+"match": "QF 1-1",
+"red": [
+"2982X",
+"20850Z"
+],
+"blue": [
+"20850G",
+"3150Z"
+],
+"video": "Zh_v1mk7ZLI",
+"seconds": 422,
+"calibrated": 0.94,
+"seen": 0.97,
+"named": 4,
+"sure": 0
+},
+{
+"id": "xqY55iGJpOE",
+"event": "Highlander Summit Signature",
+"match": "QF 3-1",
+"red": [
+"1698A",
+"66556Z"
+],
+"blue": [
+"9909M",
+"1862A"
+],
+"video": "xqY55iGJpOE",
+"seconds": 498,
+"calibrated": 0.95,
+"seen": 0.93,
+"named": 4,
+"sure": 2
+},
+{
+"id": "n11q-B1Fzz0",
+"event": "Highlander Summit Signature",
+"match": "R16 1-1",
+"red": [
+"2982X",
+"20850Z"
+],
+"blue": [
+"2982B",
+"2982Z"
+],
+"video": "n11q-B1Fzz0",
+"seconds": 452,
+"calibrated": 0.93,
+"seen": 0.85,
+"named": 4,
+"sure": 0
+},
+{
+"id": "Z-tTl-u1H7w",
+"event": "Highlander Summit Signature",
+"match": "R16 5-1",
+"red": [
+"1698A",
+"66556Z"
+],
+"blue": [
+"4610Z",
+"295Y"
+],
+"video": "Z-tTl-u1H7w",
+"seconds": 538,
+"calibrated": 0.83,
+"seen": 0.9,
+"named": 4,
+"sure": 0
+},
+{
+"id": "lt4lZLVAeWU",
+"event": "Highlander Summit Signature",
+"match": "R16 8-1",
+"red": [
+"1769A",
+"1584A"
+],
+"blue": [
+"197E",
+"4610W"
+],
+"video": "lt4lZLVAeWU",
+"seconds": 425,
+"calibrated": 0.94,
+"seen": 0.93,
+"named": 4,
+"sure": 0
+},
+{
+"id": "XQm4iQ1-USA",
+"event": "Highlander Summit Signature",
+"match": "SF 2-1",
+"red": [
+"9909M",
+"1862A"
+],
+"blue": [
+"9039J",
+"2145X"
+],
+"video": "XQm4iQ1-USA",
+"seconds": 432,
+"calibrated": 0.95,
+"seen": 0.9,
+"named": 4,
+"sure": 0
+},
+{
+"id": "EA3kR3YaUxg",
+"event": "Highlander Summit Signature",
+"match": "Final 1-3",
+"red": [
+"12125A",
+"96Z"
+],
+"blue": [
+"9909M",
+"1862A"
+],
+"video": "EA3kR3YaUxg",
+"seconds": 500,
+"calibrated": 0.94,
 "seen": 0.82,
 "named": 4,
 "sure": 0
+},
+{
+"id": "hILmQMxBN60",
+"event": "Highlander Summit Signature",
+"match": "QF 2-2",
+"red": [
+"295A",
+"20850W"
+],
+"blue": [
+"12125A",
+"96Z"
+],
+"video": "hILmQMxBN60",
+"seconds": 401,
+"calibrated": 0.94,
+"seen": 0.9,
+"named": 4,
+"sure": 2
+},
+{
+"id": "TtPqLKFAym8",
+"event": "Highlander Summit Signature",
+"match": "R16 6-1",
+"red": [
+"9909M",
+"1862A"
+],
+"blue": [
+"169C",
+"2145V"
+],
+"video": "TtPqLKFAym8",
+"seconds": 441,
+"calibrated": 0.94,
+"seen": 0.9,
+"named": 4,
+"sure": 0
+},
+{
+"id": "e2-dbeV-7ws",
+"event": "Highlander Summit Signature",
+"match": "Qual 12",
+"red": [
+"9909M",
+"10702X"
+],
+"blue": [
+"66556Z",
+"7405A"
+],
+"video": "e2-dbeV-7ws",
+"seconds": 457,
+"calibrated": 1.0,
+"seen": 0.93,
+"named": 4,
+"sure": 0
+},
+{
+"id": "-T4mfTU4CUw",
+"event": "Highlander Summit Signature",
+"match": "SF 1-1",
+"red": [
+"2982X",
+"20850Z"
+],
+"blue": [
+"12125A",
+"96Z"
+],
+"video": "-T4mfTU4CUw",
+"seconds": 463,
+"calibrated": 0.95,
+"seen": 0.95,
+"named": 4,
+"sure": 2
+},
+{
+"id": "v0y9WBQ2EN8",
+"event": "Harbor Havoc Signature",
+"match": "Final 1-1",
+"red": [
+"10102Z",
+"1698Z"
+],
+"blue": [
+"1764P",
+"197E"
+],
+"video": "v0y9WBQ2EN8",
+"seconds": 869,
+"calibrated": 0.63,
+"seen": 0.88,
+"named": 4,
+"sure": 4
 }
 ]
