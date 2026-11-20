@@ -19,15 +19,50 @@ from .detect import goal_points
 ROBOT_HALF_DEPTH = 230.0     # mm from a robot's front bumper to its centre
 
 class Calibrator:
-    def __init__(self, detector, recheck_every=2.0, min_q=0.35):
-        self.det = detector
-        self.H = None
-        self.cam = None
-        self.last_check = -1e9
-        self.recheck_every, self.min_q = recheck_every, min_q
-        self.ref = None
+    """Field calibration across a broadcast.
 
-    def solve(self, img, dets, min_q=0.4):
+    Broadcasts cut between a few fixed wide cameras and close-ups or replays.
+    A close-up has plenty of white lines, so a tape fit alone happily accepts
+    a wrong calibration there. So a calibration is only *trusted* for a frame
+    when the tape fits, most of the field's tape is in view, and the detected
+    goals sit where it puts them. Trusted calibrations are kept in a small
+    bank (one per camera); each frame first tries the bank, then a small pan
+    from the best one, then a fresh solve. Frames that pass none of these are
+    skipped and the robot tracks coast through them.
+    """
+    def __init__(self, detector, min_q=0.45, min_cov=0.55, min_agree=3, bank_size=4):
+        self.det = detector
+        self.H = None; self.cam = None; self.ref = None; self.quality = None
+        self.min_q, self.min_cov, self.min_agree, self.bank_size = min_q, min_cov, min_agree, bank_size
+        self.bank = []                               # [H, cam, ref, hits]
+
+    def _trust(self, H, img, pts, need_agree):
+        """Score H on this frame, or None when it can't be trusted. Goal agreement
+        counts most: on light or purple-lit tiles the tape is faint and a tape fit
+        alone is weak evidence either way."""
+        size = img.shape[1::-1]
+        if H is None or not C.plausible(H, size) or C.coverage(H, size) < self.min_cov:
+            return None
+        q = C.fit_quality(H, C.tape_mask(img, H))
+        agree = C.goal_agreement(H, pts, size[0])
+        if len(pts) >= 4:                            # enough goals in view to check against
+            ok = (agree >= 4 and q >= 0.25) or (agree >= 3 and q >= self.min_q)
+        else:                                        # goals hidden: only a known camera with a clear tape fit
+            ok = not need_agree and q >= 0.55
+        return (agree + q) if ok else None
+
+    def _use(self, H, img, q, entry=None):
+        size = img.shape[1::-1]
+        if entry is None:
+            entry = [H, C.camera_from_h(H, size), img.copy(), 0]
+            self.bank.append(entry)
+            if len(self.bank) > self.bank_size:
+                self.bank.sort(key=lambda e: -e[3]); self.bank.pop()
+        entry[3] += 1
+        self.H, self.cam, self.ref, self.quality = entry[0], entry[1], entry[2], q
+        return True
+
+    def solve(self, img, dets, min_q=None):
         """Calibrate from goal detections: try the best goal-to-layout matchings,
         snap each to the tape, keep the one the tape agrees with most."""
         pts = goal_points(dets)
@@ -35,41 +70,34 @@ class Calibrator:
         best = None
         for H, inl, fp, ip in C.goal_hypotheses(pts, size):
             Hs, _ = C.snap_to_tape(H, img, anchors=(np.array(fp), np.array(ip)) if len(fp) >= 4 else None)
-            if not C.plausible(Hs, size):
+            q = self._trust(Hs, img, pts, need_agree=True)
+            if q is None or (min_q is not None and q < min_q):
                 continue
-            q = C.fit_quality(Hs, C.tape_mask(img, Hs))
-            score = q + 0.02 * inl
+            score = q + 0.02 * inl          # q already includes goal agreement
             if best is None or score > best[0]:
                 best = (score, q, Hs)
-        if best is None or best[1] < min_q:
+        if best is None:
             return False
-        H = best[2]
-        self.H, self.cam, self.ref = H, C.camera_from_h(H, size), img.copy()
-        self.quality = best[1]
-        return True
+        return self._use(best[2], img, best[1])
 
     def update(self, t, img, dets):
-        """True when self.H describes this frame. Every frame is checked against
-        the tape, so a cut to a close-up or replay is caught right away; those
-        frames return False and the tracks coast instead of jumping."""
-        self.last_check = t
-        if self.H is None:
-            return self.solve(img, dets)
-        q = C.fit_quality(self.H, C.tape_mask(img, self.H))
-        if q >= self.min_q:
-            self.quality = q
-            return True
-        Hb, cc = C.transfer(self.H, self.ref, img)       # camera panned or zoomed
-        if Hb is not None and C.plausible(Hb, img.shape[1::-1]):
-            qb = C.fit_quality(Hb, C.tape_mask(img, Hb))
-            if qb >= self.min_q:
-                self.H, self.cam, self.ref, self.quality = Hb, C.camera_from_h(Hb, img.shape[1::-1]), img.copy(), qb
-                return True
-        old = (self.H, self.cam, self.ref, getattr(self, "quality", None))
-        if self.solve(img, dets):
-            return True
-        self.H, self.cam, self.ref, self.quality = old
-        return False
+        """True when self.H describes this frame."""
+        pts = goal_points(dets)
+        cands = []
+        for e in self.bank:                          # a fixed camera seen before
+            q = self._trust(e[0], img, pts, need_agree=False)
+            if q is not None:
+                cands.append((q, e))
+        if cands:
+            q, e = max(cands, key=lambda c: c[0])
+            return self._use(e[0], img, q, e)
+        if self.bank:                                # the camera panned or zoomed a little
+            e = max(self.bank, key=lambda e: e[3])
+            Hb, _ = C.transfer(e[0], e[2], img)
+            q = self._trust(Hb, img, pts, need_agree=True)
+            if q is not None:
+                return self._use(Hb, img, q)
+        return self.solve(img, dets)
 
 def robot_floor_point(box, H, cam):
     x0, y0, x1, y1 = box

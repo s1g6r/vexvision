@@ -93,6 +93,25 @@ def fit_quality(H, mask, tol=4.0):
         return 0.0
     return float((d[inside] <= tol).mean())
 
+def coverage(H, img_size):
+    """Share of the field's tape that projects inside the image. Wide broadcast
+    shots show most of it; close-ups show a corner, where a tape fit says little."""
+    w, h = img_size
+    uv = to_img(H, _TAPE)
+    ok = np.isfinite(uv).all(1) & (uv[:, 0] >= 0) & (uv[:, 0] < w) & (uv[:, 1] >= 0) & (uv[:, 1] < h)
+    return float(ok.mean())
+
+def goal_agreement(H, pts, w):
+    """How many detected goal bases (u, v, kind) sit on a projected goal of the same kind."""
+    proj = to_img(H, GOAL_XY)
+    n = 0
+    for u, v, kind in pts:
+        d = np.linalg.norm(proj - [u, v], axis=1)
+        j = int(np.argmin(d))
+        if d[j] < 0.03 * w and (kind is None or GOAL_KIND[j] == kind or {kind, GOAL_KIND[j]} <= {"neutral", "center"}):
+            n += 1
+    return n
+
 def line_pixels(mask, min_len=35, max_pts=2500, seed=0):
     """Pixels on long straight tape segments (drops clutter from robots and pieces)."""
     segs = cv2.HoughLinesP(mask.astype(np.uint8) * 255, 1, np.pi / 360, threshold=30,
