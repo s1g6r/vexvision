@@ -71,7 +71,7 @@ def main():
             entry["seen"] = round(float(np.mean([r["seen_share"] for r in res["robots"]])), 2)
             entry["named"] = sum(1 for r in res["robots"] if r.get("team"))
             meta = {k: entry[k] for k in ("event", "match", "red", "blue", "video")}
-            subprocess.run([sys.executable, "-m", "tools.export_replay", raw, path, "--out", a.out, "--id", v["id"],
+            subprocess.run([sys.executable, "-m", "tools.export_replay", raw, path, "--out", a.out, f"--id={v['id']}",
                             "--meta", json.dumps(meta)], check=False)
         index.append(entry)
         json.dump(index, open(idx_path, "w"), indent=0)

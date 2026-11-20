@@ -26,7 +26,7 @@ def main():
             meta = {}
         vid = os.path.join("/mnt/user-data/uploads/vexvisionstuff/videos", i + ".mp4")
         subprocess.run([sys.executable, "-m", "tools.export_replay", os.path.join(raw, i + ".json"), vid,
-                        "--out", rep, "--id", i, "--meta", json.dumps(meta), "--keep-stills"], check=False)
+                        "--out", rep, f"--id={i}", "--meta", json.dumps(meta), "--keep-stills"], check=False)
         print(i, "seen", e and e["seen"], [(r["team"], r.get("confidence"), r["seen_share"]) for r in res["robots"]])
     if index:
         json.dump(list(index.values()), open(idx_p, "w"), indent=0)
