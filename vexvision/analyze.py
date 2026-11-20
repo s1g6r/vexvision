@@ -126,7 +126,8 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
             every_overlay=2.0, every_plate=2.0, every_read=1.0):
     """frames: iterable of (t, img). teams: {"red": [a, b], "blue": [c, d]} (from schedule or overlay)."""
     cal = Calibrator(detector)
-    tracker = T.FourRobotTracker()
+    det_log = []                       # per calibrated frame: (t, [[x, y, conf, x0, y0, x1, y1, colour], ...], [feat, ...])
+    plate_log = []                     # (t, det index, [(text, conf), ...])
     goal_obs = {g.name: [] for g in F.GOALS}
     toggle_obs = {q: [] for q in F.TOGGLES}
     plates = {}
@@ -156,26 +157,21 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
         H, cam = cal.H, cal.cam
         cal_log.append((round(t, 2), np.round(H, 8).tolist()))
         robots = [d for d in dets if d["cls"] == "robot"]
-        pts = []
+        rows, feats = [], []
         for d in robots:
             p = robot_floor_point(d["box"], H, cam)
             if np.all(np.abs(p) < F.HALF + 200):
-                pts.append((p[0], p[1], TM.colour_feature(img, d["box"])))
-        kept = [d for d in robots if np.all(np.abs(robot_floor_point(d["box"], H, cam)) < F.HALF + 200)]
-        assign = tracker.step(t, pts)
-        if t - last_box >= 1.0 and assign:
-            last_box = t
-            box_log.append((round(t, 2), {tid: [round(v) for v in kept[j]["box"]] for tid, j in assign.items() if j is not None and j < len(kept)}))
-        if tracker.tracks and t - last_plate >= every_plate:
+                f = TM.colour_feature(img, d["box"])
+                rows.append([round(float(p[0])), round(float(p[1])), round(d["conf"], 3)] + [round(v) for v in d["box"]]
+                            + [round(TM.alliance_colour(img, d["box"]), 3)])
+                feats.append(None if f is None else [round(float(v), 4) for v in f])
+        det_log.append((round(t, 2), rows, feats))
+        if t - last_plate >= every_plate:
             last_plate = t
-            inv = {}
-            for tid, j in assign.items():
-                inv[j] = tid
-            for j, d in enumerate(kept):          # indices match pts / assign
-                if j in inv:
-                    reads = read_plates(img, d["box"])
-                    if reads:
-                        plates.setdefault(inv[j], []).extend(reads)
+            for j, r in enumerate(rows):
+                reads = read_plates(img, r[3:7])
+                if reads:
+                    plate_log.append((round(t, 2), j, reads))
         if t - last_read >= every_read:
             last_read = t
             for g in F.GOALS:
@@ -184,6 +180,45 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
             for q in F.TOGGLES:
                 col, share = readers.read_toggle(img, H, cam, q)
                 toggle_obs[q].append((t, col))
+    perception = {"det_log": det_log, "plate_log": plate_log, "goal_obs": goal_obs, "toggle_obs": toggle_obs,
+                  "running": running, "overlay_reads": overlay_reads, "teams": teams, "t_start": t_start,
+                  "cal_log": cal_log, "frames": n, "seconds": round(time.time() - t0w, 1)}
+    out = reason(perception, official=official)
+    out["perception"] = perception
+    return out
+
+def run_tracker(det_log):
+    tracker = T.FourRobotTracker()
+    assigns = []
+    cols = [r[7] for _, rows, _ in det_log for r in rows]
+    mid = float(np.median(cols)) if cols else 0.0       # some fields and robots read redder overall
+    for t, rows, feats in det_log:
+        dets = [(r[0], r[1], None if f is None else np.asarray(f), r[7] - mid, r[2]) for r, f in zip(rows, feats)]
+        assigns.append((t, tracker.step(t, dets)))
+    return tracker, assigns
+
+def reason(P, official=None):
+    """Everything after perception: tracking, team names, events, score check.
+    Runs from a saved perception log in seconds, so the tracker can be improved
+    without re-reading the video."""
+    goal_obs, toggle_obs, running, teams, t_start = P["goal_obs"], P["toggle_obs"], P["running"] or [], P["teams"], P["t_start"]
+    overlay_reads, cal_log, n, t0w = P["overlay_reads"], P["cal_log"], P["frames"], time.time()
+    tracker, assigns = run_tracker(P["det_log"])
+    rows_at = {round(t, 2): rows for t, rows, _ in P["det_log"]}
+    who = {}                                       # (t, det index) -> tid
+    box_log, last_box = [], -1e9
+    for t, a in assigns:
+        for tid, j in a.items():
+            if j is not None:
+                who[(round(t, 2), j)] = tid
+        if t - last_box >= 1.0 and a:
+            last_box = t
+            box_log.append((round(t, 2), {tid: rows_at[round(t, 2)][j][3:7] for tid, j in a.items() if j is not None}))
+    plates = {}
+    for t, j, reads in P["plate_log"]:
+        tid = who.get((round(t, 2), j))
+        if tid is not None:
+            plates.setdefault(tid, []).extend([tuple(r) for r in reads])
     if not tracker.tracks:
         return {"error": "no calibration or robots found", "frames": n}
     if t_start is None:
@@ -223,7 +258,7 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
         if e.get("robot") is not None:
             e["team"] = names.get(e["robot"], {}).get("team")
         e["t"] = round(e["t"] - (t_start or 0), 2)
-    return {"teams": teams, "t_start": t_start, "frames": n, "seconds_to_run": round(time.time() - t0w, 1),
+    return {"teams": teams, "t_start": t_start, "frames": n, "seconds_to_run": P.get("seconds"),
             "robots": robots_out, "events": ev, "final_state": state, "score_check": report,
             "overlay": overlay_reads[-1][1] if overlay_reads else None,
             "cal_log": cal_log, "box_log": box_log, "raw_tracks": {tr.tid: [(round(p[0], 2), round(p[1]), round(p[2]), p[3]) for p in tr.history] for tr in tracker.tracks}}

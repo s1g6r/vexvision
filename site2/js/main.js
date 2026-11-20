@@ -257,16 +257,21 @@ const pct = (v) => `${Math.round(v * 100)}%`;
 function scoutBlock(id) {
   const st = TS[id];
   if (!st) return "";
+  const watch = `<div class="scout-replays">${st.matches.map((m) => `<button type="button" class="btn ghost" data-replay="${esc(m.id)}">Watch ${esc(m.match || "match")} in 3D</button>`).join("")}</div>`;
+  if (!st.n) {
+    return `<div class="scout"><div class="scout-head"><b>Tracked by vexvision</b><span>in ${st.matches.length} match${st.matches.length === 1 ? "" : "es"}</span></div>
+    <p class="scout-note">We follow both robots on ${esc(id)}'s alliance in these matches, but the stream is too small to read robot plates, so we can't yet say which one is ${esc(id)}. Driving stats show up once a match names it.</p>${watch}</div>`;
+  }
   const tiles = [
     ["Driven per match", `${Math.round(st.ft_per_match)} ft`, "Distance along its tracked path"],
     ["On the other side", pct(st.opp_side), "Of driver control past the Autonomous Line"],
     ["In the Midfield", pct(st.midfield), "Of driver control inside the diamond"],
     ["Autonomous", `${Math.round(st.auton_ft)} ft`, "Moved in the first 15 seconds"],
   ];
-  return `<div class="scout"><div class="scout-head"><b>Scouted by vexvision</b><span>from ${st.n} tracked match${st.n === 1 ? "" : "es"}</span></div>
+  return `<div class="scout"><div class="scout-head"><b>Scouted by vexvision</b><span>from ${st.n} match${st.n === 1 ? "" : "es"} where we could name it</span></div>
     <div class="scout-grid"><canvas class="heat" width="240" height="240" data-team="${esc(id)}" aria-label="Where ${esc(id)} drives"></canvas>
     <div class="scout-tiles">${tiles.map(([k, v, d]) => `<div class="fact"><div class="k">${k}</div><b>${v}</b><span>${d}</span></div>`).join("")}</div></div>
-    <div class="scout-replays">${st.matches.map((m) => `<button type="button" class="btn ghost" data-replay="${esc(m.id)}">Watch ${esc(m.match || "match")} in 3D</button>`).join("")}</div></div>`;
+    ${watch}</div>`;
 }
 function drawHeat(c, st) {
   const g = c.getContext("2d"), W = c.width, n = st.heat.length, k = W / n;
@@ -345,7 +350,7 @@ function route() {
 addEventListener("hashchange", route); route();
 const rpRoot = document.getElementById("rp");
 rpRoot.addEventListener("replay-meta", (e) => { const R = e.detail;
-  document.getElementById("rp-sub").innerHTML = `${esc(R.match)} at ${esc(R.event)}: <span style="color:var(--red)">${R.red.join(" &amp; ")}</span> vs <span style="color:var(--blue)">${R.blue.join(" &amp; ")}</span>, followed for the whole match from one YouTube video. The broadcast plays in the corner with the same four robots marked, so you can check it against the real thing.`; });
+  document.getElementById("rp-sub").innerHTML = `${esc(R.match)} at ${esc(R.event)}: <span style="color:var(--red)">${R.red.join(" &amp; ")}</span> vs <span style="color:var(--blue)">${R.blue.join(" &amp; ")}</span>, followed for the whole match from one YouTube video. The broadcast plays in the corner with the same four robots marked, so you can check it against the real thing.${R.robots.some((r) => r.named === false) ? " Robot plates are too small to read on this stream, so partners we can't tell apart are shown as Red 1 and Red 2." : ""}`; });
 let current = null;
 async function loadReplay(id, autoplay) {
   if (current) { current.destroy(); const c = rpRoot.querySelector("canvas"), n = c.cloneNode(); c.replaceWith(n); }

@@ -18,6 +18,7 @@ from vexvision import field as F
 from tools.export_replay import smooth
 
 G = 24
+SURE = 0.75      # naming confidence needed before a robot's driving counts toward its team
 
 def stats_for(track, alliance, t0):
     h = [p for p in track if p[0] >= t0]
@@ -62,17 +63,24 @@ def main():
         r = json.load(open(path))
         t0 = r.get("t_start") or 0
         for rb in r.get("robots", []):
-            if not rb.get("team") or rb.get("seen_share", 0) < 0.55:
-                continue
-            s = stats_for(r["raw_tracks"][str(rb["track"])], rb["alliance"], t0)
-            if not s:
+            if not rb.get("team"):
                 continue
             T = teams.setdefault(rb["team"], {"matches": [], "_s": []})
-            T["matches"].append({"id": meta["id"], "event": meta.get("event"), "match": meta.get("match"), "alliance": rb["alliance"]})
-            T["_s"].append(s)
+            sure = (rb.get("confidence") or 0) >= SURE
+            T["matches"].append({"id": meta["id"], "event": meta.get("event"), "match": meta.get("match"),
+                                 "alliance": rb["alliance"], "named": sure})
+            if not sure or rb.get("seen_share", 0) < 0.55:
+                continue     # only count a robot's driving once we know which of the two it was
+            s = stats_for(r["raw_tracks"][str(rb["track"])], rb["alliance"], t0)
+            if s:
+                T["_s"].append(s)
     out = {}
     for team, T in teams.items():
-        S = T["_s"]; heat = sum(s["heat"] for s in S); heat = heat / (heat.max() or 1)
+        S = T["_s"]
+        if not S:
+            out[team] = {"matches": T["matches"], "n": 0}
+            continue
+        heat = sum(s["heat"] for s in S); heat = heat / (heat.max() or 1)
         out[team] = {"matches": T["matches"], "n": len(S),
                      "ft_per_match": round(float(np.mean([s["ft"] for s in S])), 1),
                      "top_speed_fps": round(float(np.median([s["top"] for s in S])), 1),

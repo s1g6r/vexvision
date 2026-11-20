@@ -53,6 +53,9 @@ def main():
         try:
             if not os.path.exists(raw):
                 res = AN.analyze(stream.video_frames(path, 0, None, fps=a.fps), det, teams=teams)
+                perc = res.pop("perception", None)
+                if perc is not None:      # what the models saw, so tracking can be redone without the video
+                    json.dump(perc, open(raw.replace(".json", ".perc.json"), "w"), default=float, separators=(",", ":"))
                 json.dump(res, open(raw, "w"), default=float)
             res = json.load(open(raw))
         except Exception as e:

@@ -30,8 +30,17 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
   const canvas = $("canvas"), labels = $(".rp-labels"), pip = $(".rp-pip .rp-still"), pipMarks = $(".rp-pip .rp-pipmarks");
   const F = createField(canvas, { twin: true });
   const { THREE } = F;
-  const robots = R.robots.map((r) => ({ ...r, side: r.alliance }));
-  F.setRobots(robots.map((r) => ({ x: r.path[0][1], y: r.path[0][2], side: r.side, team: r.team })));
+  // A robot is shown by team number only once we know which of the alliance's two
+  // it is. Otherwise it is "Red 1" / "Red 2" and its card names both possibilities.
+  const robots = R.robots.map((r) => ({ ...r, side: r.alliance, named: r.named !== false && !!r.team }));
+  const idx = { red: 0, blue: 0 };
+  for (const r of robots) {
+    const n = ++idx[r.side];
+    const pair = (R[r.side] || []).filter(Boolean);
+    r.label = r.named ? r.team : `${r.side === "red" ? "Red" : "Blue"} ${n}`;
+    r.maybe = r.named ? null : pair.length === 2 ? pair : null;
+  }
+  F.setRobots(robots.map((r) => ({ x: r.path[0][1], y: r.path[0][2], side: r.side, team: r.named ? r.team : "" })));
   const meshes = F.robots.children;
 
   // trails: a fading ribbon over the last few seconds of each path
@@ -107,12 +116,14 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
   });
 
   // labels
-  labels.innerHTML = robots.map((r) => `<div class="pin ${r.side}"><b>${esc(r.team || "?")}</b></div>`).join("");
+  labels.innerHTML = robots.map((r) => `<div class="pin ${r.side}"><b>${esc(r.label)}</b></div>`).join("");
   pipMarks.innerHTML = robots.map((r) => `<i class="${r.side}"></i>`).join("");
   const pins = [...labels.children], pmarks = [...pipMarks.children];
 
   // the team cards under the stage
-  $(".rp-teams").innerHTML = robots.map((r) => `<div class="rp-team" style="--c:var(--${r.side})"><div class="k"><i></i>${r.side === "red" ? "Red" : "Blue"}</div><b>${esc(r.team || "Unknown")}</b><span class="z"></span><span class="d"></span></div>`).join("");
+  $(".rp-teams").innerHTML = robots.map((r) => r.named
+    ? `<div class="rp-team" style="--c:var(--${r.side})"><div class="k"><i></i>${r.side === "red" ? "Red" : "Blue"}</div><b>${esc(r.team)}</b><span class="z"></span><span class="d"></span></div>`
+    : `<div class="rp-team unsure" style="--c:var(--${r.side})"><div class="k"><i></i>${esc(r.label)}</div><b>${r.maybe ? `${esc(r.maybe[0])}<small>or</small>${esc(r.maybe[1])}` : "Not named"}</b><span class="z"></span><span class="d"></span></div>`).join("");
   const cards = [...root.querySelectorAll(".rp-team")];
   const dist = robots.map((r) => {                      // cumulative distance along each path (m)
     const c = [0]; for (let i = 1; i < r.path.length; i++) c.push(c[i - 1] + Math.hypot(r.path[i][1] - r.path[i - 1][1], r.path[i][2] - r.path[i - 1][2]));

@@ -84,6 +84,7 @@ def main():
     ap.add_argument("result"); ap.add_argument("video")
     ap.add_argument("--out", default="site2/data/replays"); ap.add_argument("--id", required=True)
     ap.add_argument("--meta", default="{}"); ap.add_argument("--no-stills", action="store_true")
+    ap.add_argument("--keep-stills", action="store_true", help="reuse stills already cut for this replay")
     a = ap.parse_args()
     r = json.load(open(a.result))
     ts = r.get("t_start") or 0.0
@@ -93,7 +94,7 @@ def main():
     for tid, hist in r["raw_tracks"].items():
         hist = [(p[0] - ts, p[1], p[2], p[3]) for p in hist]
         x = next(x for x in r["robots"] if str(x["track"]) == tid)
-        robots.append({"team": team[tid], "alliance": alli[tid], "path": smooth(hist),
+        robots.append({"team": team[tid], "alliance": alli[tid], "named": (x.get("confidence") or 0) >= 0.75, "path": smooth(hist),
                        "distance_ft": x.get("distance_ft"), "seen_share": x.get("seen_share"),
                        "points": x.get("points_seen"), "placements": x.get("placements")})
     cams, last = [], -9
@@ -106,12 +107,17 @@ def main():
     t_first = min(p[0] for rb in robots for p in rb["path"])
     t_last = max(p[0] for rb in robots for p in rb["path"])
     n = 0
-    if not a.no_stills:
+    old = os.path.join(a.out, a.id + ".json")
+    s_abs = ts + t_first                      # video time of the first still
+    if a.keep_stills and os.path.exists(old):
+        o = json.load(open(old))["stills"]
+        n, s_abs = o["n"], o.get("abs", ts + o["t0"])
+    elif not a.no_stills:
         n = stills(a.video, os.path.join(a.out, a.id), ts + t_first, ts + t_last + 1)
     ev = [{k: e[k] for k in ("t", "type", "goal", "colour", "team", "auton") if k in e} for e in r["events"]
           if e["type"] in ("placement", "toggle")]
     out = {"id": a.id, **json.loads(a.meta), "t0": round(t_first, 2), "t1": round(t_last, 2),
-           "stills": {"n": n, "t0": round(t_first, 2), "dir": f"data/replays/{a.id}/", "cols": COLS, "rows": ROWS},
+           "stills": {"n": n, "t0": round(s_abs - ts, 2), "abs": round(s_abs, 2), "dir": f"data/replays/{a.id}/", "cols": COLS, "rows": ROWS},
            "robots": robots, "events": ev, "cams": cams,
            "vision_score": r.get("score_check", {}).get("vision_score")}
     os.makedirs(a.out, exist_ok=True)

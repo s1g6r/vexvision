@@ -94,3 +94,20 @@ def colour_feature(img, box, bins=8):
     v = cv2.calcHist([hsv], [2], None, [4], [0, 256]).ravel()
     f = np.r_[hist, v].astype(float)
     return f / (np.linalg.norm(f) + 1e-9)
+
+def alliance_colour(img, box):
+    """How red (+1) or blue (-1) a robot box looks: alliance plates are saturated
+    red or blue, and robots mostly carry their own alliance's cones. Noisy on one
+    frame, useful averaged over a track."""
+    import cv2
+    x0, y0, x1, y1 = [int(v) for v in box]
+    h, w = img.shape[:2]
+    x0, y0, x1, y1 = max(0, x0), max(0, y0), min(w, x1), min(h, y1)
+    if x1 - x0 < 4 or y1 - y0 < 4:
+        return 0.0
+    hsv = cv2.cvtColor(img[y0:y1, x0:x1], cv2.COLOR_BGR2HSV)
+    hh, ss, vv = hsv[..., 0], hsv[..., 1], hsv[..., 2]
+    vivid = (ss > 110) & (vv > 70)
+    red = float(np.count_nonzero(vivid & ((hh < 8) | (hh > 170))))
+    blue = float(np.count_nonzero(vivid & (hh >= 100) & (hh <= 125)))
+    return (red - blue) / (red + blue + 0.02 * hsv.shape[0] * hsv.shape[1])
