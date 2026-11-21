@@ -215,7 +215,7 @@ def auton_steps(route):
     start = describe_point(*r[0]); end = describe_point(*r[-1])
     crosses = bool(np.any(r[:, 0] + r[:, 1] > 0.15))
     moved = float(np.sum(np.hypot(*np.diff(r, axis=0).T)))
-    stops = [s_ for s_ in steps if s_[1] not in (start,)]
+    stops = [s_ for s_ in steps if s_[1] != start and s_[0] >= 1.5]   # a pause in the first second is still the start
     if stops and stops[-1][1] == end:
         stops = stops[:-1]
     return {"start": start, "stops": stops, "end": end, "crosses": crosses, "moved_m": round(moved, 1)}

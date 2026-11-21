@@ -354,7 +354,7 @@ function officialBlock(id) {
 }
 /* ---------- event prep ---------- */
 const evList = Object.entries(OFF.events).sort((a, b) => b[1].date.localeCompare(a[1].date));
-$("#prep-ev").innerHTML = evList.map(([k, e]) => `<option value="${k}">${esc(e.short.replace(/ \(Fall 2026\)$/, ""))} · ${esc(e.date)}${e.matches.length ? "" : " · schedule not out yet"}</option>`).join("");
+$("#prep-ev").innerHTML = evList.map(([k, e]) => `<option value="${k}">${esc(e.short.replace(/ \(Fall 2026\)$/, ""))} · ${esc(e.date)}${e.matches.length ? "" : " · no schedule yet"}</option>`).join("");
 const cornfield = evList.find(([, e]) => /Cornfield/.test(e.short) && e.matches.length);
 if (cornfield) $("#prep-ev").value = cornfield[0];
 $("#prep-team").value = "2360A";
@@ -416,6 +416,7 @@ function showEvent(eid, me) {
   const mine = me ? ev.matches.filter((m) => m.r.includes(me) || m.b.includes(me)) : [];
   const onVideo = ev.teams.filter((t) => REP[t.n]).length;
   const list = [...ev.teams].sort((a, b) => (b.rating ?? -1) - (a.rating ?? -1));
+  const known = list.filter((t) => t.n !== me && REP[t.n]?.sections?.auton).slice(0, 6);
   out.innerHTML = `<h3 class="tname disp" style="font-size:clamp(48px,7vw,96px)">${esc(ev.short.replace(/ \(Fall 2026\)$/, ""))}</h3>
     <div class="tstats"><span>${esc(ev.date)}</span><span><b>${ev.teams.length}</b> teams</span><span><b>${onVideo}</b> scouted on video</span></div>
     ${me && !ev.teams.some((t) => t.n === me) ? `<p class="scout-note">${esc(me)} isn't on this event's team list.</p>` : ""}
@@ -427,7 +428,10 @@ function showEvent(eid, me) {
       const win = m.p != null ? (red ? m.p : 1 - m.p) : null;
       return `<div class="pm"><div class="pm-head"><b>${esc(m.m)}</b><span>${red ? "Red" : "Blue"} alliance${win != null ? ` · ${Math.round(win * 100)}% to win going in` : ""}</span>${done ? `<span class="res">${my > th ? "Won" : my < th ? "Lost" : "Tied"} ${my}–${th}</span>` : ""}</div>
         <div class="pm-grid">${partner.map((p) => teamCard(p, side, ev, me, true)).join("")}${op.map((o) => teamCard(o, oside, ev, me, false)).join("")}</div></div>`;
-    }).join("") : `<p class="scout-note">The match schedule for this event isn't out yet. The pick list below is ready now.</p>`) : ""}
+    }).join("") : `<p class="scout-note">The match schedule for this event isn't out yet.${known.length ? "" : " The pick list below is ready now."}</p>`) : ""}
+    ${!mine.length && known.length ? `<h4 class="disp" style="font-size:34px;margin:30px 0 4px">Teams to know</h4>
+      <p class="scout-note">The strongest teams here that we've watched, so you know their autons before the schedule comes out.</p>
+      <div class="pm-grid know">${known.map((t) => teamCard(t.n, "", ev, me && ev.teams.some((x) => x.n === me) ? me : null, false)).join("")}</div>` : ""}
     <h4 class="disp" style="font-size:34px;margin:40px 0 12px">Pick list</h4>
     <p class="scout-note">Every team here, strongest first by their rating going into today. Tags come from the matches we've watched.</p>
     <div class="scroll"><table class="pick"><thead><tr><th class="n">#</th><th>Team</th><th class="n">Rating</th><th class="n">Record</th><th class="n">Points</th><th class="n">Skills</th><th>How it plays</th></tr></thead><tbody>

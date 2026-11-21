@@ -14,7 +14,9 @@ EVENTS = {  # our event names -> official event id
     "Highlander Summit Signature": 64246, "Speedway Signature": 64359,
     "GHOST Halloween Spotlight": 65564, "Harbor Havoc Signature": 64926,
     "Smoky Mountain Forge Signature": 64846, "Great Lakes #1": 65014, "Lake Park": 64295, "IPSD League": 66342,
-    "Illini Cornfield Clash Jr. (Winter 2027)": 64756,
+    "Cornfield Clash Winter": 64756,
+    "Niles": 65760, "Glenbrook South": 64352, "Great Lakes #2": 65015, "Great Lakes #3": 65016,
+    "Illinois State Championship": 65018,
 }
 ROUND = {"Qual": 2, "QF": 3, "SF": 4, "Final": 5, "R16": 6}
 
