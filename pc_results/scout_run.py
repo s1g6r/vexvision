@@ -119,6 +119,15 @@ def main():
         budget = float(argv[i + 1]); del argv[i:i + 2]
     os.makedirs(LOGDIR, exist_ok=True)
     say(f"===== scheduled run starting (budget {budget:.1f} h) =====")
+    # Everything below assumes pc-results is checked out: the rebase and the push both name it,
+    # so on another branch this would rebase that branch onto pc-results and then push it there.
+    # If someone has left the repo on main, do nothing and say so.
+    rc, branch = git("rev-parse", "--abbrev-ref", "HEAD")
+    branch = branch.strip()
+    if branch != "pc-results":
+        say(f"the repo is on '{branch}', not pc-results -- stopping. "
+            f"Run `git checkout pc-results` in {ROOT} and this will pick up again by itself.")
+        return
     if not take_lock():
         return
     try:
