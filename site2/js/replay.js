@@ -23,8 +23,16 @@ function camAt(cams, t) {
 }
 const zoneName = (x, y) => Math.abs(x) + Math.abs(y) <= 0.6096 ? "Midfield" : (x + y < 0 ? "Red side" : "Blue side");
 
+const PACKS = new Map();
+async function loadData(url) {
+  const [file, id] = url.split("#");
+  if (!id) return fetch(file).then((r) => r.json());
+  if (!PACKS.has(file)) PACKS.set(file, fetch(file).then((r) => r.json()));
+  return (await PACKS.get(file))[id];
+}
+
 export async function mountReplay(root, url, { reduced = false, autoplay = false, start = null } = {}) {
-  const R = await fetch(url).then((r) => r.json());
+  const R = await loadData(url);
   root.dispatchEvent(new CustomEvent("replay-meta", { detail: R, bubbles: true }));
   const $ = (s) => root.querySelector(s);
   const canvas = $("canvas"), labels = $(".rp-labels"), pip = $(".rp-pip .rp-still"), pipMarks = $(".rp-pip .rp-pipmarks");
