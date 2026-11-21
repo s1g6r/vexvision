@@ -1,0 +1,7 @@
+# This PC has core.autocrlf=true, so say plainly what is binary and what is text. Git's own
+# guess is right today (the .gz blobs commit byte-identical), but these files are written
+# unattended all season and the cloud side has to be able to gunzip and json.load every one.
+*.json.gz binary
+*.json    text eol=lf
+*.py      text eol=lf
+*.md      text eol=lf
