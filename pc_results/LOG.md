@@ -167,6 +167,58 @@ kick off a pass by hand at any time:
 
 Tonight's 11 pm trigger will skip while that one is still going, which is correct.
 
+### A real bug in watch.py, found by being interrupted
+
+Worth reading properly, because it defeats the whole point of an always-on station and the fix in
+`watch.py` is one line.
+
+`watch.py` decides about a video and saves that decision straight away:
+
+    state["videos"][vid] = "event stream" if ok else "not this event"
+    json.dump(state, open(sp, "w"), indent=1)
+
+and only adds the video to the event's `streams` list after the event is finished. In between, it
+hands the video to `stream_job.py`, which for a long stream runs for hours. Stop the run in that
+gap and the video is left marked "event stream" with nothing read -- and the next pass does
+
+    if vid in state["videos"]:
+        continue
+
+so it is **never looked at again**. The event isn't marked complete either, so it just sits there
+looking unfinished forever while its only stream is permanently invisible.
+
+This is not hypothetical. It happened on the first run here. Speedway Day 1 (`zhGs-5gah_Y`) was
+accepted, scanned, **96 matches found**, and then the run was killed while reading the first one.
+state.json came back with `videos["zhGs-5gah_Y"] = "event stream"` and
+`events["64359"]["streams"] = []`. All 96 matches were written off by one interrupted run.
+
+And the 10-hour budget turns bad luck into certainty: a 96-match stream cannot be read in one
+night, so every night would end inside that gap, and a long stream would only ever get its first
+night's worth of matches.
+
+**What I did about it, without touching `watch.py`.** `scout_run.py` now forgets the "event stream"
+verdicts before each run, so a half-read stream is always looked at again. Re-reading is cheap and
+correct: `stream_job` re-scans the titles (about 11 minutes for a 7.7-hour stream) and skips every
+match it has already written, so a long stream creeps forward a night at a time until it is done.
+The "too short" and "not this event" verdicts are kept, because those are settled facts about a
+video and re-checking them costs real time. Events genuinely finished are marked `complete` and
+skipped before their videos are ever considered, so dropping their entries costs nothing. Tested
+against the real state.json: 2 stream verdicts dropped, the other 26 verdicts and every `complete`
+flag untouched, and running it twice changes nothing the second time.
+
+**The proper fix, for whoever owns `watch.py`:** record the verdict only once `stream_job` has
+actually come back, or better, keep the match count alongside it so a part-read stream can be told
+from a finished one. Something like moving the `state["videos"][vid] = ...` write to after the
+`subprocess.run(...)` call, and keeping the "not this event" case where it is.
+
+**One thing left over from this.** The restarted run skipped Day 1 (it was already in `videos`) and
+went to the next accepted video, the 11-minute "Final Four" (`ME5jv9cAaJg`, 2 matches). When it
+finishes, `watch.py` will see a done event with a non-empty `streams` list and mark Speedway
+**complete** -- on the strength of 2 matches out of 96, and those two are the semifinal and final,
+which have no Illinois team in them. A complete event is skipped before the repair can help, so
+once this run ends I will clear that one flag by hand so Day 1 gets read. Noted here because it is
+the one piece of state on this PC that I edited rather than let the tools write.
+
 **To switch it off:** open Task Scheduler, find "VexVision scout station" in the top-level list,
 right-click, Disable. Enable the same way.
 
@@ -307,3 +359,4 @@ file on disk and still gunzips.
 - 2026-11-20 19:44 event 66342 IPSD Invitational League (2026-10-23, 21 Illinois teams)
 - 2026-11-20 19:44 event 64244 University of North Dakota Signature at the Mall of America (2026-08-06, 4 Illinois teams)
 - 2026-11-20 19:44 event 64359 Speedway (2026-09-18, 1 Illinois teams)
+- 2026-11-20 19:44   reading ME5jv9cAaJg 'Speedway 2026: Final Four | Semifinals & Finals | VEX V5 Override' (11 min)

@@ -25,7 +25,7 @@ pc_results/LOG.md, which is pushed.
 
   python pc_results/scout_run.py [--budget-hours 10] [--no-push] [--region Illinois]
 """
-import os, subprocess, sys, threading, time
+import json, os, subprocess, sys, threading, time
 from datetime import datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -93,6 +93,46 @@ def run(cmd, what, budget=None):
         say(f"{what} exited {p.returncode}")
     return p.returncode
 
+def repair_state():
+    """Let a half-read stream be picked up again next run.
+
+    `watch.py` writes its verdict on a video to state.json the moment it has one, and only adds the
+    video to the event's `streams` list once the whole event is done. In between it hands the video
+    to `stream_job.py`, which can take many hours. If anything stops the run in that gap -- the
+    10-hour budget, a reboot, a crash -- the video is left marked "event stream" while nothing was
+    read, and `watch.py`'s next pass does `if vid in state["videos"]: continue` and never looks at
+    it again. That happened on the very first run here: Speedway Day 1, 96 matches, was marked
+    handled with nothing read.
+
+    The budget makes it certain rather than unlucky, because a 96-match stream cannot finish inside
+    one night, so without this every long stream would only ever get its first night's worth.
+
+    The fix that doesn't touch `watch.py`: before each run, forget the "event stream" verdicts.
+    Re-reading a stream is cheap and correct -- `stream_job` re-scans the titles (about 11 minutes
+    for a 7.7-hour stream) and skips every match it has already written. Events that genuinely
+    finished are marked `complete` and `watch.py` skips those before it ever looks at their videos,
+    so dropping their entries costs nothing. The "too short" and "not this event" verdicts are kept:
+    those are settled facts about a video and re-checking them wastes real time.
+    """
+    sp = os.path.join(ROOT, "pc_results", "state.json")
+    if not os.path.exists(sp):
+        return
+    try:
+        state = json.load(open(sp, encoding="utf-8"))
+    except Exception as e:
+        say(f"state.json unreadable ({e}); leaving it alone")
+        return
+    streams = [v for v, verdict in state.get("videos", {}).items() if verdict == "event stream"]
+    if not streams:
+        return
+    for v in streams:
+        del state["videos"][v]
+    done = {e for e, st in state.get("events", {}).items() if st.get("complete")}
+    say(f"letting {len(streams)} stream(s) be looked at again: {', '.join(streams)} "
+        f"({len(done)} event(s) already marked complete are skipped anyway)")
+    with open(sp, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(state, f, indent=1)
+
 def git(*args):
     p = subprocess.run(["git"] + list(args), cwd=ROOT, capture_output=True, text=True)
     return p.returncode, (p.stdout or "") + (p.stderr or "")
@@ -132,6 +172,7 @@ def main():
         return
     try:
         run(["git", "pull", "--rebase", "--autostash", "-q", "origin", "pc-results"], "git pull")
+        repair_state()
         run([PY, os.path.join(ROOT, "tools", "pc", "watch.py")] + argv, "watch.py",
             budget=budget * 3600 if budget > 0 else None)
         if "--no-push" not in argv:
