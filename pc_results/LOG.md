@@ -89,6 +89,27 @@ So the picture the Mac drew is right: once Great Lakes #1 and Cornfield Clash ar
 the five Lake Park uploads are done here, we will have essentially all the Illinois Override
 footage that exists today.
 
+### Worth a decision: the two biggest Illinois events are on the Mac, and most of them aren't read
+
+`watch.py` has `DONE_ELSEWHERE = {64351: "cc-", 65014: "gl-"}`, so this PC deliberately leaves
+Cornfield Clash and Great Lakes #1 alone. Those are the **two biggest Illinois events in the data**
+-- 26 and 35 Illinois teams, against 43 at Lake Park -- and on `main` the Mac's own work list says
+how far it has got: `data/cc_todo.txt` lists **55 of Cornfield's 65 matches still to read**, about
+5 hours of video, each with its start and end second already worked out from
+`data/cc_stream_titles.json`. `docs/LOG.md` says that list is downloaded and tracked by
+`tools/mac/fetch_clips.sh`, on the Mac.
+
+I have not touched them, and won't without being asked -- the task file gives them to the Mac, and
+if both machines read the same match we get duplicate ids (`cc-qual1` and so on) going to the cloud
+side from two places. But it is the biggest piece of Illinois scouting still outstanding, and this
+PC is the better machine for it: it is dedicated, it stays on, and its pace is now measured. At
+5.5x real time, 5 hours of Cornfield video is about **27 hours of reading** -- two nights of the
+schedule that is now running, or less if it runs during the day too.
+
+If that is wanted, the hard part is already done: the time windows exist, so it needs a short
+script here that cuts each window and tracks it, plus removing 64351 from `DONE_ELSEWHERE` or
+agreeing that the Mac stops. Say the word and I will write it.
+
 ### Scheduling
 
 Registered a Windows task called **VexVision scout station**, running as Sagar, only when he is
@@ -122,6 +143,13 @@ disk is under 50 GB free. The disk had 122 GB free at setup; one event's clips a
 
 Console output, including any crash, goes to `%LOCALAPPDATA%\vexvision\watch_console.log`, kept
 outside the repo so it is never committed.
+
+**Checked, not just registered.** With the first full run already going, I started the task by
+hand. It launched, reported `LastTaskResult: 0`, and did exactly the right thing -- found the lock
+and wrote "another run (pid 1952) is still going after 0.1 h; leaving it alone". So the task's
+python path, working directory and user context are all correct, and the no-double-up behaviour is
+proven rather than assumed. Tonight's 11 pm trigger will skip for the same reason, since the first
+run is budgeted to about 5 am.
 
 **To switch it off:** open Task Scheduler, find "VexVision scout station" in the top-level list,
 right-click, Disable. Enable the same way.
@@ -251,3 +279,8 @@ remembering if anything else on this PC ever writes JSON through the shell. The 
 added here says what is binary and what is text, so the `.json.gz` files can't be mangled on their
 way to the cloud side; checked once by hand that a committed `.json.gz` is byte-identical to the
 file on disk and still gunzips.
+- 2026-11-20 19:16 event 64295 Lake Park (2026-10-24, 43 Illinois teams)
+- 2026-11-20 19:16 event 66342 IPSD Invitational League (2026-10-23, 21 Illinois teams)
+- 2026-11-20 19:18 event 64244 University of North Dakota Signature at the Mall of America (2026-08-06, 4 Illinois teams)
+- 2026-11-20 19:18 event 64359 Speedway (2026-09-18, 1 Illinois teams)
+- 2026-11-20 19:19   reading zhGs-5gah_Y 'Speedway: Override VEX V5 Signature Event - Day 1 (Live Stream Presented by Allegion)' (461 min)
