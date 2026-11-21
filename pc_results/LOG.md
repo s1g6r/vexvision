@@ -148,8 +148,24 @@ outside the repo so it is never committed.
 hand. It launched, reported `LastTaskResult: 0`, and did exactly the right thing -- found the lock
 and wrote "another run (pid 1952) is still going after 0.1 h; leaving it alone". So the task's
 python path, working directory and user context are all correct, and the no-double-up behaviour is
-proven rather than assumed. Tonight's 11 pm trigger will skip for the same reason, since the first
-run is budgeted to about 5 am.
+proven rather than assumed.
+
+**And then the recovery got tested for real, by accident.** At 19:43 the tools I was running the
+first pass under were cleaned up from underneath it, and both the Lake Park batch and the watch run
+were killed mid-match -- no Python left, and a lock file still on disk naming a dead process. That
+is exactly the reboot-or-crash case the lock was written for, and it behaved: the next run logged
+"clearing a stale lock (0.5 h old)" and carried straight on. Nothing was lost but the two matches
+that were in flight (Lake Park R16 7-1 and Speedway Qual 1); their clips were already downloaded,
+finished matches were skipped, and both were simply read again.
+
+The lesson worth keeping: **the scheduled task is the durable way to run this, not a session.** A
+long pass started from a terminal dies with the terminal. Started through Task Scheduler, it is
+detached and survives. So the restart was done with `Start-ScheduledTask`, which is also how to
+kick off a pass by hand at any time:
+
+    Start-ScheduledTask -TaskName 'VexVision scout station'
+
+Tonight's 11 pm trigger will skip while that one is still going, which is correct.
 
 **To switch it off:** open Task Scheduler, find "VexVision scout station" in the top-level list,
 right-click, Disable. Enable the same way.
@@ -287,3 +303,7 @@ file on disk and still gunzips.
 - 2026-11-20 19:18 event 64244 University of North Dakota Signature at the Mall of America (2026-08-06, 4 Illinois teams)
 - 2026-11-20 19:18 event 64359 Speedway (2026-09-18, 1 Illinois teams)
 - 2026-11-20 19:19   reading zhGs-5gah_Y 'Speedway: Override VEX V5 Signature Event - Day 1 (Live Stream Presented by Allegion)' (461 min)
+- 2026-11-20 19:44 event 64295 Lake Park (2026-10-24, 43 Illinois teams)
+- 2026-11-20 19:44 event 66342 IPSD Invitational League (2026-10-23, 21 Illinois teams)
+- 2026-11-20 19:44 event 64244 University of North Dakota Signature at the Mall of America (2026-08-06, 4 Illinois teams)
+- 2026-11-20 19:44 event 64359 Speedway (2026-09-18, 1 Illinois teams)
