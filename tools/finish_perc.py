@@ -13,7 +13,10 @@ def main():
     idx_p = os.path.join(rep, "index_mac.json")
     index = json.load(open(idx_p)) if os.path.exists(idx_p) else []
     for mid in sys.argv[3:]:
-        if mid[:3] in MANS:
+        sw = {x["id"]: x for x in json.load(open("/home/claude/work/sw/matches.json"))} if os.path.exists("/home/claude/work/sw/matches.json") else {}
+        if mid in sw:                           # Speedway day 1, read on the Mac
+            m, clips = sw[mid], "/home/claude/work/sw/clips"
+        elif mid[:3] in MANS:
             man, clips = MANS[mid[:3]]
             m = {x["id"]: x for x in json.load(open(man))}[mid]
         else:                                   # read on the PC: its meta file sits next to the results

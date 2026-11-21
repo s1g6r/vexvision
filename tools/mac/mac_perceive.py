@@ -59,19 +59,27 @@ def main():
     dev = os.environ.get("VV_DEVICE") or None
     det = Detector("goals.pt,robots.pt", device=dev)
     lines = [l.rstrip("\n").split("\t") for l in open(jobs) if l.strip()]
-    for j, (mid, clip, teams) in enumerate(lines):
-        if j % n != k:
-            continue
-        dst = os.path.join(out, mid + ".perc.json")
-        clip = os.path.expanduser(clip)
-        if os.path.exists(dst) or not os.path.exists(clip):
-            continue
-        t0 = time.time()
-        res = AN.analyze(frames(clip), det, teams=json.loads(teams), log=lambda *a: None)
-        P = res.pop("perception"); P["looks"] = {"2360A": "black"}
-        json.dump(P, open(dst + ".tmp", "w"), default=float, separators=(",", ":"))
-        os.replace(dst + ".tmp", dst)
-        print(time.strftime("%H:%M:%S"), mid, f"{time.time() - t0:.0f}s", flush=True)
+    todo = [x for j, x in enumerate(lines) if j % n == k]
+    idle = 0
+    while todo and idle < 1800:            # clips can still be arriving: wait up to 30 min for the next one
+        left = []
+        for mid, clip, teams in todo:
+            dst = os.path.join(out, mid + ".perc.json")
+            clip = os.path.expanduser(clip)
+            if os.path.exists(dst):
+                continue
+            if not os.path.exists(clip):
+                left.append((mid, clip, teams)); continue
+            t0 = time.time()
+            res = AN.analyze(frames(clip), det, teams=json.loads(teams), log=lambda *a: None)
+            P = res.pop("perception")
+            json.dump(P, open(dst + ".tmp", "w"), default=float, separators=(",", ":"))
+            os.replace(dst + ".tmp", dst)
+            print(time.strftime("%H:%M:%S"), mid, f"{time.time() - t0:.0f}s", flush=True)
+            idle = 0
+        if len(left) == len(todo):
+            time.sleep(20); idle += 20
+        todo = left
 
 if __name__ == "__main__":
     main()
