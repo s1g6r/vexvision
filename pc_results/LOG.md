@@ -57,6 +57,11 @@ The check (team numbers on screen must match the event's team list) behaved exac
 
 - **IPSD league (66342, 21 Illinois teams)** -- no footage. Four long videos came up in the search
   and all four were correctly rejected: they are other leagues (Rio Hondo, Caution Tape, Highland).
+  This one is a league in Naperville that runs **23 Oct 2026 to 11 Jan 2027**, which is why its
+  status is "live" and why it only has 42 matches so far. More will appear through the winter, so
+  it is right that `watch.py` keeps looking at it rather than marking it finished. No stream on
+  YouTube or anywhere else I could find -- league meets usually aren't broadcast. 21 Illinois teams
+  with no video is the single biggest hole in the scouting file, and it is not one the PC can fill.
 - **UND Signature at the Mall of America (64244, 4 Illinois teams)** -- no full stream. Only three
   clips of about three minutes, which are skipped as too short.
 - **Speedway Signature (64359, 1 Illinois team)** -- streams do exist. Day 1 (7.7 hours) and the
@@ -157,8 +162,74 @@ stop `watch.py` coming back for the rest afterwards, the stream can be marked ha
 `state.json`, or the event added to `DONE_ELSEWHERE` in `watch.py` the way Great Lakes and
 Cornfield are.
 
+### The gap this leaves, and the new reader that closes it
+
+The task file told me to find the Lake Park single-match uploads by hand, because `watch.py` is
+looking for event streams and throws away anything shorter than ten minutes. That is the right
+call for a stream search, but it means **single-match uploads are never picked up automatically**,
+and single-match uploads are how Illinois teams actually post their footage. Doing it by hand once
+for Lake Park is fine; doing it for every event from now to March is not.
+
+So there is a second new file, `read_uploads.py`. It does for any event what I did by hand for
+Lake Park: searches on the event name and on the event's team numbers, keeps videos between 45
+seconds and 10 minutes, pulls the team numbers out of the **title**, and reads the video only if
+those are exactly the four teams of one official match at that event. That last part is the whole
+point -- it is the same rule `watch.py` uses on streams, applied to titles, and it is what keeps
+footage from other events out.
+
+Checked against Lake Park, where I already knew the answer by hand. It found the same five Hawks
+Robotics videos and put every one on the right match. It also left three near misses alone, all
+correctly:
+
+- `Kly3eAIHY4A` "Vex Lake Park Finals 333Y+355P vs 2360C+2360S"
+- `dBiVaR9JoUk` "333y + 355p vs 60441t + 60441y @ lake park vex"
+- `aGiy-a0WBpo` "Niles Finals 333Y 321R v 38535A 38535B"
+
+333Y and 355P are never on the same alliance at Lake Park 64295, and 64295 is the only Lake Park
+Override event there has ever been, so the first two are from last season's Lake Park (Push Back).
+The third is a different event. None of them can be tied to an Override match, and none of them
+was read.
+
+One thing to know if you run it: searching a bare team number turns up anything that shares it --
+"321A" also finds a long shelf of Schindler 321A elevator videos. They are harmless, and only a
+genuine near miss (four team numbers in the title, three of them at the event) is now reported.
+
+    .venv\Scripts\python.exe pc_results\read_uploads.py --event 65760 --prefix niles1- -n   # list only
+    .venv\Scripts\python.exe pc_results\read_uploads.py --event 65760 --prefix niles1-       # and read
+
+`-n` lists without reading or writing to this log. It is safe to re-run after an event posts more
+uploads; matches already read are skipped.
+
+### The Illinois season ahead
+
+Checked what else is coming, because this is what the station is for. **A 38-team Illinois event
+is tomorrow**, and there are seven more before the State Championship:
+
+| date | event | id | teams |
+| --- | --- | --- | --- |
+| 2026-11-21 | Niles 219 / 333 / 321 Robotics | 65760 | 38 |
+| 2026-12-05 | Glenbrook South HS | 64352 | 32 |
+| 2027-01-03 | Great Lakes #2 | 65015 | 36 |
+| 2027-01-16 | Niles 219 / 333 / 321 Robotics #2 | 65761 | 37 |
+| 2027-01-30 | Illini Cornfield Clash Winter | 64756 | 32 |
+| 2027-02-27 | Great Lakes #3 | 65016 | 32 |
+| 2027-02-28 | Great Lakes Skills Only | 65017 | 13 |
+| 2027-03-12 | Illinois State Championship | 65018 | 11 so far |
+
+The IPSD league also keeps adding matches until 11 Jan.
+
+Tomorrow is the first real test. The weekend schedule fires every 2 hours, so the station will
+notice Niles as soon as its results go up and a stream exists. Niles is hosted by the 219/333/321
+teams, and 321H is Hawks Robotics -- the channel that posted the Lake Park matches one at a time --
+so it is quite likely tomorrow's footage shows up as short uploads rather than a stream. That is
+exactly the case `watch.py` can't see, which is why `read_uploads.py` now exists. Worth running it
+on 65760 on Sunday whatever the station finds.
+
 ### One thing to know about files written from PowerShell
 
 `il_events.json` was first written with PowerShell's `Out-File -Encoding utf8`, which on Windows
 PowerShell 5.1 adds a byte-order mark, and `json.load` refuses that. Rewritten without one. Worth
-remembering if anything else on this PC ever writes JSON through the shell.
+remembering if anything else on this PC ever writes JSON through the shell. The `.gitattributes`
+added here says what is binary and what is text, so the `.json.gz` files can't be mangled on their
+way to the cloud side; checked once by hand that a committed `.json.gz` is byte-identical to the
+file on disk and still gunzips.
