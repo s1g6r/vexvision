@@ -366,18 +366,42 @@ function watchouts(R) {
   const d = S.defence || {};
   if (d.other_side >= 0.55 && d.near_opp_their_side >= 0.15) out.push(`Expect them on your side: ${pct(d.other_side)} of driver control there`);
   const tg = S.toggles || {};
-  if (tg.opp >= 0.05) out.push("Goes for your Toggles too");
+  if (tg.opp >= 0.19) out.push(`Comes for your Toggles: ${pct(tg.opp)} of driver control by them`);
   else if (tg.share >= 0.35) { const k = Math.round(tg.trips || 0); out.push(k >= 3 ? `Lives at the Toggles: about ${k} trips a match` : `Spends ${pct(tg.share)} of driver control by a Toggle`); }
   const fav = S.scoring?.favourites?.[0];
   if (fav && fav[1] >= 1) out.push(`Works ${fav[0].replace(/^its own/, "their own")} most`);
   if (S.endgame?.midfield >= 0.5) out.push("Ends in the Midfield");
   return out.slice(0, 3);
 }
-function teamCard(n, side, ev) {
+/* how two autonomous routes meet: partners share a start or a Goal, opponents race to the same neutral Goal */
+const GOALN = { C: "the Center Goal", SW: "its own bottom Alliance Goal", WS: "its own left Alliance Goal", NE: "the other alliance's top Goal", EN: "the other alliance's right Goal", NW: "the top-left neutral Goal", WN: "the left neutral Goal", ES: "the right neutral Goal", SE: "the bottom-right neutral Goal" };
+const GKEY = Object.fromEntries(Object.entries(GOALN).map(([k, v]) => [v, k]));
+const GFLIP = { C: "C", SW: "NE", WS: "EN", NE: "SW", EN: "WS", NW: "SE", WN: "ES", ES: "WN", SE: "NW" };
+const shortGoal = (k) => GOALN[k].replace(/^its own /, "your ").replace(/^the other alliance's /, "their ");
+function autonGoals(n) {
+  const r = REP[n]?.sections?.auton?.routes?.[0]; if (!r) return null;
+  const st = r.steps, all = [...st.stops.map(([, p]) => p), st.end].filter((p) => GKEY[p]);
+  return { start: st.start, goals: new Set(all.map((p) => GKEY[p])), moved: st.moved_m };
+}
+function autonClash(me, other, partner) {
+  const a = autonGoals(me), b = autonGoals(other);
+  if (!a || !b || a.moved < 0.6 || b.moved < 0.6) return null;
+  if (partner) {
+    if (a.start === b.start) return `Both autons start at ${a.start.replace(/^its own /, "your own ")}. Agree on who takes that tile.`;
+    const both = [...a.goals].filter((g) => b.goals.has(g));
+    return both.length ? `Both autons go to ${both.map(shortGoal).join(" and ")}. Check they don't collide.` : "Your autons don't overlap.";
+  }
+  const theirs = new Set([...b.goals].map((g) => GFLIP[g]));
+  const race = [...a.goals].filter((g) => theirs.has(g) && (g === "C" || /neutral/.test(GOALN[g])));
+  return race.length ? `Races you to ${race.map(shortGoal).join(" and ")} in auton.` : null;
+}
+function teamCard(n, side, ev, me, partner) {
   const t = ev.teams.find((x) => x.n === n) || {}, R = REP[n];
   const A = R?.sections?.auton, route = A?.routes?.[0];
   const autonLine = route ? `<div class="line"><b>Auton${A.seen > 1 ? ` · ran it ${route.count} of ${A.seen}` : ""}:</b> ${esc(route.text)}.${A.routes.length > 1 ? ` <span class="role">${A.routes.length - 1} other route${A.routes.length > 2 ? "s" : ""} seen.</span>` : ""}</div>` : "";
   const W = R ? watchouts(R) : [];
+  const clash = me ? autonClash(me, n, partner) : null;
+  if (clash) W.unshift(clash);
   return `<div class="tc ${side}"><div class="n"><a href="#team-${esc(n)}">${esc(n)}</a><small>${esc(t.name || "")}</small></div>
     <div class="role">${t.rank ? `${ord(t.rank)} here · ` : ""}${esc(t.record || "")}${t.avg != null ? ` · ${Math.round(t.avg)} points a match` : ""}${t.skills ? ` · skills ${t.skills}` : ""}</div>
     ${R?.tags?.length ? `<div class="tags">${R.tags.map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : ""}
@@ -402,7 +426,7 @@ function showEvent(eid, me) {
       const my = red ? m.rs : m.bs, th = red ? m.bs : m.rs;
       const win = m.p != null ? (red ? m.p : 1 - m.p) : null;
       return `<div class="pm"><div class="pm-head"><b>${esc(m.m)}</b><span>${red ? "Red" : "Blue"} alliance${win != null ? ` · ${Math.round(win * 100)}% to win going in` : ""}</span>${done ? `<span class="res">${my > th ? "Won" : my < th ? "Lost" : "Tied"} ${my}–${th}</span>` : ""}</div>
-        <div class="pm-grid">${partner.map((p) => teamCard(p, side, ev)).join("")}${op.map((o) => teamCard(o, oside, ev)).join("")}</div></div>`;
+        <div class="pm-grid">${partner.map((p) => teamCard(p, side, ev, me, true)).join("")}${op.map((o) => teamCard(o, oside, ev, me, false)).join("")}</div></div>`;
     }).join("") : `<p class="scout-note">The match schedule for this event isn't out yet. The pick list below is ready now.</p>`) : ""}
     <h4 class="disp" style="font-size:34px;margin:40px 0 12px">Pick list</h4>
     <p class="scout-note">Every team here, strongest first by their rating going into today. Tags come from the matches we've watched.</p>

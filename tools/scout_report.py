@@ -320,7 +320,7 @@ def summarise(team, ms):
     to = np.mean([m["toggles"]["own"] + m["toggles"]["opp"] for m in ms]); topp = np.mean([m["toggles"]["opp"] for m in ms])
     tv = sec["robot"]["toggle_visits"] or 0
     if to >= 0.3:
-        which = "including the other alliance's" if topp >= 0.03 else "mostly its own"
+        which = "including the other alliance's" if topp >= 0.19 else "mostly its own"
         out.append(f"Goes after Toggles: about {tv:.0f} trips a match, {pct(to)} of driver control right by one, {which}.")
     elif to <= 0.1:
         out.append("Rarely goes to the Toggles.")
