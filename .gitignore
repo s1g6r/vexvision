@@ -13,3 +13,5 @@ site2/models/
 site2/ort/
 site2/data/thumbs/
 site2/data/replays/index_*.json
+pc_results/clips/
+.venv/
