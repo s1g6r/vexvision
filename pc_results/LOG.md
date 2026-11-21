@@ -385,6 +385,19 @@ remembering if anything else on this PC ever writes JSON through the shell. The 
 added here says what is binary and what is text, so the `.json.gz` files can't be mangled on their
 way to the cloud side; checked once by hand that a committed `.json.gz` is byte-identical to the
 file on disk and still gunzips.
+
+---
+
+## The station's own log
+
+Everything above was written by hand during setup. Everything below this line is written by
+`watch.py` and `read_uploads.py` as they run, one line each, newest at the bottom. It will grow by
+a few lines a night and more on event weekends. Each line is a timestamp and either an event being
+looked at, a stream being read, or something that didn't work.
+
+The two passes on 20 Nov are the first full run and its restart after the interruption described
+above; the second one skipped Day 1 for the reason explained there.
+
 - 2026-11-20 19:16 event 64295 Lake Park (2026-10-24, 43 Illinois teams)
 - 2026-11-20 19:16 event 66342 IPSD Invitational League (2026-10-23, 21 Illinois teams)
 - 2026-11-20 19:18 event 64244 University of North Dakota Signature at the Mall of America (2026-08-06, 4 Illinois teams)
