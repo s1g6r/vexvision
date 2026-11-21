@@ -68,6 +68,32 @@ on video, Lake Park is under the 8-match floor `tools/event_names.py` needs. Tea
 correct regardless: they come from the official schedule, not the titles, which matters because
 `docs/LOG.md` records three titles elsewhere that had red and blue the wrong way round.
 
+### All five Lake Park matches, and how good each one is
+
+Done. Every Lake Park single-match upload that exists has been read and pushed. They are not
+equally good, and the difference is worth knowing before anything is built on them -- these are
+hand-held phone videos, so how much of the field is in shot varies a lot from one to the next.
+
+| match | video | frames | calibrated | robot sightings | per calibrated frame | plate reads | read in |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Qual 3 | `FP5f82usTmE` | 432 | 419 (97%) | 1105 | 2.6 | 8 | 796s |
+| Qual 15 | `sgnpkyrQgVA` | 396 | 323 (82%) | 638 | 2.0 | 3 | 612s |
+| Qual 35 | `h4Pg18iPkIM` | 441 | 340 (77%) | 817 | 2.4 | 0 | 1191s |
+| Qual 25 | `aarbU3BLe5A` | 609 | 406 (67%) | 593 | 1.5 | 0 | 924s |
+| R16 7-1 | `ZTWAkN6Lzlo` | 414 | 168 (41%) | 310 | 1.8 | 0 | 574s |
+
+There are four robots on the field, so "per calibrated frame" would be 4.0 if every robot were
+seen in every frame. Nothing gets close, which is what you would expect when the camera is only
+showing part of the field at a time.
+
+**Qual 3 is the one to trust** -- calibrated in 97% of frames, and 2.6 of 4 robots seen on average.
+**R16 7-1 is the one to be careful with**: calibrated in only 41% of frames and 310 sightings, less
+than a third of Qual 3's, so its tracks coast through long gaps. If a report looks odd for 321H,
+38535A, 60441Y or 60441C, that match is the likely reason.
+
+Plate reads are as good as nothing anywhere (8, 3, 0, 0, 0), so none of these matches can name its
+own robots -- see the note above about Lake Park being under the 8-qualification-match floor.
+
 ### What footage exists for the other events
 
 Dry-ran `watch.py`'s search-and-verify on every remaining event without reading any matches.
