@@ -20,6 +20,8 @@ def main():
             continue
         if "robots" not in json.load(open(os.path.join(raw, i + ".json"))):
             continue
+        if not os.path.exists(os.path.join(vids, i + ".mp4")):
+            continue                      # read elsewhere (the PC): no video here to cut stills from
         e = idx[i]
         meta = {k: e.get(k) for k in ("event", "match", "red", "blue", "video")}
         run("tools.export_replay", os.path.join(raw, i + ".json"), os.path.join(vids, i + ".mp4"),

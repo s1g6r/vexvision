@@ -4100,5 +4100,24 @@
 "named": 4,
 "sure": 4,
 "replay": false
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 2",
+"red": [
+"1028A",
+"3150D"
+],
+"blue": [
+"9364E",
+"4610W"
+],
+"id": "e64359-1-qual2",
+"video": "e64359-1-qual2",
+"calibrated": 0.97,
+"seen": 0.75,
+"named": 4,
+"sure": 4,
+"replay": false
 }
 ]
