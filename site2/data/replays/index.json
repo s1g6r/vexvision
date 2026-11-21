@@ -15,7 +15,8 @@
 "calibrated": 0.94,
 "seen": 1.0,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "uXTJGJ-eFLU",
@@ -33,7 +34,8 @@
 "calibrated": 0.76,
 "seen": 0.83,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "Kx4bKVNEpjA",
@@ -52,7 +54,8 @@
 "calibrated": 0.95,
 "seen": 0.95,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "Zh_v1mk7ZLI",
@@ -71,7 +74,8 @@
 "calibrated": 0.94,
 "seen": 0.97,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "xqY55iGJpOE",
@@ -90,7 +94,8 @@
 "calibrated": 0.95,
 "seen": 0.93,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "n11q-B1Fzz0",
@@ -109,7 +114,8 @@
 "calibrated": 0.93,
 "seen": 0.85,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "Z-tTl-u1H7w",
@@ -128,7 +134,8 @@
 "calibrated": 0.83,
 "seen": 0.9,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "lt4lZLVAeWU",
@@ -147,7 +154,8 @@
 "calibrated": 0.94,
 "seen": 0.93,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "XQm4iQ1-USA",
@@ -166,7 +174,8 @@
 "calibrated": 0.95,
 "seen": 0.9,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "EA3kR3YaUxg",
@@ -185,7 +194,8 @@
 "calibrated": 0.94,
 "seen": 0.82,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "hILmQMxBN60",
@@ -204,7 +214,8 @@
 "calibrated": 0.94,
 "seen": 0.9,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "TtPqLKFAym8",
@@ -223,7 +234,8 @@
 "calibrated": 0.94,
 "seen": 0.9,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "e2-dbeV-7ws",
@@ -242,7 +254,8 @@
 "calibrated": 1.0,
 "seen": 0.93,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "-T4mfTU4CUw",
@@ -261,7 +274,8 @@
 "calibrated": 0.95,
 "seen": 0.95,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "v0y9WBQ2EN8",
@@ -280,7 +294,8 @@
 "calibrated": 0.63,
 "seen": 0.88,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "ByvAo2Zj1_Y",
@@ -299,7 +314,8 @@
 "calibrated": 0.53,
 "seen": 0.75,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "Sv0CNknjnLw",
@@ -318,7 +334,8 @@
 "calibrated": 0.62,
 "seen": 0.85,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "7eeYUx2JsT0",
@@ -337,7 +354,8 @@
 "calibrated": 0.62,
 "seen": 0.88,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "CDlAGT8gd0s",
@@ -356,7 +374,8 @@
 "calibrated": 0.74,
 "seen": 0.9,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "4i26nf-cwCA",
@@ -375,7 +394,8 @@
 "calibrated": 0.73,
 "seen": 0.93,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "Z56FSnlNoxg",
@@ -394,7 +414,8 @@
 "calibrated": 0.72,
 "seen": 0.9,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "YXWlzas-Te4",
@@ -413,7 +434,8 @@
 "calibrated": 0.76,
 "seen": 0.9,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "nQC49ljs6Xk",
@@ -432,7 +454,8 @@
 "calibrated": 0.76,
 "seen": 0.88,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "g2w_-x11kAM",
@@ -451,7 +474,8 @@
 "calibrated": 0.8,
 "seen": 0.88,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "4Msbln_rpCw",
@@ -470,7 +494,8 @@
 "calibrated": 0.75,
 "seen": 0.8,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "6CHLvioz39s",
@@ -489,7 +514,8 @@
 "calibrated": 0.74,
 "seen": 0.92,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "LrJK0D96CGc",
@@ -508,7 +534,8 @@
 "calibrated": 0.7,
 "seen": 0.9,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "SwwxtP-eWlM",
@@ -527,7 +554,8 @@
 "calibrated": 0.74,
 "seen": 0.75,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "TOJ_e6C-dPM",
@@ -546,7 +574,8 @@
 "calibrated": 0.66,
 "seen": 0.9,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "i-0MAXLpXPM",
@@ -565,7 +594,8 @@
 "calibrated": 0.7,
 "seen": 0.88,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "MPt4G9oxWk8",
@@ -584,7 +614,8 @@
 "calibrated": 0.85,
 "seen": 0.85,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "CpbT1wLyH0g",
@@ -603,7 +634,8 @@
 "calibrated": 0.96,
 "seen": 0.8,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "T0EeRxvtOS8",
@@ -622,7 +654,8 @@
 "calibrated": 0.91,
 "seen": 0.65,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "vWGDT1S9Z1Q",
@@ -641,7 +674,8 @@
 "calibrated": 0.89,
 "seen": 0.72,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "sQXLaXF469Y",
@@ -660,7 +694,8 @@
 "calibrated": 0.61,
 "seen": 0.8,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "-bXlVMTj8Ng",
@@ -679,7 +714,8 @@
 "calibrated": 1.0,
 "seen": 0.78,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "Eaci3su0JpA",
@@ -698,7 +734,8 @@
 "calibrated": 0.97,
 "seen": 0.85,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "mUtlNfCeYnw",
@@ -717,7 +754,8 @@
 "calibrated": 0.9,
 "seen": 0.93,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "3ewUQFU8J9M",
@@ -736,7 +774,8 @@
 "calibrated": 0.83,
 "seen": 0.75,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "SyF45yHVpTU",
@@ -752,7 +791,8 @@
 ],
 "video": "SyF45yHVpTU",
 "seconds": 1386,
-"error": "no calibration or robots found"
+"error": "no calibration or robots found",
+"replay": false
 },
 {
 "id": "_3ooER9wOl4",
@@ -771,7 +811,8 @@
 "calibrated": 0.42,
 "seen": 0.78,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "aelhzLIgKNg",
@@ -790,7 +831,8 @@
 "calibrated": 0.78,
 "seen": 0.9,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "bDkINvmThVw",
@@ -809,7 +851,8 @@
 "calibrated": 0.85,
 "seen": 0.73,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "PfJe0ZkNvHU",
@@ -828,7 +871,8 @@
 "calibrated": 0.27,
 "seen": 0.62,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "mzrqSKqmVCg",
@@ -847,7 +891,8 @@
 "calibrated": 0.59,
 "seen": 0.72,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "0-5sAtgWImo",
@@ -866,7 +911,8 @@
 "calibrated": 0.53,
 "seen": 0.65,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "1r-POswEj74",
@@ -885,7 +931,8 @@
 "calibrated": 0.69,
 "seen": 0.82,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "H4TVbcDyd1s",
@@ -904,7 +951,8 @@
 "calibrated": 0.65,
 "seen": 0.85,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "fT5HTKSHq9s",
@@ -923,7 +971,8 @@
 "calibrated": 0.62,
 "seen": 0.8,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "-k32ORRyM6s",
@@ -942,7 +991,8 @@
 "calibrated": 0.73,
 "seen": 0.85,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "2mhnQNIcuAA",
@@ -961,7 +1011,8 @@
 "calibrated": 0.76,
 "seen": 0.85,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "YQOnyagi2SI",
@@ -980,7 +1031,8 @@
 "calibrated": 0.96,
 "seen": 0.95,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "Z2keejXtF6w",
@@ -999,7 +1051,8 @@
 "calibrated": 0.74,
 "seen": 0.85,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "5_-_k1Ni4K8",
@@ -1018,7 +1071,8 @@
 "calibrated": 0.74,
 "seen": 0.85,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "bP2U2ud1a6w",
@@ -1037,7 +1091,8 @@
 "calibrated": 0.68,
 "seen": 0.7,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "CXVFEZx2cjk",
@@ -1056,7 +1111,8 @@
 "calibrated": 0.68,
 "seen": 0.62,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "oVvGarZ_Nus",
@@ -1075,7 +1131,8 @@
 "calibrated": 0.67,
 "seen": 0.85,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "gGUtG7EqS2Y",
@@ -1094,7 +1151,8 @@
 "calibrated": 0.65,
 "seen": 0.82,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "YMpwouE94q4",
@@ -1113,7 +1171,8 @@
 "calibrated": 0.84,
 "seen": 0.78,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "r2f9HOsQR6c",
@@ -1132,7 +1191,8 @@
 "calibrated": 0.74,
 "seen": 0.85,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "4NooGAaRqRU",
@@ -1151,7 +1211,8 @@
 "calibrated": 0.33,
 "seen": 0.48,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "cc-early-3210",
@@ -1169,7 +1230,8 @@
 "calibrated": 0.97,
 "seen": 0.9,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "cc-qf3-1",
@@ -1187,7 +1249,8 @@
 "calibrated": 0.99,
 "seen": 0.85,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "cc-sf2-1",
@@ -1205,7 +1268,8 @@
 "calibrated": 0.72,
 "seen": 0.93,
 "named": 4,
-"sure": 2
+"sure": 4,
+"replay": true
 },
 {
 "id": "cc-qual13",
@@ -1223,7 +1287,8 @@
 "calibrated": 0.98,
 "seen": 0.92,
 "named": 4,
-"sure": 2
+"sure": 4,
+"replay": true
 },
 {
 "id": "cc-qual26",
@@ -1241,7 +1306,8 @@
 "calibrated": 0.98,
 "seen": 0.9,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "cc-qual40",
@@ -1259,7 +1325,8 @@
 "calibrated": 0.99,
 "seen": 0.88,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "cc-qual50",
@@ -1277,7 +1344,8 @@
 "calibrated": 0.99,
 "seen": 0.88,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
 "id": "cc-qual34",
@@ -1295,7 +1363,8 @@
 "calibrated": 0.99,
 "seen": 0.78,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "cc-qual44",
@@ -1313,7 +1382,8 @@
 "calibrated": 0.99,
 "seen": 0.65,
 "named": 4,
-"sure": 0
+"sure": 2,
+"replay": true
 },
 {
 "id": "cc-early-5610",
@@ -1331,7 +1401,8 @@
 "calibrated": 0.96,
 "seen": 0.85,
 "named": 4,
-"sure": 4
+"sure": 4,
+"replay": true
 },
 {
 "id": "kxSY83THpHw",
@@ -1350,7 +1421,8 @@
 "calibrated": 0.8,
 "seen": 0.83,
 "named": 4,
-"sure": 0
+"sure": 0,
+"replay": true
 },
 {
 "id": "LcmEbXvS0Yg",
@@ -1369,10 +1441,1489 @@
 "calibrated": 0.62,
 "seen": 0.8,
 "named": 4,
-"sure": 2
+"sure": 2,
+"replay": true
 },
 {
-"id": "crEey8qMuqA",
+"id": "cc-sf1-1",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "SF 1-1",
+"red": [
+"2360C",
+"355P"
+],
+"blue": [
+"23545A",
+"355V"
+],
+"video": "cc-sf1-1",
+"calibrated": 0.97,
+"seen": 0.9,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "cc-qf4-1",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "QF 4-1",
+"red": [
+"2360S",
+"499R"
+],
+"blue": [
+"2827S",
+"2827A"
+],
+"video": "cc-qf4-1",
+"calibrated": 0.89,
+"seen": 0.88,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "cc-qual52",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 52",
+"red": [
+"23545A",
+"20612C"
+],
+"blue": [
+"2827Y",
+"2360C"
+],
+"video": "cc-qual52",
+"calibrated": 0.99,
+"seen": 0.88,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "gl-qual64",
+"event": "Great Lakes #1",
+"match": "Qual 64",
+"red": [
+"14153S",
+"355Y"
+],
+"blue": [
+"2360A",
+"3695C"
+],
+"video": "-LGOBuEyYPs",
+"calibrated": 0.99,
+"seen": 0.93,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "gl-r165-1",
+"event": "Great Lakes #1",
+"match": "R16 5-1",
+"red": [
+"2360A",
+"2360C"
+],
+"blue": [
+"2827P",
+"3695D"
+],
+"video": "-LGOBuEyYPs",
+"calibrated": 0.95,
+"seen": 0.73,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "gl-qf3-1",
+"event": "Great Lakes #1",
+"match": "QF 3-1",
+"red": [
+"2360A",
+"2360C"
+],
+"blue": [
+"355J",
+"8780E"
+],
+"video": "-LGOBuEyYPs",
+"calibrated": 0.86,
+"seen": 0.6,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "gl-sf2-1",
+"event": "Great Lakes #1",
+"match": "SF 2-1",
+"red": [
+"2360A",
+"2360C"
+],
+"blue": [
+"499R",
+"3695B"
+],
+"video": "-LGOBuEyYPs",
+"calibrated": 0.68,
+"seen": 0.95,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "cc-qual43",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 43",
+"red": [
+"8995E",
+"2360N"
+],
+"blue": [
+"3695D",
+"2360H"
+],
+"video": "cc-qual43",
+"calibrated": 0.99,
+"seen": 0.88,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "cc-qf2-1",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "QF 2-1",
+"red": [
+"2360H",
+"2827Y"
+],
+"blue": [
+"23545A",
+"355V"
+],
+"video": "cc-qf2-1",
+"calibrated": 0.99,
+"seen": 0.8,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "cc-qf1-1",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "QF 1-1",
+"red": [
+"2360C",
+"355P"
+],
+"blue": [
+"99766D",
+"2360V"
+],
+"video": "cc-qf1-1",
+"calibrated": 0.99,
+"seen": 0.93,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-qual51",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 51",
+"red": [
+"88976A",
+"3695D"
+],
+"blue": [
+"3695E",
+"2360S"
+],
+"video": "cc-qual51",
+"calibrated": 0.99,
+"seen": 0.8,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-r168-1",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "R16 8-1",
+"red": [
+"2827S",
+"2827A"
+],
+"blue": [
+"3695A",
+"2360N"
+],
+"video": "cc-r168-1",
+"calibrated": 0.99,
+"seen": 0.93,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-r166-1",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "R16 6-1",
+"red": [
+"355T",
+"8995E"
+],
+"blue": [
+"3695D",
+"355B"
+],
+"video": "cc-r166-1",
+"calibrated": 0.99,
+"seen": 0.9,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-r164-1",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "R16 4-1",
+"red": [
+"23545A",
+"355V"
+],
+"blue": [
+"88976A",
+"88976B"
+],
+"video": "cc-r164-1",
+"calibrated": 0.99,
+"seen": 0.82,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-qual1",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 1",
+"red": [
+"2827A",
+"3695E"
+],
+"blue": [
+"355B",
+"2360C"
+],
+"video": "cc-qual1",
+"calibrated": 0.94,
+"seen": 0.85,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-qual3",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 3",
+"red": [
+"99766D",
+"3695B"
+],
+"blue": [
+"23545A",
+"355T"
+],
+"video": "cc-qual3",
+"calibrated": 0.97,
+"seen": 0.78,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"id": "cc-qual5",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 5",
+"red": [
+"8995H",
+"2360S"
+],
+"blue": [
+"20612A",
+"2360N"
+],
+"video": "cc-qual5",
+"error": "no calibration or robots found",
+"replay": false
+},
+{
+"id": "cc-qual2",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 2",
+"red": [
+"3695A",
+"355P"
+],
+"blue": [
+"3695C",
+"8995E"
+],
+"video": "cc-qual2",
+"calibrated": 0.98,
+"seen": 0.9,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"id": "cc-qual4",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 4",
+"red": [
+"2827Y",
+"2827S"
+],
+"blue": [
+"88976A",
+"88976B"
+],
+"video": "cc-qual4",
+"calibrated": 0.96,
+"seen": 0.75,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-qual6",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 6",
+"red": [
+"2360V",
+"3695D"
+],
+"blue": [
+"355V",
+"20612C"
+],
+"video": "cc-qual6",
+"calibrated": 0.97,
+"seen": 0.82,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-r162-1",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "R16 2-1",
+"red": [
+"99766D",
+"2360V"
+],
+"blue": [
+"20612C",
+"3695B"
+],
+"video": "cc-r162-1",
+"calibrated": 0.82,
+"seen": 0.93,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "gl-qual15",
+"event": "Great Lakes #1",
+"match": "Qual 15",
+"red": [
+"355X",
+"2360A"
+],
+"blue": [
+"355G",
+"99371D"
+],
+"video": "oXew7Oi4SZI",
+"calibrated": 0.99,
+"seen": 0.85,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "gl-qual8",
+"event": "Great Lakes #1",
+"match": "Qual 8",
+"red": [
+"60172T",
+"99371A"
+],
+"blue": [
+"60172V",
+"2360A"
+],
+"video": "oXew7Oi4SZI",
+"calibrated": 0.99,
+"seen": 0.57,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-qual54",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 54",
+"red": [
+"499R",
+"3695C"
+],
+"blue": [
+"355T",
+"8995H"
+],
+"video": "cc-qual54",
+"calibrated": 0.99,
+"seen": 0.82,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"id": "gl-qual36",
+"event": "Great Lakes #1",
+"match": "Qual 36",
+"red": [
+"2827B",
+"8780A"
+],
+"blue": [
+"2360A",
+"355Z"
+],
+"video": "oXew7Oi4SZI",
+"calibrated": 0.99,
+"seen": 0.75,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "gl-qual31",
+"event": "Great Lakes #1",
+"match": "Qual 31",
+"red": [
+"2360A",
+"99371V"
+],
+"blue": [
+"60172X",
+"8780E"
+],
+"video": "oXew7Oi4SZI",
+"calibrated": 0.65,
+"seen": 0.9,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-qual8",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 8",
+"red": [
+"2360N",
+"3695B"
+],
+"blue": [
+"2827Y",
+"2827A"
+],
+"video": "cc-qual8",
+"calibrated": 0.96,
+"seen": 0.85,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "gl-qual49",
+"event": "Great Lakes #1",
+"match": "Qual 49",
+"red": [
+"2360A",
+"355J"
+],
+"blue": [
+"59575M",
+"3695B"
+],
+"video": "oXew7Oi4SZI",
+"calibrated": 0.99,
+"seen": 0.85,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-qual10",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 10",
+"red": [
+"355B",
+"2360V"
+],
+"blue": [
+"2360S",
+"99766D"
+],
+"video": "cc-qual10",
+"calibrated": 0.98,
+"seen": 0.85,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "cc-qual49",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 49",
+"red": [
+"88976B",
+"355B"
+],
+"blue": [
+"355P",
+"2360H"
+],
+"video": "cc-qual49",
+"calibrated": 0.99,
+"seen": 0.88,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "cc-qual53",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 53",
+"red": [
+"2360N",
+"2360V"
+],
+"blue": [
+"355V",
+"3695B"
+],
+"video": "cc-qual53",
+"calibrated": 0.99,
+"seen": 0.97,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "cc-qual48",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 48",
+"red": [
+"2360S",
+"2827S"
+],
+"blue": [
+"2827A",
+"3695A"
+],
+"video": "cc-qual48",
+"calibrated": 0.99,
+"seen": 0.92,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-qual47",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 47",
+"red": [
+"20612A",
+"2827Y"
+],
+"blue": [
+"499R",
+"2360V"
+],
+"video": "cc-qual47",
+"calibrated": 0.99,
+"seen": 0.82,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "cc-qual46",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 46",
+"red": [
+"355V",
+"3695C"
+],
+"blue": [
+"2360C",
+"88976B"
+],
+"video": "cc-qual46",
+"calibrated": 0.99,
+"seen": 0.9,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"id": "cc-final1-1",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Final 1-1",
+"red": [
+"2360C",
+"355P"
+],
+"blue": [
+"2827S",
+"2827A"
+],
+"video": "cc-final1-1",
+"calibrated": 0.98,
+"seen": 0.95,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-qual45",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 45",
+"red": [
+"355P",
+"3695E"
+],
+"blue": [
+"23545A",
+"2827A"
+],
+"video": "cc-qual45",
+"calibrated": 0.99,
+"seen": 0.97,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 54",
+"red": [
+"43946A",
+"60172X"
+],
+"blue": [
+"14153S",
+"2360S"
+],
+"id": "gl-qual54",
+"video": "gl-qual54",
+"calibrated": 0.99,
+"seen": 0.9,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 55",
+"red": [
+"8995E",
+"3695A"
+],
+"blue": [
+"3695D",
+"3695E"
+],
+"id": "gl-qual55",
+"video": "gl-qual55",
+"calibrated": 0.99,
+"seen": 0.9,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 56",
+"red": [
+"60172V",
+"355R"
+],
+"blue": [
+"8780A",
+"14153M"
+],
+"id": "gl-qual56",
+"video": "gl-qual56",
+"calibrated": 1.0,
+"seen": 0.68,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 57",
+"red": [
+"60172U",
+"2827P"
+],
+"blue": [
+"355J",
+"99371V"
+],
+"id": "gl-qual57",
+"video": "gl-qual57",
+"calibrated": 0.98,
+"seen": 0.9,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 58",
+"red": [
+"355V",
+"60172S"
+],
+"blue": [
+"60156A",
+"2827B"
+],
+"id": "gl-qual58",
+"video": "gl-qual58",
+"calibrated": 0.99,
+"seen": 0.82,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 59",
+"red": [
+"59575M",
+"99371A"
+],
+"blue": [
+"60172X",
+"355X"
+],
+"id": "gl-qual59",
+"video": "gl-qual59",
+"calibrated": 0.99,
+"seen": 0.6,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 60",
+"red": [
+"99371D",
+"12543E"
+],
+"blue": [
+"2360X",
+"8780E"
+],
+"id": "gl-qual60",
+"video": "gl-qual60",
+"calibrated": 0.99,
+"seen": 0.83,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 61",
+"red": [
+"499R",
+"2360C"
+],
+"blue": [
+"8780G",
+"60172T"
+],
+"id": "gl-qual61",
+"video": "gl-qual61",
+"calibrated": 0.99,
+"seen": 0.85,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 62",
+"red": [
+"3695B",
+"355G"
+],
+"blue": [
+"60156B",
+"355Z"
+],
+"id": "gl-qual62",
+"video": "gl-qual62",
+"calibrated": 0.99,
+"seen": 0.55,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 63",
+"red": [
+"41638B",
+"12543M"
+],
+"blue": [
+"43946A",
+"99371B"
+],
+"id": "gl-qual63",
+"video": "gl-qual63",
+"calibrated": 1.0,
+"seen": 0.88,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "R16 1-1",
+"red": [
+"99371V",
+"355Z"
+],
+"blue": [
+"60156B",
+"60172V"
+],
+"id": "gl-r161-1",
+"video": "gl-r161-1",
+"calibrated": 1.0,
+"seen": 0.85,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "QF 1-1",
+"red": [
+"99371V",
+"355Z"
+],
+"blue": [
+"355V",
+"8995E"
+],
+"id": "gl-qf1-1",
+"video": "gl-qf1-1",
+"calibrated": 0.93,
+"seen": 0.77,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 65",
+"red": [
+"99371F",
+"355K"
+],
+"blue": [
+"355R",
+"2827B"
+],
+"id": "gl-qual65",
+"video": "gl-qual65",
+"calibrated": 0.61,
+"seen": 0.75,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "R16 2-1",
+"red": [
+"355G",
+"60172X"
+],
+"blue": [
+"355V",
+"8995E"
+],
+"id": "gl-r162-1",
+"video": "gl-r162-1",
+"calibrated": 0.98,
+"seen": 0.67,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "R16 3-1",
+"red": [
+"12543M",
+"8780G"
+],
+"blue": [
+"355R",
+"41638B"
+],
+"id": "gl-r163-1",
+"video": "gl-r163-1",
+"calibrated": 0.96,
+"seen": 0.9,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "R16 6-1",
+"red": [
+"355J",
+"8780E"
+],
+"blue": [
+"355K",
+"355X"
+],
+"id": "gl-r166-1",
+"video": "gl-r166-1",
+"calibrated": 0.94,
+"seen": 0.75,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "R16 7-1",
+"red": [
+"3695A",
+"14153M"
+],
+"blue": [
+"8780A",
+"99371A"
+],
+"id": "gl-r167-1",
+"video": "gl-r167-1",
+"calibrated": 0.95,
+"seen": 0.88,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Final 1-1",
+"red": [
+"2360S",
+"2360X"
+],
+"blue": [
+"499R",
+"3695B"
+],
+"id": "gl-final1-1",
+"video": "gl-final1-1",
+"calibrated": 0.86,
+"seen": 0.57,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "QF 2-1",
+"red": [
+"12543M",
+"8780G"
+],
+"blue": [
+"2360S",
+"2360X"
+],
+"id": "gl-qf2-1",
+"video": "gl-qf2-1",
+"calibrated": 0.63,
+"seen": 0.97,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "QF 4-1",
+"red": [
+"3695A",
+"14153M"
+],
+"blue": [
+"499R",
+"3695B"
+],
+"id": "gl-qf4-1",
+"video": "gl-qf4-1",
+"calibrated": 0.84,
+"seen": 0.8,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "R16 8-1",
+"red": [
+"99371F",
+"60172T"
+],
+"blue": [
+"499R",
+"3695B"
+],
+"id": "gl-r168-1",
+"video": "gl-r168-1",
+"calibrated": 0.96,
+"seen": 0.68,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Lake Park",
+"match": "Qual 15",
+"red": [
+"321A",
+"60172S"
+],
+"blue": [
+"12543M",
+"321H"
+],
+"id": "lp-qual15",
+"video": "lp-qual15",
+"calibrated": 0.82,
+"seen": 0.45,
+"named": 4,
+"sure": 2,
+"replay": false
+},
+{
+"event": "Lake Park",
+"match": "Qual 3",
+"red": [
+"23880A",
+"321H"
+],
+"blue": [
+"355C",
+"355T"
+],
+"id": "lp-qual3",
+"video": "lp-qual3",
+"calibrated": 0.97,
+"seen": 0.65,
+"named": 4,
+"sure": 4,
+"replay": false
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 1",
+"red": [
+"99371F",
+"2360X"
+],
+"blue": [
+"499R",
+"355J"
+],
+"id": "gl-qual1",
+"video": "gl-qual1",
+"calibrated": 1.0,
+"seen": 0.57,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 2",
+"red": [
+"8995E",
+"2360C"
+],
+"blue": [
+"355V",
+"59575M"
+],
+"id": "gl-qual2",
+"video": "gl-qual2",
+"calibrated": 0.99,
+"seen": 0.65,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 3",
+"red": [
+"3695D",
+"355Z"
+],
+"blue": [
+"355X",
+"355K"
+],
+"id": "gl-qual3",
+"video": "gl-qual3",
+"calibrated": 1.0,
+"seen": 0.85,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 4",
+"red": [
+"8780E",
+"3695B"
+],
+"blue": [
+"12543M",
+"2360S"
+],
+"id": "gl-qual4",
+"video": "gl-qual4",
+"calibrated": 0.97,
+"seen": 0.88,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 5",
+"red": [
+"41638B",
+"14153M"
+],
+"blue": [
+"99371V",
+"355Y"
+],
+"id": "gl-qual5",
+"video": "gl-qual5",
+"calibrated": 0.97,
+"seen": 0.6,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "SF 1-1",
+"red": [
+"355V",
+"8995E"
+],
+"blue": [
+"2360S",
+"2360X"
+],
+"id": "gl-sf1-1",
+"video": "gl-sf1-1",
+"calibrated": 0.52,
+"seen": 0.8,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Lake Park",
+"match": "Qual 25",
+"red": [
+"60300W",
+"321G"
+],
+"blue": [
+"321E",
+"321H"
+],
+"id": "lp-qual25",
+"video": "lp-qual25",
+"calibrated": 0.67,
+"seen": 0.38,
+"named": 4,
+"sure": 0,
+"replay": false
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 11",
+"red": [
+"43946A",
+"60172S"
+],
+"blue": [
+"355R",
+"499R"
+],
+"id": "gl-qual11",
+"video": "gl-qual11",
+"calibrated": 0.99,
+"seen": 0.67,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 6",
+"red": [
+"60172U",
+"99371D"
+],
+"blue": [
+"3695C",
+"2827B"
+],
+"id": "gl-qual6",
+"video": "gl-qual6",
+"calibrated": 0.99,
+"seen": 0.72,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 7",
+"red": [
+"8780G",
+"60172X"
+],
+"blue": [
+"3695E",
+"60156A"
+],
+"id": "gl-qual7",
+"video": "gl-qual7",
+"calibrated": 1.0,
+"seen": 0.83,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 9",
+"red": [
+"8780A",
+"3695A"
+],
+"blue": [
+"99371B",
+"60156B"
+],
+"id": "gl-qual9",
+"video": "gl-qual9",
+"calibrated": 0.99,
+"seen": 0.95,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Lake Park",
+"match": "Qual 35",
+"red": [
+"321H",
+"2360H"
+],
+"blue": [
+"355B",
+"2360D"
+],
+"id": "lp-qual35",
+"video": "lp-qual35",
+"calibrated": 0.77,
+"seen": 0.55,
+"named": 4,
+"sure": 0,
+"replay": false
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 10",
+"red": [
+"12543E",
+"355G"
+],
+"blue": [
+"14153S",
+"2827P"
+],
+"id": "gl-qual10",
+"video": "gl-qual10",
+"calibrated": 0.99,
+"seen": 0.97,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 12",
+"red": [
+"2360S",
+"3695D"
+],
+"blue": [
+"14153M",
+"99371F"
+],
+"id": "gl-qual12",
+"video": "gl-qual12",
+"calibrated": 0.99,
+"seen": 0.75,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 13",
+"red": [
+"3695E",
+"2827B"
+],
+"blue": [
+"8780E",
+"99371A"
+],
+"id": "gl-qual13",
+"video": "gl-qual13",
+"calibrated": 0.99,
+"seen": 0.82,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 14",
+"red": [
+"99371B",
+"60156A"
+],
+"blue": [
+"60172T",
+"2360X"
+],
+"id": "gl-qual14",
+"video": "gl-qual14",
+"calibrated": 0.99,
+"seen": 0.62,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 16",
+"red": [
+"355R",
+"355Y"
+],
+"blue": [
+"3695B",
+"60172X"
+],
+"id": "gl-qual16",
+"video": "gl-qual16",
+"calibrated": 0.99,
+"seen": 0.88,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 18",
+"red": [
+"99371V",
+"2360C"
+],
+"blue": [
+"355Z",
+"43946A"
+],
+"id": "gl-qual18",
+"video": "gl-qual18",
+"calibrated": 1.0,
+"seen": 0.75,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 20",
+"red": [
+"60156B",
+"355K"
+],
+"blue": [
+"60172S",
+"2827P"
+],
+"id": "gl-qual20",
+"video": "gl-qual20",
+"calibrated": 0.98,
+"seen": 0.33,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
 "event": "Speedway Signature",
 "match": "SF 2-1",
 "red": [
@@ -1383,11 +2934,1171 @@
 "2011F",
 "2145V"
 ],
-"video": "crEey8qMuqA",
-"seconds": 394,
-"calibrated": 0.76,
+"id": "e64359-0-sf2-1",
+"video": "e64359-0-sf2-1",
+"calibrated": 0.82,
+"seen": 0.92,
+"named": 4,
+"sure": 2,
+"replay": false
+},
+{
+"event": "Lake Park",
+"match": "R16 7-1",
+"red": [
+"321H",
+"38535A"
+],
+"blue": [
+"60441Y",
+"60441C"
+],
+"id": "lp-r167-1",
+"video": "lp-r167-1",
+"calibrated": 0.41,
+"seen": 0.7,
+"named": 4,
+"sure": 0,
+"replay": false
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 17",
+"red": [
+"8780G",
+"14153S"
+],
+"blue": [
+"8995E",
+"41638B"
+],
+"id": "gl-qual17",
+"video": "gl-qual17",
+"calibrated": 0.99,
+"seen": 0.53,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 19",
+"red": [
+"355V",
+"355J"
+],
+"blue": [
+"12543E",
+"8780A"
+],
+"id": "gl-qual19",
+"video": "gl-qual19",
+"calibrated": 0.99,
+"seen": 0.82,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 21",
+"red": [
+"59575M",
+"3695C"
+],
+"blue": [
+"12543M",
+"3695A"
+],
+"id": "gl-qual21",
+"video": "gl-qual21",
+"calibrated": 0.98,
+"seen": 0.95,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 22",
+"red": [
+"60172V",
+"60172U"
+],
+"blue": [
+"2360S",
+"355G"
+],
+"id": "gl-qual22",
+"video": "gl-qual22",
+"calibrated": 0.99,
+"seen": 0.92,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 24",
+"red": [
+"355J",
+"14153S"
+],
+"blue": [
+"2360C",
+"99371B"
+],
+"id": "gl-qual24",
+"video": "gl-qual24",
+"calibrated": 0.99,
+"seen": 0.95,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 23",
+"red": [
+"3695B",
+"499R"
+],
+"blue": [
+"2827B",
+"8995E"
+],
+"id": "gl-qual23",
+"video": "gl-qual23",
+"calibrated": 0.99,
+"seen": 0.6,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 25",
+"red": [
+"99371D",
+"43946A"
+],
+"blue": [
+"60172T",
+"3695D"
+],
+"id": "gl-qual25",
+"video": "gl-qual25",
+"calibrated": 0.99,
 "seen": 0.9,
 "named": 4,
-"sure": 0
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 26",
+"red": [
+"59575M",
+"60156B"
+],
+"blue": [
+"60156A",
+"355R"
+],
+"id": "gl-qual26",
+"video": "gl-qual26",
+"calibrated": 0.99,
+"seen": 0.62,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 28",
+"red": [
+"2827P",
+"355Z"
+],
+"blue": [
+"355Y",
+"2360X"
+],
+"id": "gl-qual28",
+"video": "gl-qual28",
+"calibrated": 1.0,
+"seen": 0.82,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 30",
+"red": [
+"3695E",
+"12543M"
+],
+"blue": [
+"99371F",
+"355V"
+],
+"id": "gl-qual30",
+"video": "gl-qual30",
+"calibrated": 0.99,
+"seen": 0.85,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 33",
+"red": [
+"3695C",
+"2360S"
+],
+"blue": [
+"2360C",
+"60156A"
+],
+"id": "gl-qual33",
+"video": "gl-qual33",
+"calibrated": 0.99,
+"seen": 0.8,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 27",
+"red": [
+"355X",
+"14153M"
+],
+"blue": [
+"60172U",
+"3695A"
+],
+"id": "gl-qual27",
+"video": "gl-qual27",
+"calibrated": 0.99,
+"seen": 0.85,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 29",
+"red": [
+"60172S",
+"8780A"
+],
+"blue": [
+"99371A",
+"41638B"
+],
+"id": "gl-qual29",
+"video": "gl-qual29",
+"calibrated": 0.99,
+"seen": 0.62,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 32",
+"red": [
+"12543E",
+"355K"
+],
+"blue": [
+"8780G",
+"60172V"
+],
+"id": "gl-qual32",
+"video": "gl-qual32",
+"calibrated": 0.91,
+"seen": 0.7,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 35",
+"red": [
+"60172T",
+"355R"
+],
+"blue": [
+"12543M",
+"2827P"
+],
+"id": "gl-qual35",
+"video": "gl-qual35",
+"calibrated": 0.99,
+"seen": 0.7,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 38",
+"red": [
+"499R",
+"355Y"
+],
+"blue": [
+"60156B",
+"60172U"
+],
+"id": "gl-qual38",
+"video": "gl-qual38",
+"calibrated": 0.92,
+"seen": 0.57,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 40",
+"red": [
+"355X",
+"41638B"
+],
+"blue": [
+"12543E",
+"3695E"
+],
+"id": "gl-qual40",
+"video": "gl-qual40",
+"calibrated": 0.98,
+"seen": 0.83,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 34",
+"red": [
+"99371B",
+"99371A"
+],
+"blue": [
+"99371D",
+"8995E"
+],
+"id": "gl-qual34",
+"video": "gl-qual34",
+"calibrated": 0.99,
+"seen": 0.88,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 37",
+"red": [
+"8780G",
+"99371V"
+],
+"blue": [
+"60172S",
+"3695D"
+],
+"id": "gl-qual37",
+"video": "gl-qual37",
+"calibrated": 0.99,
+"seen": 0.88,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 39",
+"red": [
+"3695A",
+"355G"
+],
+"blue": [
+"43946A",
+"99371F"
+],
+"id": "gl-qual39",
+"video": "gl-qual39",
+"calibrated": 0.94,
+"seen": 0.9,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 42",
+"red": [
+"60172V",
+"2360X"
+],
+"blue": [
+"355V",
+"3695B"
+],
+"id": "gl-qual42",
+"video": "gl-qual42",
+"calibrated": 0.99,
+"seen": 0.77,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 44",
+"red": [
+"8995E",
+"60156A"
+],
+"blue": [
+"8780A",
+"355G"
+],
+"id": "gl-qual44",
+"video": "gl-qual44",
+"calibrated": 0.99,
+"seen": 0.53,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 46",
+"red": [
+"99371A",
+"2360S"
+],
+"blue": [
+"99371V",
+"355R"
+],
+"id": "gl-qual46",
+"video": "gl-qual46",
+"calibrated": 1.0,
+"seen": 0.92,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 41",
+"red": [
+"60172X",
+"3695C"
+],
+"blue": [
+"355J",
+"355K"
+],
+"id": "gl-qual41",
+"video": "gl-qual41",
+"calibrated": 0.99,
+"seen": 0.6,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 43",
+"red": [
+"8780E",
+"14153M"
+],
+"blue": [
+"14153S",
+"59575M"
+],
+"id": "gl-qual43",
+"video": "gl-qual43",
+"calibrated": 0.99,
+"seen": 0.85,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 45",
+"red": [
+"2360C",
+"3695A"
+],
+"blue": [
+"99371D",
+"355Y"
+],
+"id": "gl-qual45",
+"video": "gl-qual45",
+"calibrated": 0.99,
+"seen": 0.75,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 47",
+"red": [
+"3695D",
+"2360X"
+],
+"blue": [
+"41638B",
+"60172U"
+],
+"id": "gl-qual47",
+"video": "gl-qual47",
+"calibrated": 0.99,
+"seen": 0.5,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 48",
+"red": [
+"355Z",
+"3695E"
+],
+"blue": [
+"14153M",
+"60172S"
+],
+"id": "gl-qual48",
+"video": "gl-qual48",
+"calibrated": 0.99,
+"seen": 0.75,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 51",
+"red": [
+"2827B",
+"2827P"
+],
+"blue": [
+"99371B",
+"8780G"
+],
+"id": "gl-qual51",
+"video": "gl-qual51",
+"calibrated": 0.96,
+"seen": 0.92,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 11",
+"red": [
+"20612C",
+"2360H"
+],
+"blue": [
+"3695A",
+"3695E"
+],
+"id": "cc-qual11",
+"video": "cc-qual11",
+"calibrated": 0.97,
+"seen": 1.0,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 12",
+"red": [
+"20612A",
+"3695C"
+],
+"blue": [
+"2827S",
+"3695D"
+],
+"id": "cc-qual12",
+"video": "cc-qual12",
+"calibrated": 0.97,
+"seen": 0.95,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 15",
+"red": [
+"2360C",
+"3695A"
+],
+"blue": [
+"99766D",
+"3695D"
+],
+"id": "cc-qual15",
+"video": "cc-qual15",
+"calibrated": 0.97,
+"seen": 0.93,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 18",
+"red": [
+"355T",
+"2360S"
+],
+"blue": [
+"2360H",
+"355V"
+],
+"id": "cc-qual18",
+"video": "cc-qual18",
+"calibrated": 0.98,
+"seen": 0.8,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 9",
+"red": [
+"355V",
+"88976A"
+],
+"blue": [
+"355P",
+"8995H"
+],
+"id": "cc-qual9",
+"video": "cc-qual9",
+"calibrated": 0.97,
+"seen": 0.93,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 50",
+"red": [
+"12543M",
+"60156B"
+],
+"blue": [
+"355X",
+"60172V"
+],
+"id": "gl-qual50",
+"video": "gl-qual50",
+"calibrated": 0.96,
+"seen": 0.62,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Great Lakes #1",
+"match": "Qual 52",
+"red": [
+"99371F",
+"60172T"
+],
+"blue": [
+"3695C",
+"12543E"
+],
+"id": "gl-qual52",
+"video": "gl-qual52",
+"calibrated": 0.99,
+"seen": 0.87,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 14",
+"red": [
+"8995E",
+"355T"
+],
+"blue": [
+"2827Y",
+"3695E"
+],
+"id": "cc-qual14",
+"video": "cc-qual14",
+"calibrated": 0.97,
+"seen": 0.85,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 17",
+"red": [
+"20612A",
+"88976B"
+],
+"blue": [
+"3695B",
+"8995H"
+],
+"id": "cc-qual17",
+"video": "cc-qual17",
+"calibrated": 0.97,
+"seen": 0.95,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 19",
+"red": [
+"23545A",
+"355B"
+],
+"blue": [
+"2360N",
+"3695C"
+],
+"id": "cc-qual19",
+"video": "cc-qual19",
+"calibrated": 0.97,
+"seen": 0.88,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 20",
+"red": [
+"20612C",
+"499R"
+],
+"blue": [
+"2827A",
+"88976A"
+],
+"id": "cc-qual20",
+"video": "cc-qual20",
+"calibrated": 0.96,
+"seen": 0.88,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 21",
+"red": [
+"8995E",
+"8995H"
+],
+"blue": [
+"2360C",
+"2827S"
+],
+"id": "cc-qual21",
+"video": "cc-qual21",
+"calibrated": 0.96,
+"seen": 0.92,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 22",
+"red": [
+"2360N",
+"88976B"
+],
+"blue": [
+"3695A",
+"355T"
+],
+"id": "cc-qual22",
+"video": "cc-qual22",
+"calibrated": 0.98,
+"seen": 0.92,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 23",
+"red": [
+"2827Y",
+"3695D"
+],
+"blue": [
+"499R",
+"355P"
+],
+"id": "cc-qual23",
+"video": "cc-qual23",
+"calibrated": 0.96,
+"seen": 0.88,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 24",
+"red": [
+"20612C",
+"3695C"
+],
+"blue": [
+"3695B",
+"355B"
+],
+"id": "cc-qual24",
+"video": "cc-qual24",
+"calibrated": 0.96,
+"seen": 0.75,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 27",
+"red": [
+"2360H",
+"2827A"
+],
+"blue": [
+"20612A",
+"2360V"
+],
+"id": "cc-qual27",
+"video": "cc-qual27",
+"calibrated": 0.99,
+"seen": 0.97,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "cc-qual41",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 41",
+"red": [
+"2827A",
+"88976B"
+],
+"blue": [
+"99766D",
+"8995H"
+],
+"video": "cc-qual41",
+"calibrated": 0.99,
+"seen": 0.92,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"id": "cc-qual39",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 39",
+"red": [
+"499R",
+"355V"
+],
+"blue": [
+"8995E",
+"355B"
+],
+"video": "cc-qual39",
+"calibrated": 0.99,
+"seen": 0.9,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"id": "cc-qual42",
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 42",
+"red": [
+"355B",
+"355T"
+],
+"blue": [
+"20612C",
+"2827S"
+],
+"video": "cc-qual42",
+"calibrated": 0.99,
+"seen": 0.93,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 25",
+"red": [
+"88976A",
+"23545A"
+],
+"blue": [
+"2360S",
+"8995E"
+],
+"id": "cc-qual25",
+"video": "cc-qual25",
+"calibrated": 0.68,
+"seen": 0.88,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 28",
+"red": [
+"2827Y",
+"3695D"
+],
+"blue": [
+"8995H",
+"355B"
+],
+"id": "cc-qual28",
+"video": "cc-qual28",
+"calibrated": 0.99,
+"seen": 0.95,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 29",
+"red": [
+"3695E",
+"2827S"
+],
+"blue": [
+"499R",
+"2360N"
+],
+"id": "cc-qual29",
+"video": "cc-qual29",
+"calibrated": 0.99,
+"seen": 0.93,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 30",
+"red": [
+"2360V",
+"8995E"
+],
+"blue": [
+"20612C",
+"88976B"
+],
+"id": "cc-qual30",
+"video": "cc-qual30",
+"calibrated": 0.99,
+"seen": 0.88,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 31",
+"red": [
+"88976A",
+"99766D"
+],
+"blue": [
+"3695C",
+"2360H"
+],
+"id": "cc-qual31",
+"video": "cc-qual31",
+"calibrated": 0.99,
+"seen": 0.9,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 32",
+"red": [
+"355V",
+"23545A"
+],
+"blue": [
+"3695A",
+"20612A"
+],
+"id": "cc-qual32",
+"video": "cc-qual32",
+"calibrated": 0.99,
+"seen": 0.85,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 33",
+"red": [
+"355P",
+"2360C"
+],
+"blue": [
+"2360S",
+"3695B"
+],
+"id": "cc-qual33",
+"video": "cc-qual33",
+"calibrated": 0.99,
+"seen": 0.82,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 35",
+"red": [
+"3695A",
+"8995H"
+],
+"blue": [
+"3695E",
+"2360V"
+],
+"id": "cc-qual35",
+"video": "cc-qual35",
+"calibrated": 0.99,
+"seen": 0.97,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 36",
+"red": [
+"3695B",
+"2360H"
+],
+"blue": [
+"2827S",
+"23545A"
+],
+"id": "cc-qual36",
+"video": "cc-qual36",
+"calibrated": 0.99,
+"seen": 0.88,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 37",
+"red": [
+"2360C",
+"20612A"
+],
+"blue": [
+"355T",
+"88976A"
+],
+"id": "cc-qual37",
+"video": "cc-qual37",
+"calibrated": 0.99,
+"seen": 0.78,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Illini Cornfield Clash Jr. (Fall 2026)",
+"match": "Qual 38",
+"red": [
+"99766D",
+"2360N"
+],
+"blue": [
+"355P",
+"20612C"
+],
+"id": "cc-qual38",
+"video": "cc-qual38",
+"calibrated": 0.99,
+"seen": 0.72,
+"named": 4,
+"sure": 2,
+"replay": true
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 1",
+"red": [
+"34543Z",
+"34543M"
+],
+"blue": [
+"663D",
+"76316J"
+],
+"id": "e64359-1-qual1",
+"video": "e64359-1-qual1",
+"calibrated": 0.89,
+"seen": 0.75,
+"named": 4,
+"sure": 4,
+"replay": false
 }
 ]

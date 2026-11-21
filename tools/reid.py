@@ -47,9 +47,10 @@ def run_match(m, raw, i, vid, out):
             if not os.path.exists(f):
                 continue
             im = Image.open(f).convert("RGB"); crops, keys = [], []
+            sx, sy = im.width / 1280, im.height / 720          # boxes are in the 1280x720 frames we analysed
             for k, b in boxes.items():
-                x0, y0, x1, y1 = b
-                if (x1 - x0) < 18 or (y1 - y0) < 18:
+                x0, y0, x1, y1 = b[0] * sx, b[1] * sy, b[2] * sx, b[3] * sy
+                if (x1 - x0) < 12 or (y1 - y0) < 12:
                     continue
                 p = 0.08 * max(x1 - x0, y1 - y0)
                 crops.append(im.crop((max(0, x0 - p), max(0, y0 - p), x1 + p, y1 + p))); keys.append(str(k))

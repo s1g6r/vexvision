@@ -122,3 +122,17 @@
 - **The Cornfield stream, mapped** (`data/cc_stream_titles.json`). Reading the match title in the corner every 30 s found all 54 qualifications and 11 elimination matches. A 50-minute stretch in the middle replays earlier matches (same frames); it is skipped. `tools/mac/fetch_clips.sh` with `data/cc_todo.txt` downloads the 55 matches we don't have yet, about 5 hours of video. It runs on the Mac.
 - **Event prep page.** Pick an event and your team. It shows each of your matches with partner and opponent cards (official rank, record, points a match, skills, our tags and their most-run auton) and the stats site's pre-match chance to win. Under that is a pick list of every team at the event, ordered by rating and tagged by how it plays.
 - **Report tags** (Plays defence, Stays home, Toggle runner, which Goals, Ends in Midfield, Auton crosses over). The thresholds were set from where teams fall: Toggle runner is the top 30% for time at Toggles. The summary thresholds were raised to match, because "Goes after Toggles" used to fire for almost everyone.
+
+### Nov 20–21 — two whole events, the Mac and the PC
+
+- **Cornfield Clash Fall (all 65 matches) and Great Lakes #1 (all 78).** The Cornfield clips were cut from the stream by match title (`data/cc_stream_titles.json`). The Great Lakes streams only open with YouTube's Android client, which gives 360p. Detection and calibration still work at that size (calibrated about 0.99).
+- **The M4 Pro Mac did most of the reading.** `tools/mac/mac_perceive.py` plus a one-click start file run on macOS with the Apple GPU: 3 workers, about 6 minutes per match each, about 18 matches an hour. This machine did the rest from the other end of the list. The bridge shell on the Mac can't run anything longer than 3 minutes, so the Mac job runs in a normal Terminal window that Sagar started.
+- **The gaming PC is a scout station** (`tools/pc/`, `docs/PC_TASK.md`). A Claude session on the PC set it up. It pushes results to the `pc-results` branch, and `ingest` pulls them here. So far it has read 5 Lake Park single-match uploads and part of the Speedway day-1 stream. Its matches have no replay stills, because we don't keep its video; they're flagged `replay: false` and only feed the reports.
+- **Bug: wrong crops on 360p video.** The look-matching step cut robot crops using box coordinates from the 1280×720 frames we analyse, straight out of 360p video. Every Great Lakes crop was off. `tools/reid.py` now scales the boxes, and the Great Lakes looks were redone.
+- **Naming across whole events, tested again** by hiding each known name and checking it comes back:
+  - **Great Lakes:** at confidence 0.9 or higher, 8 of 9 came back right; the miss was a plate read the looks disagree with. 2360A came back right in 7 of 8 overall.
+  - **Cornfield:** about 16 of 19 at 0.9 or higher.
+  - Names are applied only at 0.9 or higher. Robots named for sure went from 94 of 292 to 436 of 844.
+- **Duplicates:** the same match filmed twice (a single-match upload and a stream) is now kept once, the copy where the robots were seen best (`tools/merge_index.py`).
+- **Artifact size cap:** one version can hold at most 256 MiB. The replay still sheets are now scaled to 3/4 and saved at JPEG quality 42, about 0.8 MB a sheet, for roughly 225 MiB in all. The picture in the corner of the replay is small, so this barely shows.
+- **Result:** 213 matches, 117 teams with a report (up from 69). 2360A's report now covers 15 matches at Cornfield and Great Lakes; its most-run auton was run in 7 of 12.

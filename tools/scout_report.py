@@ -263,7 +263,7 @@ def summarise(team, ms):
         routes = []
         for i, c in enumerate(cl):
             st = auton_steps(c["typical"]["route"])
-            routes.append({"label": "ABCDEFG"[i], "count": len(c["members"]), "typical": c["typical"]["id"],
+            routes.append({"label": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[min(i, 25)], "count": len(c["members"]), "typical": c["typical"]["id"],
                            "members": [m["id"] for m in c["members"]], "steps": st, "text": auton_text(st)})
         top = routes[0]
         if seen == 1:

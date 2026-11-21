@@ -3,6 +3,8 @@ Usage: python -m tools.finish_perc RAW_DIR REPLAY_DIR id[@manifest@clipdir] ..."
 import json, os, subprocess, sys
 from vexvision import analyze as AN
 
+from tools.official import EVENTS
+SHORT = {v: k for k, v in EVENTS.items()}
 MANS = {"gl-": ("/home/claude/work/gl/matches.json", "/home/claude/work/gl/clips"),
         "cc-": ("/home/claude/work/cc/matches2.json", "/home/claude/work/cc/clips")}
 
@@ -11,8 +13,13 @@ def main():
     idx_p = os.path.join(rep, "index_mac.json")
     index = json.load(open(idx_p)) if os.path.exists(idx_p) else []
     for mid in sys.argv[3:]:
-        man, clips = MANS[mid[:3]]
-        m = {x["id"]: x for x in json.load(open(man))}[mid]
+        if mid[:3] in MANS:
+            man, clips = MANS[mid[:3]]
+            m = {x["id"]: x for x in json.load(open(man))}[mid]
+        else:                                   # read on the PC: its meta file sits next to the results
+            m = json.load(open(os.path.join("/home/claude/work/pc/pc_results", mid + ".meta.json")))
+            m["event"] = SHORT.get(m.get("event_id"), m["event"])
+            clips = "/home/claude/work/pc/clips"
         P = json.load(open(os.path.join(raw, mid + ".perc.json")))
         res = AN.reason(P)
         json.dump(res, open(os.path.join(raw, mid + ".json"), "w"), default=float)

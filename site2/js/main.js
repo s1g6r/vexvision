@@ -28,6 +28,8 @@ const thumb = (id) => {
   const [n, c, r, rows] = t, C = TH.cols;
   return `<span class="spr" style="background-image:url(data/sheets/sheet-${n}.jpg);background-size:${C * 100}% ${rows * 100}%;background-position:${C > 1 ? (c / (C - 1)) * 100 : 0}% ${rows > 1 ? (r / (rows - 1)) * 100 : 0}%"></span>`;
 };
+const IDX = await fetch("data/replays/index.json").then((r) => (r.ok ? r.json() : [])).catch(() => []);
+const NOREP = new Set(IDX.filter((x) => x.replay === false).map((x) => x.id));
 const REP = await fetch("data/reports.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
 
 /* ---------- a field view with an orbit you can drag ---------- */
@@ -266,7 +268,7 @@ const pct = (v) => `${Math.round(v * 100)}%`;
 function scoutBlock(id) {
   const st = TS[id];
   if (!st) return "";
-  const watch = `<div class="scout-replays">${st.matches.map((m) => `<button type="button" class="btn ghost" data-replay="${esc(m.id)}">Watch ${esc(m.match || "match")} in 3D</button>`).join("")}</div>`;
+  const watch = `<div class="scout-replays">${st.matches.filter((m) => !NOREP.has(m.id)).map((m) => `<button type="button" class="btn ghost" data-replay="${esc(m.id)}">Watch ${esc(m.match || "match")} in 3D</button>`).join("")}</div>`;
   if (!st.n) {
     return `<div class="scout"><div class="scout-head"><b>Tracked by vexvision</b><span>in ${st.matches.length} match${st.matches.length === 1 ? "" : "es"}</span></div>
     <p class="scout-note">We follow both robots on ${esc(id)}'s alliance in these matches, but the stream is too small to read robot plates, so we can't yet say which one is ${esc(id)}. Driving stats show up once a match names it.</p>${watch}</div>`;
@@ -411,7 +413,7 @@ function showEvent(eid, me) {
 }
 /* ---------- full scouting report ---------- */
 const mmss2 = (s) => { s = Math.max(0, Math.round(s)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
-const watchBtn = (m, t, label) => `<button type="button" class="watch" data-replay="${esc(m.id)}" ${t != null ? `data-t="${(+t).toFixed(1)}"` : ""}>${esc(label)}</button>`;
+const watchBtn = (m, t, label) => NOREP.has(m.id) ? "" : `<button type="button" class="watch" data-replay="${esc(m.id)}" ${t != null ? `data-t="${(+t).toFixed(1)}"` : ""}>${esc(label)}</button>`;
 const bar = (v, cls = "") => `<span class="bar ${cls}"><i style="width:${Math.min(100, Math.round(v * 100))}%"></i></span><b class="num">${pct(v)}</b>`;
 function showReport(id) {
   const R = REP[id], st = TS[id], out = $("#result");
@@ -571,8 +573,8 @@ async function loadReplay(id, autoplay, start = null) {
   document.querySelectorAll("#rp-list button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.id === id));
   current = await mountReplay(rpRoot, `data/replays/${id}.json`, { reduced, autoplay, start });
 }
-fetch("data/replays/index.json").then((r) => (r.ok ? r.json() : [])).catch(() => []).then((idx) => {
-  const good = idx.filter((x) => !x.error && x.calibrated >= 0.6 && x.seen >= 0.6);
+Promise.resolve(IDX).then((idx) => {
+  const good = idx.filter((x) => !x.error && x.replay !== false && x.calibrated >= 0.6 && x.seen >= 0.6);
   // Matches we could put names on come first: eliminations before qualifications.
   const rank = (x) => (/^SF|^Final/.test(x.match || "") ? 0 : /^QF/.test(x.match || "") ? 1 : /^R16/.test(x.match || "") ? 2 : 3);
   const named = good.filter((x) => (x.sure || 0) >= 2).sort((a, b) => rank(a) - rank(b));
