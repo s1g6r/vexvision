@@ -46,9 +46,14 @@ frames calibrated, 1105 robot sightings, all nine goals read 71 times. There is 
 overlay on these uploads, so `t_start` is empty and almost no licence plates were read -- the
 teams come from the official results instead.
 
-Pace, for planning: about **5.5x real time**, so roughly 13 minutes per 2.5-minute match, or about
-40 minutes for a full 7-minute match window. One match at a time, which is the default, and leaves
-the PC usable.
+Pace on phone video: about **5.5x real time**, so roughly 13 minutes per 2.5-minute match. One
+match at a time, which is the default, and leaves the PC usable.
+
+**That 5.5x is the worst case, not the normal one -- see the broadcast figure below.** I used it at
+first to estimate everything, and it was wrong by about 4x for real event streams. The reason is
+calibration: on a broadcast the camera is one of a few fixed shots, so `Calibrator` recognises it
+from its bank and reuses the answer, while hand-held phone video moves constantly and forces a
+fresh solve on nearly every frame, which is the expensive path.
 
 **For the cloud side, about these five Lake Park matches.** `docs/LOG.md` (Nov 20) says replay
 timing now comes off the broadcast clock -- the median of the "driver" clock reads -- because
@@ -128,9 +133,12 @@ how far it has got: `data/cc_todo.txt` lists **55 of Cornfield's 65 matches stil
 I have not touched them, and won't without being asked -- the task file gives them to the Mac, and
 if both machines read the same match we get duplicate ids (`cc-qual1` and so on) going to the cloud
 side from two places. But it is the biggest piece of Illinois scouting still outstanding, and this
-PC is the better machine for it: it is dedicated, it stays on, and its pace is now measured. At
-5.5x real time, 5 hours of Cornfield video is about **27 hours of reading** -- two nights of the
-schedule that is now running, or less if it runs during the day too.
+PC is the better machine for it: it is dedicated, it stays on, and its pace is now measured.
+
+Cornfield is a broadcast stream, so the 1.4x figure applies, not 5.5x: 5 hours of video is about
+**7 hours of reading -- one night**. (I first wrote 27 hours here from the phone-video rate; that
+was wrong by about 4x.) One night of this PC for 55 matches at the second-biggest Illinois event is
+a very good trade.
 
 If that is wanted, the hard part is already done: the time windows exist, so it needs a short
 script here that cuts each window and tracks it, plus removing 64351 from `DONE_ELSEWHERE` or
@@ -287,10 +295,37 @@ Nothing there. The channel has no Lake Park, Great Lakes or Cornfield uploads ei
 This matters for how the PC spends the season, and the first full run has now measured it rather
 than guessed. Speedway Day 1 (`zhGs-5gah_Y`, 7.7 hours) passed the team-numbers-on-screen check,
 `watch.py` accepted it, and the title scan found **96 matches** in it. Nine of those have an
-Illinois team (355T). At the measured pace of about 40 minutes per full match window that is
-roughly **64 hours of reading, about six nights of the schedule, to get nine useful matches** --
-just under 10% of the work is footage of anyone we are scouting. With the region filter it is
-about six hours. UND is the same shape on paper: 35 useful matches out of 273.
+Illinois team (355T), so just under 10% of the work is footage of anyone we are scouting.
+
+**Corrected, now a real broadcast match has been read.** Speedway Qual 1: a 420-second window
+read in 594 seconds, so **1.4x real time**, about 10 minutes a match -- not the 40 minutes I
+estimated from the phone videos. So Day 1 is roughly **16 hours, about two nights**, not six. With
+the region filter it would be about an hour and a half. UND is the same shape on paper: 35 useful
+matches out of 273.
+
+### Broadcast matches come out far better than the Lake Park ones
+
+Worth recording next to the Lake Park table, because the difference is large and it changes what
+can be built. Speedway Qual 1 against Lake Park's best (Qual 3):
+
+| | Lake Park Qual 3 (phone) | Speedway Qual 1 (broadcast) |
+| --- | --- | --- |
+| frames | 432 | 1260 |
+| calibrated | 419 (97%) | 1121 (89%) |
+| robots seen per calibrated frame, of 4 | 2.6 | **3.1** |
+| licence-plate reads | 8 | **60** |
+| useful overlay reads | **0** of 48 | **123** of 140 |
+| driver-control start (`t_start`) | missing | **169.0 s** |
+| speed | 5.5x real time | **1.4x** |
+
+The two that matter most are the last two columns of information, not the speed. On a broadcast the
+overlay is readable, so the match name, the teams, the running score and the clock all come
+through, and `t_start` is found -- which is exactly what `docs/LOG.md` (Nov 20) needs to time
+replays properly. And 60 plate reads in one match, against 8 across all five Lake Park matches,
+means robots at these events can actually be named rather than shown as "Red 1 / Red 2".
+
+So the Lake Park matches are the hard case and the ones to treat with caution; anything read off a
+real event stream should be considerably more trustworthy.
 
 It isn't harmful. `watch.py` takes events in order of how many Illinois teams played them, so a new
 Illinois event is always reached before these leftovers, and finished matches are skipped, so the
