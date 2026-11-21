@@ -26,7 +26,7 @@ pc_results/LOG.md, which is pushed.
   python pc_results/scout_run.py [--budget-hours 10] [--no-push] [--region Illinois]
 """
 import json, os, subprocess, sys, threading, time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -137,6 +137,49 @@ def git(*args):
     p = subprocess.run(["git"] + list(args), cwd=ROOT, capture_output=True, text=True)
     return p.returncode, (p.stdout or "") + (p.stderr or "")
 
+MAC_EVENTS = {64351, 65014}        # Cornfield and Great Lakes #1: watch.py's DONE_ELSEWHERE
+UPLOAD_WINDOW_DAYS = 21
+
+def look_for_uploads():
+    """For an event the station found no stream for, go looking for single-match uploads.
+
+    `watch.py` only takes videos over ten minutes, because it is hunting event streams. Illinois
+    teams mostly post one match at a time instead -- the five Hawks Robotics Lake Park videos are
+    all two or three minutes -- so that footage is invisible to it. The task file handled Lake Park
+    by hand, which is fine once and no good for a season.
+
+    Only for events with **no stream found**. If an event has a stream, every match in it is being
+    read from there, and reading the same match again from an upload would send the cloud side the
+    same match twice under two ids. So this fills the gap and never overlaps it.
+
+    Narrowed further to keep the searching small: an event is looked at while it is still `live`, or
+    for three weeks after its date, which is when uploads actually appear. Cornfield and Great Lakes
+    are left out because they belong to the Mac.
+    """
+    sp = os.path.join(ROOT, "pc_results", "state.json")
+    if not os.path.exists(sp):
+        return
+    try:
+        state = json.load(open(sp, encoding="utf-8"))
+        import urllib.request
+        meta = {e["id"]: e for e in json.load(urllib.request.urlopen(
+            "https://stats.2360arachnid.com/data/override/meta.json", timeout=30))["events"]}
+    except Exception as e:
+        say(f"couldn't work out which events to search for uploads ({e}); skipping that step")
+        return
+
+    cutoff = (datetime.now() - timedelta(days=UPLOAD_WINDOW_DAYS)).strftime("%Y-%m-%d")
+    for eid_s, st in state.get("events", {}).items():
+        eid = int(eid_s)
+        ev = meta.get(eid) or {}
+        if eid in MAC_EVENTS or st.get("streams"):
+            continue                                  # the Mac's, or already covered by a stream
+        if ev.get("status") != "live" and (ev.get("date") or "") < cutoff:
+            continue                                  # too old for uploads to still be appearing
+        say(f"no stream for event {eid}; looking for single-match uploads")
+        run([PY, os.path.join(HERE, "read_uploads.py"), "--event", eid_s, "--prefix", f"u{eid}-"],
+            f"read_uploads {eid}")
+
 def push_leftovers():
     """watch.py pushes after each stream. If its time ran out mid-stream, the matches it did
     finish are on disk but uncommitted, so send them now rather than leaving them for tomorrow."""
@@ -175,6 +218,7 @@ def main():
         repair_state()
         run([PY, os.path.join(ROOT, "tools", "pc", "watch.py")] + argv, "watch.py",
             budget=budget * 3600 if budget > 0 else None)
+        look_for_uploads()
         if "--no-push" not in argv:
             push_leftovers()
         run([PY, os.path.join(HERE, "prune_clips.py")], "prune_clips.py")

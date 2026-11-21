@@ -352,6 +352,28 @@ genuine near miss (four team numbers in the title, three of them at the event) i
 `-n` lists without reading or writing to this log. It is safe to re-run after an event posts more
 uploads; matches already read are skipped.
 
+**And it now runs by itself, so nobody has to remember it.** The point of this PC is that the
+scouting updates after a weekend without anyone doing anything, and a tool you have to remember to
+run doesn't achieve that. So each scheduled run, after `watch.py`, looks for single-match uploads
+for any event **it found no stream for**.
+
+Only for streamless events, deliberately. If an event has a stream, every match is being read from
+it, and reading the same match again from an upload would hand the cloud side the same match twice
+under two different ids. So this fills the gap and never overlaps it.
+
+Narrowed twice more, to keep the searching small: an event is looked at while its status is still
+`live`, or for three weeks after its date, which is when uploads actually appear; and Cornfield and
+Great Lakes are left out because they are the Mac's.
+
+Checked against the real state.json without letting it read anything. It picks **IPSD only** --
+still live, no stream -- and correctly leaves out Lake Park (27 days old, and already done), UND
+(August), and Speedway (has a stream; and still left out even with its stream removed, being a
+September event). Tomorrow, Niles will be inside the window, and if no stream turns up for it the
+uploads get found without anyone asking.
+
+One thing to know: tonight's 11 pm run started before this was written, so it is running the older
+version and will not do the upload pass. The first run that does is tomorrow's.
+
 ### The Illinois season ahead
 
 Checked what else is coming, because this is what the station is for. **A 38-team Illinois event
@@ -408,3 +430,8 @@ above; the second one skipped Day 1 for the reason explained there.
 - 2026-11-20 19:44 event 64244 University of North Dakota Signature at the Mall of America (2026-08-06, 4 Illinois teams)
 - 2026-11-20 19:44 event 64359 Speedway (2026-09-18, 1 Illinois teams)
 - 2026-11-20 19:44   reading ME5jv9cAaJg 'Speedway 2026: Final Four | Semifinals & Finals | VEX V5 Override' (11 min)
+- 2026-11-20 23:00 event 64295 Lake Park (2026-10-24, 43 Illinois teams)
+- 2026-11-20 23:00 event 66342 IPSD Invitational League (2026-10-23, 21 Illinois teams)
+- 2026-11-20 23:00 event 64244 University of North Dakota Signature at the Mall of America (2026-08-06, 4 Illinois teams)
+- 2026-11-20 23:00 event 64359 Speedway (2026-09-18, 1 Illinois teams)
+- 2026-11-20 23:01   reading zhGs-5gah_Y 'Speedway: Override VEX V5 Signature Event - Day 1 (Live Stream Presented by Allegion)' (461 min)
