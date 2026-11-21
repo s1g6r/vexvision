@@ -130,15 +130,71 @@ how far it has got: `data/cc_todo.txt` lists **55 of Cornfield's 65 matches stil
 `data/cc_stream_titles.json`. `docs/LOG.md` says that list is downloaded and tracked by
 `tools/mac/fetch_clips.sh`, on the Mac.
 
-I have not touched them, and won't without being asked -- the task file gives them to the Mac, and
-if both machines read the same match we get duplicate ids (`cc-qual1` and so on) going to the cloud
-side from two places. But it is the biggest piece of Illinois scouting still outstanding, and this
-PC is the better machine for it: it is dedicated, it stays on, and its pace is now measured.
+**Sagar asked for it to be finished, so this is now being done.** What follows is what the backlog
+actually turned out to be, which is a good deal worse than `cc_todo.txt` alone suggests.
 
-Cornfield is a broadcast stream, so the 1.4x figure applies, not 5.5x: 5 hours of video is about
-**7 hours of reading -- one night**. (I first wrote 27 hours here from the phone-video rate; that
-was wrong by about 4x.) One night of this PC for 55 matches at the second-biggest Illinois event is
-a very good trade.
+Counting what the Mac has **tracked** (a replay json exists under `site2/data/replays/`) against
+what it has **indexed** (an entry in `site2/data/videos.json`, which is only a link into the
+stream, not a reading):
+
+| event | Illinois teams | indexed | tracked | **never read** |
+| --- | --- | --- | --- | --- |
+| Illini Cornfield Clash Jr. | 26 | 65 | 16 | **49** |
+| Great Lakes #1 | 35 | 78 | 8 | **70** |
+
+So **118 matches at the two biggest Illinois events had never been read by anything.** Those two
+events are 61 of the 83 Illinois teams. Next to that, the station spending its nights on Speedway
+for one Illinois team was plainly the wrong order of work.
+
+Cornfield and Great Lakes are broadcast streams, so the 1.4x figure applies, not 5.5x. (I first
+wrote 27 hours here from the phone-video rate; that was wrong by about 4x.) The window list comes
+to **8.8 hours of video, about 12.5 hours of reading.**
+
+**Where the windows come from.** Nothing is being re-found; the Mac already did that and the
+answers are on `main`. Cornfield's 49 take their exact start and end from `data/cc_todo.txt`. The
+Great Lakes 70 take their start from the `&t=` in `site2/data/videos.json` (the link is start + 60)
+and their length from the gap to the next match on the same stream, clamped to 150-420 s -- 150
+because a match is about 110 s of play plus the reset, 420 because that is `watch.py`'s own cap.
+Median gap is 180-240 s, which matches the 240 s windows the Mac chose for Cornfield. Teams always
+come from the official schedule looked up by match name, never from the work list.
+
+**One match was dropped rather than read.** `gl-qual54` and `gl-qual55` both resolved to start 0,
+which cannot be right. Rather than guess, I read the overlay off the stream: at 12 seconds in it
+says QUAL 54 with **0:04** left on the clock. The afternoon stream opens four seconds before the
+end of Qual 54, so that match is not in the footage and reading it would have invented a match out
+of a reset. Dropped and recorded here. Qual 55 really starts about 36 s in, and Qual 56 about 160 s,
+so `t - 60` is a sound start for the rest.
+
+**Checked on one match before committing 12 hours to it.** `gl-qual56`, a 180 s window, read in
+262 s (1.45x, in line with Speedway). The result is the best of anything read on this PC so far:
+**541 of 541 frames calibrated, 100%**, 1461 robot sightings (2.7 of 4 per frame), and **61 of 61
+overlay reads useful**, with `t_start` found at 77.0 s. Licence plates come back empty on this
+stream, which is exactly what `docs/LOG.md` found -- so naming at Great Lakes still has to come
+from the re-id step, not from plates.
+
+**How it runs.** A second Windows task, **"VexVision backlog"**, running `pc_results\backlog_run.py`
+over `pc_results\mac_backlog.json` via `read_windows.py`. It has its own lock, so it can't trip over
+itself or the nightly run, and it pushes every 4 matches so results reach the cloud side as they
+appear instead of in one lump 12 hours later. Finished matches are skipped, so stopping and
+starting it costs nothing.
+
+It was started by hand at 23:44 and also has a **daily trigger at 10:00**, after the nightly
+station window ends, so it resumes by itself every day until the list is empty; once empty each run
+logs "backlog empty" and exits in seconds. To run it now, or to restart it:
+
+    Start-ScheduledTask -TaskName 'VexVision backlog'
+
+Console output is `%LOCALAPPDATA%\vexvision\backlog_console.log`. To stop it: Task Scheduler,
+"VexVision backlog", Disable (or End the running instance).
+
+With the nightly station also running one match at a time, that is two matches at once, which is
+the limit the task file sets and no more.
+
+**What still needs agreeing with the Mac.** This writes the same ids the Mac would have written
+(`cc-qual10`, `gl-qual55`, ...), which is deliberate -- they are the same artifacts, just produced
+on the machine that can actually get through them. But if the Mac also works its way through
+`cc_todo.txt`, both machines will spend time on the same matches. Nothing breaks and no data is
+corrupted; it is wasted effort. Worth telling the Mac side that the PC has these two events.
 
 If that is wanted, the hard part is already done: the time windows exist, so it needs a short
 script here that cuts each window and tracks it, plus removing 64351 from `DONE_ELSEWHERE` or
@@ -473,3 +529,5 @@ above; the second one skipped Day 1 for the reason explained there.
 - 2026-11-20 23:37 windows: 1 in the list, 0 already read, 1 to go
 - 2026-11-20 23:37 windows: event 65014 Great Lakes VEX V5 Robotics Competition #1: Overri: 80 official matches
 - 2026-11-20 23:41 windows:   gl-qual56 (Qual 56) done in 262s
+- 2026-11-20 23:44 windows: 1 in the list, 0 already read, 1 to go
+- 2026-11-20 23:44 windows: event 65014 Great Lakes VEX V5 Robotics Competition #1: Overri: 80 official matches
