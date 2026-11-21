@@ -1,0 +1,60 @@
+﻿{
+ "region": "Illinois",
+ "teams": 83,
+ "events": [
+  {
+   "event_id": 64295,
+   "name": "Lake Park High School VEX V5 Robotics Competition: Override High School Teams",
+   "date": "2026-10-24",
+   "status": "done",
+   "illinois_teams": 43,
+   "teams": 43,
+   "matches": 80
+  },
+  {
+   "event_id": 65014,
+   "name": "Great Lakes VEX V5 Robotics Competition #1: Override Middle School and High School Teams",
+   "date": "2026-11-15",
+   "status": "done",
+   "illinois_teams": 35,
+   "teams": 44,
+   "matches": 80
+  },
+  {
+   "event_id": 64351,
+   "name": "Illini Cornfield Clash Jr. Fall Event: VEX V5 Robotics Competition Middle and High School Teams",
+   "date": "2026-11-07",
+   "status": "done",
+   "illinois_teams": 26,
+   "teams": 29,
+   "matches": 65
+  },
+  {
+   "event_id": 66342,
+   "name": "IPSD VEX V5 Robotics Competition Invitational League: Override High School Teams",
+   "date": "2026-10-23",
+   "status": "live",
+   "illinois_teams": 21,
+   "teams": 21,
+   "matches": 42
+  },
+  {
+   "event_id": 64244,
+   "name": "University of North Dakota Signature at the Mall of America: VEX V5 Robotics Competition, High School Presented by the College of Engineering and Mines",
+   "date": "2026-08-06",
+   "status": "done",
+   "illinois_teams": 4,
+   "teams": 118,
+   "matches": 273
+  },
+  {
+   "event_id": 64359,
+   "name": "Speedway: Override VEX V5 Blended Signature Event: VEX V5 Robotics Competition, Presented by the Chrysalis Global Foundation",
+   "date": "2026-09-18",
+   "status": "done",
+   "illinois_teams": 1,
+   "teams": 97,
+   "matches": 236
+  }
+ ]
+}
