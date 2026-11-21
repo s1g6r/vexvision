@@ -15,3 +15,5 @@ site2/data/thumbs/
 site2/data/replays/index_*.json
 pc_results/clips/
 .venv/
+pc_results/raw/
+pc_results/reid_tmp/

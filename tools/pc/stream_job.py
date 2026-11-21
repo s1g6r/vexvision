@@ -127,6 +127,27 @@ def frames(path, fps=3, size=(1280, 720)):
         k += 1
     p.wait()
 
+_reid = None
+
+def looks(P, mid, clip, out):
+    """What each robot looks like (crop embeddings), so the cloud side can tell partners apart
+    across a whole event. Saved as <id>.reid.json.gz next to the results."""
+    global _reid
+    try:
+        from tools import reid as RE
+        if _reid is None:
+            _reid = RE.model()
+        rawdir = os.path.join(out, "raw"); os.makedirs(rawdir, exist_ok=True)
+        json.dump(AN.reason(json.loads(json.dumps(P, default=float))), open(os.path.join(rawdir, mid + ".json"), "w"), default=float)
+        tmp = os.path.join(out, "reid_tmp"); os.makedirs(tmp, exist_ok=True)
+        RE.run_match(_reid, rawdir, mid, clip, tmp)
+        src = os.path.join(tmp, mid + ".json")
+        if os.path.exists(src):
+            with open(src) as f, gzip.open(os.path.join(out, mid + ".reid.json.gz"), "wt") as g:
+                g.write(f.read())
+    except Exception as e:
+        print(f"  looks for {mid} failed: {e}")
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--video", required=True); ap.add_argument("--event", required=True, type=int)
@@ -177,6 +198,7 @@ def main():
         with gzip.open(dst + ".tmp", "wt") as f:
             json.dump(P, f, default=float, separators=(",", ":"))
         os.replace(dst + ".tmp", dst)
+        looks(P, mid, clip, a.out)
         json.dump({"id": mid, "event": ev_name, "event_id": a.event, "match": name, **teams, "stream": a.video,
                    "start": round(t0), "length": round(length), "title": title},
                   open(os.path.join(a.out, mid + ".meta.json"), "w"))

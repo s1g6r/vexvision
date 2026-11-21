@@ -65,14 +65,21 @@ def verify(vid, event_teams):
             tries += 1; hits += sum(1 for n in nums if n in event_teams) >= max(2, len(nums) - 1)
     return tries >= 2 and hits >= tries - 1, dur
 
+def update_code():
+    """Pick up fixes pushed to main (the cloud side improves these scripts)."""
+    subprocess.run(["git", "fetch", "-q", "origin", "main"], cwd=ROOT)
+    subprocess.run(["git", "merge", "-q", "--no-edit", "-X", "theirs", "origin/main"], cwd=ROOT)
+
 def push(msg):
     for cmd in (["git", "add", "pc_results"], ["git", "commit", "-q", "-m", msg],
+                ["git", "pull", "-q", "--rebase", "origin", "pc-results"],
                 ["git", "push", "-q", "origin", "HEAD:pc-results"]):
         subprocess.run(cmd, cwd=ROOT)
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--region", default="Illinois"); ap.add_argument("--no-push", action="store_true")
     a = ap.parse_args()
+    update_code()
     os.makedirs(OUT, exist_ok=True)
     sp = os.path.join(OUT, "state.json")
     state = json.load(open(sp)) if os.path.exists(sp) else {"events": {}, "videos": {}}
