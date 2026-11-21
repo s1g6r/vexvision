@@ -181,10 +181,13 @@ Nothing there. The channel has no Lake Park, Great Lakes or Cornfield uploads ei
 
 ### The two out-of-state events are mostly footage we don't want
 
-This matters for how the PC spends the season. Speedway Day 1 (`zhGs-5gah_Y`, 7.7 hours) passes
-the team-numbers-on-screen check, so `watch.py` will accept it and read **every** match in it.
-That is on the order of **ten nights of this PC running flat out to reach nine matches** that have
-an Illinois team in them. UND is the same shape: 35 useful matches out of 273.
+This matters for how the PC spends the season, and the first full run has now measured it rather
+than guessed. Speedway Day 1 (`zhGs-5gah_Y`, 7.7 hours) passed the team-numbers-on-screen check,
+`watch.py` accepted it, and the title scan found **96 matches** in it. Nine of those have an
+Illinois team (355T). At the measured pace of about 40 minutes per full match window that is
+roughly **64 hours of reading, about six nights of the schedule, to get nine useful matches** --
+just under 10% of the work is footage of anyone we are scouting. With the region filter it is
+about six hours. UND is the same shape on paper: 35 useful matches out of 273.
 
 It isn't harmful. `watch.py` takes events in order of how many Illinois teams played them, so a new
 Illinois event is always reached before these leftovers, and finished matches are skipped, so the
