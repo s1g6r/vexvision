@@ -50,6 +50,24 @@ Pace, for planning: about **5.5x real time**, so roughly 13 minutes per 2.5-minu
 40 minutes for a full 7-minute match window. One match at a time, which is the default, and leaves
 the PC usable.
 
+**For the cloud side, about these five Lake Park matches.** `docs/LOG.md` (Nov 20) says replay
+timing now comes off the broadcast clock -- the median of the "driver" clock reads -- because
+driver control starts 15-75 s after autonomous. These uploads are phone video of the field with
+**no overlay at all**: no match name, no clock, no scores, no alliance panels. So every one of
+them comes back with `t_start: null` and an empty `running` series. `overlay_reads` is there but
+carries nothing usable: on Qual 3, 40 of its 48 reads are entirely blank and the other 8 have only
+a `clock` value and no period word. **Don't trust those 8.** There is no overlay on screen for
+them to have come from, so they are OCR finding an m:ss-shaped thing somewhere in the gym; the
+clock filter only asks for m:ss under two minutes. `t_start` needs a period word as well as a
+clock, which is why it is correctly null rather than wrong. They are
+single-match uploads that start at the beginning of the match, so counting from t=0 is the only
+option here, and the pause before driver control will have to be assumed rather than measured.
+Licence plates are no better: 3 to 8 reads across a whole match, same as the Mac found on its
+streams, so these matches will not name themselves either -- and with only 4 qualification matches
+on video, Lake Park is under the 8-match floor `tools/event_names.py` needs. Teams and sides are
+correct regardless: they come from the official schedule, not the titles, which matters because
+`docs/LOG.md` records three titles elsewhere that had red and blue the wrong way round.
+
 ### What footage exists for the other events
 
 Dry-ran `watch.py`'s search-and-verify on every remaining event without reading any matches.

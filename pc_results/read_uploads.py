@@ -31,6 +31,7 @@ import watch as W
 
 TEAM = re.compile(r"(?<![A-Z0-9])(\d{1,5}[A-Z])(?![A-Z0-9])", re.I)
 MIN_SECONDS, MAX_SECONDS = 45, 600
+MAX_TEAM_QUERIES = 50
 
 QUIET = False          # a dry run prints but doesn't write to the shared log
 
@@ -84,10 +85,15 @@ def main():
     full = W.get(f"events/{a.event}.json")
     ev_teams = [t["number"] for t in full["teams"]]
     hosts = [h.strip().upper() for h in a.hosts.split(",") if h.strip()]
-    log(f"event {a.event} {W.short(ev_name)}: {len(off)} official matches, {len(ev_teams)} teams")
+    # Search every team at the event, not a sample: this runs once per event, so a couple of extra
+    # minutes is worth not missing the one team that posts its matches. Capped so a 118-team
+    # Signature event can't turn into a quarter of an hour of searching.
+    subjects = hosts or ev_teams[:MAX_TEAM_QUERIES]
+    log(f"event {a.event} {W.short(ev_name)}: {len(off)} official matches, {len(ev_teams)} teams; "
+        f"searching the event name and {len(subjects)} team numbers")
 
     seen, found, rejected = {}, {}, []
-    for q in queries(ev_name, hosts or ev_teams[:12]):
+    for q in queries(ev_name, subjects):
         try:
             res = search(q)
         except Exception as e:
