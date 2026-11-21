@@ -2541,7 +2541,7 @@
 "seen": 0.45,
 "named": 4,
 "sure": 2,
-"replay": false
+"replay": true
 },
 {
 "event": "Lake Park",
@@ -2560,7 +2560,7 @@
 "seen": 0.65,
 "named": 4,
 "sure": 4,
-"replay": false
+"replay": true
 },
 {
 "event": "Great Lakes #1",
@@ -2693,7 +2693,7 @@
 "seen": 0.38,
 "named": 4,
 "sure": 0,
-"replay": false
+"replay": true
 },
 {
 "event": "Great Lakes #1",
@@ -2788,7 +2788,7 @@
 "seen": 0.55,
 "named": 4,
 "sure": 0,
-"replay": false
+"replay": true
 },
 {
 "event": "Great Lakes #1",
@@ -2940,7 +2940,7 @@
 "seen": 0.92,
 "named": 4,
 "sure": 2,
-"replay": false
+"replay": true
 },
 {
 "event": "Lake Park",
@@ -2959,7 +2959,7 @@
 "seen": 0.7,
 "named": 4,
 "sure": 0,
-"replay": false
+"replay": true
 },
 {
 "event": "Great Lakes #1",
@@ -4099,7 +4099,7 @@
 "seen": 0.75,
 "named": 4,
 "sure": 4,
-"replay": false
+"replay": true
 },
 {
 "event": "Speedway Signature",
@@ -4118,6 +4118,6 @@
 "seen": 0.75,
 "named": 4,
 "sure": 4,
-"replay": false
+"replay": true
 }
 ]
