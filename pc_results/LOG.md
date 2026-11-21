@@ -470,3 +470,6 @@ above; the second one skipped Day 1 for the reason explained there.
 - 2026-11-20 23:00 event 64244 University of North Dakota Signature at the Mall of America (2026-08-06, 4 Illinois teams)
 - 2026-11-20 23:00 event 64359 Speedway (2026-09-18, 1 Illinois teams)
 - 2026-11-20 23:01   reading zhGs-5gah_Y 'Speedway: Override VEX V5 Signature Event - Day 1 (Live Stream Presented by Allegion)' (461 min)
+- 2026-11-20 23:37 windows: 1 in the list, 0 already read, 1 to go
+- 2026-11-20 23:37 windows: event 65014 Great Lakes VEX V5 Robotics Competition #1: Overri: 80 official matches
+- 2026-11-20 23:41 windows:   gl-qual56 (Qual 56) done in 262s

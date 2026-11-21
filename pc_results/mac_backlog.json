@@ -1,0 +1,946 @@
+[
+ {
+  "id": "gl-qual55",
+  "stream": "-LGOBuEyYPs",
+  "start": 0,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 55"
+ },
+ {
+  "id": "gl-qual56",
+  "stream": "-LGOBuEyYPs",
+  "start": 120,
+  "length": 180,
+  "event_id": 65014,
+  "match": "Qual 56"
+ },
+ {
+  "id": "gl-qual57",
+  "stream": "-LGOBuEyYPs",
+  "start": 300,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 57"
+ },
+ {
+  "id": "gl-qual58",
+  "stream": "-LGOBuEyYPs",
+  "start": 510,
+  "length": 330,
+  "event_id": 65014,
+  "match": "Qual 58"
+ },
+ {
+  "id": "gl-qual59",
+  "stream": "-LGOBuEyYPs",
+  "start": 840,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 59"
+ },
+ {
+  "id": "gl-qual60",
+  "stream": "-LGOBuEyYPs",
+  "start": 990,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 60"
+ },
+ {
+  "id": "gl-qual61",
+  "stream": "-LGOBuEyYPs",
+  "start": 1200,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 61"
+ },
+ {
+  "id": "gl-qual62",
+  "stream": "-LGOBuEyYPs",
+  "start": 1410,
+  "length": 240,
+  "event_id": 65014,
+  "match": "Qual 62"
+ },
+ {
+  "id": "gl-qual63",
+  "stream": "-LGOBuEyYPs",
+  "start": 1650,
+  "length": 390,
+  "event_id": 65014,
+  "match": "Qual 63"
+ },
+ {
+  "id": "gl-qual65",
+  "stream": "-LGOBuEyYPs",
+  "start": 2220,
+  "length": 420,
+  "event_id": 65014,
+  "match": "Qual 65"
+ },
+ {
+  "id": "gl-r161-1",
+  "stream": "-LGOBuEyYPs",
+  "start": 6090,
+  "length": 150,
+  "event_id": 65014,
+  "match": "R16 1-1"
+ },
+ {
+  "id": "gl-r162-1",
+  "stream": "-LGOBuEyYPs",
+  "start": 6210,
+  "length": 180,
+  "event_id": 65014,
+  "match": "R16 2-1"
+ },
+ {
+  "id": "gl-r163-1",
+  "stream": "-LGOBuEyYPs",
+  "start": 6390,
+  "length": 390,
+  "event_id": 65014,
+  "match": "R16 3-1"
+ },
+ {
+  "id": "gl-r166-1",
+  "stream": "-LGOBuEyYPs",
+  "start": 7020,
+  "length": 180,
+  "event_id": 65014,
+  "match": "R16 6-1"
+ },
+ {
+  "id": "gl-r167-1",
+  "stream": "-LGOBuEyYPs",
+  "start": 7200,
+  "length": 180,
+  "event_id": 65014,
+  "match": "R16 7-1"
+ },
+ {
+  "id": "gl-r168-1",
+  "stream": "-LGOBuEyYPs",
+  "start": 7380,
+  "length": 240,
+  "event_id": 65014,
+  "match": "R16 8-1"
+ },
+ {
+  "id": "gl-qf1-1",
+  "stream": "-LGOBuEyYPs",
+  "start": 7620,
+  "length": 240,
+  "event_id": 65014,
+  "match": "QF 1-1"
+ },
+ {
+  "id": "gl-qf2-1",
+  "stream": "-LGOBuEyYPs",
+  "start": 7860,
+  "length": 420,
+  "event_id": 65014,
+  "match": "QF 2-1"
+ },
+ {
+  "id": "gl-qf4-1",
+  "stream": "-LGOBuEyYPs",
+  "start": 8820,
+  "length": 210,
+  "event_id": 65014,
+  "match": "QF 4-1"
+ },
+ {
+  "id": "gl-sf1-1",
+  "stream": "-LGOBuEyYPs",
+  "start": 9030,
+  "length": 390,
+  "event_id": 65014,
+  "match": "SF 1-1"
+ },
+ {
+  "id": "gl-final1-1",
+  "stream": "-LGOBuEyYPs",
+  "start": 10410,
+  "length": 420,
+  "event_id": 65014,
+  "match": "Final 1-1"
+ },
+ {
+  "id": "gl-qual1",
+  "stream": "oXew7Oi4SZI",
+  "start": 1020,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 1"
+ },
+ {
+  "id": "gl-qual2",
+  "stream": "oXew7Oi4SZI",
+  "start": 1170,
+  "length": 240,
+  "event_id": 65014,
+  "match": "Qual 2"
+ },
+ {
+  "id": "gl-qual3",
+  "stream": "oXew7Oi4SZI",
+  "start": 1410,
+  "length": 180,
+  "event_id": 65014,
+  "match": "Qual 3"
+ },
+ {
+  "id": "gl-qual4",
+  "stream": "oXew7Oi4SZI",
+  "start": 1590,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 4"
+ },
+ {
+  "id": "gl-qual5",
+  "stream": "oXew7Oi4SZI",
+  "start": 1740,
+  "length": 240,
+  "event_id": 65014,
+  "match": "Qual 5"
+ },
+ {
+  "id": "gl-qual6",
+  "stream": "oXew7Oi4SZI",
+  "start": 1980,
+  "length": 360,
+  "event_id": 65014,
+  "match": "Qual 6"
+ },
+ {
+  "id": "gl-qual7",
+  "stream": "oXew7Oi4SZI",
+  "start": 2340,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 7"
+ },
+ {
+  "id": "gl-qual9",
+  "stream": "oXew7Oi4SZI",
+  "start": 2670,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 9"
+ },
+ {
+  "id": "gl-qual10",
+  "stream": "oXew7Oi4SZI",
+  "start": 2880,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 10"
+ },
+ {
+  "id": "gl-qual11",
+  "stream": "oXew7Oi4SZI",
+  "start": 3090,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 11"
+ },
+ {
+  "id": "gl-qual12",
+  "stream": "oXew7Oi4SZI",
+  "start": 3240,
+  "length": 180,
+  "event_id": 65014,
+  "match": "Qual 12"
+ },
+ {
+  "id": "gl-qual13",
+  "stream": "oXew7Oi4SZI",
+  "start": 3420,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 13"
+ },
+ {
+  "id": "gl-qual14",
+  "stream": "oXew7Oi4SZI",
+  "start": 3630,
+  "length": 300,
+  "event_id": 65014,
+  "match": "Qual 14"
+ },
+ {
+  "id": "gl-qual16",
+  "stream": "oXew7Oi4SZI",
+  "start": 4290,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 16"
+ },
+ {
+  "id": "gl-qual17",
+  "stream": "oXew7Oi4SZI",
+  "start": 4440,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 17"
+ },
+ {
+  "id": "gl-qual18",
+  "stream": "oXew7Oi4SZI",
+  "start": 4590,
+  "length": 360,
+  "event_id": 65014,
+  "match": "Qual 18"
+ },
+ {
+  "id": "gl-qual19",
+  "stream": "oXew7Oi4SZI",
+  "start": 4950,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 19"
+ },
+ {
+  "id": "gl-qual20",
+  "stream": "oXew7Oi4SZI",
+  "start": 5160,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 20"
+ },
+ {
+  "id": "gl-qual21",
+  "stream": "oXew7Oi4SZI",
+  "start": 5310,
+  "length": 180,
+  "event_id": 65014,
+  "match": "Qual 21"
+ },
+ {
+  "id": "gl-qual22",
+  "stream": "oXew7Oi4SZI",
+  "start": 5490,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 22"
+ },
+ {
+  "id": "gl-qual23",
+  "stream": "oXew7Oi4SZI",
+  "start": 5640,
+  "length": 180,
+  "event_id": 65014,
+  "match": "Qual 23"
+ },
+ {
+  "id": "gl-qual24",
+  "stream": "oXew7Oi4SZI",
+  "start": 5820,
+  "length": 180,
+  "event_id": 65014,
+  "match": "Qual 24"
+ },
+ {
+  "id": "gl-qual25",
+  "stream": "oXew7Oi4SZI",
+  "start": 6000,
+  "length": 240,
+  "event_id": 65014,
+  "match": "Qual 25"
+ },
+ {
+  "id": "gl-qual26",
+  "stream": "oXew7Oi4SZI",
+  "start": 6240,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 26"
+ },
+ {
+  "id": "gl-qual27",
+  "stream": "oXew7Oi4SZI",
+  "start": 6450,
+  "length": 390,
+  "event_id": 65014,
+  "match": "Qual 27"
+ },
+ {
+  "id": "gl-qual28",
+  "stream": "oXew7Oi4SZI",
+  "start": 6840,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 28"
+ },
+ {
+  "id": "gl-qual29",
+  "stream": "oXew7Oi4SZI",
+  "start": 7050,
+  "length": 180,
+  "event_id": 65014,
+  "match": "Qual 29"
+ },
+ {
+  "id": "gl-qual30",
+  "stream": "oXew7Oi4SZI",
+  "start": 7230,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 30"
+ },
+ {
+  "id": "gl-qual32",
+  "stream": "oXew7Oi4SZI",
+  "start": 10710,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 32"
+ },
+ {
+  "id": "gl-qual33",
+  "stream": "oXew7Oi4SZI",
+  "start": 10860,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 33"
+ },
+ {
+  "id": "gl-qual34",
+  "stream": "oXew7Oi4SZI",
+  "start": 11070,
+  "length": 300,
+  "event_id": 65014,
+  "match": "Qual 34"
+ },
+ {
+  "id": "gl-qual35",
+  "stream": "oXew7Oi4SZI",
+  "start": 11370,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 35"
+ },
+ {
+  "id": "gl-qual37",
+  "stream": "oXew7Oi4SZI",
+  "start": 11700,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 37"
+ },
+ {
+  "id": "gl-qual38",
+  "stream": "oXew7Oi4SZI",
+  "start": 11850,
+  "length": 180,
+  "event_id": 65014,
+  "match": "Qual 38"
+ },
+ {
+  "id": "gl-qual39",
+  "stream": "oXew7Oi4SZI",
+  "start": 12030,
+  "length": 300,
+  "event_id": 65014,
+  "match": "Qual 39"
+ },
+ {
+  "id": "gl-qual40",
+  "stream": "oXew7Oi4SZI",
+  "start": 12330,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 40"
+ },
+ {
+  "id": "gl-qual41",
+  "stream": "oXew7Oi4SZI",
+  "start": 12450,
+  "length": 180,
+  "event_id": 65014,
+  "match": "Qual 41"
+ },
+ {
+  "id": "gl-qual42",
+  "stream": "oXew7Oi4SZI",
+  "start": 12630,
+  "length": 210,
+  "event_id": 65014,
+  "match": "Qual 42"
+ },
+ {
+  "id": "gl-qual43",
+  "stream": "oXew7Oi4SZI",
+  "start": 12840,
+  "length": 390,
+  "event_id": 65014,
+  "match": "Qual 43"
+ },
+ {
+  "id": "gl-qual44",
+  "stream": "oXew7Oi4SZI",
+  "start": 13230,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 44"
+ },
+ {
+  "id": "gl-qual45",
+  "stream": "oXew7Oi4SZI",
+  "start": 13380,
+  "length": 180,
+  "event_id": 65014,
+  "match": "Qual 45"
+ },
+ {
+  "id": "gl-qual46",
+  "stream": "oXew7Oi4SZI",
+  "start": 13560,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 46"
+ },
+ {
+  "id": "gl-qual47",
+  "stream": "oXew7Oi4SZI",
+  "start": 13710,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 47"
+ },
+ {
+  "id": "gl-qual48",
+  "stream": "oXew7Oi4SZI",
+  "start": 13860,
+  "length": 270,
+  "event_id": 65014,
+  "match": "Qual 48"
+ },
+ {
+  "id": "gl-qual49",
+  "stream": "oXew7Oi4SZI",
+  "start": 14130,
+  "length": 180,
+  "event_id": 65014,
+  "match": "Qual 49"
+ },
+ {
+  "id": "gl-qual50",
+  "stream": "oXew7Oi4SZI",
+  "start": 14310,
+  "length": 150,
+  "event_id": 65014,
+  "match": "Qual 50"
+ },
+ {
+  "id": "gl-qual51",
+  "stream": "oXew7Oi4SZI",
+  "start": 14460,
+  "length": 240,
+  "event_id": 65014,
+  "match": "Qual 51"
+ },
+ {
+  "id": "gl-qual52",
+  "stream": "oXew7Oi4SZI",
+  "start": 14700,
+  "length": 420,
+  "event_id": 65014,
+  "match": "Qual 52"
+ },
+ {
+  "id": "cc-qual5",
+  "stream": "9H4powqTyUA",
+  "start": 2580,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 5"
+ },
+ {
+  "id": "cc-qual9",
+  "stream": "9H4powqTyUA",
+  "start": 3720,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 9"
+ },
+ {
+  "id": "cc-qual10",
+  "stream": "9H4powqTyUA",
+  "start": 4020,
+  "length": 270,
+  "event_id": 64351,
+  "match": "Qual 10"
+ },
+ {
+  "id": "cc-qual11",
+  "stream": "9H4powqTyUA",
+  "start": 4260,
+  "length": 390,
+  "event_id": 64351,
+  "match": "Qual 11"
+ },
+ {
+  "id": "cc-qual12",
+  "stream": "9H4powqTyUA",
+  "start": 4500,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 12"
+ },
+ {
+  "id": "cc-qual14",
+  "stream": "9H4powqTyUA",
+  "start": 5040,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 14"
+ },
+ {
+  "id": "cc-qual15",
+  "stream": "9H4powqTyUA",
+  "start": 5220,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 15"
+ },
+ {
+  "id": "cc-qual17",
+  "stream": "9H4powqTyUA",
+  "start": 5760,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 17"
+ },
+ {
+  "id": "cc-qual18",
+  "stream": "9H4powqTyUA",
+  "start": 6000,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 18"
+ },
+ {
+  "id": "cc-qual19",
+  "stream": "9H4powqTyUA",
+  "start": 6240,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 19"
+ },
+ {
+  "id": "cc-qual20",
+  "stream": "9H4powqTyUA",
+  "start": 6480,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 20"
+ },
+ {
+  "id": "cc-qual21",
+  "stream": "9H4powqTyUA",
+  "start": 6780,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 21"
+ },
+ {
+  "id": "cc-qual22",
+  "stream": "9H4powqTyUA",
+  "start": 6990,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 22"
+ },
+ {
+  "id": "cc-qual23",
+  "stream": "9H4powqTyUA",
+  "start": 7410,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 23"
+ },
+ {
+  "id": "cc-qual24",
+  "stream": "9H4powqTyUA",
+  "start": 7590,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 24"
+ },
+ {
+  "id": "cc-qual25",
+  "stream": "9H4powqTyUA",
+  "start": 7830,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 25"
+ },
+ {
+  "id": "cc-qual27",
+  "stream": "9H4powqTyUA",
+  "start": 11910,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 27"
+ },
+ {
+  "id": "cc-qual28",
+  "stream": "9H4powqTyUA",
+  "start": 12150,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 28"
+ },
+ {
+  "id": "cc-qual29",
+  "stream": "9H4powqTyUA",
+  "start": 12390,
+  "length": 360,
+  "event_id": 64351,
+  "match": "Qual 29"
+ },
+ {
+  "id": "cc-qual30",
+  "stream": "9H4powqTyUA",
+  "start": 12720,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 30"
+ },
+ {
+  "id": "cc-qual31",
+  "stream": "9H4powqTyUA",
+  "start": 12900,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 31"
+ },
+ {
+  "id": "cc-qual32",
+  "stream": "9H4powqTyUA",
+  "start": 13140,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 32"
+ },
+ {
+  "id": "cc-qual33",
+  "stream": "9H4powqTyUA",
+  "start": 13380,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 33"
+ },
+ {
+  "id": "cc-qual35",
+  "stream": "9H4powqTyUA",
+  "start": 13950,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 35"
+ },
+ {
+  "id": "cc-qual36",
+  "stream": "9H4powqTyUA",
+  "start": 14190,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 36"
+ },
+ {
+  "id": "cc-qual37",
+  "stream": "9H4powqTyUA",
+  "start": 14550,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 37"
+ },
+ {
+  "id": "cc-qual38",
+  "stream": "9H4powqTyUA",
+  "start": 14700,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 38"
+ },
+ {
+  "id": "cc-qual39",
+  "stream": "9H4powqTyUA",
+  "start": 15090,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 39"
+ },
+ {
+  "id": "cc-qual41",
+  "stream": "9H4powqTyUA",
+  "start": 15540,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 41"
+ },
+ {
+  "id": "cc-qual42",
+  "stream": "9H4powqTyUA",
+  "start": 15750,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 42"
+ },
+ {
+  "id": "cc-qual43",
+  "stream": "9H4powqTyUA",
+  "start": 15990,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 43"
+ },
+ {
+  "id": "cc-qual45",
+  "stream": "9H4powqTyUA",
+  "start": 16440,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 45"
+ },
+ {
+  "id": "cc-qual46",
+  "stream": "9H4powqTyUA",
+  "start": 16650,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 46"
+ },
+ {
+  "id": "cc-qual47",
+  "stream": "9H4powqTyUA",
+  "start": 16890,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 47"
+ },
+ {
+  "id": "cc-qual48",
+  "stream": "9H4powqTyUA",
+  "start": 17010,
+  "length": 390,
+  "event_id": 64351,
+  "match": "Qual 48"
+ },
+ {
+  "id": "cc-qual49",
+  "stream": "9H4powqTyUA",
+  "start": 17460,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 49"
+ },
+ {
+  "id": "cc-qual51",
+  "stream": "9H4powqTyUA",
+  "start": 17760,
+  "length": 420,
+  "event_id": 64351,
+  "match": "Qual 51"
+ },
+ {
+  "id": "cc-qual52",
+  "stream": "9H4powqTyUA",
+  "start": 18120,
+  "length": 300,
+  "event_id": 64351,
+  "match": "Qual 52"
+ },
+ {
+  "id": "cc-qual53",
+  "stream": "9H4powqTyUA",
+  "start": 18330,
+  "length": 330,
+  "event_id": 64351,
+  "match": "Qual 53"
+ },
+ {
+  "id": "cc-qual54",
+  "stream": "9H4powqTyUA",
+  "start": 18480,
+  "length": 420,
+  "event_id": 64351,
+  "match": "Qual 54"
+ },
+ {
+  "id": "cc-r162-1",
+  "stream": "9H4powqTyUA",
+  "start": 21390,
+  "length": 330,
+  "event_id": 64351,
+  "match": "R16 2-1"
+ },
+ {
+  "id": "cc-r164-1",
+  "stream": "9H4powqTyUA",
+  "start": 21630,
+  "length": 300,
+  "event_id": 64351,
+  "match": "R16 4-1"
+ },
+ {
+  "id": "cc-r166-1",
+  "stream": "9H4powqTyUA",
+  "start": 21990,
+  "length": 330,
+  "event_id": 64351,
+  "match": "R16 6-1"
+ },
+ {
+  "id": "cc-r168-1",
+  "stream": "9H4powqTyUA",
+  "start": 22350,
+  "length": 330,
+  "event_id": 64351,
+  "match": "R16 8-1"
+ },
+ {
+  "id": "cc-qf1-1",
+  "stream": "9H4powqTyUA",
+  "start": 22800,
+  "length": 330,
+  "event_id": 64351,
+  "match": "QF 1-1"
+ },
+ {
+  "id": "cc-qf2-1",
+  "stream": "9H4powqTyUA",
+  "start": 23220,
+  "length": 300,
+  "event_id": 64351,
+  "match": "QF 2-1"
+ },
+ {
+  "id": "cc-qf4-1",
+  "stream": "9H4powqTyUA",
+  "start": 23910,
+  "length": 390,
+  "event_id": 64351,
+  "match": "QF 4-1"
+ },
+ {
+  "id": "cc-sf1-1",
+  "stream": "9H4powqTyUA",
+  "start": 24450,
+  "length": 300,
+  "event_id": 64351,
+  "match": "SF 1-1"
+ },
+ {
+  "id": "cc-final1-1",
+  "stream": "9H4powqTyUA",
+  "start": 25380,
+  "length": 420,
+  "event_id": 64351,
+  "match": "Final 1-1"
+ }
+]
