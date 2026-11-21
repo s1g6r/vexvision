@@ -34,7 +34,7 @@
 "calibrated": 0.76,
 "seen": 0.83,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true
 },
 {
@@ -931,7 +931,7 @@
 "calibrated": 0.69,
 "seen": 0.82,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true
 },
 {
@@ -951,7 +951,7 @@
 "calibrated": 0.65,
 "seen": 0.85,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true
 },
 {
@@ -971,7 +971,7 @@
 "calibrated": 0.62,
 "seen": 0.8,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true
 },
 {
@@ -991,7 +991,7 @@
 "calibrated": 0.73,
 "seen": 0.85,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true
 },
 {
@@ -1071,7 +1071,7 @@
 "calibrated": 0.74,
 "seen": 0.85,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true
 },
 {
@@ -1091,7 +1091,7 @@
 "calibrated": 0.68,
 "seen": 0.7,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true
 },
 {
@@ -1111,7 +1111,7 @@
 "calibrated": 0.68,
 "seen": 0.62,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true
 },
 {
@@ -1131,7 +1131,7 @@
 "calibrated": 0.67,
 "seen": 0.85,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true
 },
 {
@@ -1151,7 +1151,7 @@
 "calibrated": 0.65,
 "seen": 0.82,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true
 },
 {
@@ -1171,7 +1171,7 @@
 "calibrated": 0.84,
 "seen": 0.78,
 "named": 4,
-"sure": 0,
+"sure": 4,
 "replay": true
 },
 {
@@ -1191,7 +1191,7 @@
 "calibrated": 0.74,
 "seen": 0.85,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true
 },
 {
@@ -1441,7 +1441,7 @@
 "calibrated": 0.62,
 "seen": 0.8,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true
 },
 {
@@ -4118,6 +4118,139 @@
 "seen": 0.75,
 "named": 4,
 "sure": 4,
+"replay": true
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 23",
+"red": [
+"1233B",
+"1323C"
+],
+"blue": [
+"80001C",
+"355T"
+],
+"id": "e64359-1-qual23",
+"video": "e64359-1-qual23",
+"calibrated": 0.95,
+"seen": 0.75,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 3",
+"red": [
+"252A",
+"1233N"
+],
+"blue": [
+"99209X",
+"2011G"
+],
+"id": "e64359-1-qual3",
+"video": "e64359-1-qual3",
+"calibrated": 0.95,
+"seen": 0.78,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 35",
+"red": [
+"355T",
+"471B"
+],
+"blue": [
+"2568Z",
+"34543M"
+],
+"id": "e64359-1-qual35",
+"video": "e64359-1-qual35",
+"calibrated": 0.9,
+"seen": 0.7,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 63",
+"red": [
+"355T",
+"6210M"
+],
+"blue": [
+"7368M",
+"45434M"
+],
+"id": "e64359-1-qual63",
+"video": "e64359-1-qual63",
+"calibrated": 0.65,
+"seen": 0.75,
+"named": 4,
+"sure": 0,
+"replay": true
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 75",
+"red": [
+"3150D",
+"3946E"
+],
+"blue": [
+"55760R",
+"355T"
+],
+"id": "e64359-1-qual75",
+"video": "e64359-1-qual75",
+"calibrated": 0.82,
+"seen": 0.88,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 5",
+"red": [
+"7701Z",
+"99904C"
+],
+"blue": [
+"10015Z",
+"6842V"
+],
+"id": "e64359-1-qual5",
+"video": "e64359-1-qual5",
+"calibrated": 0.86,
+"seen": 0.45,
+"named": 4,
+"sure": 4,
+"replay": true
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 4",
+"red": [
+"2055X",
+"10102Z"
+],
+"blue": [
+"2145V",
+"10666A"
+],
+"id": "e64359-1-qual4",
+"video": "e64359-1-qual4",
+"calibrated": 0.89,
+"seen": 0.7,
+"named": 4,
+"sure": 2,
 "replay": true
 }
 ]
