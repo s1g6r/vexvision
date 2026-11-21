@@ -237,13 +237,22 @@ actually come back, or better, keep the match count alongside it so a part-read 
 from a finished one. Something like moving the `state["videos"][vid] = ...` write to after the
 `subprocess.run(...)` call, and keeping the "not this event" case where it is.
 
-**One thing left over from this.** The restarted run skipped Day 1 (it was already in `videos`) and
-went to the next accepted video, the 11-minute "Final Four" (`ME5jv9cAaJg`, 2 matches). When it
-finishes, `watch.py` will see a done event with a non-empty `streams` list and mark Speedway
-**complete** -- on the strength of 2 matches out of 96, and those two are the semifinal and final,
-which have no Illinois team in them. A complete event is skipped before the repair can help, so
-once this run ends I will clear that one flag by hand so Day 1 gets read. Noted here because it is
-the one piece of state on this PC that I edited rather than let the tools write.
+**One thing left over from this, now dealt with.** The restarted run skipped Day 1 (it was already
+in `videos`) and went to the next accepted video, the 11-minute "Final Four" (`ME5jv9cAaJg`). It
+read the two matches in it, SF 1-1 and SF 2-1 -- neither has an Illinois team -- and then marked
+Speedway **complete** on the strength of those 2 out of 96. A complete event is skipped before the
+repair can help, so at 20:08, with no run holding the lock, I cleared that one flag by hand and
+dropped the two stream verdicts with it. Day 1 will now be reconsidered. That is the only piece of
+state on this PC I have edited rather than let the tools write, and it is the only one needed,
+because `repair_state` stops the situation arising again.
+
+**For the cloud side: dedupe by event and match, not by id.** Match ids from `watch.py` are
+`e<event>-<n>-<match>`, where `n` is how many streams that event had recorded *at the time*. That
+counter is not stable across an interrupted run: these two semifinals came from the event's second
+accepted video but were written as `e64359-0-sf1-1` and `e64359-0-sf2-1`, because the kill had left
+`streams` empty. When Day 1 is read it will be `n = 1`, so if Day 1's 96 matches include SF 1-1 the
+same match will arrive a second time as `e64359-1-sf1-1`. Every `.meta.json` carries `event_id` and
+`match`, so the pair is the reliable key; the id isn't.
 
 **To switch it off:** open Task Scheduler, find "VexVision scout station" in the top-level list,
 right-click, Disable. Enable the same way.
