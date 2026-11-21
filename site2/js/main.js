@@ -577,7 +577,8 @@ Promise.resolve(IDX).then((idx) => {
   const good = idx.filter((x) => !x.error && x.replay !== false && x.calibrated >= 0.6 && x.seen >= 0.6);
   // Matches we could put names on come first: eliminations before qualifications.
   const rank = (x) => (/^SF|^Final/.test(x.match || "") ? 0 : /^QF/.test(x.match || "") ? 1 : /^R16/.test(x.match || "") ? 2 : 3);
-  const named = good.filter((x) => (x.sure || 0) >= 2).sort((a, b) => rank(a) - rank(b));
+  const ours = (x) => ((x.red || []).concat(x.blue || [])).includes("2360A") ? 0 : 1;
+  const named = good.filter((x) => (x.sure || 0) >= 2).sort((a, b) => (b.sure || 0) - (a.sure || 0) || ours(a) - ours(b) || rank(a) - rank(b));
   const rest = good.filter((x) => (x.sure || 0) < 2 && x.video !== "FSpOd3gBuqM");
   const list = [...named, { id: "q19", event: "Great Planes Signature", match: "Qual 19", video: "FSpOd3gBuqM" }, ...rest];
   const first = list[0].id;
