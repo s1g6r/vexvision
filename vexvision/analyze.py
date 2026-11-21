@@ -123,7 +123,7 @@ def read_plates(img, box):
     return out
 
 def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_hint=6, log=print,
-            every_overlay=2.0, every_plate=2.0, every_read=1.0):
+            every_overlay=3.0, every_plate=2.0, every_read=2.0):
     """frames: iterable of (t, img). teams: {"red": [a, b], "blue": [c, d]} (from schedule or overlay)."""
     cal = Calibrator(detector)
     det_log = []                       # per calibrated frame: (t, [[x, y, conf, x0, y0, x1, y1, colour], ...], [feat, ...])

@@ -21,6 +21,13 @@ const [frames, videos, TS] = await Promise.all([
   fetch("data/team_stats.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
 ]);
 const OFF = await fetch("data/official.json").then((r) => (r.ok ? r.json() : null)).catch(() => null) || { matches: {}, teams: {}, events: {} };
+const TH = await fetch("data/thumbs.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+const thumb = (id) => {
+  const t = TH?.map?.[id];
+  if (!t) return `<img src="data/thumbs/${id}.jpg" alt="" loading="lazy">`;
+  const [n, c, r, rows] = t, C = TH.cols;
+  return `<span class="spr" style="background-image:url(data/sheets/sheet-${n}.jpg);background-size:${C * 100}% ${rows * 100}%;background-position:${C > 1 ? (c / (C - 1)) * 100 : 0}% ${rows > 1 ? (r / (rows - 1)) * 100 : 0}%"></span>`;
+};
 const REP = await fetch("data/reports.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
 
 /* ---------- a field view with an orbit you can drag ---------- */
@@ -271,7 +278,9 @@ function scoutBlock(id) {
     ["Autonomous", `${Math.round(st.auton_ft)} ft`, "Moved in the first 15 seconds"],
   ];
   const rep = REP[id];
-  const brief = rep ? `<ul class="brief">${rep.summary.slice(0, 3).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+  const W = rep ? watchouts(rep) : [];
+  const brief = rep ? `${rep.tags?.length ? `<div class="tags" style="margin-bottom:12px">${rep.tags.map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : ""}<ul class="brief">${rep.summary.slice(0, 3).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    ${W.length ? `<p class="scout-note" style="margin:0 0 6px"><b style="color:var(--ink)">Watch for</b></p><ul class="watch-list" style="margin-bottom:18px">${W.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
     <a class="btn solid report-btn" href="#report-${esc(id)}">Full scouting report</a>` : "";
   return `<div class="scout"><div class="scout-head"><b>Scouted by vexvision</b><span>from ${st.n} match${st.n === 1 ? "" : "es"} where we could name it</span></div>${brief}
     <div class="scout-grid"><div class="scout-maps">
@@ -348,16 +357,31 @@ const cornfield = evList.find(([, e]) => /Cornfield/.test(e.short) && e.matches.
 if (cornfield) $("#prep-ev").value = cornfield[0];
 $("#prep-team").value = "2360A";
 $("#prep-form").addEventListener("submit", (e) => { e.preventDefault(); location.hash = `event-${$("#prep-ev").value}-${$("#prep-team").value.trim().toUpperCase()}`; });
+function watchouts(R) {
+  const S = R.sections || {}, out = [];
+  const r0 = S.auton?.routes?.[0];
+  if (r0?.steps?.crosses) out.push("Their auton crosses the Autonomous Line");
+  const d = S.defence || {};
+  if (d.other_side >= 0.55 && d.near_opp_their_side >= 0.15) out.push(`Expect them on your side: ${pct(d.other_side)} of driver control there`);
+  const tg = S.toggles || {};
+  if (tg.opp >= 0.05) out.push("Goes for your Toggles too");
+  else if (tg.share >= 0.35) { const k = Math.round(tg.trips || 0); out.push(k >= 3 ? `Lives at the Toggles: about ${k} trips a match` : `Spends ${pct(tg.share)} of driver control by a Toggle`); }
+  const fav = S.scoring?.favourites?.[0];
+  if (fav && fav[1] >= 1) out.push(`Works ${fav[0].replace(/^its own/, "their own")} most`);
+  if (S.endgame?.midfield >= 0.5) out.push("Ends in the Midfield");
+  return out.slice(0, 3);
+}
 function teamCard(n, side, ev) {
   const t = ev.teams.find((x) => x.n === n) || {}, R = REP[n];
-  const route = R?.sections?.auton?.routes?.[0];
-  const autonLine = route ? `<div class="line"><b>Auton${R.sections.auton.seen > 1 ? ` (${route.count} of ${R.sections.auton.seen})` : ""}:</b> ${esc(route.text)}.</div>` : "";
-  const goal = R?.summary?.find((x) => x.startsWith("Works about"));
+  const A = R?.sections?.auton, route = A?.routes?.[0];
+  const autonLine = route ? `<div class="line"><b>Auton${A.seen > 1 ? ` · ran it ${route.count} of ${A.seen}` : ""}:</b> ${esc(route.text)}.${A.routes.length > 1 ? ` <span class="role">${A.routes.length - 1} other route${A.routes.length > 2 ? "s" : ""} seen.</span>` : ""}</div>` : "";
+  const W = R ? watchouts(R) : [];
   return `<div class="tc ${side}"><div class="n"><a href="#team-${esc(n)}">${esc(n)}</a><small>${esc(t.name || "")}</small></div>
     <div class="role">${t.rank ? `${ord(t.rank)} here · ` : ""}${esc(t.record || "")}${t.avg != null ? ` · ${Math.round(t.avg)} points a match` : ""}${t.skills ? ` · skills ${t.skills}` : ""}</div>
     ${R?.tags?.length ? `<div class="tags">${R.tags.map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : ""}
-    ${autonLine}${goal ? `<div class="line">${esc(goal.split(". Its")[0])}.</div>` : ""}
-    ${R ? `<a class="more" href="#report-${esc(n)}">Full scouting report</a>` : `<div class="role">Not on video yet</div>`}</div>`;
+    ${route ? `<div class="tc-auton"><canvas class="heat auton big" width="200" height="200" data-team="${esc(n)}" aria-label="${esc(n)}'s autonomous routes"></canvas>${autonLine}</div>` : ""}
+    ${W.length ? `<ul class="watch-list">${W.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+    ${R ? `<div class="tc-links">${route ? watchBtn({ id: route.typical }, -1, "Watch their auton") : ""}<a class="more" href="#report-${esc(n)}">Full report</a></div>` : `<div class="role">Not on video yet</div>`}</div>`;
 }
 function showEvent(eid, me) {
   const ev = OFF.events[eid], out = $("#prep-out");
@@ -493,19 +517,19 @@ function showTeam(id) {
     ${scoutBlock(id)}
     ${matches.map((v) => {
       const mine = v.r?.includes(id) ? ["r", v.r, v.b] : v.b?.includes(id) ? ["b", v.b, v.r] : null;
-      return `<div class="mrow"><a class="th" href="${v.u || yt(v.id)}"><img src="data/thumbs/${v.id}.jpg" alt="" loading="lazy"></a><div><div class="ev">${esc(v.e || "")}</div><div class="rd">${esc(v.m || "Match")}</div>
+      return `<div class="mrow"><a class="th" href="${v.u || yt(v.id)}">${thumb(v.id)}</a><div><div class="ev">${esc(v.e || "")}</div><div class="rd">${esc(v.m || "Match")}</div>
       ${mine ? `<div class="al"><span class="side-${mine[0]}">${mine[0] === "r" ? "Red" : "Blue"}</span> with ${mine[1].filter((x) => x !== id).map((x) => tlink(x)).join(" & ") || "partner not named"} <span class="mute">vs</span> ${mine[2].map((x) => tlink(x)).join(" & ")}</div>` : ""}</div>
       <a class="w" href="${v.u || yt(v.id)}">Watch${v.l ? " · " + v.l : ""}</a></div>`;
     }).join("")}
-    ${other.length ? `<div class="vids">${other.map((v) => `<a class="vid" href="${v.u || yt(v.id)}"><span class="th"><img src="data/thumbs/${v.id}.jpg" alt="" loading="lazy"></span>${esc(v.t)}<br><small>${esc(v.c)}</small></a>`).join("")}</div>` : ""}`;
+    ${other.length ? `<div class="vids">${other.map((v) => `<a class="vid" href="${v.u || yt(v.id)}"><span class="th">${thumb(v.id)}</span>${esc(v.t)}<br><small>${esc(v.c)}</small></a>`).join("")}</div>` : ""}`;
 }
 document.addEventListener("click", (e) => {
   const b = e.target.closest("[data-replay]"); if (!b) return;
   document.getElementById("replay").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
   loadReplay(b.dataset.replay, true, b.dataset.t != null ? +b.dataset.t : null);
 });
-new MutationObserver(() => document.querySelectorAll("canvas.heat:not([data-drawn])").forEach((c) => { c.dataset.drawn = 1; drawHeat(c, TS[c.dataset.team]); }))
-  .observe(document.getElementById("result"), { childList: true, subtree: true });
+const drawNew = () => document.querySelectorAll("canvas.heat:not([data-drawn])").forEach((c) => { c.dataset.drawn = 1; drawHeat(c, TS[c.dataset.team]); });
+for (const el of [document.getElementById("result"), document.getElementById("prep-out")]) new MutationObserver(drawNew).observe(el, { childList: true, subtree: true });
 const q = $("#q"), sugg = $("#sugg");
 let list = [], cur = 0;
 q.addEventListener("input", () => {
@@ -558,7 +582,7 @@ fetch("data/replays/index.json").then((r) => (r.ok ? r.json() : [])).catch(() =>
   loadReplay(first).catch((e) => console.error(e));
   const el = document.getElementById("rp-list");
   if (list.length > 1) {
-    el.innerHTML = list.map((x) => `<button type="button" data-id="${x.id}" aria-pressed="${x.id === first}"><img src="data/thumbs/${x.video}.jpg" alt="" loading="lazy"><span><b>${esc(x.match || "Match")}</b><span>${esc((x.event || "").replace(/ Signature$/, "").replace(/^Illini /, "").replace(/ \(Fall 2026\)$/, ""))}</span></span></button>`).join("");
+    el.innerHTML = list.map((x) => `<button type="button" data-id="${x.id}" aria-pressed="${x.id === first}">${thumb(x.video)}<span><b>${esc(x.match || "Match")}</b><span>${esc((x.event || "").replace(/ Signature$/, "").replace(/^Illini /, "").replace(/ \(Fall 2026\)$/, ""))}</span></span></button>`).join("");
     el.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => loadReplay(b.dataset.id, true)));
   }
 });

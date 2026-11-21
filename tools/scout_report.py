@@ -223,6 +223,8 @@ def auton_steps(route):
 def auton_text(st):
     if st["moved_m"] < 0.6:
         return f"stays at {st['start']}"
+    if not st["stops"] and st["start"] == st["end"]:
+        return f"works around {st['start']}" + (", crossing the Autonomous Line" if st["crosses"] else "")
     parts = [f"starts at {st['start']}"]
     for t_, p in st["stops"][:3]:
         parts.append(f"stops at {p} ({t_:.0f} s)")

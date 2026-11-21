@@ -13,7 +13,8 @@ EVENTS = {  # our event names -> official event id
     "Mall of America Signature": 64244, "The Silk Road Link": 64392, "Tri-Valley": 64632,
     "Highlander Summit Signature": 64246, "Speedway Signature": 64359,
     "GHOST Halloween Spotlight": 65564, "Harbor Havoc Signature": 64926,
-    "Smoky Mountain Forge Signature": 64846, "Blank.'s Beginnings": 64565,
+    "Smoky Mountain Forge Signature": 64846, "Great Lakes #1": 65014, "Lake Park": 64295, "IPSD League": 66342,
+    "Illini Cornfield Clash Jr. (Winter 2027)": 64756,
 }
 ROUND = {"Qual": 2, "QF": 3, "SF": 4, "Final": 5, "R16": 6}
 

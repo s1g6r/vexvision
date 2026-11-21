@@ -1,14 +1,17 @@
 """Add matches cut from a full-day event stream to the site's video list, so team
 pages list them and link to the right moment of the stream.
-Usage: python -m tools.add_stream_matches MANIFEST STREAM_ID CHANNEL SITE_VIDEOS_JSON"""
+Usage: python -m tools.add_stream_matches MANIFEST STREAM_ID CHANNEL SITE_VIDEOS_JSON [ID_PREFIX] [SLUG]
+Manifest entries: {id, event, match, red, blue, start, [stream]}; a per-entry "stream" overrides STREAM_ID."""
 import json, sys
 man, stream_id, channel, path = sys.argv[1:5]
-vids = [v for v in json.load(open(path)) if not v["id"].startswith("cc-")]
+prefix = sys.argv[5] if len(sys.argv) > 5 else "cc-"
+slug = sys.argv[6] if len(sys.argv) > 6 else "cornfield-clash-jr-fall-2026"
+vids = [v for v in json.load(open(path)) if not v["id"].startswith(prefix)]
 for m in json.load(open(man)):
     tm = m["red"] + m["blue"]
     vids.append({"id": m["id"], "t": f"{m['event']} - {m['match']} ({' & '.join(m['red'])} vs {' & '.join(m['blue'])})",
-                 "c": channel, "k": "match", "e": m["event"].replace(" (Fall 2026)", ""), "s": "cornfield-clash-jr-fall-2026",
+                 "c": channel, "k": "match", "e": m["event"].replace(" (Fall 2026)", ""), "s": slug,
                  "m": m["match"], "r": m["red"], "b": m["blue"], "tm": tm, "l": "",
-                 "u": f"https://www.youtube.com/watch?v={stream_id}&t={int(m['start']) + 60}s"})
+                 "u": f"https://www.youtube.com/watch?v={m.get('stream', stream_id)}&t={int(m['start']) + 60}s"})
 json.dump(vids, open(path, "w"), separators=(",", ":"))
 print(len(vids), "videos")
