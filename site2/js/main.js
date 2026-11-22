@@ -454,6 +454,31 @@ function drawPlan(c) {
   });
   g.globalAlpha = 1;
 }
+/* ---------- pick list ---------- */
+const PICK_SORTS = [["rating", "Rating"], ["avg", "Points"], ["skills", "Skills"], ["video", "Most on video"], ["fit", "Fits with you"]];
+function pickFit(me, n) {
+  if (!me || n === me) return null;
+  const a = autonGoals(me), b = autonGoals(n);
+  if (!a || !b) return null;
+  if (a.start === b.start) return { ok: false, text: "Same start tile" };
+  if (a.moved >= 0.6 && b.moved >= 0.6 && [...a.goals].some((g) => b.goals.has(g))) return { ok: false, text: "Same auton Goals" };
+  return { ok: true, text: "Autons fit" };
+}
+function pickTable(ev, me, key) {
+  const val = { rating: (t) => t.rating ?? -1, avg: (t) => t.avg ?? -1, skills: (t) => t.skills ?? -1, video: (t) => REP[t.n] ? (REP[t.n].n ?? 0) : -1,
+    fit: (t) => { if (t.n === me) return -1e9; const f = pickFit(me, t.n); return (f ? (f.ok ? 2 : 0.5) : REP[t.n] ? 1 : 0) * 1000 + (t.rating ?? 0); } }[key];
+  const list = [...ev.teams].sort((a, b) => val(b) - val(a));
+  return `<table class="pick"><thead><tr><th class="n">#</th><th>Team</th><th class="n">Rating</th><th class="n">Record</th><th class="n">Points</th><th class="n">Skills</th><th>How it plays</th>${me && REP[me] ? "<th>With you</th>" : ""}</tr></thead><tbody>
+    ${list.map((t, i) => { const f = pickFit(me, t.n); return `<tr class="${t.n === me ? "me" : ""}"><td class="n">${i + 1}</td><td><b><a href="#team-${esc(t.n)}">${esc(t.n)}</a></b><small style="display:block;color:var(--mute)">${esc(t.name || "")}</small></td><td class="n">${t.rating != null ? Math.round(t.rating) : "–"}</td><td class="n">${esc(t.record || "–")}</td><td class="n">${t.avg != null ? Math.round(t.avg) : "–"}</td><td class="n">${t.skills ?? "–"}</td>
+      <td>${REP[t.n] ? `<div class="tags">${(REP[t.n].tags.length ? REP[t.n].tags : ["Scouted"]).map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : `<span class="role" style="color:var(--mute);font-size:13px">Not on video yet</span>`}</td>${me && REP[me] ? `<td>${f ? `<span class="fit ${f.ok ? "ok" : "no"}">${f.text}</span>` : `<span class="role" style="color:var(--mute);font-size:13px">–</span>`}</td>` : ""}</tr>`; }).join("")}
+    </tbody></table>`;
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".pick-sort button"); if (!b) return;
+  const w = document.getElementById("pick-wrap"), ev = OFF.events[w.dataset.ev];
+  b.parentNode.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+  w.innerHTML = pickTable(ev, w.dataset.me || null, b.dataset.sort);
+});
 function showEvent(eid, me) {
   const ev = OFF.events[eid], out = $("#prep-out");
   if (!ev) { out.innerHTML = `<div class="empty"><p><b>We don't have that event yet.</b></p></div>`; return; }
@@ -479,11 +504,9 @@ function showEvent(eid, me) {
       <p class="scout-note">The strongest teams here that we've watched, so you know their autons before the schedule comes out.</p>
       <div class="pm-grid know">${known.map((t) => teamCard(t.n, "", ev, me && ev.teams.some((x) => x.n === me) ? me : null, false)).join("")}</div>` : ""}
     <h4 class="disp" style="font-size:34px;margin:40px 0 12px">Pick list</h4>
-    <p class="scout-note">Every team here, strongest first by their rating going into today. Tags come from the matches we've watched.</p>
-    <div class="scroll"><table class="pick"><thead><tr><th class="n">#</th><th>Team</th><th class="n">Rating</th><th class="n">Record</th><th class="n">Points</th><th class="n">Skills</th><th>How it plays</th></tr></thead><tbody>
-    ${list.map((t, i) => `<tr class="${t.n === me ? "me" : ""}"><td class="n">${i + 1}</td><td><b><a href="#team-${esc(t.n)}">${esc(t.n)}</a></b><small style="display:block;color:var(--mute)">${esc(t.name || "")}</small></td><td class="n">${t.rating != null ? Math.round(t.rating) : "–"}</td><td class="n">${esc(t.record || "–")}</td><td class="n">${t.avg != null ? Math.round(t.avg) : "–"}</td><td class="n">${t.skills ?? "–"}</td>
-      <td>${REP[t.n] ? `<div class="tags">${(REP[t.n].tags.length ? REP[t.n].tags : ["Scouted"]).map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : `<span class="role" style="color:var(--mute);font-size:13px">Not on video yet</span>`}</td></tr>`).join("")}
-    </tbody></table></div>`;
+    <p class="scout-note">Every team here. Rating is from going into the event; tags come from the matches we've watched.${me && REP[me] ? ` "With you" compares each team's most-run auton with ${esc(me)}'s.` : ""}</p>
+    <div class="pick-sort" role="group" aria-label="Sort the pick list">${PICK_SORTS.filter(([k]) => k !== "fit" || (me && REP[me])).map(([k, label]) => `<button type="button" data-sort="${k}" aria-pressed="${k === "rating"}">${label}</button>`).join("")}</div>
+    <div class="scroll" id="pick-wrap" data-ev="${esc(eid)}" data-me="${esc(me || "")}">${pickTable(ev, me, "rating")}</div>`;
 }
 /* ---------- full scouting report ---------- */
 const mmss2 = (s) => { s = Math.max(0, Math.round(s)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
