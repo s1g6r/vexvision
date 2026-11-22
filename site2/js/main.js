@@ -287,7 +287,7 @@ const noteBox = (id) => `<div class="notes"><label for="note-${esc(id)}">Your no
 document.addEventListener("click", async (e) => {
   const b = e.target.closest(".copy-notes"); if (!b) return;
   const ev = OFF.events[b.dataset.ev];
-  const text = `${ev.name}\n\n` + ev.teams.filter((t) => NOTES[t.n]).map((t) => `${t.n}${t.name ? ` (${t.name})` : ""}: ${NOTES[t.n].trim()}`).join("\n\n");
+  const text = `${(ev.short || ev.name).replace(/ \(Fall 2026\)$/, "")}, ${ev.date}\n\n` + ev.teams.filter((t) => NOTES[t.n]).map((t) => `${t.n}${t.name ? ` (${t.name})` : ""}: ${NOTES[t.n].trim()}`).join("\n\n");
   try { await navigator.clipboard.writeText(text); b.textContent = "Copied"; } catch { b.textContent = "Couldn't copy here"; }
   setTimeout(() => (b.textContent = "Copy my notes for this event"), 2000);
 });
@@ -520,6 +520,24 @@ document.addEventListener("click", (e) => {
   w.innerHTML = pickTable(ev, w.dataset.me || null, b.dataset.sort);
   const mp = document.getElementById("pick-mix-slot"); if (mp) mp.innerHTML = b.dataset.sort === "mix" ? mixPanel() : "";
 });
+/* the pick list as it is sorted now, with your notes, as a CSV any spreadsheet opens */
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".pick-csv"); if (!b) return;
+  const w = document.getElementById("pick-wrap"), ev = OFF.events[w.dataset.ev], me = w.dataset.me || null;
+  const key = document.querySelector(".pick-sort button[aria-pressed=true]")?.dataset.sort || "rating";
+  const MS = key === "mix" ? mixScores(ev) : null;
+  const order = [...w.querySelectorAll("tbody tr td:nth-child(2) a")].map((a) => a.textContent);
+  const byN = Object.fromEntries(ev.teams.map((t) => [t.n, t]));
+  const q = (v) => { v = v == null ? "" : String(v); return /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v; };
+  const head = ["Rank", "Team", "Name", "Rating", "Record", "Points a match", "Skills", ...(MS ? ["Your mix"] : []), "How it plays", "Matches on video", ...(me && REP[me] ? ["With " + me] : []), "Your notes"];
+  const rows = order.map((n, i) => { const t = byN[n], f = pickFit(me, n);
+    return [i + 1, n, t.name, t.rating != null ? Math.round(t.rating) : "", t.record, t.avg != null ? Math.round(t.avg) : "", t.skills, ...(MS ? [MS[n].score >= 0 ? Math.round(MS[n].score * 100) : ""] : []),
+      REP[n] ? (REP[n].tags.join("; ") || "Scouted") : "", REP[n]?.n ?? 0, ...(me && REP[me] ? [f ? f.text : ""] : []), NOTES[n] || ""]; });
+  const csv = "\ufeff" + [head, ...rows].map((r) => r.map(q).join(",")).join("\r\n");
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  a.download = `pick list ${(ev.short || "event").replace(/ \(Fall 2026\)$/, "")}${me ? " " + me : ""}.csv`; document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+});
 document.addEventListener("input", (e) => {
   const r = e.target.closest?.("input[data-mix]"); if (!r) return;
   MIX[r.dataset.mix] = +r.value; r.previousElementSibling.textContent = ["Off", "A little", "Some", "A lot"][+r.value];
@@ -571,7 +589,8 @@ function showEvent(eid, me) {
     <p class="scout-note">Every team here. Rating is from going into the event; tags come from the matches we've watched.${me && REP[me] ? ` "With you" compares each team's most-run auton with ${esc(me)}'s.` : ""}</p>
     <div class="pick-sort" role="group" aria-label="Sort the pick list">${PICK_SORTS.filter(([k]) => k !== "fit" || (me && REP[me])).map(([k, label]) => `<button type="button" data-sort="${k}" aria-pressed="${k === "rating"}">${label}</button>`).join("")}</div>
     <div id="pick-mix-slot"></div>
-    <div class="scroll" id="pick-wrap" data-ev="${esc(eid)}" data-me="${esc(me || "")}">${pickTable(ev, me, "rating")}</div>`;
+    <div class="scroll" id="pick-wrap" data-ev="${esc(eid)}" data-me="${esc(me || "")}">${pickTable(ev, me, "rating")}</div>
+    <button type="button" class="btn ghost pick-csv" style="margin-top:16px">Download the pick list as a spreadsheet</button>`;
 }
 /* ---------- full scouting report ---------- */
 const mmss2 = (s) => { s = Math.max(0, Math.round(s)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
