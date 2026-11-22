@@ -123,8 +123,12 @@ def read_plates(img, box):
     return out
 
 def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_hint=6, log=print,
-            every_overlay=3.0, every_plate=2.0, every_read=2.0):
-    """frames: iterable of (t, img). teams: {"red": [a, b], "blue": [c, d]} (from schedule or overlay)."""
+            every_overlay=3.0, every_plate=2.0, every_read=2.0, quick=False):
+    """frames: iterable of (t, img). teams: {"red": [a, b], "blue": [c, d]} (from schedule or overlay).
+    quick: once the on-screen clock has been read, only look closely at the match itself. Before
+    autonomous starts one frame in three is enough to line up the field, and after the driver clock
+    runs out only the overlay is read (for the final score). Streams whose overlay can't be read get
+    every frame, as before."""
     cal = Calibrator(detector)
     det_log = []                       # per calibrated frame: (t, [[x, y, conf, x0, y0, x1, y1, colour], ...], [feat, ...])
     plate_log = []                     # (t, det index, [(text, conf), ...])
@@ -139,9 +143,10 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
     last_read = -1e9; last_plate = -1e9; last_ov = -1e9
     n = 0
     t0w = time.time()
+    clock_ok, t_end, k = False, None, 0
     for t, img in frames:
-        n += 1
-        if t - last_ov >= every_overlay:
+        k += 1
+        if t - last_ov >= (1.5 if quick and t_start is None else every_overlay):
             last_ov = t
             r = overlay.read(img, valid_teams)
             overlay_reads.append((t, r.as_dict()))
@@ -149,8 +154,19 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
                 running.append((t, r.red_score, r.blue_score))
             if teams is None and len(r.red) == 2 and len(r.blue) == 2:
                 teams = {"red": r.red, "blue": r.blue}
+            if r.period is not None or len(r.red) == 2:
+                clock_ok = True               # this stream's overlay can be read
             if t_start is None and r.period == "auton" and r.clock is not None:
                 t_start = t - (15 - r.clock)
+            if r.period == "driver" and r.clock is not None and t_start is not None and t > t_start + 15:
+                t_end = max(t_end or 0, t + r.clock + 3)   # a misread clock can only make it look later
+        if quick and clock_ok:
+            end = t_end if t_end is not None else (t_start + 150 if t_start is not None else None)
+            if end is not None and t > end + 8:
+                continue                      # match over (plus a few seconds for the final Goals): overlay only
+            if t_start is None and t < 120 and k % 3:
+                continue                      # before autonomous: one frame in three (only early on, in case the clock never shows)
+        n += 1
         dets = detector(img)
         if not cal.update(t, img, dets):
             continue

@@ -159,3 +159,12 @@
 - **Niles final re-read:** with the new video it calibrated (0.88) but the camera is behind the drivers: robots seen 42% of the time, none named for sure, no auton. Kept out.
 - **Video for Illinois teams is used up.** The Hawks Robotics channel's Override uploads are all read; its other Niles and Lake Park uploads are from last season. Lake Park has only those 5 single-match uploads, IPSD and Glenbrook South have no video. More Illinois coverage now needs new video (a stream at Glenbrook South, or teams uploading), not more reading.
 - **Checks on the live site:** every team page, every report and every event (with sample teams, every pick-list sort) loads with no errors or bad text (948 pages); all replays open.
+
+### Nov 22 (morning) — quick reading, corrections, printing
+
+- **Quick reading** (`analyze(..., quick=True)`, on by default in `mac_perceive.py` and `cc_run.py`; `VV_QUICK=0` turns it off). Once the overlay can be read, frames before autonomous are thinned to one in three (only in the first 120 s, in case the clock never shows), and after the driver clock runs out only the overlay is read, plus 8 s for the final Goals. The end time is the latest one any clock read gives, so a misread can only make it later.
+  - **Speedway Qual 11 (stream clip, 330 s):** 490 frames instead of 996. Same t_start and driver start; robot paths differ by a median 9–50 mm; seen share and distance driven the same.
+  - **Cornfield Qual 1 (single upload):** 677 frames instead of 720 (the match fills the clip). Paths differ by a median 1–11 mm; distance driven is about 10% lower because driving after the buzzer is no longer counted.
+  - First try had a bug: a "driver 0:00" left on screen from the previous match ended the reading before it started. The end time now only comes from driver clocks after autonomous.
+- **"Wrong team on a robot? Tell us"** under each replay opens a GitHub issue with the match and what the replay shows. Fixes go in `data/name_fixes.json` and are applied by `tools/event_names.py` as certain (`docs/NAME_FIXES.md`).
+- **Print:** event pages and reports print as light sheets without the rest of the site.

@@ -20,7 +20,8 @@ def main():
         clip = os.path.join(clips, m["id"] + ".mp4")
         if not os.path.exists(clip):
             print(m["id"], "no clip"); continue
-        res = AN.analyze(stream.video_frames(clip, 0, None, fps=3), det, teams={"red": m["red"], "blue": m["blue"]})
+        res = AN.analyze(stream.video_frames(clip, 0, None, fps=3), det, teams={"red": m["red"], "blue": m["blue"]},
+                         quick=os.environ.get("VV_QUICK", "1") != "0")
         P = res.pop("perception"); P["looks"] = looks
         json.dump(P, open(os.path.join(raw, m["id"] + ".perc.json"), "w"), default=float, separators=(",", ":"))
         res = AN.reason(json.loads(json.dumps(P, default=float)))

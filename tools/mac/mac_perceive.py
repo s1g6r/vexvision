@@ -18,6 +18,8 @@ def ffmpeg_exe():
         return None
 
 FF = ffmpeg_exe()
+# look closely only at the match itself once the on-screen clock is read (about twice as fast on stream clips)
+QUICK = os.environ.get("VV_QUICK", "1") != "0"
 
 def frames(path, fps=3, size=(1280, 720)):
     """ffmpeg when it can decode the clip (the Cornfield clips are AV1), OpenCV otherwise."""
@@ -71,7 +73,7 @@ def main():
             if not os.path.exists(clip):
                 left.append((mid, clip, teams)); continue
             t0 = time.time()
-            res = AN.analyze(frames(clip), det, teams=json.loads(teams), log=lambda *a: None)
+            res = AN.analyze(frames(clip), det, teams=json.loads(teams), log=lambda *a: None, quick=QUICK)
             P = res.pop("perception")
             json.dump(P, open(dst + ".tmp", "w"), default=float, separators=(",", ":"))
             os.replace(dst + ".tmp", dst)
