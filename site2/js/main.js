@@ -763,7 +763,15 @@ addEventListener("hashchange", route); route();
 if (!location.hash.startsWith("#event-") && cornfield) showEvent(cornfield[0], "2360A");
 const rpRoot = document.getElementById("rp");
 rpRoot.addEventListener("replay-meta", (e) => { const R = e.detail;
-  document.getElementById("rp-sub").innerHTML = `${esc(R.match)} at ${esc(R.event)}: <span style="color:var(--red)">${R.red.join(" &amp; ")}</span> vs <span style="color:var(--blue)">${R.blue.join(" &amp; ")}</span>, followed for the whole match from one YouTube video.${R.stills && R.stills.n ? " The broadcast plays in the corner with the same four robots marked, so you can check it against the real thing." : ""}${R.robots.some((r) => r.named === false) ? " Robot plates are too small to read on this stream, so partners we can't tell apart are shown as Red 1 and Red 2." : ""}`; });
+  document.getElementById("rp-sub").innerHTML = `${esc(R.match)} at ${esc(R.event)}: <span style="color:var(--red)">${R.red.join(" &amp; ")}</span> vs <span style="color:var(--blue)">${R.blue.join(" &amp; ")}</span>, followed for the whole match from one YouTube video.${R.stills && R.stills.n ? " The broadcast plays in the corner with the same four robots marked, so you can check it against the real thing." : ""}${R.robots.some((r) => r.named === false) ? " Robot plates are too small to read on this stream, so partners we can't tell apart are shown as Red 1 and Red 2." : ""} <a class="rp-fix" href="${fixLink(R)}" target="_blank" rel="noopener">Wrong team on a robot? Tell us</a>`; });
+/* a prefilled GitHub issue: which match, what the replay shows, and room to say what's wrong */
+function fixLink(R) {
+  const k = { red: 0, blue: 0 };
+  const who = (R.robots || []).map((r) => { const a = r.alliance === "blue" ? "blue" : "red"; k[a]++;
+    return `- ${a === "blue" ? "Blue" : "Red"} ${k[a]}: ${r.named ? r.team : `not named (${(R[a] || []).join(" or ")})`}`; }).join("\n");
+  const body = `Match: ${R.match} at ${R.event} (${R.id})\n\nWhat the replay shows:\n${who}\n\nWhat's wrong (for example "the robot marked 2360A is really 2360C", and the time in the match if it helps):\n\n`;
+  return `https://github.com/s1g6r/vexvision/issues/new?title=${encodeURIComponent(`Wrong robot name: ${R.match}, ${R.event}`)}&body=${encodeURIComponent(body)}`;
+}
 let current = null;
 async function loadReplay(id, autoplay, start = null) {
   if (current) { current.destroy(); const c = rpRoot.querySelector("canvas"), n = c.cloneNode(); c.replaceWith(n); }

@@ -12,6 +12,9 @@ from collections import defaultdict
 import numpy as np
 
 SURE = 0.75
+FIX_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "name_fixes.json")
+FIXES = json.load(open(FIX_FILE)) if os.path.exists(FIX_FILE) else {}
+FIXES = {m: {str(k): v for k, v in d.items()} for m, d in FIXES.items() if not m.startswith("_")}
 
 def reid_desc(vs):
     """One look per robot from its crop embeddings: the mean of the crops closest to their
@@ -51,9 +54,19 @@ def load(raw, idx, reid=None):
             # option 0: tA on the first robot; option 1: swapped
             cur = 0 if rb[0].get("team") == tA else 1
             anchor = cur if (rb[0].get("confidence") or 0) >= SURE else None
+            # a scout's correction (data/name_fixes.json) beats everything: {match id: {track: team}}
+            fx = FIXES.get(x["id"], {})
+            k0, k1 = str(rb[0]["track"]), str(rb[1]["track"])
+            fixed = None
+            if fx.get(k0) in (tA, tB):
+                fixed = 0 if fx[k0] == tA else 1
+            elif fx.get(k1) in (tA, tB):
+                fixed = 1 if fx[k1] == tA else 0
+            if fixed is not None:
+                anchor = fixed
             ev[x["event"]].append({"match": x["id"], "alliance": a, "teams": (tA, tB), "tracks": (rb[0]["track"], rb[1]["track"]),
                                    "d": (np.asarray(rb[0]["desc"], float), np.asarray(rb[1]["desc"], float)), "x": cur, "anchor": anchor,
-                                   "conf0": rb[0].get("confidence") or 0})
+                                   "conf0": rb[0].get("confidence") or 0, "fixed": fixed is not None})
     return ev
 
 def chosen(D, x):
@@ -125,7 +138,7 @@ def main():
             continue
         X = solve(Ds)
         for i, (D, x) in enumerate(zip(Ds, X)):
-            c = 0.9 if D["anchor"] is not None else confidence(Ds, X, i, scale)
+            c = 1.0 if D["fixed"] else 0.9 if D["anchor"] is not None else confidence(Ds, X, i, scale)
             tA, tB = D["teams"]; k0, k1 = D["tracks"]
             m = {k0: tA, k1: tB} if x == 0 else {k0: tB, k1: tA}
             if c >= 0.9:

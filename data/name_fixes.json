@@ -1,0 +1,4 @@
+{
+  "_how": "Corrections from scouts. Each entry is a match id, then robot track ids (from the match's raw reading, robots[].track) and the team that robot really is. tools/event_names.py treats these as certain and uses them to name the rest of the event. See docs/NAME_FIXES.md.",
+  "_example": {"cc-sf2-1": {"0": "2360A"}}
+}
