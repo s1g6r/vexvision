@@ -37,7 +37,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p26"
+"pack": "p27"
 },
 {
 "id": "Kx4bKVNEpjA",
@@ -730,7 +730,7 @@
 "named": 4,
 "sure": 0,
 "replay": true,
-"pack": "p27"
+"pack": "p28"
 },
 {
 "id": "-bXlVMTj8Ng",
@@ -852,7 +852,7 @@
 "named": 4,
 "sure": 2,
 "replay": true,
-"pack": "p27"
+"pack": "p28"
 },
 {
 "id": "aelhzLIgKNg",
@@ -873,7 +873,7 @@
 "named": 4,
 "sure": 2,
 "replay": true,
-"pack": "p27"
+"pack": "p28"
 },
 {
 "id": "bDkINvmThVw",
@@ -894,7 +894,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p27"
+"pack": "p28"
 },
 {
 "id": "PfJe0ZkNvHU",
@@ -915,7 +915,7 @@
 "named": 4,
 "sure": 0,
 "replay": true,
-"pack": "p27"
+"pack": "p28"
 },
 {
 "id": "mzrqSKqmVCg",
@@ -936,7 +936,7 @@
 "named": 4,
 "sure": 2,
 "replay": true,
-"pack": "p27"
+"pack": "p28"
 },
 {
 "id": "0-5sAtgWImo",
@@ -957,7 +957,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p27"
+"pack": "p28"
 },
 {
 "id": "1r-POswEj74",
@@ -1251,7 +1251,7 @@
 "named": 4,
 "sure": 2,
 "replay": true,
-"pack": "p26"
+"pack": "p27"
 },
 {
 "id": "4NooGAaRqRU",
@@ -1272,7 +1272,7 @@
 "named": 4,
 "sure": 2,
 "replay": true,
-"pack": "p28"
+"pack": "p29"
 },
 {
 "id": "cc-early-3210",
@@ -1491,7 +1491,7 @@
 "calibrated": 0.8,
 "seen": 0.83,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p26"
 },
@@ -4410,7 +4410,7 @@
 "named": 4,
 "sure": 2,
 "replay": true,
-"pack": "p25"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -4430,7 +4430,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p25"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -4450,7 +4450,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p25"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -4470,7 +4470,7 @@
 "named": 4,
 "sure": 2,
 "replay": true,
-"pack": "p25"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -4490,7 +4490,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p25"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -4510,7 +4510,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p25"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -4608,7 +4608,7 @@
 "calibrated": 0.58,
 "seen": 0.75,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "pack": "p24"
 },
@@ -4648,7 +4648,7 @@
 "calibrated": 0.9,
 "seen": 0.65,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p24"
 },
@@ -4849,6 +4849,126 @@
 "seen": 0.75,
 "named": 4,
 "sure": 4,
+"replay": true,
+"pack": "p25"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 24",
+"red": [
+"6210M",
+"210K"
+],
+"blue": [
+"7447X",
+"55760R"
+],
+"id": "e64359-1-qual24",
+"video": "e64359-1-qual24",
+"calibrated": 0.88,
+"seen": 0.72,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p25"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 26",
+"red": [
+"55760V",
+"10015Z"
+],
+"blue": [
+"2011A",
+"34543Z"
+],
+"id": "e64359-1-qual26",
+"video": "e64359-1-qual26",
+"calibrated": 0.9,
+"seen": 0.8,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p25"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 27",
+"red": [
+"2011G",
+"10666A"
+],
+"blue": [
+"16610G",
+"3150V"
+],
+"id": "e64359-1-qual27",
+"video": "e64359-1-qual27",
+"calibrated": 0.89,
+"seen": 0.75,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p25"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 28",
+"red": [
+"76316J",
+"1211X"
+],
+"blue": [
+"7410A",
+"12914X"
+],
+"id": "e64359-1-qual28",
+"video": "e64359-1-qual28",
+"calibrated": 0.88,
+"seen": 0.73,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p25"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 29",
+"red": [
+"8292Z",
+"3150A"
+],
+"blue": [
+"7701S",
+"2145X"
+],
+"id": "e64359-1-qual29",
+"video": "e64359-1-qual29",
+"calibrated": 0.88,
+"seen": 0.78,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p25"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 30",
+"red": [
+"32K",
+"3946W"
+],
+"blue": [
+"2055X",
+"9364E"
+],
+"id": "e64359-1-qual30",
+"video": "e64359-1-qual30",
+"calibrated": 0.9,
+"seen": 0.7,
+"named": 4,
+"sure": 2,
 "replay": true,
 "pack": "p25"
 }
