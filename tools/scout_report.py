@@ -287,7 +287,7 @@ def summarise(team, ms):
         km = {k: v / max(1, n) for k, v in kinds.items()}
         parts = [f"{km['own']:.0f} of its own Alliance Goals", f"{km['neutral']:.0f} neutral", f"{km['center']:.0f} at the Center Goal", f"{km['opp']:.0f} of the other alliance's"]
         parts = [p_ for p_, k in zip(parts, ["own", "neutral", "center", "opp"]) if round(km[k]) >= 1]
-        txt = f"Works about {per:.0f} {'Goal' if round(per) == 1 else 'Goals'} a match ({', '.join(parts)})"
+        txt = f"Stops at about {per:.0f} {'Goal' if round(per) == 1 else 'Goals'} a match to score or descore ({', '.join(parts)})"
         if cyc:
             txt += f", moving to a new Goal every {cyc:.0f} s or so"
         txt += f". Its favourite is {fav[0]}"
@@ -300,6 +300,8 @@ def summarise(team, ms):
         cw = {"own": "its own colour", "yellow": "yellows", "other": "the other alliance's colour"}
         rest = [k for k in ("own", "yellow") if k != big]
         out.append(f"Mostly handles {cw[big]}: {pct(cm[big])} of the cone colour seen on the robot, {cw[rest[0]]} {pct(cm[rest[0]])} (a rough read from the video).")
+        if cm["yellow"] >= GAMBLER and len(carry) >= 2:
+            out.append("A gambler: yellows are a bigger part of its game than for most teams, so expect it to go for them.")
     sec["scoring"] = {"visits_per_match": round(float(per), 1), "cycle_s": cyc, "by_kind": {k: round(v / max(1, n), 1) for k, v in kinds.items()},
                       "favourites": [[k, round(names[k] / n, 1)] for k in sorted(names, key=lambda k: -names[k])[:5]], "carry": cm}
     # --- the robot itself
@@ -349,7 +351,9 @@ def summarise(team, ms):
         sec["split"] = {"quals": len(q), "elims": len(e)}
     return out, sec
 
-def tags(sec):
+GAMBLER = 0.38   # share of the cone colour seen on the robot that is yellow; about the top sixth of teams
+
+def tags(sec, n=1):
     """A few words for what kind of robot this is, for lists and match cards."""
     t = []
     d = sec.get("defence", {}); g = sec.get("scoring", {}).get("by_kind", {}); tg = sec.get("toggles", {})
@@ -362,7 +366,10 @@ def tags(sec):
     if g:
         k = max(g, key=g.get)
         if g[k] >= 1:
-            t.append({"own": "Own Goals", "neutral": "Neutral Goals", "center": "Center Goal", "opp": "Their Goals"}[k])
+            t.append({"own": "Mostly own Goals", "neutral": "Mostly neutral Goals", "center": "Mostly Center Goal", "opp": "Mostly their Goals"}[k])
+    cm = sec.get("scoring", {}).get("carry")
+    if cm and cm.get("yellow", 0) >= GAMBLER and n >= 2:
+        t.append("Gambler")                   # yellows are a big part of how it scores
     if sec.get("endgame", {}).get("midfield", 0) >= 0.5:
         t.append("Ends in Midfield")
     a = sec.get("auton")
@@ -407,7 +414,7 @@ def main():
     out = {}
     for team, ms in teams.items():
         summary, sec = summarise(team, ms)
-        out[team] = {"n": len(ms), "summary": summary, "sections": sec, "matches": ms, "tags": tags(sec)}
+        out[team] = {"n": len(ms), "summary": summary, "sections": sec, "matches": ms, "tags": tags(sec, len(ms))}
     ranks(out)
     json.dump(out, open(a.out, "w"), separators=(",", ":"))
     print(len(out), "teams with a report")
