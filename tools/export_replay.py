@@ -45,7 +45,9 @@ def fill_gaps(t, xy, seen, max_gap=8.0):
 def smooth(path, win=1.0):
     """path: [(t, x, y, seen)] at the analysis rate. Gaussian smoothing in time,
     seen points weighted far above coasting ones, then heading from velocity."""
-    a = np.array([[p[0], p[1], p[2], 1.0 if p[3] else 0.15] for p in path], float)
+    a = np.array([[p[0], p[1], p[2], 1.0 if p[3] else 0.15] for p in path], float).reshape(-1, 4)
+    if not len(a):
+        return []                                # a robot that was never placed on the field
     t, xy, w = a[:, 0], a[:, 1:3], a[:, 3]
     xy = fill_gaps(t, xy, w > 0.5)
     out = []
@@ -111,7 +113,10 @@ def main():
         if r.get("t_start") is not None and "t_driver" in r:   # the match itself: after the buzzer people walk on and lift robots
             hist = [p for p in hist if -3.0 <= p[0] <= end]
         x = next(x for x in r["robots"] if str(x["track"]) == tid)
-        robots.append({"team": team[tid], "alliance": alli[tid], "named": (x.get("confidence") or 0) >= 0.75, "path": smooth(hist),
+        path = smooth(hist)
+        if not path:
+            continue
+        robots.append({"team": team[tid], "alliance": alli[tid], "named": (x.get("confidence") or 0) >= 0.75, "path": path,
                        "distance_ft": x.get("distance_ft"), "seen_share": x.get("seen_share"),
                        "points": x.get("points_seen"), "placements": x.get("placements")})
     cams, last = [], -9
