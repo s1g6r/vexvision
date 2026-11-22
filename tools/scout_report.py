@@ -287,7 +287,7 @@ def summarise(team, ms):
         km = {k: v / max(1, n) for k, v in kinds.items()}
         parts = [f"{km['own']:.0f} of its own Alliance Goals", f"{km['neutral']:.0f} neutral", f"{km['center']:.0f} at the Center Goal", f"{km['opp']:.0f} of the other alliance's"]
         parts = [p_ for p_, k in zip(parts, ["own", "neutral", "center", "opp"]) if round(km[k]) >= 1]
-        txt = f"Works about {per:.0f} Goals a match ({', '.join(parts)})"
+        txt = f"Works about {per:.0f} {'Goal' if round(per) == 1 else 'Goals'} a match ({', '.join(parts)})"
         if cyc:
             txt += f", moving to a new Goal every {cyc:.0f} s or so"
         txt += f". Its favourite is {fav[0]}"
@@ -321,16 +321,16 @@ def summarise(team, ms):
     tv = sec["robot"]["toggle_visits"] or 0
     if to >= 0.3:
         which = "including the other alliance's" if topp >= 0.19 else "mostly its own"
-        out.append(f"Goes after Toggles: about {tv:.0f} trips a match, {pct(to)} of driver control right by one, {which}.")
+        out.append(f"Goes after Toggles: about {tv:.0f} {'trip' if round(tv) == 1 else 'trips'} a match, {pct(to)} of driver control right by one, {which}.")
     elif to <= 0.1:
         out.append("Rarely goes to the Toggles.")
     else:
-        out.append(f"Visits the Toggles now and then: about {tv:.0f} trips a match.")
+        out.append(f"Visits the Toggles now and then: about {tv:.0f} {'trip' if round(tv) == 1 else 'trips'} a match." if round(tv) >= 1 else "Visits the Toggles now and then, less than once a match.")
     sec["toggles"] = {"share": round(float(to), 3), "opp": round(float(topp), 3), "trips": tv}
     # --- endgame
     mid = np.mean([m["midfield_end"] for m in ms])
     if mid >= 0.5:
-        out.append(f"Ends in the Midfield in {sum(m['midfield_end'] for m in ms)} of {n} matches.")
+        out.append(f"Ends in the Midfield in {sum(m['midfield_end'] for m in ms)} of {n} {'match' if n == 1 else 'matches'}.")
     sec["endgame"] = {"midfield": round(float(mid), 3)}
     # --- quals vs elims
     q = [m for m in ms if not m["elim"]]; e = [m for m in ms if m["elim"]]
