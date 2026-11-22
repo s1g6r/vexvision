@@ -58,3 +58,16 @@ staged clips once a match has its replay and looks; they are copies and take a l
 - Download: about 9 GB for 94 clips, about 25 minutes with the 4-piece trick.
 - Reading: 94 matches in about 9 hours of Mac time spread over the evening (slower while the Mac was on battery).
 - Robots named for sure after naming across the event: 276 of 376.
+
+## Reading in the cloud instead (Speedway day 2, 22 Nov)
+
+When the Mac job isn't running, the cloud machine can read the clips itself, more slowly:
+
+1. Grab frames and download clips on the Mac's shell exactly as above (steps 1 and 2); on 22 Nov all 1,089 frames of a
+   9-hour stream came down in under three minutes, and clips in about a minute each.
+2. Order the windows so the most useful matches come first (Illinois teams, then teams with the fewest matches on video)
+   and save them as `windows_todo.txt` next to `matches.json`.
+3. Stage clips into this machine a few at a time and run two workers:
+   `tools/cloud_worker.sh 0 2 <dir>` and `tools/cloud_worker.sh 1 2 <dir>`. Each one reads its clips with quick reading
+   as they arrive, works out the robot looks, and deletes the staged copy.
+4. Every couple of hours: `rebuild.sh`, then `post.sh "message"`.
