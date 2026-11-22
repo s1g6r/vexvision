@@ -3,13 +3,16 @@ Usage: python -m tools.pack_thumbs THUMB_DIR OUT_DIR  -> OUT_DIR/sheet-<n>.jpg +
 import json, os, sys
 from PIL import Image
 
-W, H, COLS, PER = 240, 135, 16, 320
+W, H, COLS, PER = 240, 135, 8, 64          # small sheets: the page only loads the ones it shows
 
 def main():
     src, out = sys.argv[1], sys.argv[2]
     os.makedirs(out, exist_ok=True)
     ids = sorted(f[:-4] for f in os.listdir(src) if f.endswith(".jpg") and not f.startswith("sheet-"))
     m = {}
+    for f in os.listdir(out):                   # sheets left from an earlier, bigger layout
+        if f.startswith("sheet-"):
+            os.remove(os.path.join(out, f))
     for n in range(0, len(ids), PER):
         chunk = ids[n:n + PER]; rows = (len(chunk) + COLS - 1) // COLS
         sheet = Image.new("RGB", (COLS * W, rows * H), (21, 20, 18))
@@ -20,7 +23,7 @@ def main():
                 continue
             sheet.paste(im, ((i % COLS) * W, (i // COLS) * H))
             m[k] = [n // PER, i % COLS, i // COLS, rows]
-        sheet.save(os.path.join(out, f"sheet-{n // PER}.jpg"), quality=78, optimize=True, progressive=True)
+        sheet.save(os.path.join(out, f"sheet-{n // PER}.jpg"), quality=74, optimize=True, progressive=True)
     json.dump({"cols": COLS, "map": m}, open(os.path.join(os.path.dirname(out.rstrip("/")), "thumbs.json"), "w"), separators=(",", ":"))
     print(len(m), "thumbs in", (len(ids) + PER - 1) // PER, "sheets")
 

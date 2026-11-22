@@ -26,8 +26,22 @@ const thumb = (id) => {
   const t = TH?.map?.[id];
   if (!t) return `<img src="data/thumbs/${id}.jpg" alt="" loading="lazy">`;
   const [n, c, r, rows] = t, C = TH.cols;
-  return `<span class="spr" style="background-image:url(data/sheets/sheet-${n}.jpg);background-size:${C * 100}% ${rows * 100}%;background-position:${C > 1 ? (c / (C - 1)) * 100 : 0}% ${rows > 1 ? (r / (rows - 1)) * 100 : 0}%"></span>`;
+  return `<span class="spr" data-bg="data/sheets/sheet-${n}.jpg" style="background-size:${C * 100}% ${rows * 100}%;background-position:${C > 1 ? (c / (C - 1)) * 100 : 0}% ${rows > 1 ? (r / (rows - 1)) * 100 : 0}%"></span>`;
 };
+// Thumbnail sheets load only when a thumbnail comes near the screen.
+let sprPending = false;
+function sprScan() {
+  sprPending = false;
+  const H = innerHeight + 400, W = innerWidth + 400;
+  document.querySelectorAll(".spr[data-bg]").forEach((el) => {
+    const r = el.getBoundingClientRect();
+    if (r.bottom > -400 && r.top < H && r.right > -400 && r.left < W && (r.width || r.height)) { el.style.backgroundImage = `url(${el.dataset.bg})`; el.removeAttribute("data-bg"); }
+  });
+}
+const watchSpr = () => { if (!sprPending) { sprPending = true; requestAnimationFrame(sprScan); } };
+addEventListener("scroll", watchSpr, { capture: true, passive: true });
+addEventListener("resize", watchSpr);
+new MutationObserver(watchSpr).observe(document.body, { childList: true, subtree: true });
 const IDX = await fetch("data/replays/index.json").then((r) => (r.ok ? r.json() : [])).catch(() => []);
 const NOREP = new Set(IDX.filter((x) => x.replay === false).map((x) => x.id));
 const REP = await fetch("data/reports.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
@@ -395,10 +409,11 @@ function autonClash(me, other, partner) {
   const race = [...a.goals].filter((g) => theirs.has(g) && (g === "C" || /neutral/.test(GOALN[g])));
   return race.length ? `Races you to ${race.map(shortGoal).join(" and ")} in auton.` : null;
 }
+const nOn = (R) => { const k = R.n ?? R.matches?.length ?? 0; return `${k} match${k === 1 ? "" : "es"}`; };
 function teamCard(n, side, ev, me, partner) {
   const t = ev.teams.find((x) => x.n === n) || {}, R = REP[n];
   const A = R?.sections?.auton, route = A?.routes?.[0];
-  const autonLine = route ? `<div class="line"><b>Auton${A.seen > 1 ? ` · ran it ${route.count} of ${A.seen}` : ""}:</b> ${esc(route.text)}.${A.routes.length > 1 ? ` <span class="role">${A.routes.length - 1} other route${A.routes.length > 2 ? "s" : ""} seen.</span>` : ""}</div>` : "";
+  const autonLine = route ? `<div class="line"><b>Auton${A.seen > 1 ? ` · ran it ${route.count} of ${A.seen}` : " · seen once"}:</b> ${esc(route.text)}.${A.routes.length > 1 ? ` <span class="role">${A.routes.length - 1} other route${A.routes.length > 2 ? "s" : ""} seen.</span>` : ""}</div>` : "";
   const W = R ? watchouts(R) : [];
   const clash = me ? autonClash(me, n, partner) : null;
   if (clash) W.unshift(clash);
@@ -407,7 +422,7 @@ function teamCard(n, side, ev, me, partner) {
     ${R?.tags?.length ? `<div class="tags">${R.tags.map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : ""}
     ${route ? `<div class="tc-auton"><canvas class="heat auton big" width="200" height="200" data-team="${esc(n)}" aria-label="${esc(n)}'s autonomous routes"></canvas>${autonLine}</div>` : ""}
     ${W.length ? `<ul class="watch-list">${W.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
-    ${R ? `<div class="tc-links">${route ? watchBtn({ id: route.typical }, -1, "Watch their auton") : ""}<a class="more" href="#report-${esc(n)}">Full report</a></div>` : `<div class="role">Not on video yet</div>`}</div>`;
+    ${R ? `<div class="tc-links">${route ? watchBtn({ id: route.typical }, -1, "Watch their auton") : ""}<a class="more" href="#report-${esc(n)}">Full report</a></div><div class="role tc-src">From ${nOn(R)} on video</div>` : `<div class="role">Not on video yet</div>`}</div>`;
 }
 function showEvent(eid, me) {
   const ev = OFF.events[eid], out = $("#prep-out");
@@ -616,6 +631,8 @@ Promise.resolve(IDX).then((idx) => {
   if (list.length > 1) {
     el.innerHTML = list.map((x) => `<button type="button" data-id="${x.id}" aria-pressed="${x.id === first}">${thumb(TH?.map?.[x.id] ? x.id : x.video)}<span><b>${esc(x.match || "Match")}</b><span>${esc((x.event || "").replace(/ Signature$/, "").replace(/^Illini /, "").replace(/ \(Fall 2026\)$/, ""))}</span></span></button>`).join("");
     el.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => loadReplay(b.dataset.id, true)));
+    watchSpr(el);
   }
 });
+watchSpr(document);
 window.__ready = true; window.done = true;
