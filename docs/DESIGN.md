@@ -21,3 +21,11 @@ headings made of two short statements.
 - **Your notes**: a rounded text box on reports and team pages, saved on the device only; a note shows as a soft gold strip
   on that team's prep-page card.
 - **"From N matches on video"** under each card, so a read from one match isn't mistaken for a habit.
+- **Match strip**: your matches as pill buttons in one horizontally scrolling row that sticks under the menu while the match
+  cards are on screen and lets go after the last one. Results are a small green W or pink L; the next unplayed match is
+  filled gold, the one place gold fills a control on this page. Jumps respect reduced motion.
+- **Your mix** panel: a rounded panel of six sliders in a responsive grid, label left and its current word ("Off", "A
+  little", "Some", "A lot") right, slider full width under them; gold accent to match the rest of the page. Words rather
+  than numbers, because the weights only matter relative to each other.
+- **Download the pick list** and **Copy my notes**: ghost buttons, text only, placed under the thing they act on.
+- Scanner rerun on the rendered event page with the mix panel open: the same three findings as above, nothing new.
