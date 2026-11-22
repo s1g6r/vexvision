@@ -191,6 +191,7 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
   addEventListener("resize", () => F.resize());
 
   const clock = $(".rp-clock"), pipCard = $(".rp-pip");
+  pipCard.hidden = !(R.stills && R.stills.n);          // matches kept without broadcast stills (to save space)
   let stillIdx = -1;
   const helper = new THREE.PerspectiveCamera(30, 16 / 9, 0.05, 60);
 

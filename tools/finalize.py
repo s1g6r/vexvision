@@ -20,12 +20,14 @@ def main():
             continue
         if "robots" not in json.load(open(os.path.join(raw, i + ".json"))):
             continue
-        if not os.path.exists(os.path.join(vids, i + ".mp4")):
-            continue                      # read elsewhere (the PC): no video here to cut stills from
+        vid = os.path.join(vids, i + ".mp4")
+        if not os.path.exists(vid) and R:
+            continue                      # already has a 3D-only replay
         e = idx[i]
         meta = {k: e.get(k) for k in ("event", "match", "red", "blue", "video")}
-        run("tools.export_replay", os.path.join(raw, i + ".json"), os.path.join(vids, i + ".mp4"),
-            "--out", rep, f"--id={i}", "--meta", json.dumps(meta))
+        # no video here (read on the PC or the Mac): a 3D replay without the broadcast stills
+        run("tools.export_replay", os.path.join(raw, i + ".json"), vid,
+            "--out", rep, f"--id={i}", "--meta", json.dumps(meta), *([] if os.path.exists(vid) else ["--no-stills"]))
     run("tools.team_stats", "--raw", raw, "--index", os.path.join(rep, "index.json"),
         "--out", os.path.join(os.path.dirname(rep.rstrip("/")), "team_stats.json"), "--extra", *extra)
 
