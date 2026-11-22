@@ -110,8 +110,12 @@ def main():
                        "skills": t.get("skills"), "avg": round(sum(g["scored"]) / len(g["scored"]), 1) if g and g["scored"] else None})
         events[eid] = {"name": e["name"], "short": ours.get(eid, e["name"]), "date": e["date"], "status": e.get("status"), "teams": tl, "matches": ms}
     # when the results were last pulled, so the site can say how fresh they are
-    src = [os.path.join("data/official", f) for f in os.listdir("data/official") if f.endswith(".json")] if os.path.isdir("data/official") else []
-    fetched = datetime.datetime.fromtimestamp(max(os.path.getmtime(f) for f in src), datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ") if src else None
+    stamp = os.path.join(a.official, "fetched.txt")
+    if os.path.exists(stamp):
+        fetched = open(stamp).read().strip()
+    else:
+        src = glob.glob(os.path.join(a.official, "*.json"))
+        fetched = datetime.datetime.fromtimestamp(max(os.path.getmtime(f) for f in src), datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ") if src else None
     json.dump({"fetched": fetched, "matches": matches, "teams": teams, "events": events}, open(a.out, "w"), separators=(",", ":"))
     print(f"{len(matches)} of {len(idx)} tracked matches joined, {len(teams)} teams")
 

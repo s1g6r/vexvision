@@ -36,6 +36,9 @@ def main():
         save(get(f"{BASE}/leaderboard.json"), os.path.join(a.dir, "leaderboard.json")); ok += 1
     except Exception as e:
         print(f"  leaderboard: {e}", file=sys.stderr); bad += 1
+    if ok:
+        import datetime
+        open(os.path.join(a.dir, "fetched.txt"), "w").write(datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ") + "\n")
     print(f"{ok} files refreshed, {bad} failed")
 
 
