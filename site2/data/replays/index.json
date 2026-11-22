@@ -1020,7 +1020,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p31"
+"pack": "p32"
 },
 {
 "id": "-k32ORRyM6s",
@@ -1209,7 +1209,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p31"
+"pack": "p32"
 },
 {
 "id": "YMpwouE94q4",
@@ -1493,7 +1493,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p31"
+"pack": "p32"
 },
 {
 "id": "LcmEbXvS0Yg",
@@ -4408,7 +4408,7 @@
 "calibrated": 0.65,
 "seen": 0.75,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p28"
 },
@@ -4528,7 +4528,7 @@
 "calibrated": 0.89,
 "seen": 0.77,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p30"
 },
@@ -5648,7 +5648,7 @@
 "calibrated": 0.79,
 "seen": 0.8,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p29"
 },
@@ -5810,7 +5810,7 @@
 "named": 4,
 "sure": 2,
 "replay": true,
-"pack": "p29"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -6030,7 +6030,7 @@
 "named": 4,
 "sure": 0,
 "replay": true,
-"pack": "p30"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -6191,5 +6191,105 @@
 "sure": 4,
 "replay": true,
 "pack": "p31"
+},
+{
+"id": "e64359-2-qual154",
+"event": "Speedway Signature",
+"match": "Qual 154",
+"red": [
+"252H",
+"7368C"
+],
+"blue": [
+"355T",
+"1590A"
+],
+"video": "e64359-2-qual154",
+"calibrated": 0.92,
+"seen": 0.8,
+"named": 4,
+"sure": 0,
+"replay": true,
+"pack": "p32"
+},
+{
+"id": "e64359-2-qual102",
+"event": "Speedway Signature",
+"match": "Qual 102",
+"red": [
+"1028A",
+"355T"
+],
+"blue": [
+"7410A",
+"2145Y"
+],
+"video": "e64359-2-qual102",
+"calibrated": 0.86,
+"seen": 0.72,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p31"
+},
+{
+"id": "e64359-2-qual185",
+"event": "Speedway Signature",
+"match": "Qual 185",
+"red": [
+"355T",
+"2145X"
+],
+"blue": [
+"76316J",
+"5690X"
+],
+"video": "e64359-2-qual185",
+"calibrated": 0.73,
+"seen": 0.8,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p32"
+},
+{
+"id": "e64359-2-qual128",
+"event": "Speedway Signature",
+"match": "Qual 128",
+"red": [
+"884A",
+"252A"
+],
+"blue": [
+"3150V",
+"355T"
+],
+"video": "e64359-2-qual128",
+"calibrated": 0.76,
+"seen": 0.77,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p31"
+},
+{
+"id": "e64359-1-qual68",
+"event": "Speedway Signature",
+"match": "Qual 68",
+"red": [
+"16610M",
+"6210B"
+],
+"blue": [
+"7700R",
+"18799M"
+],
+"video": "e64359-1-qual68",
+"calibrated": 0.87,
+"seen": 0.88,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p29"
 }
 ]
