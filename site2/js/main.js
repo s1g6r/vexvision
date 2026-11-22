@@ -424,6 +424,36 @@ function teamCard(n, side, ev, me, partner) {
     ${W.length ? `<ul class="watch-list">${W.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
     ${R ? `<div class="tc-links">${route ? watchBtn({ id: route.typical }, -1, "Watch their auton") : ""}<a class="more" href="#report-${esc(n)}">Full report</a></div><div class="role tc-src">From ${nOn(R)} on video</div>` : `<div class="role">Not on video yet</div>`}</div>`;
 }
+/* ---------- match plan: all four most-run autons on one field ---------- */
+const PLAN_COL = { me: "#f2c230", partner: "#5fd08a", opp1: "#ef6b8a", opp2: "#b48cff" };
+function typicalPath(n) {
+  const R = REP[n], r = R?.sections?.auton?.routes?.[0]; if (!r) return null;
+  const m = R.matches.find((x) => x.id === r.typical && x.route?.length);
+  return m ? { path: m.route, count: r.count, seen: R.sections.auton.seen } : null;
+}
+function planBlock(me, partner, op) {
+  const who = [[me, "me", false], [partner, "partner", false], [op[0], "opp1", true], [op[1], "opp2", true]].filter(([n]) => n);
+  const have = who.filter(([n]) => typicalPath(n));
+  if (have.length < 2) return "";
+  const data = esc(JSON.stringify(have.map(([n, k, flip]) => [n, k, flip])));
+  return `<div class="pm-plan"><canvas class="plan" width="220" height="220" data-plan="${data}" aria-label="Most-run autons of the teams in this match"></canvas>
+    <div><b class="pm-plan-h">Autons in this match</b><ul class="pm-legend">${who.map(([n, k]) => `<li><i style="background:${PLAN_COL[k]}"></i>${esc(n)}${typicalPath(n) ? "" : ` <span class="role">not seen</span>`}</li>`).join("")}</ul>
+    <p class="role">Your side is bottom left. Each line is that team's most-run auton; a filled dot is where it starts.</p></div></div>`;
+}
+function drawPlan(c) {
+  const g = c.getContext("2d"), W = c.width;
+  g.fillStyle = "#1c1a17"; g.fillRect(0, 0, W, W);
+  const P = fieldLines(g, W);
+  JSON.parse(c.dataset.plan).forEach(([n, k, flip]) => {
+    const t = typicalPath(n); if (!t) return;
+    const pts = t.path.map(([x, y]) => flip ? [-x, -y] : [x, y]);
+    g.strokeStyle = PLAN_COL[k]; g.fillStyle = PLAN_COL[k]; g.lineWidth = 3; g.lineJoin = "round"; g.globalAlpha = 0.95;
+    g.beginPath(); pts.forEach(([x, y], j) => { const [u, v] = P(x, y); j ? g.lineTo(u, v) : g.moveTo(u, v); }); g.stroke();
+    const [u0, v0] = P(...pts[0]); g.beginPath(); g.arc(u0, v0, 5, 0, 7); g.fill();
+    const [u1, v1] = P(...pts[pts.length - 1]); g.beginPath(); g.arc(u1, v1, 3.5, 0, 7); g.lineWidth = 2; g.stroke();
+  });
+  g.globalAlpha = 1;
+}
 function showEvent(eid, me) {
   const ev = OFF.events[eid], out = $("#prep-out");
   if (!ev) { out.innerHTML = `<div class="empty"><p><b>We don't have that event yet.</b></p></div>`; return; }
@@ -442,6 +472,7 @@ function showEvent(eid, me) {
       const my = red ? m.rs : m.bs, th = red ? m.bs : m.rs;
       const win = m.p != null ? (red ? m.p : 1 - m.p) : null;
       return `<div class="pm"><div class="pm-head"><b>${esc(m.m)}</b><span>${red ? "Red" : "Blue"} alliance${win != null ? ` · ${Math.round(win * 100)}% to win going in` : ""}</span>${done ? `<span class="res">${my > th ? "Won" : my < th ? "Lost" : "Tied"} ${my}–${th}</span>` : ""}</div>
+        ${planBlock(me, partner[0], op)}
         <div class="pm-grid">${partner.map((p) => teamCard(p, side, ev, me, true)).join("")}${op.map((o) => teamCard(o, oside, ev, me, false)).join("")}</div></div>`;
     }).join("") : `<p class="scout-note">The match schedule for this event isn't out yet.${known.length ? "" : " The pick list below is ready now."}</p>`) : ""}
     ${!mine.length && known.length ? `<h4 class="disp" style="font-size:34px;margin:30px 0 4px">Teams to know</h4>
@@ -573,7 +604,7 @@ document.addEventListener("click", (e) => {
   document.getElementById("replay").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
   loadReplay(b.dataset.replay, true, b.dataset.t != null ? +b.dataset.t : null);
 });
-const drawNew = () => document.querySelectorAll("canvas.heat:not([data-drawn])").forEach((c) => { c.dataset.drawn = 1; drawHeat(c, TS[c.dataset.team]); });
+const drawNew = () => { document.querySelectorAll("canvas.heat:not([data-drawn])").forEach((c) => { c.dataset.drawn = 1; drawHeat(c, TS[c.dataset.team]); }); document.querySelectorAll("canvas.plan:not([data-drawn])").forEach((c) => { c.dataset.drawn = 1; drawPlan(c); }); };
 for (const el of [document.getElementById("result"), document.getElementById("prep-out")]) new MutationObserver(drawNew).observe(el, { childList: true, subtree: true });
 const q = $("#q"), sugg = $("#sugg");
 let list = [], cur = 0;
