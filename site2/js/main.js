@@ -569,7 +569,7 @@ function showEvent(eid, me) {
   const list = [...ev.teams].sort((a, b) => (b.rating ?? -1) - (a.rating ?? -1));
   const known = list.filter((t) => t.n !== me && REP[t.n]?.sections?.auton).slice(0, 6);
   out.innerHTML = `<h3 class="tname disp" style="font-size:clamp(48px,7vw,96px)">${esc(ev.short.replace(/ \(Fall 2026\)$/, ""))}</h3>
-    <div class="tstats"><span>${esc(ev.date)}</span><span><b>${ev.teams.length}</b> teams</span><span><b>${onVideo}</b> scouted on video</span></div>
+    <div class="tstats"><span>${esc(ev.date)}</span><span><b>${ev.teams.length}</b> teams</span><span><b>${onVideo}</b> scouted on video</span>${OFF.fetched ? `<span>Results checked ${esc(new Date(OFF.fetched).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }))}</span>` : ""}</div>
     ${ev.teams.some((t) => NOTES[t.n]) ? `<button type="button" class="btn ghost copy-notes" data-ev="${esc(eid)}">Copy my notes for this event</button>` : ""}
     ${me && !ev.teams.some((t) => t.n === me) ? `<p class="scout-note">${esc(me)} isn't on this event's team list.</p>` : ""}
     ${me && ev.teams.some((t) => t.n === me) ? (mine.length ? `<div class="pm-sec"><h4 class="disp" style="font-size:34px;margin:30px 0 4px">${esc(me)}'s matches</h4>` + jumpStrip(mine, me) + mine.map((m, mi) => {

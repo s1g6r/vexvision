@@ -5,6 +5,7 @@ and the season leaderboard, and writes site2/data/official.json:
   matches: our match id -> official teams and scores
   teams:   team number -> season numbers plus per-event numbers
 """
+import datetime
 import argparse, json, re, glob, os
 from collections import defaultdict
 
@@ -108,7 +109,10 @@ def main():
             tl.append({"n": t["number"], "name": t.get("name"), "rank": t.get("rank"), "record": t.get("record"), "rating": t.get("rating_now") or t.get("rating_pre"),
                        "skills": t.get("skills"), "avg": round(sum(g["scored"]) / len(g["scored"]), 1) if g and g["scored"] else None})
         events[eid] = {"name": e["name"], "short": ours.get(eid, e["name"]), "date": e["date"], "status": e.get("status"), "teams": tl, "matches": ms}
-    json.dump({"matches": matches, "teams": teams, "events": events}, open(a.out, "w"), separators=(",", ":"))
+    # when the results were last pulled, so the site can say how fresh they are
+    src = [os.path.join("data/official", f) for f in os.listdir("data/official") if f.endswith(".json")] if os.path.isdir("data/official") else []
+    fetched = datetime.datetime.fromtimestamp(max(os.path.getmtime(f) for f in src), datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ") if src else None
+    json.dump({"fetched": fetched, "matches": matches, "teams": teams, "events": events}, open(a.out, "w"), separators=(",", ":"))
     print(f"{len(matches)} of {len(idx)} tracked matches joined, {len(teams)} teams")
 
 if __name__ == "__main__":
