@@ -29,3 +29,9 @@ headings made of two short statements.
   than numbers, because the weights only matter relative to each other.
 - **Download the pick list** and **Copy my notes**: ghost buttons, text only, placed under the thing they act on.
 - Scanner rerun on the rendered event page with the mix panel open: the same three findings as above, nothing new.
+- **Mark picked**: a small text pill at the end of each pick-list row. A picked row dims, its number is struck through and
+  it drops to the bottom, so the best teams left are always at the top during alliance selection. "Clear picks" is a
+  plain underlined text button next to the one-line help, shown only when something is marked. Your own team has no
+  button.
+- **Print**: event pages and reports switch to a light sheet (white, dark text, light borders), with the menu, forms,
+  sliders, strip and buttons hidden. The field drawings keep their dark background so the coloured routes stay visible.
