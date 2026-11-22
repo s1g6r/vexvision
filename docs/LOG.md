@@ -136,3 +136,13 @@
 - **Duplicates:** the same match filmed twice (a single-match upload and a stream) is now kept once, the copy where the robots were seen best (`tools/merge_index.py`).
 - **Artifact size cap:** one version can hold at most 256 MiB. The replay still sheets are now scaled to 3/4 and saved at JPEG quality 42, about 0.8 MB a sheet, for roughly 225 MiB in all. The picture in the corner of the replay is small, so this barely shows.
 - **Result:** 213 matches, 117 teams with a report (up from 69). 2360A's report now covers 15 matches at Cornfield and Great Lakes; its most-run auton was run in 7 of 12.
+
+### Nov 21–22 — Speedway day 1, Niles, and the move to GitHub Pages
+
+- **Speedway day 1, all of it.** The day-1 stream (7.7 hours) was mapped by reading the match title on a frame every 30 s, which found 94 of the 96 qualifications. Each match was downloaded on the Mac as four pieces at once, because YouTube slows each connection to about real time, then read by the Mac job. Robots were named across the event from their looks: 276 of 376 named for sure. Qual 37 was dropped (its timing came out wrong and nothing could be placed) and Qual 68 failed to read.
+- **The Mac job now waits for clips** that are still downloading instead of skipping them, so reading and downloading can run at the same time.
+- **Niles (21 Nov).** No stream. The official schedule and results come straight from the stats site, which this machine can now reach, so `tools/fetch_official.py` refreshes them without the Mac. Hawks Robotics posted four phone videos; only Qual 22 had a steady enough view (calibrated 0.84, all four robots named). The other three were left out.
+- **Upcoming Illinois events** are in the event list: Niles, Glenbrook South, Great Lakes #2 and #3, Cornfield Clash Winter, State. Before a schedule is out, the page shows "Teams to know": the strongest entrants we have on video, with their autons. Partner and opponent cards note auton clashes (same start tile, same Goals, races for a neutral or Center Goal).
+- **GitHub Pages.** The site moved to https://s1g6r.github.io/vexvision/ (workflow `.github/workflows/pages.yml`, publishes `site2/` on every push to `main`). That removed the artifact host's 256 MiB and 512-file caps. Replay data is bundled into packs of up to 12 matches per event (`tools/pack_replays.py`); a replay loads its pack once.
+- **Replays without stills** are allowed (the corner picture hides), for matches whose video we don't keep. Picker thumbnails now come from each replay's own stills (`tools/thumbs_from_stills.py`).
+- **Result:** 307 matches tracked, 305 with a replay, 201 teams with a report.
