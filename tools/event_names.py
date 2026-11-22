@@ -10,6 +10,7 @@ Usage: python -m tools.event_names RAW_DIR INDEX OUT"""
 import json, os, sys, random
 from collections import defaultdict
 import numpy as np
+from vexvision import analyze as AN, teams as TM
 
 SURE = 0.75
 FIX_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "name_fixes.json")
@@ -45,6 +46,10 @@ def load(raw, idx, reid=None):
             E = json.load(open(rp))
             for b in r["robots"]:
                 b["desc"] = reid_desc(E.get(str(b["track"]), []))
+        if x["id"] not in PLATES:
+            pr = plate_reads_by_track(raw, x["id"], r)
+            if pr is not None:
+                PLATES[x["id"]] = pr
         for a in ("red", "blue"):
             rb = [b for b in r["robots"] if b["alliance"] == a]
             teams = x.get(a) or []
@@ -62,12 +67,63 @@ def load(raw, idx, reid=None):
                 fixed = 0 if fx[k0] == tA else 1
             elif fx.get(k1) in (tA, tB):
                 fixed = 1 if fx[k1] == tA else 0
+            # 1080p plate reads (tools/plate_pass): two or more clear reads and at least three times as
+            # many for one way round as the other name the pair outright
+            pv = plate_decision(x, r, rb, (tA, tB))
+            plated = pv is not None
+            if plated:
+                anchor = pv
+            elif PLATE_EVENTS and x["event"] in PLATE_EVENTS:
+                anchor = None           # this event has plate reads: old names don't anchor it any more
             if fixed is not None:
                 anchor = fixed
             ev[x["event"]].append({"match": x["id"], "alliance": a, "teams": (tA, tB), "tracks": (rb[0]["track"], rb[1]["track"]),
                                    "d": (np.asarray(rb[0]["desc"], float), np.asarray(rb[1]["desc"], float)), "x": cur, "anchor": anchor,
-                                   "conf0": rb[0].get("confidence") or 0, "fixed": fixed is not None})
+                                   "conf0": rb[0].get("confidence") or 0, "fixed": fixed is not None, "plated": plated})
     return ev
+
+PLATE_EVENTS = set()              # events where enough plates were read to stand on their own
+
+
+def plate_reads_by_track(raw, mid, r):
+    """{tid: [(text, conf)]} from the 1080p plate pass, using the same tracks as the reading."""
+    pp = os.path.join(raw, mid + ".plates.json")
+    if not os.path.exists(pp):
+        return None
+    P = json.load(open(os.path.join(raw, mid + ".perc.json")))
+    _, assigns = AN.run_tracker(P["det_log"])
+    who = {}
+    for t, a in assigns:
+        for tid, j in a.items():
+            if j is not None:
+                who[(round(t, 2), j)] = tid
+    t_end = (r["t_driver"] + 105 + 3) if r.get("t_driver") else None
+    out = {}
+    for t, j, reads in json.load(open(pp)):
+        if t_end is not None and t > t_end:
+            continue
+        tid = who.get((round(t, 2), j))
+        if tid is not None:
+            out.setdefault(tid, []).extend(tuple(x) for x in reads)
+    return out
+
+
+def plate_decision(x, r, rb, teams):
+    reads = PLATES.get(x["id"])
+    if not reads:
+        return None
+    others = [t for k in ("red", "blue") for t in (x.get(k) or [])]
+    v = TM.plate_votes(reads, (rb[0]["track"], rb[1]["track"]), teams, others)
+    if not v:
+        return None
+    m, pro, con = v
+    if pro >= 2 and pro >= 3 * con:
+        return 0 if m[rb[0]["track"]] == teams[0] else 1
+    return None
+
+
+PLATES = {}
+
 
 def chosen(D, x):
     """(team, descriptor) pairs a decision puts forward under choice x."""
@@ -124,6 +180,15 @@ def main():
     raw, idx_p, out = sys.argv[1:4]
     reid = sys.argv[4] if len(sys.argv) > 4 else None
     idx = json.load(open(idx_p))
+    # an event where most matches have had the 1080p plate pass is named from plates (and scout
+    # fixes) alone; elsewhere earlier names still anchor, as before
+    per, plated = defaultdict(int), defaultdict(int)
+    for x in idx:
+        if x.get("error"):
+            continue
+        per[x["event"]] += 1
+        plated[x["event"]] += os.path.exists(os.path.join(raw, x["id"] + ".plates.json"))
+    PLATE_EVENTS.update(e for e in per if plated[e] >= max(10, 0.6 * per[e]))
     ev = load(raw, idx, reid)
     hint, scale = {}, 0.05
     quals = defaultdict(set)

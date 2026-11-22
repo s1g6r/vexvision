@@ -129,3 +129,33 @@ def look_score(feat, look):
     if total <= 0:
         return 0.0
     return float(f[list(L["hue"]), L["min_sat"]:].sum() / total)
+
+
+def plate_votes(plate_reads, tracks, teams, other_teams=(), margin=1.0):
+    """Name two robots of one alliance from 1080p plate reads, or say it can't.
+
+    plate_reads: {tid: [(text, conf), ...]} for this alliance's two tracks.
+    A read counts only when it clearly matches one team of the four in the match (likelihood
+    ahead of the next by `margin`); reads of the other alliance's plates are dropped, since they
+    mean the box held another robot or the track jumped. Returns ({tid: team}, votes_for,
+    votes_against) or None when no read counts."""
+    a, b = tracks
+    t1, t2 = teams
+    allt = list(teams) + [t for t in other_teams if t not in teams]
+    keep = swap = 0
+    for tid in (a, b):
+        for txt, c in plate_reads.get(tid, []):
+            sc = {t: read_likelihood(txt, t, c) for t in allt}
+            best = max(sc, key=sc.get)
+            rest = sorted(sc.values())[-2] if len(sc) > 1 else -99
+            if sc[best] - rest < margin or best not in teams:
+                continue
+            if (tid == a and best == t1) or (tid == b and best == t2):
+                keep += 1
+            else:
+                swap += 1
+    if keep == swap == 0:
+        return None
+    if keep >= swap:
+        return {a: t1, b: t2}, keep, swap
+    return {a: t2, b: t1}, swap, keep

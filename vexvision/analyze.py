@@ -324,11 +324,16 @@ def reason(P, official=None, looks=None, hint=None):
         if t - last_box >= 1.0 and a:
             last_box = t
             box_log.append((round(t, 2), {tid: rows_at[round(t, 2)][j][3:7] for tid, j in a.items() if j is not None}))
-    plates = {}
+    plates, plates_in = {}, {}
     for t, j, reads in P["plate_log"]:
         tid = who.get((round(t, 2), j))
         if tid is not None:
             plates.setdefault(tid, []).extend([tuple(r) for r in reads])
+    for t, j, reads in P.get("plate_log", [])[len(P.get("plate_log_720", P.get("plate_log", []))):] if "plate_log_720" in P else []:
+        tid = who.get((round(t, 2), j))
+        ts0 = P.get("t_start")
+        if tid is not None and (ts0 is None or ts0 - 35 <= t):
+            plates_in.setdefault(tid, []).extend([tuple(r) for r in reads])
     if not tracker.tracks:
         return {"error": "no calibration or robots found", "frames": n}
     if t_start is None:
@@ -351,6 +356,16 @@ def reason(P, official=None, looks=None, hint=None):
             tids = [tr.tid for tr in tracker.tracks if tr.alliance == a]
             if len(tids) == 2 and len(teams.get(a, [])) == 2:
                 m, conf = TM.assign_alliance(tids, teams[a], plates)
+                # 1080p plate reads (tools/plate_pass) are counted as votes, keeping only reads during
+                # the match that clearly name one of this alliance's two teams
+                pv = TM.plate_votes({k: v for k, v in plates_in.items() if k in tids}, tids, teams[a],
+                                    teams.get("red", []) + teams.get("blue", []))
+                if pv and pv[1] >= 2 and pv[1] >= 3 * pv[2]:
+                    m, conf = pv[0], min(0.99, 0.85 + 0.03 * pv[1])
+                elif pv is None or pv[1] < 2:
+                    pass
+                else:
+                    m, conf = pv[0], 0.5        # plates disagree with each other: leave it to the event
                 known = [t for t in teams[a] if t in looked]
                 if known:                     # a team told us what its robot looks like
                     k = known[0]
