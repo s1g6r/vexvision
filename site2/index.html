@@ -295,6 +295,11 @@ h4.mt{margin-top:30px!important}
 .pick-mix output{color:var(--mute);font-size:13px}
 table.pick td small{color:var(--mute);margin-left:1px}
 .rp-fix{color:var(--mute);font-size:14px;white-space:nowrap}.rp-fix:hover{color:var(--ink)}
+.take{font:500 12.5px "Geist",sans-serif;color:var(--mute);background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 11px;cursor:pointer;white-space:nowrap}
+.take:hover{color:var(--ink)}.take[aria-pressed=true]{color:var(--ink);background:rgba(239,233,221,.1)}
+table.pick tr.taken td{opacity:.42}table.pick tr.taken td:last-child{opacity:1}table.pick tr.taken b a{text-decoration:line-through}
+.take-clear{font:500 13px "Geist",sans-serif;color:var(--ink);background:none;border:0;text-decoration:underline;cursor:pointer;padding:0 0 0 6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .pick-sort{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
 .pick-sort button{font:500 14px "Geist",sans-serif;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
 .pick-sort button[aria-pressed=true]{background:var(--ink);color:#0c0b0a;border-color:var(--ink)}
@@ -311,7 +316,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 @media print{
 :root{--bg:#fff;--panel:#fff;--panel2:#f2f2f2;--ink:#111;--mute:#555;--line:rgba(0,0,0,.2);color-scheme:light}
 html,body{background:#fff!important;color:#111}
-.nav,.hero,footer,.ticker,#replay,#read,.head,.find,.picks,.pm-jump,.pick-sort,#pick-mix-slot,.btn,.back,.tc-links,.rp-fix{display:none!important}
+.nav,.hero,footer,.ticker,#replay,#read,.head,.find,.picks,.pm-jump,.pick-sort,#pick-mix-slot,.btn,.back,.tc-links,.rp-fix,.take,.pick-help{display:none!important}
 body[data-print=prep] #teams,body[data-print=teams] #prep{display:none!important}
 .sec{padding:0!important}.wrap{max-width:none!important;padding:0 8mm!important}
 .pm,.tc,.rep-sec,.pm-plan,tr{break-inside:avoid}.pm{border:1px solid #bbb}

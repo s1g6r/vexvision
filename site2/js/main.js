@@ -502,17 +502,33 @@ function pickFit(me, n) {
   if (a.moved >= 0.6 && b.moved >= 0.6 && [...a.goals].some((g) => b.goals.has(g))) return { ok: false, text: "Same auton Goals" };
   return { ok: true, text: "Autons fit" };
 }
+/* teams already picked during alliance selection, per event, on this device */
+const TAKEN = (() => { try { return JSON.parse(localStorage.getItem("vv-taken") || "{}"); } catch { return {}; } })();
+const saveTaken = () => { try { localStorage.setItem("vv-taken", JSON.stringify(TAKEN)); } catch {} };
+const evId = (ev) => Object.keys(OFF.events).find((k) => OFF.events[k] === ev);
+const curSort = () => document.querySelector(".pick-sort button[aria-pressed=true]")?.dataset.sort || "rating";
 function pickTable(ev, me, key) {
+  const tk = new Set(TAKEN[evId(ev)] || []);
   const val = { rating: (t) => t.rating ?? -1, avg: (t) => t.avg ?? -1, skills: (t) => t.skills ?? -1, video: (t) => REP[t.n] ? (REP[t.n].n ?? 0) : -1,
     fit: (t) => { if (t.n === me) return -1e9; const f = pickFit(me, t.n); return (f ? (f.ok ? 2 : 0.5) : REP[t.n] ? 1 : 0) * 1000 + (t.rating ?? 0); },
     mix: (t) => MS[t.n].score }[key];
   const MS = key === "mix" ? mixScores(ev) : null;
-  const list = [...ev.teams].sort((a, b) => val(b) - val(a));
-  return `<table class="pick"><thead><tr><th class="n">#</th><th>Team</th><th class="n">Rating</th><th class="n">Record</th><th class="n">Points</th><th class="n">Skills</th>${MS ? '<th class="n">Mix</th>' : ""}<th>How it plays</th>${me && REP[me] ? "<th>With you</th>" : ""}</tr></thead><tbody>
-    ${list.map((t, i) => { const f = pickFit(me, t.n); return `<tr class="${t.n === me ? "me" : ""}"><td class="n">${i + 1}</td><td><b><a href="#team-${esc(t.n)}">${esc(t.n)}</a></b><small style="display:block;color:var(--mute)">${esc(t.name || "")}</small></td><td class="n">${t.rating != null ? Math.round(t.rating) : "–"}</td><td class="n">${esc(t.record || "–")}</td><td class="n">${t.avg != null ? Math.round(t.avg) : "–"}</td><td class="n">${t.skills ?? "–"}</td>${MS ? `<td class="n">${MS[t.n].score >= 0 ? Math.round(MS[t.n].score * 100) + (MS[t.n].part ? "<small>*</small>" : "") : "–"}</td>` : ""}
-      <td>${REP[t.n] ? `<div class="tags">${(REP[t.n].tags.length ? REP[t.n].tags : ["Scouted"]).map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : `<span class="role" style="color:var(--mute);font-size:13px">Not on video yet</span>`}</td>${me && REP[me] ? `<td>${f ? `<span class="fit ${f.ok ? "ok" : "no"}">${f.text}</span>` : `<span class="role" style="color:var(--mute);font-size:13px">–</span>`}</td>` : ""}</tr>`; }).join("")}
+  const list = [...ev.teams].sort((a, b) => tk.has(a.n) - tk.has(b.n) || val(b) - val(a));
+  let rank = 0;
+  return `<table class="pick"><thead><tr><th class="n">#</th><th>Team</th><th class="n">Rating</th><th class="n">Record</th><th class="n">Points</th><th class="n">Skills</th>${MS ? '<th class="n">Mix</th>' : ""}<th>How it plays</th>${me && REP[me] ? "<th>With you</th>" : ""}<th><span class="sr">Picked</span></th></tr></thead><tbody>
+    ${list.map((t) => { const f = pickFit(me, t.n), gone = tk.has(t.n); return `<tr class="${t.n === me ? "me" : ""}${gone ? " taken" : ""}"><td class="n">${gone ? "–" : ++rank}</td><td><b><a href="#team-${esc(t.n)}">${esc(t.n)}</a></b><small style="display:block;color:var(--mute)">${esc(t.name || "")}</small></td><td class="n">${t.rating != null ? Math.round(t.rating) : "–"}</td><td class="n">${esc(t.record || "–")}</td><td class="n">${t.avg != null ? Math.round(t.avg) : "–"}</td><td class="n">${t.skills ?? "–"}</td>${MS ? `<td class="n">${MS[t.n].score >= 0 ? Math.round(MS[t.n].score * 100) + (MS[t.n].part ? "<small>*</small>" : "") : "–"}</td>` : ""}
+      <td>${REP[t.n] ? `<div class="tags">${(REP[t.n].tags.length ? REP[t.n].tags : ["Scouted"]).map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : `<span class="role" style="color:var(--mute);font-size:13px">Not on video yet</span>`}</td>${me && REP[me] ? `<td>${f ? `<span class="fit ${f.ok ? "ok" : "no"}">${f.text}</span>` : `<span class="role" style="color:var(--mute);font-size:13px">–</span>`}</td>` : ""}<td>${t.n === me ? "" : `<button type="button" class="take" data-n="${esc(t.n)}" aria-pressed="${gone}">${gone ? "Picked" : "Mark picked"}</button>`}</td></tr>`; }).join("")}
     </tbody></table>`;
 }
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".take, .take-clear"); if (!b) return;
+  const w = document.getElementById("pick-wrap"), eid = w.dataset.ev;
+  if (b.classList.contains("take-clear")) delete TAKEN[eid];
+  else { const set = new Set(TAKEN[eid] || []); set.has(b.dataset.n) ? set.delete(b.dataset.n) : set.add(b.dataset.n); TAKEN[eid] = [...set]; }
+  saveTaken();
+  w.innerHTML = pickTable(OFF.events[eid], w.dataset.me || null, curSort());
+  const c = document.querySelector(".take-clear"); if (c) c.hidden = !(TAKEN[eid] || []).length;
+});
 document.addEventListener("click", (e) => {
   const b = e.target.closest(".pick-sort button"); if (!b) return;
   const w = document.getElementById("pick-wrap"), ev = OFF.events[w.dataset.ev];
@@ -529,10 +545,10 @@ document.addEventListener("click", (e) => {
   const order = [...w.querySelectorAll("tbody tr td:nth-child(2) a")].map((a) => a.textContent);
   const byN = Object.fromEntries(ev.teams.map((t) => [t.n, t]));
   const q = (v) => { v = v == null ? "" : String(v); return /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v; };
-  const head = ["Rank", "Team", "Name", "Rating", "Record", "Points a match", "Skills", ...(MS ? ["Your mix"] : []), "How it plays", "Matches on video", ...(me && REP[me] ? ["With " + me] : []), "Your notes"];
+  const head = ["Rank", "Team", "Name", "Rating", "Record", "Points a match", "Skills", ...(MS ? ["Your mix"] : []), "How it plays", "Matches on video", ...(me && REP[me] ? ["With " + me] : []), "Picked", "Your notes"];
   const rows = order.map((n, i) => { const t = byN[n], f = pickFit(me, n);
-    return [i + 1, n, t.name, t.rating != null ? Math.round(t.rating) : "", t.record, t.avg != null ? Math.round(t.avg) : "", t.skills, ...(MS ? [MS[n].score >= 0 ? Math.round(MS[n].score * 100) : ""] : []),
-      REP[n] ? (REP[n].tags.join("; ") || "Scouted") : "", REP[n]?.n ?? 0, ...(me && REP[me] ? [f ? f.text : ""] : []), NOTES[n] || ""]; });
+    return [(TAKEN[w.dataset.ev] || []).includes(n) ? "" : i + 1, n, t.name, t.rating != null ? Math.round(t.rating) : "", t.record, t.avg != null ? Math.round(t.avg) : "", t.skills, ...(MS ? [MS[n].score >= 0 ? Math.round(MS[n].score * 100) : ""] : []),
+      REP[n] ? (REP[n].tags.join("; ") || "Scouted") : "", REP[n]?.n ?? 0, ...(me && REP[me] ? [f ? f.text : ""] : []), (TAKEN[w.dataset.ev] || []).includes(n) ? "Yes" : "", NOTES[n] || ""]; });
   const csv = "\ufeff" + [head, ...rows].map((r) => r.map(q).join(",")).join("\r\n");
   const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
   a.download = `pick list ${(ev.short || "event").replace(/ \(Fall 2026\)$/, "")}${me ? " " + me : ""}.csv`; document.body.append(a); a.click(); a.remove();
@@ -589,6 +605,7 @@ function showEvent(eid, me) {
     <p class="scout-note">Every team here. Rating is from going into the event; tags come from the matches we've watched.${me && REP[me] ? ` "With you" compares each team's most-run auton with ${esc(me)}'s.` : ""}</p>
     <div class="pick-sort" role="group" aria-label="Sort the pick list">${PICK_SORTS.filter(([k]) => k !== "fit" || (me && REP[me])).map(([k, label]) => `<button type="button" data-sort="${k}" aria-pressed="${k === "rating"}">${label}</button>`).join("")}</div>
     <div id="pick-mix-slot"></div>
+    <p class="scout-note pick-help">During alliance selection, mark each team as it's picked: the best teams left move to the top. <button type="button" class="take-clear" ${(TAKEN[eid] || []).length ? "" : "hidden"}>Clear picks</button></p>
     <div class="scroll" id="pick-wrap" data-ev="${esc(eid)}" data-me="${esc(me || "")}">${pickTable(ev, me, "rating")}</div>
     <button type="button" class="btn ghost pick-csv" style="margin-top:16px">Download the pick list as a spreadsheet</button>`;
 }
