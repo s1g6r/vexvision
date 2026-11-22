@@ -146,3 +146,16 @@
 - **GitHub Pages.** The site moved to https://s1g6r.github.io/vexvision/ (workflow `.github/workflows/pages.yml`, publishes `site2/` on every push to `main`). That removed the artifact host's 256 MiB and 512-file caps. Replay data is bundled into packs of up to 12 matches per event (`tools/pack_replays.py`); a replay loads its pack once.
 - **Replays without stills** are allowed (the corner picture hides), for matches whose video we don't keep. Picker thumbnails now come from each replay's own stills (`tools/thumbs_from_stills.py`).
 - **Result:** 307 matches tracked, 305 with a replay, 201 teams with a report.
+
+### Nov 22 (overnight) — lighter, offline, and more for the scout in the stands
+
+- **First visit is about 1.5 MB over the wire** (was about 10 MB). Picker thumbnails load only when scrolled into view, and a service worker (`site2/sw.js`) keeps the site working offline once it has loaded.
+- **Match plan:** each of your matches on the event page draws all four robots' most-run autons on one field, opponents turned to their side.
+- **Match strip:** a row of your matches that stays under the menu while you scroll them, with W/L marked and the first unplayed match marked "next". A 0–0 match before later played ones counts as replayed, not next.
+- **Pick list:** sorts by rating, points, skills, matches on video, fit with your auton, or "Your mix": six sliders (rating, points, skills, speed, Goals worked, time on the other side), each scored as a percentile against the other teams at that event. Teams without video drop the video sliders and get a *. The sliders are saved on the device. The list downloads as a CSV with your notes.
+- **Notes:** a box on every team page (including teams with results but no video), on reports and as a strip on cards, saved on the device; "Copy my notes for this event" puts them all on the clipboard.
+- **Find teams by name** as well as number; teams with no video show up as "no video yet".
+- **Results freshness:** `tools/fetch_official.py` writes `data/official/fetched.txt`; the event page says "Results checked …" in the reader's time.
+- **Niles final re-read:** with the new video it calibrated (0.88) but the camera is behind the drivers: robots seen 42% of the time, none named for sure, no auton. Kept out.
+- **Video for Illinois teams is used up.** The Hawks Robotics channel's Override uploads are all read; its other Niles and Lake Park uploads are from last season. Lake Park has only those 5 single-match uploads, IPSD and Glenbrook South have no video. More Illinois coverage now needs new video (a stream at Glenbrook South, or teams uploading), not more reading.
+- **Checks on the live site:** every team page, every report and every event (with sample teams, every pick-list sort) loads with no errors or bad text (948 pages); all replays open.
