@@ -570,7 +570,7 @@ function showEvent(eid, me) {
   const known = list.filter((t) => t.n !== me && REP[t.n]?.sections?.auton).slice(0, 6);
   out.innerHTML = `<h3 class="tname disp" style="font-size:clamp(48px,7vw,96px)">${esc(ev.short.replace(/ \(Fall 2026\)$/, ""))}</h3>
     <div class="tstats"><span>${esc(ev.date)}</span><span><b>${ev.teams.length}</b> teams</span><span><b>${onVideo}</b> scouted on video</span>${OFF.fetched ? `<span>Results checked ${esc(new Date(OFF.fetched).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }))}</span>` : ""}</div>
-    ${ev.teams.some((t) => NOTES[t.n]) ? `<button type="button" class="btn ghost copy-notes" data-ev="${esc(eid)}">Copy my notes for this event</button>` : ""}
+    <div class="ev-acts"><button type="button" class="btn ghost" onclick="print()">Print this page</button>${ev.teams.some((t) => NOTES[t.n]) ? `<button type="button" class="btn ghost copy-notes" data-ev="${esc(eid)}">Copy my notes for this event</button>` : ""}</div>
     ${me && !ev.teams.some((t) => t.n === me) ? `<p class="scout-note">${esc(me)} isn't on this event's team list.</p>` : ""}
     ${me && ev.teams.some((t) => t.n === me) ? (mine.length ? `<div class="pm-sec"><h4 class="disp" style="font-size:34px;margin:30px 0 4px">${esc(me)}'s matches</h4>` + jumpStrip(mine, me) + mine.map((m, mi) => {
       const red = m.r.includes(me), al = red ? m.r : m.b, op = red ? m.b : m.r, side = red ? "r" : "b", oside = red ? "b" : "r";
@@ -755,6 +755,7 @@ function land(el) {
 }
 function route() {
   const h = decodeURIComponent(location.hash.slice(1));
+  document.body.dataset.print = h.startsWith("event-") ? "prep" : h.startsWith("team-") || h.startsWith("report-") ? "teams" : "";
   if (h.startsWith("event-")) { const [, eid, ...rest] = h.split("-"); showEvent(eid, rest.join("-").toUpperCase() || null); land($("#prep")); return; }
   if (h.startsWith("report-")) { const id = h.slice(7).toUpperCase(); q.value = id; showReport(id); land($("#result")); return; }
   if (h.startsWith("team-")) { const id = h.slice(5).toUpperCase(); q.value = id; sugg.classList.remove("open"); showTeam(id); land($("#result")); }
