@@ -739,11 +739,25 @@ $("#find").addEventListener("submit", (e) => {
   if (!s) return q.focus();
   location.hash = "team-" + (T.has(s) || OFF.teams?.[s] || !list[cur] ? s : list[cur].id);
 });
+/* scroll a section into view and keep it there while content above it is still loading,
+   unless the reader starts scrolling on their own */
+let landTimer = null;
+function land(el) {
+  el.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+  clearInterval(landTimer);
+  let left = 12; const stop = () => { clearInterval(landTimer); ["wheel", "touchstart", "keydown"].forEach((k) => removeEventListener(k, stop)); };
+  ["wheel", "touchstart", "keydown"].forEach((k) => addEventListener(k, stop, { passive: true, once: true }));
+  landTimer = setInterval(() => {
+    const top = el.getBoundingClientRect().top;
+    if (Math.abs(top - 72) > 40) el.scrollIntoView({ behavior: "auto" });
+    if (--left <= 0) stop();
+  }, 250);
+}
 function route() {
   const h = decodeURIComponent(location.hash.slice(1));
-  if (h.startsWith("event-")) { const [, eid, ...rest] = h.split("-"); showEvent(eid, rest.join("-").toUpperCase() || null); $("#prep").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); return; }
-  if (h.startsWith("report-")) { const id = h.slice(7).toUpperCase(); q.value = id; showReport(id); $("#teams").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); return; }
-  if (h.startsWith("team-")) { const id = h.slice(5).toUpperCase(); q.value = id; sugg.classList.remove("open"); showTeam(id); $("#teams").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); }
+  if (h.startsWith("event-")) { const [, eid, ...rest] = h.split("-"); showEvent(eid, rest.join("-").toUpperCase() || null); land($("#prep")); return; }
+  if (h.startsWith("report-")) { const id = h.slice(7).toUpperCase(); q.value = id; showReport(id); land($("#result")); return; }
+  if (h.startsWith("team-")) { const id = h.slice(5).toUpperCase(); q.value = id; sugg.classList.remove("open"); showTeam(id); land($("#result")); }
 }
 addEventListener("hashchange", route); route();
 if (!location.hash.startsWith("#event-") && cornfield) showEvent(cornfield[0], "2360A");
