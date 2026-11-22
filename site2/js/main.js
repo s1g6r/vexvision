@@ -614,7 +614,7 @@ Promise.resolve(IDX).then((idx) => {
   loadReplay(first).catch((e) => console.error(e));
   const el = document.getElementById("rp-list");
   if (list.length > 1) {
-    el.innerHTML = list.map((x) => `<button type="button" data-id="${x.id}" aria-pressed="${x.id === first}">${thumb(x.video)}<span><b>${esc(x.match || "Match")}</b><span>${esc((x.event || "").replace(/ Signature$/, "").replace(/^Illini /, "").replace(/ \(Fall 2026\)$/, ""))}</span></span></button>`).join("");
+    el.innerHTML = list.map((x) => `<button type="button" data-id="${x.id}" aria-pressed="${x.id === first}">${thumb(TH?.map?.[x.id] ? x.id : x.video)}<span><b>${esc(x.match || "Match")}</b><span>${esc((x.event || "").replace(/ Signature$/, "").replace(/^Illini /, "").replace(/ \(Fall 2026\)$/, ""))}</span></span></button>`).join("");
     el.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => loadReplay(b.dataset.id, true)));
   }
 });
