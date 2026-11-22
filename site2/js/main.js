@@ -279,6 +279,15 @@ const yt = (id) => `https://www.youtube.com/watch?v=${id}`;
 const rank = (m) => { const x = (m || "").match(/^(R16|QF|SF|Final) (\d+)-(\d+)/); if (x) return { R16: 1, QF: 2, SF: 3, Final: 4 }[x[1]] * 100 + +x[2]; const q = (m || "").match(/Qual (\d+)/); return q ? -1000 + +q[1] : 900; };
 const tlink = (t, me) => `<a href="#team-${t}"${t === me ? ' style="color:var(--gold)"' : ""}>${t}</a>`;
 const pct = (v) => `${Math.round(v * 100)}%`;
+/* ---------- your own notes, kept on this device ---------- */
+const NOTES = (() => { try { return JSON.parse(localStorage.getItem("vv-notes") || "{}"); } catch { return {}; } })();
+const saveNotes = () => { try { localStorage.setItem("vv-notes", JSON.stringify(NOTES)); } catch {} };
+const noteBox = (id) => `<div class="notes"><label for="note-${esc(id)}">Your notes on ${esc(id)}</label>
+  <textarea id="note-${esc(id)}" data-note="${esc(id)}" rows="3" placeholder="What you saw in the pits or from the stands: drivetrain, intake, what they told you. Saved on this device only.">${esc(NOTES[id] || "")}</textarea></div>`;
+document.addEventListener("input", (e) => {
+  const t = e.target.closest?.("textarea[data-note]"); if (!t) return;
+  const v = t.value.trim(); if (v) NOTES[t.dataset.note] = t.value; else delete NOTES[t.dataset.note]; saveNotes();
+});
 function scoutBlock(id) {
   const st = TS[id];
   if (!st) return "";
@@ -422,6 +431,7 @@ function teamCard(n, side, ev, me, partner) {
     ${R?.tags?.length ? `<div class="tags">${R.tags.map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : ""}
     ${route ? `<div class="tc-auton"><canvas class="heat auton big" width="200" height="200" data-team="${esc(n)}" aria-label="${esc(n)}'s autonomous routes"></canvas>${autonLine}</div>` : ""}
     ${W.length ? `<ul class="watch-list">${W.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+    ${NOTES[n] ? `<div class="tc-note"><b>Your note:</b> ${esc(NOTES[n].length > 160 ? NOTES[n].slice(0, 157) + "…" : NOTES[n])}</div>` : ""}
     ${R ? `<div class="tc-links">${route ? watchBtn({ id: route.typical }, -1, "Watch their auton") : ""}<a class="more" href="#report-${esc(n)}">Full report</a></div><div class="role tc-src">From ${nOn(R)} on video</div>` : `<div class="role">Not on video yet</div>`}</div>`;
 }
 /* ---------- match plan: all four most-run autons on one field ---------- */
@@ -544,6 +554,7 @@ function showReport(id) {
     <a class="back" href="#team-${esc(id)}">Back to ${esc(id)}</a>
     <div class="rep-head"><span class="kicker">Scouting report</span><h3 class="tname disp">${esc(id)}</h3>
       <p class="rep-sub">From ${ms.length} match${ms.length === 1 ? "" : "es"} where we could tell which robot is ${esc(id)}${events.length ? `, at ${events.map(esc).join(", ")}` : ""}${q.length && e.length ? ` (${q.length} qualification${q.length === 1 ? "" : "s"}, ${e.length} elimination${e.length === 1 ? "" : "s"})` : e.length ? " (eliminations)" : ""}. It comes from where the robot drove and what it carried, so it says how a team plays rather than its exact score.</p></div>
+    ${noteBox(id)}
     ${OFF.teams[id] ? `<section class="rep-sec">${officialBlock(id).replace('<div class="off">', '<div>')}</section>` : ""}
     <section class="rep-sec"><h4>How they play</h4><ul class="plays">${R.summary.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>
     <section class="rep-sec rep-grid">
@@ -613,6 +624,7 @@ function showTeam(id) {
   out.innerHTML = `<h3 class="tname disp">${esc(id)}</h3>
     <div class="tstats"><span><b>${matches.length}</b> match${matches.length === 1 ? "" : "es"} on video</span><span><b>${t.events.size}</b> event${t.events.size === 1 ? "" : "s"}</span>${partners.length ? `<span>Partnered with ${partners.map((p) => tlink(p)).join(", ")}</span>` : ""}</div>
     ${officialBlock(id)}
+    ${noteBox(id)}
     ${scoutBlock(id)}
     ${matches.map((v) => {
       const mine = v.r?.includes(id) ? ["r", v.r, v.b] : v.b?.includes(id) ? ["b", v.b, v.r] : null;
@@ -689,4 +701,5 @@ Promise.resolve(IDX).then((idx) => {
   }
 });
 watchSpr(document);
+if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(() => {});
 window.__ready = true; window.done = true;
