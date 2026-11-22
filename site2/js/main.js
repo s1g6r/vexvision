@@ -496,6 +496,22 @@ document.addEventListener("click", (e) => {
   b.parentNode.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
   w.innerHTML = pickTable(ev, w.dataset.me || null, b.dataset.sort);
 });
+/* a row of your matches to jump between; the first one without a score is marked as next */
+function jumpStrip(mine, me) {
+  if (mine.length < 2) return "";
+  const played = (m) => m.rs != null && (m.rs || m.bs);
+  let last = -1; mine.forEach((m, i) => { if (played(m)) last = i; });
+  const next = last + 1 < mine.length ? last + 1 : -1;
+  return `<nav class="pm-jump" aria-label="Jump to a match">${mine.map((m, i) => {
+    const red = m.r.includes(me), my = red ? m.rs : m.bs, th = red ? m.bs : m.rs, done = m.rs != null && (m.rs || m.bs);
+    const res = done ? (my > th ? "W" : my < th ? "L" : "T") : "";
+    return `<button type="button" data-pm="${i}" class="${i === next ? "next" : ""}${res ? " r-" + res : ""}">${esc(m.m.replace(/^Qual(ifier|ification)? #?/i, "Q"))}${res ? ` <small>${res}</small>` : i === next ? " <small>next</small>" : ""}</button>`;
+  }).join("")}</nav>`;
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".pm-jump button"); if (!b) return;
+  document.getElementById("pm-" + b.dataset.pm)?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+});
 function showEvent(eid, me) {
   const ev = OFF.events[eid], out = $("#prep-out");
   if (!ev) { out.innerHTML = `<div class="empty"><p><b>We don't have that event yet.</b></p></div>`; return; }
@@ -508,13 +524,13 @@ function showEvent(eid, me) {
     <div class="tstats"><span>${esc(ev.date)}</span><span><b>${ev.teams.length}</b> teams</span><span><b>${onVideo}</b> scouted on video</span></div>
     ${ev.teams.some((t) => NOTES[t.n]) ? `<button type="button" class="btn ghost copy-notes" data-ev="${esc(eid)}">Copy my notes for this event</button>` : ""}
     ${me && !ev.teams.some((t) => t.n === me) ? `<p class="scout-note">${esc(me)} isn't on this event's team list.</p>` : ""}
-    ${me && ev.teams.some((t) => t.n === me) ? (mine.length ? `<h4 class="disp" style="font-size:34px;margin:30px 0 4px">${esc(me)}'s matches</h4>` + mine.map((m) => {
+    ${me && ev.teams.some((t) => t.n === me) ? (mine.length ? `<h4 class="disp" style="font-size:34px;margin:30px 0 4px">${esc(me)}'s matches</h4>` + jumpStrip(mine, me) + mine.map((m, mi) => {
       const red = m.r.includes(me), al = red ? m.r : m.b, op = red ? m.b : m.r, side = red ? "r" : "b", oside = red ? "b" : "r";
       const partner = al.filter((x) => x !== me);
       const done = m.rs != null && (m.rs || m.bs);
       const my = red ? m.rs : m.bs, th = red ? m.bs : m.rs;
       const win = m.p != null ? (red ? m.p : 1 - m.p) : null;
-      return `<div class="pm"><div class="pm-head"><b>${esc(m.m)}</b><span>${red ? "Red" : "Blue"} alliance${win != null ? ` · ${Math.round(win * 100)}% to win going in` : ""}</span>${done ? `<span class="res">${my > th ? "Won" : my < th ? "Lost" : "Tied"} ${my}–${th}</span>` : ""}</div>
+      return `<div class="pm" id="pm-${mi}"><div class="pm-head"><b>${esc(m.m)}</b><span>${red ? "Red" : "Blue"} alliance${win != null ? ` · ${Math.round(win * 100)}% to win going in` : ""}</span>${done ? `<span class="res">${my > th ? "Won" : my < th ? "Lost" : "Tied"} ${my}–${th}</span>` : ""}</div>
         ${planBlock(me, partner[0], op)}
         <div class="pm-grid">${partner.map((p) => teamCard(p, side, ev, me, true)).join("")}${op.map((o) => teamCard(o, oside, ev, me, false)).join("")}</div></div>`;
     }).join("") : `<p class="scout-note">The match schedule for this event isn't out yet.${known.length ? "" : " The pick list below is ready now."}</p>`) : ""}
