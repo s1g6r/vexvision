@@ -472,7 +472,28 @@ function drawPlan(c) {
   g.globalAlpha = 1;
 }
 /* ---------- pick list ---------- */
-const PICK_SORTS = [["rating", "Rating"], ["avg", "Points"], ["skills", "Skills"], ["video", "Most on video"], ["fit", "Fits with you"]];
+const PICK_SORTS = [["rating", "Rating"], ["avg", "Points"], ["skills", "Skills"], ["video", "Most on video"], ["fit", "Fits with you"], ["mix", "Your mix"]];
+/* your own mix: each slider weighs one thing, compared only with the other teams at this event */
+const MIX_KEYS = [["rating", "Rating", (t) => t.rating], ["avg", "Points a match", (t) => t.avg], ["skills", "Skills", (t) => t.skills],
+  ["speed", "Speed on video", (t) => REP[t.n]?.sections?.robot?.top_fps], ["goals", "Goals worked", (t) => REP[t.n]?.sections?.scoring?.visits_per_match],
+  ["defence", "Time on the other side", (t) => REP[t.n]?.sections?.defence?.other_side]];
+const MIX = (() => { try { return { rating: 2, avg: 2, skills: 1, speed: 1, goals: 1, defence: 0, ...JSON.parse(localStorage.getItem("vv-mix") || "{}") }; } catch { return { rating: 2, avg: 2, skills: 1, speed: 1, goals: 1, defence: 0 }; } })();
+function mixScores(ev) {
+  const pct = {};
+  MIX_KEYS.forEach(([k, , f]) => {
+    const vals = ev.teams.map((t) => f(t)).filter((v) => v != null).sort((a, b) => a - b);
+    pct[k] = (v) => v == null || vals.length < 2 ? null : vals.filter((x) => x < v).length / (vals.length - 1);
+  });
+  const out = {};
+  ev.teams.forEach((t) => {
+    let sum = 0, w = 0, miss = 0;
+    MIX_KEYS.forEach(([k, , f]) => { const wt = +MIX[k] || 0; if (!wt) return; const p = pct[k](f(t)); if (p == null) { miss += wt; return; } sum += wt * p; w += wt; });
+    out[t.n] = w ? { score: sum / w, part: miss > 0 } : { score: -1, part: true };
+  });
+  return out;
+}
+const mixPanel = () => `<div class="pick-mix" id="pick-mix"><p class="role">Slide each one to say how much it matters to you. Teams are compared only with the others at this event; where we have no video for a team, the video sliders are left out of its score and its Mix is marked *.</p>
+  ${MIX_KEYS.map(([k, label]) => `<label><span>${label}</span><output>${["Off", "A little", "Some", "A lot"][MIX[k]]}</output><input type="range" min="0" max="3" step="1" value="${MIX[k]}" data-mix="${k}"></label>`).join("")}</div>`;
 function pickFit(me, n) {
   if (!me || n === me) return null;
   const a = autonGoals(me), b = autonGoals(n);
@@ -483,10 +504,12 @@ function pickFit(me, n) {
 }
 function pickTable(ev, me, key) {
   const val = { rating: (t) => t.rating ?? -1, avg: (t) => t.avg ?? -1, skills: (t) => t.skills ?? -1, video: (t) => REP[t.n] ? (REP[t.n].n ?? 0) : -1,
-    fit: (t) => { if (t.n === me) return -1e9; const f = pickFit(me, t.n); return (f ? (f.ok ? 2 : 0.5) : REP[t.n] ? 1 : 0) * 1000 + (t.rating ?? 0); } }[key];
+    fit: (t) => { if (t.n === me) return -1e9; const f = pickFit(me, t.n); return (f ? (f.ok ? 2 : 0.5) : REP[t.n] ? 1 : 0) * 1000 + (t.rating ?? 0); },
+    mix: (t) => MS[t.n].score }[key];
+  const MS = key === "mix" ? mixScores(ev) : null;
   const list = [...ev.teams].sort((a, b) => val(b) - val(a));
-  return `<table class="pick"><thead><tr><th class="n">#</th><th>Team</th><th class="n">Rating</th><th class="n">Record</th><th class="n">Points</th><th class="n">Skills</th><th>How it plays</th>${me && REP[me] ? "<th>With you</th>" : ""}</tr></thead><tbody>
-    ${list.map((t, i) => { const f = pickFit(me, t.n); return `<tr class="${t.n === me ? "me" : ""}"><td class="n">${i + 1}</td><td><b><a href="#team-${esc(t.n)}">${esc(t.n)}</a></b><small style="display:block;color:var(--mute)">${esc(t.name || "")}</small></td><td class="n">${t.rating != null ? Math.round(t.rating) : "–"}</td><td class="n">${esc(t.record || "–")}</td><td class="n">${t.avg != null ? Math.round(t.avg) : "–"}</td><td class="n">${t.skills ?? "–"}</td>
+  return `<table class="pick"><thead><tr><th class="n">#</th><th>Team</th><th class="n">Rating</th><th class="n">Record</th><th class="n">Points</th><th class="n">Skills</th>${MS ? '<th class="n">Mix</th>' : ""}<th>How it plays</th>${me && REP[me] ? "<th>With you</th>" : ""}</tr></thead><tbody>
+    ${list.map((t, i) => { const f = pickFit(me, t.n); return `<tr class="${t.n === me ? "me" : ""}"><td class="n">${i + 1}</td><td><b><a href="#team-${esc(t.n)}">${esc(t.n)}</a></b><small style="display:block;color:var(--mute)">${esc(t.name || "")}</small></td><td class="n">${t.rating != null ? Math.round(t.rating) : "–"}</td><td class="n">${esc(t.record || "–")}</td><td class="n">${t.avg != null ? Math.round(t.avg) : "–"}</td><td class="n">${t.skills ?? "–"}</td>${MS ? `<td class="n">${MS[t.n].score >= 0 ? Math.round(MS[t.n].score * 100) + (MS[t.n].part ? "<small>*</small>" : "") : "–"}</td>` : ""}
       <td>${REP[t.n] ? `<div class="tags">${(REP[t.n].tags.length ? REP[t.n].tags : ["Scouted"]).map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : `<span class="role" style="color:var(--mute);font-size:13px">Not on video yet</span>`}</td>${me && REP[me] ? `<td>${f ? `<span class="fit ${f.ok ? "ok" : "no"}">${f.text}</span>` : `<span class="role" style="color:var(--mute);font-size:13px">–</span>`}</td>` : ""}</tr>`; }).join("")}
     </tbody></table>`;
 }
@@ -495,6 +518,13 @@ document.addEventListener("click", (e) => {
   const w = document.getElementById("pick-wrap"), ev = OFF.events[w.dataset.ev];
   b.parentNode.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
   w.innerHTML = pickTable(ev, w.dataset.me || null, b.dataset.sort);
+  const mp = document.getElementById("pick-mix-slot"); if (mp) mp.innerHTML = b.dataset.sort === "mix" ? mixPanel() : "";
+});
+document.addEventListener("input", (e) => {
+  const r = e.target.closest?.("input[data-mix]"); if (!r) return;
+  MIX[r.dataset.mix] = +r.value; r.previousElementSibling.textContent = ["Off", "A little", "Some", "A lot"][+r.value];
+  try { localStorage.setItem("vv-mix", JSON.stringify(MIX)); } catch {}
+  const w = document.getElementById("pick-wrap"); w.innerHTML = pickTable(OFF.events[w.dataset.ev], w.dataset.me || null, "mix");
 });
 /* a row of your matches to jump between; the first one without a score is marked as next */
 function jumpStrip(mine, me) {
@@ -524,7 +554,7 @@ function showEvent(eid, me) {
     <div class="tstats"><span>${esc(ev.date)}</span><span><b>${ev.teams.length}</b> teams</span><span><b>${onVideo}</b> scouted on video</span></div>
     ${ev.teams.some((t) => NOTES[t.n]) ? `<button type="button" class="btn ghost copy-notes" data-ev="${esc(eid)}">Copy my notes for this event</button>` : ""}
     ${me && !ev.teams.some((t) => t.n === me) ? `<p class="scout-note">${esc(me)} isn't on this event's team list.</p>` : ""}
-    ${me && ev.teams.some((t) => t.n === me) ? (mine.length ? `<h4 class="disp" style="font-size:34px;margin:30px 0 4px">${esc(me)}'s matches</h4>` + jumpStrip(mine, me) + mine.map((m, mi) => {
+    ${me && ev.teams.some((t) => t.n === me) ? (mine.length ? `<div class="pm-sec"><h4 class="disp" style="font-size:34px;margin:30px 0 4px">${esc(me)}'s matches</h4>` + jumpStrip(mine, me) + mine.map((m, mi) => {
       const red = m.r.includes(me), al = red ? m.r : m.b, op = red ? m.b : m.r, side = red ? "r" : "b", oside = red ? "b" : "r";
       const partner = al.filter((x) => x !== me);
       const done = m.rs != null && (m.rs || m.bs);
@@ -533,13 +563,14 @@ function showEvent(eid, me) {
       return `<div class="pm" id="pm-${mi}"><div class="pm-head"><b>${esc(m.m)}</b><span>${red ? "Red" : "Blue"} alliance${win != null ? ` · ${Math.round(win * 100)}% to win going in` : ""}</span>${done ? `<span class="res">${my > th ? "Won" : my < th ? "Lost" : "Tied"} ${my}–${th}</span>` : ""}</div>
         ${planBlock(me, partner[0], op)}
         <div class="pm-grid">${partner.map((p) => teamCard(p, side, ev, me, true)).join("")}${op.map((o) => teamCard(o, oside, ev, me, false)).join("")}</div></div>`;
-    }).join("") : `<p class="scout-note">The match schedule for this event isn't out yet.${known.length ? "" : " The pick list below is ready now."}</p>`) : ""}
+    }).join("") + "</div>" : `<p class="scout-note">The match schedule for this event isn't out yet.${known.length ? "" : " The pick list below is ready now."}</p>`) : ""}
     ${!mine.length && known.length ? `<h4 class="disp" style="font-size:34px;margin:30px 0 4px">Teams to know</h4>
       <p class="scout-note">The strongest teams here that we've watched, so you know their autons before the schedule comes out.</p>
       <div class="pm-grid know">${known.map((t) => teamCard(t.n, "", ev, me && ev.teams.some((x) => x.n === me) ? me : null, false)).join("")}</div>` : ""}
     <h4 class="disp" style="font-size:34px;margin:40px 0 12px">Pick list</h4>
     <p class="scout-note">Every team here. Rating is from going into the event; tags come from the matches we've watched.${me && REP[me] ? ` "With you" compares each team's most-run auton with ${esc(me)}'s.` : ""}</p>
     <div class="pick-sort" role="group" aria-label="Sort the pick list">${PICK_SORTS.filter(([k]) => k !== "fit" || (me && REP[me])).map(([k, label]) => `<button type="button" data-sort="${k}" aria-pressed="${k === "rating"}">${label}</button>`).join("")}</div>
+    <div id="pick-mix-slot"></div>
     <div class="scroll" id="pick-wrap" data-ev="${esc(eid)}" data-me="${esc(me || "")}">${pickTable(ev, me, "rating")}</div>`;
 }
 /* ---------- full scouting report ---------- */
