@@ -284,6 +284,13 @@ const NOTES = (() => { try { return JSON.parse(localStorage.getItem("vv-notes") 
 const saveNotes = () => { try { localStorage.setItem("vv-notes", JSON.stringify(NOTES)); } catch {} };
 const noteBox = (id) => `<div class="notes"><label for="note-${esc(id)}">Your notes on ${esc(id)}</label>
   <textarea id="note-${esc(id)}" data-note="${esc(id)}" rows="3" placeholder="What you saw in the pits or from the stands: drivetrain, intake, what they told you. Saved on this device only.">${esc(NOTES[id] || "")}</textarea></div>`;
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest(".copy-notes"); if (!b) return;
+  const ev = OFF.events[b.dataset.ev];
+  const text = `${ev.name}\n\n` + ev.teams.filter((t) => NOTES[t.n]).map((t) => `${t.n}${t.name ? ` (${t.name})` : ""}: ${NOTES[t.n].trim()}`).join("\n\n");
+  try { await navigator.clipboard.writeText(text); b.textContent = "Copied"; } catch { b.textContent = "Couldn't copy here"; }
+  setTimeout(() => (b.textContent = "Copy my notes for this event"), 2000);
+});
 document.addEventListener("input", (e) => {
   const t = e.target.closest?.("textarea[data-note]"); if (!t) return;
   const v = t.value.trim(); if (v) NOTES[t.dataset.note] = t.value; else delete NOTES[t.dataset.note]; saveNotes();
@@ -499,6 +506,7 @@ function showEvent(eid, me) {
   const known = list.filter((t) => t.n !== me && REP[t.n]?.sections?.auton).slice(0, 6);
   out.innerHTML = `<h3 class="tname disp" style="font-size:clamp(48px,7vw,96px)">${esc(ev.short.replace(/ \(Fall 2026\)$/, ""))}</h3>
     <div class="tstats"><span>${esc(ev.date)}</span><span><b>${ev.teams.length}</b> teams</span><span><b>${onVideo}</b> scouted on video</span></div>
+    ${ev.teams.some((t) => NOTES[t.n]) ? `<button type="button" class="btn ghost copy-notes" data-ev="${esc(eid)}">Copy my notes for this event</button>` : ""}
     ${me && !ev.teams.some((t) => t.n === me) ? `<p class="scout-note">${esc(me)} isn't on this event's team list.</p>` : ""}
     ${me && ev.teams.some((t) => t.n === me) ? (mine.length ? `<h4 class="disp" style="font-size:34px;margin:30px 0 4px">${esc(me)}'s matches</h4>` + mine.map((m) => {
       const red = m.r.includes(me), al = red ? m.r : m.b, op = red ? m.b : m.r, side = red ? "r" : "b", oside = red ? "b" : "r";
