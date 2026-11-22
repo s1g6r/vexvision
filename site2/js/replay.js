@@ -31,7 +31,7 @@ async function loadData(url) {
   return (await PACKS.get(file))[id];
 }
 
-export async function mountReplay(root, url, { reduced = false, autoplay = false, start = null } = {}) {
+export async function mountReplay(root, url, { reduced = false, autoplay = false, start = null, names = {} } = {}) {
   const R = await loadData(url);
   root.dispatchEvent(new CustomEvent("replay-meta", { detail: R, bubbles: true }));
   const $ = (s) => root.querySelector(s);
@@ -130,7 +130,7 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
 
   // the team cards under the stage
   $(".rp-teams").innerHTML = robots.map((r) => r.named
-    ? `<div class="rp-team" style="--c:var(--${r.side})"><div class="k"><i></i>${r.side === "red" ? "Red" : "Blue"}</div><b>${esc(r.team)}</b><span class="z"></span><span class="d"></span></div>`
+    ? `<div class="rp-team" style="--c:var(--${r.side})"><div class="k"><i></i>${r.side === "red" ? "Red" : "Blue"}</div><b>${esc(r.team)}${names[r.team] ? `<small class="tn">${esc(names[r.team])}</small>` : ""}</b><span class="z"></span><span class="d"></span></div>`
     : `<div class="rp-team unsure" style="--c:var(--${r.side})"><div class="k"><i></i>${esc(r.label)}</div><b>${r.maybe ? `${esc(r.maybe[0])}<small>or</small>${esc(r.maybe[1])}` : "Not named"}</b><span class="z"></span><span class="d"></span></div>`).join("");
   const cards = [...root.querySelectorAll(".rp-team")];
   const dist = robots.map((r) => {                      // cumulative distance along each path (m)

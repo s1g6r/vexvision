@@ -798,7 +798,7 @@ async function loadReplay(id, autoplay, start = null) {
   rpRoot.querySelector(".rp-range").replaceWith(rpRoot.querySelector(".rp-range").cloneNode(true));
   document.querySelectorAll("#rp-list button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.id === id));
   const pk = IDX.find((x) => x.id === id)?.pack;
-  current = await mountReplay(rpRoot, pk ? `data/replays/pack/${pk}.json#${id}` : `data/replays/${id}.json`, { reduced, autoplay, start });
+  current = await mountReplay(rpRoot, pk ? `data/replays/pack/${pk}.json#${id}` : `data/replays/${id}.json`, { reduced, autoplay, start, names: Object.fromEntries(Object.entries(OFF.teams || {}).map(([k, v]) => [k, v.name])) });
 }
 Promise.resolve(IDX).then((idx) => {
   const good = idx.filter((x) => !x.error && x.replay !== false && x.calibrated >= 0.6 && x.seen >= 0.6);
