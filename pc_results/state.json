@@ -18,7 +18,8 @@
   "64359": {
    "name": "Speedway: Override VEX V5 Blended Signature Event: VEX V5 Robotics Competition, Presented by the Chrysalis Global Foundation",
    "streams": [
-    "ME5jv9cAaJg"
+    "ME5jv9cAaJg",
+    "zhGs-5gah_Y"
    ],
    "checked": "2026-11-20T20:08"
   },
@@ -71,6 +72,7 @@
   "fSj_bAWskm0": "too short",
   "CGV9Dt0HEDo": "not this event",
   "sO4EPeI_tls": "too short",
-  "zhGs-5gah_Y": "event stream"
+  "zhGs-5gah_Y": "event stream",
+  "ME5jv9cAaJg": "event stream"
  }
 }

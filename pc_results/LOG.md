@@ -540,3 +540,4 @@ above; the second one skipped Day 1 for the reason explained there.
 - 2026-11-21 21:23 event 64244 University of North Dakota Signature at the Mall of America (2026-08-06, 4 Illinois teams)
 - 2026-11-21 21:23 event 64359 Speedway (2026-09-18, 1 Illinois teams)
 - 2026-11-21 21:24   reading zhGs-5gah_Y 'Speedway: Override VEX V5 Signature Event - Day 1 (Live Stream Presented by Allegion)' (461 min)
+- 2026-11-21 21:35   reading ME5jv9cAaJg 'Speedway 2026: Final Four | Semifinals & Finals | VEX V5 Override' (11 min)
