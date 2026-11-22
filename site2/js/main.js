@@ -686,7 +686,7 @@ function drawRoutes(c, R) {
 
 function showTeam(id) {
   const t = T.get(id), out = $("#result");
-  if (!t && OFF.teams[id]) { out.innerHTML = `<h3 class="tname disp">${esc(id)}</h3>${officialBlock(id)}<p class="scout-note">No Override video names ${esc(id)} yet.</p>`; return; }
+  if (!t && OFF.teams[id]) { out.innerHTML = `<h3 class="tname disp">${esc(id)}</h3>${officialBlock(id)}<p class="scout-note">No Override video names ${esc(id)} yet.</p>${noteBox(id)}`; return; }
   if (!t) {
     const near = [...T.keys()].filter((k) => k.startsWith(id.replace(/[A-Z]+$/, ""))).slice(0, 8);
     out.innerHTML = `<div class="empty"><p><b>No Override video names ${esc(id)} yet.</b> A team shows up once a match, reveal or skills video title includes its number.</p>${near.length ? `<div class="picks"><span>Same club</span>${near.map((k) => `<a href="#team-${k}">${k}</a>`).join("")}</div>` : ""}</div>`;
@@ -719,9 +719,12 @@ const q = $("#q"), sugg = $("#sugg");
 let list = [], cur = 0;
 q.addEventListener("input", () => {
   const s = q.value.trim().toUpperCase();
-  list = s ? [...T.values()].filter((t) => t.id.startsWith(s)).sort((a, b) => b.vids.length - a.vids.length).slice(0, 6) : [];
+  const ids = new Set([...T.keys(), ...Object.keys(OFF.teams || {})]);
+  const nm = (id) => OFF.teams?.[id]?.name || "";
+  list = s ? [...ids].map((id) => ({ id, by: id.startsWith(s) ? 2 : s.length >= 3 && nm(id).toUpperCase().includes(s) ? 1 : 0, v: T.get(id)?.vids.length || 0 }))
+    .filter((x) => x.by).sort((a, b) => b.by - a.by || b.v - a.v || a.id.localeCompare(b.id, undefined, { numeric: true })).slice(0, 6) : [];
   cur = 0;
-  sugg.innerHTML = list.map((t, i) => `<a href="#team-${t.id}" class="${i ? "" : "cur"}"><b>${t.id}</b><span class="mute">${t.vids.length} video${t.vids.length === 1 ? "" : "s"}</span></a>`).join("");
+  sugg.innerHTML = list.map((t, i) => `<a href="#team-${t.id}" class="${i ? "" : "cur"}"><b>${t.id}</b><span class="mute">${esc(nm(t.id))}${nm(t.id) ? " · " : ""}${t.v ? `${t.v} video${t.v === 1 ? "" : "s"}` : "no video yet"}</span></a>`).join("");
   sugg.classList.toggle("open", list.length > 0);
 });
 q.addEventListener("keydown", (e) => {
@@ -734,7 +737,7 @@ $("#find").addEventListener("submit", (e) => {
   e.preventDefault();
   const s = q.value.trim().toUpperCase().replace(/\s+/g, "");
   if (!s) return q.focus();
-  location.hash = "team-" + (list[cur] && !T.has(s) ? list[cur].id : s);
+  location.hash = "team-" + (T.has(s) || OFF.teams?.[s] || !list[cur] ? s : list[cur].id);
 });
 function route() {
   const h = decodeURIComponent(location.hash.slice(1));
