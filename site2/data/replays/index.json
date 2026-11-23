@@ -45,7 +45,7 @@
 "uXTJGJ-eFLU",
 3
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "id": "Kx4bKVNEpjA",
@@ -870,7 +870,7 @@
 "sQXLaXF469Y",
 6
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "-bXlVMTj8Ng",
@@ -1012,7 +1012,7 @@
 "_3ooER9wOl4",
 1
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "aelhzLIgKNg",
@@ -1037,7 +1037,7 @@
 "aelhzLIgKNg",
 2
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "bDkINvmThVw",
@@ -1062,7 +1062,7 @@
 "bDkINvmThVw",
 2
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "PfJe0ZkNvHU",
@@ -1087,7 +1087,7 @@
 "PfJe0ZkNvHU",
 5
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "mzrqSKqmVCg",
@@ -1112,7 +1112,7 @@
 "mzrqSKqmVCg",
 1
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "0-5sAtgWImo",
@@ -1137,7 +1137,7 @@
 "0-5sAtgWImo",
 3
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "1r-POswEj74",
@@ -1188,31 +1188,6 @@
 3
 ],
 "pack": "p23"
-},
-{
-"id": "fT5HTKSHq9s",
-"event": "Speedway Signature",
-"match": "Qual 189",
-"red": [
-"8682A",
-"10B"
-],
-"blue": [
-"1233N",
-"2011A"
-],
-"video": "fT5HTKSHq9s",
-"seconds": 508,
-"calibrated": 0.62,
-"seen": 0.8,
-"named": 4,
-"sure": 4,
-"replay": true,
-"yt": [
-"fT5HTKSHq9s",
-6
-],
-"pack": "p38"
 },
 {
 "id": "-k32ORRyM6s",
@@ -1412,7 +1387,7 @@
 "oVvGarZ_Nus",
 2
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "id": "gGUtG7EqS2Y",
@@ -1437,7 +1412,7 @@
 "gGUtG7EqS2Y",
 3
 ],
-"pack": "p38"
+"pack": "p41"
 },
 {
 "id": "YMpwouE94q4",
@@ -1487,7 +1462,7 @@
 "r2f9HOsQR6c",
 3
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "id": "4NooGAaRqRU",
@@ -1512,7 +1487,7 @@
 "4NooGAaRqRU",
 7
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "id": "cc-early-3210",
@@ -1777,7 +1752,7 @@
 "kxSY83THpHw",
 3
 ],
-"pack": "p38"
+"pack": "p41"
 },
 {
 "id": "LcmEbXvS0Yg",
@@ -7434,7 +7409,7 @@
 "KiElXboeVVc",
 18927
 ],
-"pack": "p35"
+"pack": "p36"
 },
 {
 "id": "e64359-2-qual102",
@@ -7482,7 +7457,7 @@
 "KiElXboeVVc",
 25773
 ],
-"pack": "p37"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual128",
@@ -7554,7 +7529,7 @@
 "KiElXboeVVc",
 27836
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "id": "e64359-2-qual129",
@@ -7602,7 +7577,7 @@
 "KiElXboeVVc",
 28631
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "id": "e64359-2-qual200",
@@ -7626,7 +7601,7 @@
 "KiElXboeVVc",
 29048
 ],
-"pack": "p37"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual98",
@@ -7650,7 +7625,7 @@
 "KiElXboeVVc",
 3938
 ],
-"pack": "p38"
+"pack": "p41"
 },
 {
 "id": "e64359-2-qual144",
@@ -7698,7 +7673,7 @@
 "KiElXboeVVc",
 24228
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual204",
@@ -7722,7 +7697,7 @@
 "KiElXboeVVc",
 29805
 ],
-"pack": "p37"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual208",
@@ -7746,7 +7721,7 @@
 "KiElXboeVVc",
 30599
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual112",
@@ -7906,7 +7881,7 @@
 "KiElXboeVVc",
 25167
 ],
-"pack": "p37"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual183",
@@ -7930,7 +7905,7 @@
 "KiElXboeVVc",
 25359
 ],
-"pack": "p37"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual124",
@@ -8122,7 +8097,7 @@
 "KiElXboeVVc",
 19317
 ],
-"pack": "p35"
+"pack": "p36"
 },
 {
 "id": "e64359-2-qual159",
@@ -8170,7 +8145,7 @@
 "KiElXboeVVc",
 22139
 ],
-"pack": "p36"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual169",
@@ -8194,7 +8169,7 @@
 "KiElXboeVVc",
 22139
 ],
-"pack": "p36"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual136",
@@ -8242,7 +8217,7 @@
 "KiElXboeVVc",
 22573
 ],
-"pack": "p36"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual175",
@@ -8266,7 +8241,7 @@
 "KiElXboeVVc",
 23618
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual97",
@@ -8290,7 +8265,7 @@
 "KiElXboeVVc",
 3742
 ],
-"pack": "p38"
+"pack": "p41"
 },
 {
 "id": "e64359-2-qual104",
@@ -8458,7 +8433,7 @@
 "KiElXboeVVc",
 18598
 ],
-"pack": "p35"
+"pack": "p36"
 },
 {
 "id": "e64359-2-qual143",
@@ -8506,7 +8481,7 @@
 "KiElXboeVVc",
 20758
 ],
-"pack": "p36"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual157",
@@ -8554,7 +8529,7 @@
 "KiElXboeVVc",
 22302
 ],
-"pack": "p36"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual187",
@@ -8578,7 +8553,7 @@
 "KiElXboeVVc",
 26163
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "id": "e64359-2-qual165",
@@ -8602,7 +8577,7 @@
 "KiElXboeVVc",
 21206
 ],
-"pack": "p36"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual202",
@@ -8626,7 +8601,7 @@
 "KiElXboeVVc",
 29641
 ],
-"pack": "p37"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual179",
@@ -8650,7 +8625,7 @@
 "KiElXboeVVc",
 24432
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual197",
@@ -8674,7 +8649,7 @@
 "KiElXboeVVc",
 28424
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "id": "e64359-2-qual210",
@@ -8698,7 +8673,7 @@
 "KiElXboeVVc",
 31268
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual105",
@@ -8746,7 +8721,7 @@
 "KiElXboeVVc",
 29641
 ],
-"pack": "p37"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual113",
@@ -8794,7 +8769,7 @@
 "KiElXboeVVc",
 32020
 ],
-"pack": "p38"
+"pack": "p41"
 },
 {
 "id": "e64359-2-qual188",
@@ -8818,7 +8793,7 @@
 "KiElXboeVVc",
 32353
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "id": "e64359-2-qual212",
@@ -8836,13 +8811,13 @@
 "calibrated": 0.9,
 "seen": 0.73,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "yt": [
 "KiElXboeVVc",
 31852
 ],
-"pack": "p38"
+"pack": "p41"
 },
 {
 "event": "Speedway Signature",
@@ -8866,7 +8841,7 @@
 "KiElXboeVVc",
 4138
 ],
-"pack": "p38"
+"pack": "p41"
 },
 {
 "event": "Speedway Signature",
@@ -9268,13 +9243,13 @@
 "calibrated": 0.69,
 "seen": 0.85,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "yt": [
 "KiElXboeVVc",
 31464
 ],
-"pack": "p38"
+"pack": "p41"
 },
 {
 "id": "e64359-2-qual209",
@@ -9298,7 +9273,7 @@
 "KiElXboeVVc",
 30772
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "event": "Speedway Signature",
@@ -9340,7 +9315,7 @@
 "calibrated": 0.9,
 "seen": 0.72,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "yt": [
 "KiElXboeVVc",
@@ -9388,7 +9363,7 @@
 "calibrated": 0.84,
 "seen": 0.93,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "yt": [
 "KiElXboeVVc",
@@ -9443,5 +9418,797 @@
 14948
 ],
 "pack": "p35"
+},
+{
+"id": "e64359-2-qual195",
+"event": "Speedway Signature",
+"match": "Qual 195",
+"red": [
+"80001C",
+"34543M"
+],
+"blue": [
+"2393S",
+"6210H"
+],
+"video": "e64359-2-qual195",
+"calibrated": 0.61,
+"seen": 0.85,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+28016
+],
+"pack": "p39"
+},
+{
+"id": "e64359-2-qual206",
+"event": "Speedway Signature",
+"match": "Qual 206",
+"red": [
+"252W",
+"663D"
+],
+"blue": [
+"2145Y",
+"7700R"
+],
+"video": "e64359-2-qual206",
+"calibrated": 0.64,
+"seen": 0.93,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+30182
+],
+"pack": "p40"
+},
+{
+"id": "e64359-2-qual201",
+"event": "Speedway Signature",
+"match": "Qual 201",
+"red": [
+"3300Z",
+"4610Z"
+],
+"blue": [
+"1233N",
+"45434M"
+],
+"video": "e64359-2-qual201",
+"calibrated": 0.62,
+"seen": 0.28,
+"named": 4,
+"sure": 0,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+29263
+],
+"pack": "p40"
+},
+{
+"id": "e64359-2-qual199",
+"event": "Speedway Signature",
+"match": "Qual 199",
+"red": [
+"57711N",
+"5690X"
+],
+"blue": [
+"34543Z",
+"7410D"
+],
+"video": "e64359-2-qual199",
+"calibrated": 0.78,
+"seen": 0.8,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+28877
+],
+"pack": "p40"
+},
+{
+"id": "e64359-2-qual205",
+"event": "Speedway Signature",
+"match": "Qual 205",
+"red": [
+"3150U",
+"10102Z"
+],
+"blue": [
+"2145X",
+"3150Y"
+],
+"video": "e64359-2-qual205",
+"calibrated": 0.61,
+"seen": 0.7,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+29984
+],
+"pack": "p40"
+},
+{
+"id": "e64359-2-qual196",
+"event": "Speedway Signature",
+"match": "Qual 196",
+"red": [
+"1211X",
+"32C"
+],
+"blue": [
+"2623K",
+"1082M"
+],
+"video": "e64359-2-qual196",
+"calibrated": 0.71,
+"seen": 0.65,
+"named": 4,
+"sure": 0,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+28246
+],
+"pack": "p39"
+},
+{
+"id": "e64359-2-qual138",
+"event": "Speedway Signature",
+"match": "Qual 138",
+"red": [
+"32C",
+"10015Z"
+],
+"blue": [
+"2393S",
+"10102Z"
+],
+"video": "e64359-2-qual138",
+"calibrated": 0.89,
+"seen": 0.88,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+12644
+],
+"pack": "p35"
+},
+{
+"id": "e64359-2-qual207",
+"event": "Speedway Signature",
+"match": "Qual 207",
+"red": [
+"2011A",
+"3150A"
+],
+"blue": [
+"3150D",
+"2055X"
+],
+"video": "e64359-2-qual207",
+"calibrated": 0.73,
+"seen": 0.77,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+30404
+],
+"pack": "p40"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 139",
+"red": [
+"7368C",
+"99904A"
+],
+"blue": [
+"3150U",
+"5690X"
+],
+"id": "e64359-2-qual139",
+"video": "e64359-2-qual139",
+"calibrated": 0.93,
+"seen": 0.75,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+12848
+],
+"pack": "p35"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 150",
+"red": [
+"80001C",
+"2145V"
+],
+"blue": [
+"3150Y",
+"8682A"
+],
+"id": "e64359-2-qual150",
+"video": "e64359-2-qual150",
+"calibrated": 0.85,
+"seen": 0.78,
+"named": 4,
+"sure": 2,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+18161
+],
+"pack": "p36"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 153",
+"red": [
+"68699A",
+"3150V"
+],
+"blue": [
+"99904A",
+"3588R"
+],
+"id": "e64359-2-qual153",
+"video": "e64359-2-qual153",
+"calibrated": 0.94,
+"seen": 0.85,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+18763
+],
+"pack": "p36"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 147",
+"red": [
+"34543M",
+"3150A"
+],
+"blue": [
+"252A",
+"54010A"
+],
+"id": "e64359-2-qual147",
+"video": "e64359-2-qual147",
+"calibrated": 0.79,
+"seen": 0.88,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+14758
+],
+"pack": "p35"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 155",
+"red": [
+"2011F",
+"7447X"
+],
+"blue": [
+"3946Z",
+"10102Z"
+],
+"id": "e64359-2-qual155",
+"video": "e64359-2-qual155",
+"calibrated": 0.85,
+"seen": 0.82,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+19132
+],
+"pack": "p36"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 161",
+"red": [
+"884A",
+"45434M"
+],
+"blue": [
+"32C",
+"10702Y"
+],
+"id": "e64359-2-qual161",
+"video": "e64359-2-qual161",
+"calibrated": 0.95,
+"seen": 0.8,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+20393
+],
+"pack": "p36"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 162",
+"red": [
+"10666A",
+"8737M"
+],
+"blue": [
+"471B",
+"11101B"
+],
+"id": "e64359-2-qual162",
+"video": "e64359-2-qual162",
+"calibrated": 0.92,
+"seen": 0.82,
+"named": 4,
+"sure": 2,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+20561
+],
+"pack": "p37"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 151",
+"red": [
+"1082M",
+"18799M"
+],
+"blue": [
+"1323C",
+"1028A"
+],
+"id": "e64359-2-qual151",
+"video": "e64359-2-qual151",
+"calibrated": 0.89,
+"seen": 0.7,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+18338
+],
+"pack": "p36"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 166",
+"red": [
+"2011A",
+"16610M"
+],
+"blue": [
+"663D",
+"9364E"
+],
+"id": "e64359-2-qual166",
+"video": "e64359-2-qual166",
+"calibrated": 0.8,
+"seen": 0.77,
+"named": 4,
+"sure": 2,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+21397
+],
+"pack": "p37"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 167",
+"red": [
+"7701Z",
+"7368G"
+],
+"blue": [
+"3150D",
+"12914X"
+],
+"id": "e64359-2-qual167",
+"video": "e64359-2-qual167",
+"calibrated": 0.81,
+"seen": 0.85,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+21612
+],
+"pack": "p37"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 173",
+"red": [
+"252W",
+"1211X"
+],
+"blue": [
+"80001C",
+"6210P"
+],
+"id": "e64359-2-qual173",
+"video": "e64359-2-qual173",
+"calibrated": 0.78,
+"seen": 0.72,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+23071
+],
+"pack": "p37"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 176",
+"red": [
+"55760R",
+"2393S"
+],
+"blue": [
+"16610V",
+"68699A"
+],
+"id": "e64359-2-qual176",
+"video": "e64359-2-qual176",
+"calibrated": 0.86,
+"seen": 0.82,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+23815
+],
+"pack": "p38"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 160",
+"red": [
+"2393S",
+"1233B"
+],
+"blue": [
+"2145Y",
+"7410K"
+],
+"id": "e64359-2-qual160",
+"video": "e64359-2-qual160",
+"calibrated": 0.92,
+"seen": 0.8,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+20165
+],
+"pack": "p36"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 180",
+"red": [
+"99904A",
+"3150D"
+],
+"blue": [
+"2011B",
+"2568Z"
+],
+"id": "e64359-2-qual180",
+"video": "e64359-2-qual180",
+"calibrated": 0.84,
+"seen": 0.62,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+24627
+],
+"pack": "p38"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 164",
+"red": [
+"2011G",
+"6210M"
+],
+"blue": [
+"57711N",
+"7701S"
+],
+"id": "e64359-2-qual164",
+"video": "e64359-2-qual164",
+"calibrated": 0.98,
+"seen": 0.6,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+21032
+],
+"pack": "p37"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 172",
+"red": [
+"3300Z",
+"252A"
+],
+"blue": [
+"1082M",
+"2011F"
+],
+"id": "e64359-2-qual172",
+"video": "e64359-2-qual172",
+"calibrated": 0.94,
+"seen": 0.7,
+"named": 4,
+"sure": 2,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+22820
+],
+"pack": "p37"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 181",
+"red": [
+"4610Z",
+"2145Y"
+],
+"blue": [
+"11101B",
+"7701Z"
+],
+"id": "e64359-2-qual181",
+"video": "e64359-2-qual181",
+"calibrated": 0.96,
+"seen": 0.85,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+24985
+],
+"pack": "p38"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 177",
+"red": [
+"1233C",
+"471B"
+],
+"blue": [
+"663H",
+"6210M"
+],
+"id": "e64359-2-qual177",
+"video": "e64359-2-qual177",
+"calibrated": 0.92,
+"seen": 0.7,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+24041
+],
+"pack": "p38"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 189",
+"red": [
+"8682A",
+"10B"
+],
+"blue": [
+"1233N",
+"2011A"
+],
+"id": "e64359-2-qual189",
+"video": "e64359-2-qual189",
+"calibrated": 0.65,
+"seen": 0.82,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+26722
+],
+"pack": "p39"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 184",
+"red": [
+"3946W",
+"57711N"
+],
+"blue": [
+"10702Y",
+"3150V"
+],
+"id": "e64359-2-qual184",
+"video": "e64359-2-qual184",
+"calibrated": 0.91,
+"seen": 0.8,
+"named": 4,
+"sure": 2,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+25610
+],
+"pack": "p38"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 186",
+"red": [
+"7368G",
+"10102Z"
+],
+"blue": [
+"1028A",
+"210K"
+],
+"id": "e64359-2-qual186",
+"video": "e64359-2-qual186",
+"calibrated": 0.19,
+"seen": 1.0,
+"named": 4,
+"sure": 0,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+26722
+],
+"pack": "p38"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 192",
+"red": [
+"7701S",
+"252H"
+],
+"blue": [
+"7447X",
+"16610M"
+],
+"id": "e64359-2-qual192",
+"video": "e64359-2-qual192",
+"calibrated": 0.79,
+"seen": 0.8,
+"named": 4,
+"sure": 2,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+27396
+],
+"pack": "p39"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 190",
+"red": [
+"7368M",
+"663D"
+],
+"blue": [
+"18799M",
+"5069Y"
+],
+"id": "e64359-2-qual190",
+"video": "e64359-2-qual190",
+"calibrated": 0.86,
+"seen": 0.85,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+26960
+],
+"pack": "p39"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 191",
+"red": [
+"1412J",
+"2011G"
+],
+"blue": [
+"10702X",
+"884A"
+],
+"id": "e64359-2-qual191",
+"video": "e64359-2-qual191",
+"calibrated": 0.68,
+"seen": 0.68,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+27166
+],
+"pack": "p39"
+},
+{
+"event": "Speedway Signature",
+"match": "Qual 193",
+"red": [
+"9364E",
+"3150U"
+],
+"blue": [
+"8292Z",
+"1239E"
+],
+"id": "e64359-2-qual193",
+"video": "e64359-2-qual193",
+"calibrated": 0.76,
+"seen": 0.88,
+"named": 4,
+"sure": 4,
+"replay": true,
+"yt": [
+"KiElXboeVVc",
+27571
+],
+"pack": "p39"
 }
 ]
