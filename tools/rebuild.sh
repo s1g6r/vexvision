@@ -11,3 +11,4 @@ python3 -m tools.fetch_official 2>&1 | tail -1
 python3 -m tools.official 2>&1 | tail -1
 echo "$(date +%T) rebuilt"
 python3 -m tools.pack_replays site2/data/replays
+python3 -m tools.yt_links $R $S/index.json | tail -1

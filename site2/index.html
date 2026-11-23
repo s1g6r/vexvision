@@ -134,6 +134,8 @@ p{margin:0}.mute{color:var(--mute)}
 .rp-wrap{position:relative}.rp-top{position:absolute;z-index:2;left:14px;right:14px;top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .rp-clock b{font-weight:600;color:var(--ink);margin-right:4px}
 .rp-pip{position:absolute;right:14px;bottom:14px;width:min(30%,320px);margin:0;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px var(--line),0 20px 40px -12px rgba(0,0,0,.8);background:#000}
+.rp-yt{position:absolute;inset:0;z-index:6;background:#000}.rp-yt iframe{display:block;width:100%;height:100%;border:0}
+.rp-wrap.real .rp-top,.rp-wrap.real .rp-pip,.rp-wrap.real .rp-labels{visibility:hidden}
 .rp-still{display:block;width:100%;aspect-ratio:16/9;background:#000 no-repeat}
 .rp-pipmarks{position:absolute;left:0;top:0;right:0;aspect-ratio:16/9;pointer-events:none}
 .rp-pipmarks i{position:absolute;left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;border:2px solid var(--gold);transition:opacity .2s}
@@ -372,6 +374,7 @@ a{color:#111}
     <div class="rp-stage">
       <canvas aria-label="The match replayed on a 3D field"></canvas>
       <div class="rp-labels"></div>
+      <div class="rp-yt" hidden></div>
       <figure class="rp-pip"><div class="rp-still" role="img" aria-label="The broadcast at this moment"></div><div class="rp-pipmarks"></div><figcaption>The broadcast</figcaption></figure>
     </div>
     </div>
@@ -379,6 +382,7 @@ a{color:#111}
       <button class="btn solid rp-play" type="button">Play</button>
       <div class="rp-scrub"><div class="rp-ticks"></div><div class="rp-fill"></div><input class="rp-range" type="range" aria-label="Match time"></div>
       <button class="chipbtn rp-heat" type="button" aria-pressed="false">Where they drove</button>
+      <button class="chipbtn rp-real" type="button" aria-pressed="false" hidden>Real video</button>
       <div class="seg rp-speed" role="group" aria-label="Speed"><button type="button" data-s="1" aria-pressed="true">1×</button><button type="button" data-s="2" aria-pressed="false">2×</button><button type="button" data-s="4" aria-pressed="false">4×</button></div>
     </div>
     <div class="rp-teams"></div>

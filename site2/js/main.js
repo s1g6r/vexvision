@@ -779,8 +779,21 @@ function route() {
 addEventListener("hashchange", route); route();
 if (!location.hash.startsWith("#event-") && cornfield) showEvent(cornfield[0], "2360A");
 const rpRoot = document.getElementById("rp");
+/* the original YouTube video in place of the 3D view, from the same moment of the match */
+function showReal(on) {
+  const box = rpRoot.querySelector(".rp-yt"), b = rpRoot.querySelector(".rp-real");
+  if (!box || !b) return;
+  const wrap = rpRoot.querySelector(".rp-wrap"); wrap?.classList.toggle("real", !!on);
+  if (!on) { box.hidden = true; box.innerHTML = ""; b.setAttribute("aria-pressed", "false"); b.textContent = "Real video"; return; }
+  const [vid, s0] = JSON.parse(b.dataset.yt);
+  const at = Math.max(0, Math.round(s0 + 3 + (current?.t ?? 0)));
+  current?.setPlaying?.(false);
+  box.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(vid)}?start=${at}&autoplay=1&rel=0" title="The match on YouTube" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+  box.hidden = false; b.setAttribute("aria-pressed", "true"); b.textContent = "Back to 3D";
+}
+document.addEventListener("click", (e) => { const b = e.target.closest(".rp-real"); if (b) showReal(b.getAttribute("aria-pressed") !== "true"); });
 rpRoot.addEventListener("replay-meta", (e) => { const R = e.detail;
-  document.getElementById("rp-sub").innerHTML = `${esc(R.match)} at ${esc(R.event)}: <span style="color:var(--red)">${R.red.join(" &amp; ")}</span> vs <span style="color:var(--blue)">${R.blue.join(" &amp; ")}</span>, followed for the whole match from one YouTube video.${R.stills && R.stills.n ? " The broadcast plays in the corner with the same four robots marked, so you can check it against the real thing." : ""}${R.robots.some((r) => r.named === false) ? " Robot plates are too small to read on this stream, so partners we can't tell apart are shown as Red 1 and Red 2." : ""} <a class="rp-fix" href="${fixLink(R)}" target="_blank" rel="noopener">Wrong team on a robot? Tell us</a>`; });
+  document.getElementById("rp-sub").innerHTML = `${esc(R.match)} at ${esc(R.event)}: <span style="color:var(--red)">${R.red.join(" &amp; ")}</span> vs <span style="color:var(--blue)">${R.blue.join(" &amp; ")}</span>, followed for the whole match from one YouTube video.${R.stills && R.stills.n ? " The broadcast plays in the corner with the same four robots marked, so you can check it against the real thing." : ""}${R.robots.some((r) => r.named === false) ? " Robot plates are too small to read on this stream, so partners we can't tell apart are shown as Red 1 and Red 2." : ""}${(() => { const y = IDX.find((x) => x.id === R.id)?.yt; return y ? ` <a class="rp-fix" href="https://www.youtube.com/watch?v=${encodeURIComponent(y[0])}&t=${y[1]}s" target="_blank" rel="noopener">Watch autonomous on YouTube</a> ·` : ""; })()} <a class="rp-fix" href="${fixLink(R)}" target="_blank" rel="noopener">Wrong team on a robot? Tell us</a>`; });
 /* a prefilled GitHub issue: which match, what the replay shows, and room to say what's wrong */
 function fixLink(R) {
   const k = { red: 0, blue: 0 };
@@ -797,6 +810,9 @@ async function loadReplay(id, autoplay, start = null) {
   rpRoot.querySelector(".rp-range").replaceWith(rpRoot.querySelector(".rp-range").cloneNode(true));
   document.querySelectorAll("#rp-list button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.id === id));
   const pk = IDX.find((x) => x.id === id)?.pack;
+  showReal(false);
+  const yt = IDX.find((x) => x.id === id)?.yt;
+  const rb = rpRoot.querySelector(".rp-real"); rb.hidden = !yt; rb.dataset.yt = yt ? JSON.stringify(yt) : "";
   current = await mountReplay(rpRoot, pk ? `data/replays/pack/${pk}.json#${id}` : `data/replays/${id}.json`, { reduced, autoplay, start, names: Object.fromEntries(Object.entries(OFF.teams || {}).map(([k, v]) => [k, v.name])) });
 }
 Promise.resolve(IDX).then((idx) => {
