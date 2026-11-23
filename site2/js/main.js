@@ -397,7 +397,6 @@ function watchouts(R) {
   if (d.other_side >= 0.55 && d.near_opp_their_side >= 0.15) out.push("Expect them on your side for much of driver control");
   const tg = S.toggles || {};
   if (tg.opp >= 0.19) out.push("Comes for your Toggles");
-  else if (tg.share >= 0.35) out.push("Spends a lot of time at the Toggles");
   const fav = S.scoring?.favourites?.[0];
   if (fav && fav[1] >= 1) out.push(`Goes to ${fav[0].replace(/^its own/, "their own")} most`);
   if (S.endgame?.midfield >= 0.5) out.push("Ends in the Midfield");
@@ -625,8 +624,6 @@ function showReport(id) {
   const rows = [
     ["On the other side", (m) => m.other_side, "Share of driver control past the Autonomous Line"],
     ["Up against an opponent there", (m) => m.near_opp_their_side, "On their side and within a robot's length of one of them"],
-    ["Near a Toggle", (m) => m.toggles.own + m.toggles.opp, "Within half a metre of either alliance's Toggle on the wall"],
-    ["Near the other alliance's Toggles", (m) => m.toggles.opp, ""],
     ["At a Goal", sum, "Parked right next to a Goal"],
     ["Ends in the Midfield", (m) => (m.midfield_end ? 1 : 0), "Where it is in the last 10 seconds"],
   ];
@@ -675,12 +672,12 @@ function showReport(id) {
     ${q.length && e.length ? `<section class="rep-sec"><h4>Qualifications vs eliminations</h4><div class="scroll"><table class="cmp"><thead><tr><th></th><th>Quals (${q.length})</th><th>Elims (${e.length})</th></tr></thead><tbody>
       ${rows.slice(0, 5).map(([k, f]) => `<tr><td>${k}</td><td class="n">${pct(avg(f, q))}</td><td class="n">${pct(avg(f, e))}</td></tr>`).join("")}
       <tr><td>Driven per match</td><td class="n">${Math.round(avg((m) => m.ft, q))} ft</td><td class="n">${Math.round(avg((m) => m.ft, e))} ft</td></tr></tbody></table></div></section>` : ""}
-    <section class="rep-sec"><h4>Match by match</h4><div class="scroll"><table class="mtab"><thead><tr><th>Match</th><th>With</th><th>Auton</th><th class="n">Score</th><th class="n">Other side</th><th class="n">Toggles</th><th class="n">Driven</th><th>Watch</th></tr></thead><tbody>
+    <section class="rep-sec"><h4>Match by match</h4><div class="scroll"><table class="mtab"><thead><tr><th>Match</th><th>With</th><th>Auton</th><th class="n">Score</th><th class="n">Other side</th><th class="n">Driven</th><th>Watch</th></tr></thead><tbody>
       ${ms.map((m) => { const ri = A ? A.routes.findIndex((r) => r.members.includes(m.id)) : -1; return `<tr><td><b>${esc(m.match)}</b><small>${esc((m.event || "").replace(/ Signature$| \(Fall 2026\)$/, ""))}</small></td>
         <td><span class="side-${m.alliance[0]}">${m.alliance === "red" ? "Red" : "Blue"}</span> ${esc(m.partner || "")}</td>
         <td>${ri >= 0 ? `<span class="rt"><i style="background:${RC[ri % 6]}"></i>${A.routes[ri].label}</span>` : "–"}</td>
         <td class="n">${(() => { const o = OFF.matches[m.id]; if (!o || o.rs == null) return "–"; const my = m.alliance === "red" ? o.rs : o.bs, th = m.alliance === "red" ? o.bs : o.rs; return `<span style="color:${my > th ? "#7fd99a" : my < th ? "#f08a8a" : "inherit"}">${my}–${th}</span>`; })()}</td>
-        <td class="n">${pct(m.other_side)}</td><td class="n">${pct(m.toggles.own + m.toggles.opp)}</td><td class="n">${Math.round(m.ft)} ft</td>
+        <td class="n">${pct(m.other_side)}</td><td class="n">${Math.round(m.ft)} ft</td>
         <td class="w">${watchBtn(m, -1, "Auton")}${watchBtn(m, m.driver_at, "Driver")}${m.defence_len >= 4 ? watchBtn(m, m.defence_t, "Crossing over") : ""}${m.toggle_first.opp != null ? watchBtn(m, m.toggle_first.opp, "Their Toggle") : ""}</td></tr>`; }).join("")}
     </tbody></table></div></section>
   </div>`;
