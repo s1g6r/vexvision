@@ -399,7 +399,7 @@ function watchouts(R) {
   if (tg.opp >= 0.19) out.push(`Comes for your Toggles: ${pct(tg.opp)} of driver control by them`);
   else if (tg.share >= 0.35) { const k = Math.round(tg.trips || 0); out.push(k >= 3 ? `Lives at the Toggles: about ${k} trips a match` : `Spends ${pct(tg.share)} of driver control by a Toggle`); }
   const fav = S.scoring?.favourites?.[0];
-  if (fav && fav[1] >= 1) out.push(`Spends most time at ${fav[0].replace(/^its own/, "their own")}`);
+  if (fav && fav[1] >= 1) out.push(`Goes to ${fav[0].replace(/^its own/, "their own")} most`);
   if (S.endgame?.midfield >= 0.5) out.push("Ends in the Midfield");
   return out.slice(0, 3);
 }
@@ -475,7 +475,7 @@ function drawPlan(c) {
 const PICK_SORTS = [["rating", "Rating"], ["avg", "Points"], ["skills", "Skills"], ["video", "Most on video"], ["fit", "Fits with you"], ["mix", "Your mix"]];
 /* your own mix: each slider weighs one thing, compared only with the other teams at this event */
 const MIX_KEYS = [["rating", "Rating", (t) => t.rating], ["avg", "Points a match", (t) => t.avg], ["skills", "Skills", (t) => t.skills],
-  ["speed", "Speed on video", (t) => REP[t.n]?.sections?.robot?.top_fps], ["goals", "Goals visited", (t) => REP[t.n]?.sections?.scoring?.visits_per_match],
+  ["speed", "Speed on video", (t) => REP[t.n]?.sections?.robot?.top_fps], ["goals", "Trips to Goals", (t) => REP[t.n]?.sections?.scoring?.visits_per_match],
   ["defence", "Time on the other side", (t) => REP[t.n]?.sections?.defence?.other_side]];
 const MIX = (() => { try { return { rating: 2, avg: 2, skills: 1, speed: 1, goals: 1, defence: 0, ...JSON.parse(localStorage.getItem("vv-mix") || "{}") }; } catch { return { rating: 2, avg: 2, skills: 1, speed: 1, goals: 1, defence: 0 }; } })();
 function mixScores(ev) {
@@ -627,7 +627,7 @@ function showReport(id) {
     ["Up against an opponent there", (m) => m.near_opp_their_side, "On their side and within a robot's length of one of them"],
     ["Near a Toggle", (m) => m.toggles.own + m.toggles.opp, "Within half a metre of either alliance's Toggle on the wall"],
     ["Near the other alliance's Toggles", (m) => m.toggles.opp, ""],
-    ["At a Goal", sum, "Close enough to be scoring or descoring"],
+    ["At a Goal", sum, "Parked right next to a Goal"],
     ["Ends in the Midfield", (m) => (m.midfield_end ? 1 : 0), "Where it is in the last 10 seconds"],
   ];
   const RC = ["#f2c230", "#4c86ff", "#5fd08a", "#c792ea", "#ff9e57", "#ef3b45"];
@@ -654,17 +654,18 @@ function showReport(id) {
       <div class="variants">${autonHtml}</div>
     </section>
     <section class="rep-sec rep-grid">
-      <div><h4>What it scores</h4>
-        <div class="bignums"><div><b>${SC.visits_per_match != null ? Math.round(SC.visits_per_match) : "–"}</b><span>Goal stops a match</span></div><div><b>${SC.cycle_s ? Math.round(SC.cycle_s) + " s" : "–"}</b><span>between Goals</span></div><div><b>${RB.toggle_visits != null ? Math.round(RB.toggle_visits) : "–"}</b><span>Toggle trips a match</span></div></div>
+      <div><h4>Trips to Goals</h4>
+        <div class="bignums"><div><b>${SC.visits_per_match != null ? Math.round(SC.visits_per_match) : "–"}</b><span>trips to a Goal a match</span></div><div><b>${SC.cycle_s ? Math.round(SC.cycle_s) + " s" : "–"}</b><span>between trips</span></div><div><b>${RB.toggle_visits != null ? Math.round(RB.toggle_visits) : "–"}</b><span>Toggle trips a match</span></div></div>
         <div class="meters">${["own", "neutral", "center", "opp"].map((k) => `<div class="meter"><span class="k">${KN[k]}<small>${(kinds[k] ?? 0).toFixed(1)} a match</small></span>${bar((kinds[k] ?? 0) / ktot)}</div>`).join("")}</div>
+        <p class="cap">A trip is any time the robot sits next to a Goal for a second or more. The video shows where it went, not what it scored.</p>
         ${SC.favourites?.length ? `<p class="cap">Goes back to most: ${SC.favourites.slice(0, 3).map(([g, v]) => `${esc(g)} (${v.toFixed(1)} a match)`).join(", ")}.</p>` : ""}</div>
       <div><h4>Cone colours on the robot</h4>${cm ? `<div class="colours"><span class="c-own" style="flex:${cm.own}"></span><span class="c-yel" style="flex:${cm.yellow}"></span><span class="c-oth" style="flex:${cm.other}"></span></div>
         <div class="meters"><div class="meter"><span class="k">Its own colour</span>${bar(cm.own, "own")}</div><div class="meter"><span class="k">Yellow</span>${bar(cm.yellow, "yel")}</div><div class="meter"><span class="k">The other alliance's colour</span>${bar(cm.other, "oth")}</div></div>
         <p class="cap">A rough read of the colour on and around the robot during driver control. Its own paint is removed, but plates and flags still count a little.</p>` : `<p class="cap">Not enough clear views of the robot yet.</p>`}
         <h4 class="mt">The robot</h4><div class="meters">
         ${rankLine("top_fps", "Top speed", "Faster than this share of the robots we tracked")}
-        ${rankLine("visits", "Goal stops", "More than this share of the robots we tracked")}
-        ${rankLine("cycle", "Time between Goals", "Quicker than this share of the robots we tracked")}
+        ${rankLine("visits", "Trips to Goals", "More than this share of the robots we tracked")}
+        ${rankLine("cycle", "Time between trips", "Quicker than this share of the robots we tracked")}
         ${RB.moving != null ? `<div class="meter"><span class="k">Time spent moving<small>Share of driver control</small></span>${bar(RB.moving)}</div>` : ""}</div>
         ${RB.ft ? `<p class="cap">Drives about ${Math.round(RB.ft)} ft a match.</p>` : ""}</div>
     </section>
@@ -674,7 +675,7 @@ function showReport(id) {
     </section>
     ${q.length && e.length ? `<section class="rep-sec"><h4>Qualifications vs eliminations</h4><div class="scroll"><table class="cmp"><thead><tr><th></th><th>Quals (${q.length})</th><th>Elims (${e.length})</th></tr></thead><tbody>
       ${rows.slice(0, 5).map(([k, f]) => `<tr><td>${k}</td><td class="n">${pct(avg(f, q))}</td><td class="n">${pct(avg(f, e))}</td></tr>`).join("")}
-      <tr><td>Goal stops per match</td><td class="n">${Math.round(avg((m) => m.visits.length, q))}</td><td class="n">${Math.round(avg((m) => m.visits.length, e))}</td></tr>
+      <tr><td>Trips to Goals per match</td><td class="n">${Math.round(avg((m) => m.visits.length, q))}</td><td class="n">${Math.round(avg((m) => m.visits.length, e))}</td></tr>
       <tr><td>Driven per match</td><td class="n">${Math.round(avg((m) => m.ft, q))} ft</td><td class="n">${Math.round(avg((m) => m.ft, e))} ft</td></tr></tbody></table></div></section>` : ""}
     <section class="rep-sec"><h4>Match by match</h4><div class="scroll"><table class="mtab"><thead><tr><th>Match</th><th>With</th><th>Auton</th><th class="n">Score</th><th class="n">Goals</th><th class="n">Other side</th><th class="n">Toggles</th><th class="n">Driven</th><th>Watch</th></tr></thead><tbody>
       ${ms.map((m) => { const ri = A ? A.routes.findIndex((r) => r.members.includes(m.id)) : -1; return `<tr><td><b>${esc(m.match)}</b><small>${esc((m.event || "").replace(/ Signature$| \(Fall 2026\)$/, ""))}</small></td>

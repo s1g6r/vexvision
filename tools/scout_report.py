@@ -285,11 +285,11 @@ def summarise(team, ms):
     cyc = mean([m["cycle_s"] for m in ms])
     if per >= 1:
         km = {k: v / max(1, n) for k, v in kinds.items()}
-        parts = [f"{km['own']:.0f} of its own Alliance Goals", f"{km['neutral']:.0f} neutral", f"{km['center']:.0f} at the Center Goal", f"{km['opp']:.0f} of the other alliance's"]
+        parts = [f"{km['own']:.0f} to its own Alliance Goals", f"{km['neutral']:.0f} to neutral Goals", f"{km['center']:.0f} to the Center Goal", f"{km['opp']:.0f} to the other alliance's Goals"]
         parts = [p_ for p_, k in zip(parts, ["own", "neutral", "center", "opp"]) if round(km[k]) >= 1]
-        txt = f"Stops at about {per:.0f} {'Goal' if round(per) == 1 else 'Goals'} a match to score or descore ({', '.join(parts)})"
+        txt = f"Goes to a Goal about {per:.0f} {'time' if round(per) == 1 else 'times'} a match ({', '.join(parts)})"
         if cyc:
-            txt += f", moving to a new Goal every {cyc:.0f} s or so"
+            txt += f", a new trip every {cyc:.0f} s or so"
         txt += f". Its favourite is {fav[0]}"
         out.append(txt + ".")
     carry = [m["carry"] for m in ms if m.get("carry")]
@@ -346,7 +346,7 @@ def summarise(team, ms):
         if abs(te - tq) >= 0.05:
             bits.append(f"{'more' if te > tq else 'less'} time at Toggles ({pct(tq)} → {pct(te)})")
         if abs(ve - vq) >= 2:
-            bits.append(f"{'more' if ve > vq else 'fewer'} Goal visits ({vq:.0f} → {ve:.0f} a match)")
+            bits.append(f"{'more' if ve > vq else 'fewer'} trips to Goals ({vq:.0f} → {ve:.0f} a match)")
         out.append(("In eliminations it plays differently: " + ", ".join(bits) + ".") if bits else "Plays the same way in eliminations as in qualifications.")
         sec["split"] = {"quals": len(q), "elims": len(e)}
     return out, sec
