@@ -14,8 +14,11 @@ def main():
     index = json.load(open(idx_p)) if os.path.exists(idx_p) else []
     for mid in sys.argv[3:]:
         sw = {x["id"]: x for x in json.load(open("/home/claude/work/sw/matches.json"))} if os.path.exists("/home/claude/work/sw/matches.json") else {}
+        sw2 = {x["id"]: x for x in json.load(open("/home/claude/work/sw2/matches.json"))} if mid.startswith("e64359-2") and os.path.exists("/home/claude/work/sw2/matches.json") else {}
         if mid in sw:                           # Speedway day 1, read on the Mac
             m, clips = sw[mid], "/home/claude/work/sw/clips"
+        elif mid in sw2:                        # Speedway day 2, read on the Mac
+            m, clips = sw2[mid], "/mnt/user-data/uploads/vexvisionstuff/sw2/clips"
         elif mid[:3] in MANS:
             man, clips = MANS[mid[:3]]
             m = {x["id"]: x for x in json.load(open(man))}[mid]

@@ -185,7 +185,7 @@
 ### Nov 23 — the rest of Speedway day 2
 
 - **All 117 day-2 qualification matches are in** (the last 61 read overnight and this morning). Your Mac read most of them (3 workers, 6–12 minutes a match), and the cloud worked from the other end of the list (2 workers, about 17 minutes a match). Each finished reading came here for tracking, robot looks and naming, and the Mac read team plates from the 1080p cuts right after.
-- **Two downloads were broken** (Qual 138 and Qual 199: the file had no index, one only 4 MB). Both were downloaded again and read. `ffprobe` on every clip is now part of the check before reading.
+- **Two downloads were broken** (Qual 138 and Qual 199: the file had no index, one only 4 MB). They were found by checking every clip with `ffprobe`, then downloaded again and read. A broken clip fails quietly (the reading just finds no field), so run that check before a batch.
 - **The overnight gap:** the work only moves while Claude's turn is running, and the turn ended last night, so nothing was fed to the Mac for several hours. The morning run caught up.
 - **Results:** Speedway now has 228 matches with replays, 395 of 450 alliances named for sure, and a median of 7 matches per team report (was 6). Every replay links to the YouTube stream at autonomous (421 of 421).
 - **Checked live:** all 117 day-2 replays open with no errors.
