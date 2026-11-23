@@ -4348,7 +4348,7 @@
 "calibrated": 0.95,
 "seen": 0.75,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p25"
 },
@@ -4468,7 +4468,7 @@
 "calibrated": 0.89,
 "seen": 0.7,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p26"
 },
@@ -4668,7 +4668,7 @@
 "calibrated": 0.9,
 "seen": 0.73,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p24"
 },
@@ -4788,7 +4788,7 @@
 "calibrated": 0.77,
 "seen": 0.83,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p24"
 },
@@ -4808,7 +4808,7 @@
 "calibrated": 0.79,
 "seen": 0.68,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p25"
 },
@@ -4968,7 +4968,7 @@
 "calibrated": 0.9,
 "seen": 0.7,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p25"
 },
@@ -4988,7 +4988,7 @@
 "calibrated": 0.91,
 "seen": 0.7,
 "named": 4,
-"sure": 0,
+"sure": 4,
 "replay": true,
 "pack": "p25"
 },
@@ -5088,7 +5088,7 @@
 "calibrated": 0.87,
 "seen": 0.85,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p26"
 },
@@ -5128,7 +5128,7 @@
 "calibrated": 0.9,
 "seen": 0.62,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p26"
 },
@@ -5148,7 +5148,7 @@
 "calibrated": 0.91,
 "seen": 0.82,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p26"
 },
@@ -5248,7 +5248,7 @@
 "calibrated": 0.55,
 "seen": 0.48,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p27"
 },
@@ -5268,7 +5268,7 @@
 "calibrated": 0.79,
 "seen": 0.62,
 "named": 4,
-"sure": 0,
+"sure": 4,
 "replay": true,
 "pack": "p27"
 },
@@ -5288,7 +5288,7 @@
 "calibrated": 0.85,
 "seen": 0.85,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p27"
 },
@@ -5348,7 +5348,7 @@
 "calibrated": 0.87,
 "seen": 0.8,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p27"
 },
@@ -5368,7 +5368,7 @@
 "calibrated": 0.93,
 "seen": 0.77,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p27"
 },
@@ -5568,7 +5568,7 @@
 "calibrated": 0.83,
 "seen": 0.85,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p28"
 },
@@ -5608,7 +5608,7 @@
 "calibrated": 0.93,
 "seen": 0.85,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p28"
 },
@@ -5888,7 +5888,7 @@
 "calibrated": 0.9,
 "seen": 0.85,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p30"
 },
@@ -5948,7 +5948,7 @@
 "calibrated": 0.81,
 "seen": 0.78,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p30"
 },
@@ -5968,7 +5968,7 @@
 "calibrated": 0.84,
 "seen": 0.8,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p30"
 },
@@ -6008,7 +6008,7 @@
 "calibrated": 0.82,
 "seen": 0.72,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "pack": "p30"
 },
@@ -6028,7 +6028,7 @@
 "calibrated": 0.84,
 "seen": 0.9,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "pack": "p31"
 },
@@ -6208,9 +6208,9 @@
 "calibrated": 0.92,
 "seen": 0.8,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
-"pack": "p33"
+"pack": "p34"
 },
 {
 "id": "e64359-2-qual102",
@@ -6270,7 +6270,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p32"
+"pack": "p33"
 },
 {
 "id": "e64359-1-qual68",
@@ -6308,7 +6308,7 @@
 "calibrated": 0.69,
 "seen": 0.88,
 "named": 4,
-"sure": 0,
+"sure": 4,
 "replay": true,
 "pack": "p35"
 },
@@ -6328,7 +6328,7 @@
 "calibrated": 0.82,
 "seen": 0.7,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p33"
 },
@@ -6348,7 +6348,7 @@
 "calibrated": 0.65,
 "seen": 0.78,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "pack": "p35"
 },
@@ -6368,7 +6368,7 @@
 "calibrated": 0.62,
 "seen": 0.92,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "pack": "p35"
 },
@@ -6428,9 +6428,9 @@
 "calibrated": 0.94,
 "seen": 0.75,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
-"pack": "p34"
+"pack": "p35"
 },
 {
 "id": "e64359-2-qual204",
@@ -6450,7 +6450,7 @@
 "named": 4,
 "sure": 4,
 "replay": true,
-"pack": "p35"
+"pack": "p36"
 },
 {
 "id": "e64359-2-qual208",
@@ -6568,7 +6568,7 @@
 "calibrated": 0.87,
 "seen": 0.82,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p33"
 },
@@ -6644,7 +6644,7 @@
 "calibrated": 0.72,
 "seen": 0.93,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p32"
 },
@@ -6664,7 +6664,7 @@
 "calibrated": 0.93,
 "seen": 0.8,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p32"
 },
@@ -7044,7 +7044,7 @@
 "calibrated": 0.87,
 "seen": 0.75,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p32"
 },
@@ -7144,7 +7144,7 @@
 "calibrated": 0.93,
 "seen": 0.9,
 "named": 4,
-"sure": 0,
+"sure": 4,
 "replay": true,
 "pack": "p34"
 },
@@ -7164,7 +7164,7 @@
 "calibrated": 0.85,
 "seen": 0.7,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p35"
 },
@@ -7204,7 +7204,7 @@
 "calibrated": 0.56,
 "seen": 0.75,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "pack": "p35"
 },
@@ -7244,7 +7244,7 @@
 "calibrated": 0.72,
 "seen": 0.77,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "pack": "p35"
 },
@@ -7307,5 +7307,25 @@
 "sure": 4,
 "replay": true,
 "pack": "p35"
+},
+{
+"id": "e64359-2-qual113",
+"event": "Speedway Signature",
+"match": "Qual 113",
+"red": [
+"80001C",
+"884A"
+],
+"blue": [
+"99209X",
+"2567U"
+],
+"video": "e64359-2-qual113",
+"calibrated": 0.83,
+"seen": 0.9,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p32"
 }
 ]
