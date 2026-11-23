@@ -189,3 +189,19 @@
 - **The overnight gap:** the work only moves while Claude's turn is running, and the turn ended last night, so nothing was fed to the Mac for several hours. The morning run caught up.
 - **Results:** Speedway now has 228 matches with replays, 395 of 450 alliances named for sure, and a median of 7 matches per team report (was 6). Every replay links to the YouTube stream at autonomous (421 of 421).
 - **Checked live:** all 117 day-2 replays open with no errors.
+
+### Nov 23 — Toggles: count real flips, not time nearby
+
+- **Removed** everything built on time spent near a Toggle (the "Near a Toggle" meters, the Toggles % column, "Spends a lot of time at the Toggles"). A robot parked by a Toggle is usually defending it or scoring on the Goal next to it.
+- **A flip** (`tools/toggle_flips.py`): the Toggle is seen changing colour during the match, a robot is touching it (within half a metre, from 2 s before to half a second after), and the new colour stays once robots move away. Changes under 4 s apart are one flip. The closest touching robot gets the credit.
+- **Checked by eye** against match video, 4 frames per moment (3 s before to 4 s after):
+  - single-match uploads (Highlander, Harbor Havoc, Blank's, some Speedway): 19 real of the 20 that could be judged, 3 couldn't be judged;
+  - Speedway stream (1080p cuts): 20 of 20 real;
+  - moments the rule throws out: 7 of 12 correctly thrown out, 3 real flips missed (two quick flips in a row, a flip to yellow, a lost robot — the first two are now handled).
+  - A looser version (new colour just read twice) found 76 more but only about 13 of 17 judgeable were real, so it was not used.
+- **Coverage:** the camera sees one or two of the four Toggles, so flips are a floor. 280 flips in 156 of 423 matches. The site never says a team "doesn't toggle".
+- **Toggle runner** now means: at least 3 matches, 3+ flips seen, in 3+ different matches or in at least half of its matches. 13 teams (was 44, and 22 of those 44 were never seen flipping once).
+- **Comes for your Toggles:** 2+ flips seen on the other alliance's Toggles. **Late:** most flips in the last 30 seconds.
+- **Replay:** a seen flip lights that Toggle in the flipper's colour for about 2.5 s, the robot's label says "Toggled", and the play bar gets a mark.
+- **Open question for Sagar:** the Toggle shows two colours from above (top face and the face toward the field). Which one is its set colour? Until that is answered the replay shows flips only, not which colour a Toggle is on.
+- The old colour-change events in the replays (which also fired before and after the match during field reset) are replaced by these flips.

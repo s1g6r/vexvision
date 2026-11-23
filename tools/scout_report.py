@@ -5,7 +5,7 @@ Everything here comes from the tracked paths, not from reading scores:
   from match to match
 - defence: driver-control time on the other side of the Autonomous Line, and time
   right next to an opponent robot
-- toggles: time spent at a Toggle (own colour or the other alliance's)
+- toggles: Toggle flips seen (tools/toggle_flips.py); time merely near a Toggle is not used
 - goals: time spent at each kind of Goal (own Alliance Goals, neutral Quadrant Goals,
   the Center Goal, the other alliance's Goals)
 - endgame: where it is in the last 10 seconds
@@ -23,9 +23,10 @@ from tools.export_replay import smooth
 
 SURE = 0.75
 NEAR_GOAL = 450.0        # mm, robot centre to goal centre: working that goal
-NEAR_TOGGLE = 520.0      # mm, robot centre to the toggle on the wall
 NEAR_OPP = 760.0         # mm, centre to centre: bumping or blocking an opponent
 AUTON = 15.0
+
+FLIPS = {}   # match id -> Toggle flips, from tools/toggle_flips.py
 
 def flip(x, y, alliance):
     """Turn the field so the team's own side is always where red's is."""
@@ -89,13 +90,12 @@ def match_features(r, rb, meta):
         gtime[k] += dt[at].sum()
         if at.any() and k not in gfirst:
             gfirst[k] = float(t[np.argmax(at)])
-    ttime = {"own": 0.0, "opp": 0.0}; tfirst = {}
-    for q, (qx, qy) in F.TOGGLES.items():
-        at = driver & (np.hypot(x - qx, y - qy) < NEAR_TOGGLE)
-        k = "own" if F.QUADRANT_COLOR[q] == al else "opp"
-        ttime[k] += dt[at].sum()
-        if at.any() and k not in tfirst:
-            tfirst[k] = float(t[np.argmax(at)])
+    # Toggle flips this robot was seen making (a colour change while it touched the Toggle, that stayed)
+    fl = [e for e in FLIPS.get(meta["id"], []) if e.get("team") == rb["team"]]
+    flips = {"own": sum(not e["theirs"] for e in fl), "opp": sum(e["theirs"] for e in fl), "late": sum(e["t"] >= 90 for e in fl)}
+    tfirst = {}
+    for e in fl:
+        tfirst.setdefault("opp" if e["theirs"] else "own", e["t"])
     # longest stretch on the other side, for a "watch" moment
     best, cur, start, best_t = 0.0, 0.0, None, None
     for i in np.flatnonzero(driver):
@@ -145,10 +145,6 @@ def match_features(r, rb, meta):
                 i += 1
     visits.sort()
     starts = [v_[0] for v_ in visits]
-    tv = 0
-    for q, (qx, qy) in F.TOGGLES.items():
-        inz = driver & (np.hypot(x - qx, y - qy) < NEAR_TOGGLE)
-        tv += int(np.sum(inz[1:] & ~inz[:-1]))
     carry = rb.get("carry")
     if carry:
         own = carry["red"] if al == "red" else carry["blue"]; oth = carry["blue"] if al == "red" else carry["red"]
@@ -163,7 +159,7 @@ def match_features(r, rb, meta):
         "near_opp_their_side": round(float(dt[driver & near_opp & other_side].sum() / D), 3),
         "goals": {k: round(v / D, 3) for k, v in gtime.items()},
         "goal_first": gfirst,
-        "toggles": {k: round(v / D, 3) for k, v in ttime.items()},
+        "flips": flips,
         "toggle_first": tfirst,
         "midfield_end": bool(np.isfinite(ex) and abs(ex) + abs(ey) <= F.MIDFIELD_R),
         "end": None if not np.isfinite(ex) else [round(float(v) / 1000, 2) for v in flip(ex, ey, al)],
@@ -176,7 +172,7 @@ def match_features(r, rb, meta):
         "moving": round(float(len(moving) / max(1, len(v))), 3),
         "visits": [[round(a, 1), k, n_] for a, k, n_ in visits],
         "cycle_s": round(float(np.median(np.diff(starts))), 1) if len(starts) >= 3 else None,
-        "toggle_visits": tv,
+        
         "carry": carry,
     }
 
@@ -314,7 +310,7 @@ def summarise(team, ms):
                       "favourites": [[k, round(names[k] / n, 1)] for k in sorted(names, key=lambda k: -names[k])[:5]], "carry": cm}
     # --- the robot itself
     top_ = mean([m["top_fps"] for m in ms]); cru = mean([m["cruise_fps"] for m in ms]); mov = mean([m["moving"] for m in ms])
-    sec["robot"] = {"top_fps": top_, "cruise_fps": cru, "moving": mov, "ft": mean([m["ft"] for m in ms]), "toggle_visits": mean([m["toggle_visits"] for m in ms])}
+    sec["robot"] = {"top_fps": top_, "cruise_fps": cru, "moving": mov, "ft": mean([m["ft"] for m in ms])}
     # --- defence
     os_ = np.mean([m["other_side"] for m in ms]); no = np.mean([m["near_opp_their_side"] for m in ms])
     if os_ >= 0.55 and no >= 0.15:
@@ -327,16 +323,18 @@ def summarise(team, ms):
         out.append("Mostly plays its own side, crossing over now and then.")
     sec["defence"] = {"other_side": round(float(os_), 3), "near_opp_their_side": round(float(no), 3)}
     # --- toggles
-    to = np.mean([m["toggles"]["own"] + m["toggles"]["opp"] for m in ms]); topp = np.mean([m["toggles"]["opp"] for m in ms])
-    tv = sec["robot"]["toggle_visits"] or 0
-    if to >= 0.3:
-        which = "including the other alliance's" if topp >= 0.19 else "mostly its own"
-        out.append(f"Goes after Toggles a lot, {which}.")
-    elif to <= 0.1:
-        out.append("Rarely goes to the Toggles.")
-    else:
-        out.append("Goes to the Toggles now and then.")
-    sec["toggles"] = {"share": round(float(to), 3), "opp": round(float(topp), 3), "trips": tv}
+    # Only flips we actually saw count. The camera sees one or two of the four Toggles, so no flips
+    # seen is not the same as no flips: say nothing rather than "doesn't toggle".
+    nf = sum(m["flips"]["own"] + m["flips"]["opp"] for m in ms); nopp = sum(m["flips"]["opp"] for m in ms)
+    km = sum(1 for m in ms if m["flips"]["own"] + m["flips"]["opp"]); late = sum(m["flips"]["late"] for m in ms)
+    if nf:
+        theirs = " including the other alliance's" if nopp >= 2 or (nopp and nopp * 2 >= nf) else ""
+        many = nf >= 3 and (km >= 3 or km * 2 >= n) and n >= 3
+        out.append((f"Keeps flipping Toggles: seen doing it in {km} of {n} matches,{theirs}." if many else
+                    f"Seen flipping a Toggle in {km} of {n} {'match' if n == 1 else 'matches'}{','+theirs if theirs else ''}.").replace(",.", "."))
+        if late >= 2 and late * 2 >= nf:
+            out.append("Usually goes for a Toggle in the last 30 seconds.")
+    sec["toggles"] = {"flips": nf, "matches": km, "opp_flips": nopp, "late": late}
     # --- endgame
     mid = np.mean([m["midfield_end"] for m in ms])
     if mid >= 0.5:
@@ -346,13 +344,10 @@ def summarise(team, ms):
     q = [m for m in ms if not m["elim"]]; e = [m for m in ms if m["elim"]]
     if q and e:
         dq, de = np.mean([m["other_side"] for m in q]), np.mean([m["other_side"] for m in e])
-        tq = np.mean([m["toggles"]["own"] + m["toggles"]["opp"] for m in q]); te = np.mean([m["toggles"]["own"] + m["toggles"]["opp"] for m in e])
         vq, ve = np.mean([len(m["visits"]) for m in q]), np.mean([len(m["visits"]) for m in e])
         bits = []
         if abs(de - dq) >= 0.1:
             bits.append(f"{'more' if de > dq else 'less'} time on the other side")
-        if abs(te - tq) >= 0.05:
-            bits.append(f"{'more' if te > tq else 'less'} time at the Toggles")
         if abs(ve - vq) >= 2:
             bits.append(f"goes to Goals {'more' if ve > vq else 'less'} often")
         out.append(("In eliminations it plays differently: " + ", ".join(bits) + ".") if bits else "Plays the same way in eliminations as in qualifications.")
@@ -369,8 +364,8 @@ def tags(sec, n=1):
         t.append("Plays defence")
     elif d.get("other_side", 1) <= 0.15:
         t.append("Stays home")
-    if tg.get("share", 0) >= 0.35:
-        t.append("Toggle runner")
+    if n >= 3 and tg.get("flips", 0) >= 3 and (tg.get("matches", 0) >= 3 or tg.get("matches", 0) * 2 >= n):
+        t.append("Toggle runner")             # seen flipping Toggles in 3+ different matches, or in half of them
     if g:
         k = max(g, key=g.get)
         if g[k] >= 1:
@@ -412,7 +407,9 @@ def ranks(out):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--raw", required=True); ap.add_argument("--index", required=True); ap.add_argument("--out", required=True)
+    ap.add_argument("--flips", default="data/toggle_flips.json")
     a = ap.parse_args()
+    FLIPS.update(json.load(open(a.flips)) if os.path.exists(a.flips) else {})
     idx = [x for x in json.load(open(a.index)) if not x.get("error") and (x.get("calibrated") or 0) >= 0.6]
     teams = {}
     for meta in idx:
