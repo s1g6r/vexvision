@@ -394,10 +394,10 @@ function watchouts(R) {
   const r0 = S.auton?.routes?.[0];
   if (r0?.steps?.crosses) out.push("Their auton crosses the Autonomous Line");
   const d = S.defence || {};
-  if (d.other_side >= 0.55 && d.near_opp_their_side >= 0.15) out.push(`Expect them on your side: ${pct(d.other_side)} of driver control there`);
+  if (d.other_side >= 0.55 && d.near_opp_their_side >= 0.15) out.push("Expect them on your side for much of driver control");
   const tg = S.toggles || {};
-  if (tg.opp >= 0.19) out.push(`Comes for your Toggles: ${pct(tg.opp)} of driver control by them`);
-  else if (tg.share >= 0.35) { const k = Math.round(tg.trips || 0); out.push(k >= 3 ? `Lives at the Toggles: about ${k} trips a match` : `Spends ${pct(tg.share)} of driver control by a Toggle`); }
+  if (tg.opp >= 0.19) out.push("Comes for your Toggles");
+  else if (tg.share >= 0.35) out.push("Spends a lot of time at the Toggles");
   const fav = S.scoring?.favourites?.[0];
   if (fav && fav[1] >= 1) out.push(`Goes to ${fav[0].replace(/^its own/, "their own")} most`);
   if (S.endgame?.midfield >= 0.5) out.push("Ends in the Midfield");
@@ -475,7 +475,7 @@ function drawPlan(c) {
 const PICK_SORTS = [["rating", "Rating"], ["avg", "Points"], ["skills", "Skills"], ["video", "Most on video"], ["fit", "Fits with you"], ["mix", "Your mix"]];
 /* your own mix: each slider weighs one thing, compared only with the other teams at this event */
 const MIX_KEYS = [["rating", "Rating", (t) => t.rating], ["avg", "Points a match", (t) => t.avg], ["skills", "Skills", (t) => t.skills],
-  ["speed", "Speed on video", (t) => REP[t.n]?.sections?.robot?.top_fps], ["goals", "Trips to Goals", (t) => REP[t.n]?.sections?.scoring?.visits_per_match],
+  ["speed", "Speed on video", (t) => REP[t.n]?.sections?.robot?.top_fps], ["goals", "Busy at the Goals", (t) => REP[t.n]?.sections?.scoring?.visits_per_match],
   ["defence", "Time on the other side", (t) => REP[t.n]?.sections?.defence?.other_side]];
 const MIX = (() => { try { return { rating: 2, avg: 2, skills: 1, speed: 1, goals: 1, defence: 0, ...JSON.parse(localStorage.getItem("vv-mix") || "{}") }; } catch { return { rating: 2, avg: 2, skills: 1, speed: 1, goals: 1, defence: 0 }; } })();
 function mixScores(ev) {
@@ -612,7 +612,7 @@ function showEvent(eid, me) {
 /* ---------- full scouting report ---------- */
 const mmss2 = (s) => { s = Math.max(0, Math.round(s)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
 const watchBtn = (m, t, label) => NOREP.has(m.id) ? "" : `<button type="button" class="watch" data-replay="${esc(m.id)}" ${t != null ? `data-t="${(+t).toFixed(1)}"` : ""}>${esc(label)}</button>`;
-const bar = (v, cls = "") => `<span class="bar ${cls}"><i style="width:${Math.min(100, Math.round(v * 100))}%"></i></span><b class="num">${pct(v)}</b>`;
+const bar = (v, cls = "", label = true) => `<span class="bar ${cls}"><i style="width:${Math.min(100, Math.round(v * 100))}%"></i></span>${label ? `<b class="num">${pct(v)}</b>` : ""}`;
 function showReport(id) {
   const R = REP[id], st = TS[id], out = $("#result");
   if (!R) { out.innerHTML = `<div class="empty"><p><b>No scouting report for ${esc(id)} yet.</b> A report needs at least one match where we can tell which robot is ${esc(id)}.</p><a class="btn ghost" href="#team-${esc(id)}">Back to ${esc(id)}</a></div>`; return; }
@@ -654,18 +654,17 @@ function showReport(id) {
       <div class="variants">${autonHtml}</div>
     </section>
     <section class="rep-sec rep-grid">
-      <div><h4>Trips to Goals</h4>
-        <div class="bignums"><div><b>${SC.visits_per_match != null ? Math.round(SC.visits_per_match) : "–"}</b><span>trips to a Goal a match</span></div><div><b>${SC.cycle_s ? Math.round(SC.cycle_s) + " s" : "–"}</b><span>between trips</span></div><div><b>${RB.toggle_visits != null ? Math.round(RB.toggle_visits) : "–"}</b><span>Toggle trips a match</span></div></div>
-        <div class="meters">${["own", "neutral", "center", "opp"].map((k) => `<div class="meter"><span class="k">${KN[k]}<small>${(kinds[k] ?? 0).toFixed(1)} a match</small></span>${bar((kinds[k] ?? 0) / ktot)}</div>`).join("")}</div>
-        <p class="cap">A trip is any time the robot sits next to a Goal for a second or more. The video shows where it went, not what it scored.</p>
-        ${SC.favourites?.length ? `<p class="cap">Goes back to most: ${SC.favourites.slice(0, 3).map(([g, v]) => `${esc(g)} (${v.toFixed(1)} a match)`).join(", ")}.</p>` : ""}</div>
+      <div><h4>Which Goals it goes to</h4>
+        <div class="meters">${["own", "neutral", "center", "opp"].map((k) => { const v = (kinds[k] ?? 0) / ktot; return `<div class="meter"><span class="k">${KN[k]}<small>${v >= 0.45 ? "Most of the time" : v >= 0.25 ? "Often" : v >= 0.1 ? "Sometimes" : v > 0.02 ? "Rarely" : "Hardly ever"}</small></span>${bar(v, "", false)}</div>`; }).join("")}</div>
+        ${SC.favourites?.length ? `<p class="cap">Keeps going back to ${SC.favourites.slice(0, 3).map(([g]) => esc(g)).join(", ")}.</p>` : ""}
+        <p class="cap">From where the robot parks next to a Goal. The video shows where it goes, not what it scores.</p></div>
       <div><h4>Cone colours on the robot</h4>${cm ? `<div class="colours"><span class="c-own" style="flex:${cm.own}"></span><span class="c-yel" style="flex:${cm.yellow}"></span><span class="c-oth" style="flex:${cm.other}"></span></div>
         <div class="meters"><div class="meter"><span class="k">Its own colour</span>${bar(cm.own, "own")}</div><div class="meter"><span class="k">Yellow</span>${bar(cm.yellow, "yel")}</div><div class="meter"><span class="k">The other alliance's colour</span>${bar(cm.other, "oth")}</div></div>
         <p class="cap">A rough read of the colour on and around the robot during driver control. Its own paint is removed, but plates and flags still count a little.</p>` : `<p class="cap">Not enough clear views of the robot yet.</p>`}
         <h4 class="mt">The robot</h4><div class="meters">
         ${rankLine("top_fps", "Top speed", "Faster than this share of the robots we tracked")}
-        ${rankLine("visits", "Trips to Goals", "More than this share of the robots we tracked")}
-        ${rankLine("cycle", "Time between trips", "Quicker than this share of the robots we tracked")}
+        ${rankLine("visits", "Busy at the Goals", "Busier than this share of the robots we tracked")}
+        ${rankLine("cycle", "Quick between Goals", "Quicker than this share of the robots we tracked")}
         ${RB.moving != null ? `<div class="meter"><span class="k">Time spent moving<small>Share of driver control</small></span>${bar(RB.moving)}</div>` : ""}</div>
         ${RB.ft ? `<p class="cap">Drives about ${Math.round(RB.ft)} ft a match.</p>` : ""}</div>
     </section>
@@ -675,14 +674,13 @@ function showReport(id) {
     </section>
     ${q.length && e.length ? `<section class="rep-sec"><h4>Qualifications vs eliminations</h4><div class="scroll"><table class="cmp"><thead><tr><th></th><th>Quals (${q.length})</th><th>Elims (${e.length})</th></tr></thead><tbody>
       ${rows.slice(0, 5).map(([k, f]) => `<tr><td>${k}</td><td class="n">${pct(avg(f, q))}</td><td class="n">${pct(avg(f, e))}</td></tr>`).join("")}
-      <tr><td>Trips to Goals per match</td><td class="n">${Math.round(avg((m) => m.visits.length, q))}</td><td class="n">${Math.round(avg((m) => m.visits.length, e))}</td></tr>
       <tr><td>Driven per match</td><td class="n">${Math.round(avg((m) => m.ft, q))} ft</td><td class="n">${Math.round(avg((m) => m.ft, e))} ft</td></tr></tbody></table></div></section>` : ""}
-    <section class="rep-sec"><h4>Match by match</h4><div class="scroll"><table class="mtab"><thead><tr><th>Match</th><th>With</th><th>Auton</th><th class="n">Score</th><th class="n">Goals</th><th class="n">Other side</th><th class="n">Toggles</th><th class="n">Driven</th><th>Watch</th></tr></thead><tbody>
+    <section class="rep-sec"><h4>Match by match</h4><div class="scroll"><table class="mtab"><thead><tr><th>Match</th><th>With</th><th>Auton</th><th class="n">Score</th><th class="n">Other side</th><th class="n">Toggles</th><th class="n">Driven</th><th>Watch</th></tr></thead><tbody>
       ${ms.map((m) => { const ri = A ? A.routes.findIndex((r) => r.members.includes(m.id)) : -1; return `<tr><td><b>${esc(m.match)}</b><small>${esc((m.event || "").replace(/ Signature$| \(Fall 2026\)$/, ""))}</small></td>
         <td><span class="side-${m.alliance[0]}">${m.alliance === "red" ? "Red" : "Blue"}</span> ${esc(m.partner || "")}</td>
         <td>${ri >= 0 ? `<span class="rt"><i style="background:${RC[ri % 6]}"></i>${A.routes[ri].label}</span>` : "–"}</td>
         <td class="n">${(() => { const o = OFF.matches[m.id]; if (!o || o.rs == null) return "–"; const my = m.alliance === "red" ? o.rs : o.bs, th = m.alliance === "red" ? o.bs : o.rs; return `<span style="color:${my > th ? "#7fd99a" : my < th ? "#f08a8a" : "inherit"}">${my}–${th}</span>`; })()}</td>
-        <td class="n">${m.visits.length}</td><td class="n">${pct(m.other_side)}</td><td class="n">${pct(m.toggles.own + m.toggles.opp)}</td><td class="n">${Math.round(m.ft)} ft</td>
+        <td class="n">${pct(m.other_side)}</td><td class="n">${pct(m.toggles.own + m.toggles.opp)}</td><td class="n">${Math.round(m.ft)} ft</td>
         <td class="w">${watchBtn(m, -1, "Auton")}${watchBtn(m, m.driver_at, "Driver")}${m.defence_len >= 4 ? watchBtn(m, m.defence_t, "Crossing over") : ""}${m.toggle_first.opp != null ? watchBtn(m, m.toggle_first.opp, "Their Toggle") : ""}</td></tr>`; }).join("")}
     </tbody></table></div></section>
   </div>`;

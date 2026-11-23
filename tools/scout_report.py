@@ -284,14 +284,22 @@ def summarise(team, ms):
     fav = sorted(names, key=lambda k: -names[k])[:2]
     cyc = mean([m["cycle_s"] for m in ms])
     if per >= 1:
-        km = {k: v / max(1, n) for k, v in kinds.items()}
-        parts = [f"{km['own']:.0f} to its own Alliance Goals", f"{km['neutral']:.0f} to neutral Goals", f"{km['center']:.0f} to the Center Goal", f"{km['opp']:.0f} to the other alliance's Goals"]
-        parts = [p_ for p_, k in zip(parts, ["own", "neutral", "center", "opp"]) if round(km[k]) >= 1]
-        txt = f"Goes to a Goal about {per:.0f} {'time' if round(per) == 1 else 'times'} a match ({', '.join(parts)})"
-        if cyc:
-            txt += f", a new trip every {cyc:.0f} s or so"
-        txt += f". Its favourite is {fav[0]}"
-        out.append(txt + ".")
+        # in words, not counts: which Goals it goes to, compared with each other
+        tot = sum(kinds.values()) or 1
+        sh = {k: v / tot for k, v in kinds.items()}
+        NM = {"own": "its own Alliance Goals", "neutral": "the neutral Goals", "center": "the Center Goal", "opp": "the other alliance's Goals"}
+        order = sorted(sh, key=lambda k: -sh[k])
+        top, nxt = order[0], order[1]
+        if sh[top] >= 0.55:
+            txt = f"Mostly goes to {NM[top]}"
+            if sh[nxt] >= 0.2:
+                txt += f", with {NM[nxt]} now and then"
+        else:
+            txt = f"Splits its time between {NM[top]} and {NM[nxt]}"
+        never = [NM[k] for k in order[2:] if sh[k] < 0.06]
+        if never:
+            txt += f", and hardly ever goes to {' or '.join(never)}"
+        out.append(txt + f". Keeps going back to {fav[0]}.")
     carry = [m["carry"] for m in ms if m.get("carry")]
     cm = None
     if len(carry) >= 1:
@@ -299,7 +307,7 @@ def summarise(team, ms):
         big = max(cm, key=cm.get)
         cw = {"own": "its own colour", "yellow": "yellows", "other": "the other alliance's colour"}
         rest = [k for k in ("own", "yellow") if k != big]
-        out.append(f"Mostly handles {cw[big]}: {pct(cm[big])} of the cone colour seen on the robot, {cw[rest[0]]} {pct(cm[rest[0]])} (a rough read from the video).")
+        out.append(f"Mostly handles {cw[big]}, then {cw[rest[0]]} (a rough read from the colour on the robot).")
         if cm["yellow"] >= GAMBLER and len(carry) >= 2:
             out.append("A gambler: yellows are a bigger part of its game than for most teams, so expect it to go for them.")
     sec["scoring"] = {"visits_per_match": round(float(per), 1), "cycle_s": cyc, "by_kind": {k: round(v / max(1, n), 1) for k, v in kinds.items()},
@@ -310,24 +318,24 @@ def summarise(team, ms):
     # --- defence
     os_ = np.mean([m["other_side"] for m in ms]); no = np.mean([m["near_opp_their_side"] for m in ms])
     if os_ >= 0.55 and no >= 0.15:
-        out.append(f"Plays defence: {pct(os_)} of driver control on the other side, often right up against an opponent.")
+        out.append("Plays defence: spends most of driver control on the other side, often right up against an opponent.")
     elif os_ >= 0.45:
-        out.append(f"Spends {pct(os_)} of driver control on the other side of the field.")
+        out.append("Spends a lot of driver control on the other side of the field.")
     elif os_ <= 0.15:
-        out.append(f"Stays home: only {pct(os_)} of driver control on the other side.")
+        out.append("Stays home: hardly ever crosses to the other side.")
     else:
-        out.append(f"Mostly plays its own side ({pct(1 - os_)} of driver control), crossing over now and then.")
+        out.append("Mostly plays its own side, crossing over now and then.")
     sec["defence"] = {"other_side": round(float(os_), 3), "near_opp_their_side": round(float(no), 3)}
     # --- toggles
     to = np.mean([m["toggles"]["own"] + m["toggles"]["opp"] for m in ms]); topp = np.mean([m["toggles"]["opp"] for m in ms])
     tv = sec["robot"]["toggle_visits"] or 0
     if to >= 0.3:
         which = "including the other alliance's" if topp >= 0.19 else "mostly its own"
-        out.append(f"Goes after Toggles: about {tv:.0f} {'trip' if round(tv) == 1 else 'trips'} a match, {pct(to)} of driver control right by one, {which}.")
+        out.append(f"Goes after Toggles a lot, {which}.")
     elif to <= 0.1:
         out.append("Rarely goes to the Toggles.")
     else:
-        out.append(f"Visits the Toggles now and then: about {tv:.0f} {'trip' if round(tv) == 1 else 'trips'} a match." if round(tv) >= 1 else "Visits the Toggles now and then, less than once a match.")
+        out.append("Goes to the Toggles now and then.")
     sec["toggles"] = {"share": round(float(to), 3), "opp": round(float(topp), 3), "trips": tv}
     # --- endgame
     mid = np.mean([m["midfield_end"] for m in ms])
@@ -342,11 +350,11 @@ def summarise(team, ms):
         vq, ve = np.mean([len(m["visits"]) for m in q]), np.mean([len(m["visits"]) for m in e])
         bits = []
         if abs(de - dq) >= 0.1:
-            bits.append(f"{'more' if de > dq else 'less'} time on the other side ({pct(dq)} → {pct(de)})")
+            bits.append(f"{'more' if de > dq else 'less'} time on the other side")
         if abs(te - tq) >= 0.05:
-            bits.append(f"{'more' if te > tq else 'less'} time at Toggles ({pct(tq)} → {pct(te)})")
+            bits.append(f"{'more' if te > tq else 'less'} time at the Toggles")
         if abs(ve - vq) >= 2:
-            bits.append(f"{'more' if ve > vq else 'fewer'} trips to Goals ({vq:.0f} → {ve:.0f} a match)")
+            bits.append(f"goes to Goals {'more' if ve > vq else 'less'} often")
         out.append(("In eliminations it plays differently: " + ", ".join(bits) + ".") if bits else "Plays the same way in eliminations as in qualifications.")
         sec["split"] = {"quals": len(q), "elims": len(e)}
     return out, sec
@@ -392,7 +400,14 @@ def ranks(out):
         k = r["sections"].get("ranks", {}).get("top_fps"); sp = r["sections"]["robot"]["top_fps"]
         if k is not None and sp:
             word = "One of the fastest robots we tracked" if k >= 0.8 else "Quicker than most robots we tracked" if k >= 0.6 else "Slower than most robots we tracked" if k <= 0.2 else "Middle of the pack for speed"
-            r["summary"].insert(min(3, len(r["summary"])), f"{word}: faster than {round(k * 100)}% of the {len(out)} teams.")
+            r["summary"].insert(min(3, len(r["summary"])), f"{word}.")
+        kc = r["sections"].get("ranks", {}).get("cycle"); kv = r["sections"].get("ranks", {}).get("visits")
+        if kc is not None and kc >= 0.7:
+            r["summary"].insert(min(3, len(r["summary"])), "Gets from Goal to Goal faster than most robots.")
+        elif kc is not None and kc <= 0.25:
+            r["summary"].insert(min(3, len(r["summary"])), "Takes its time between Goals compared with most robots.")
+        elif kv is not None and kv >= 0.8:
+            r["summary"].insert(min(3, len(r["summary"])), "One of the busiest robots at the Goals.")
 
 def main():
     ap = argparse.ArgumentParser()
