@@ -188,7 +188,11 @@ def main():
             continue
         per[x["event"]] += 1
         plated[x["event"]] += os.path.exists(os.path.join(raw, x["id"] + ".plates.json"))
-    PLATE_EVENTS.update(e for e in per if plated[e] >= max(10, 0.6 * per[e]))
+    # Tested 22 Nov at Speedway, hiding half the plate-named alliances: naming from plates and looks
+    # alone got 77% of them right, keeping earlier names as anchors got 85%. So plates correct the
+    # alliances they can read and earlier names still anchor the rest (PLATE_EVENTS stays empty).
+    for e in per:
+        print(f"{e}: {plated[e]} of {per[e]} matches have 1080p plate reads") if plated[e] else None
     ev = load(raw, idx, reid)
     hint, scale = {}, 0.05
     quals = defaultdict(set)
