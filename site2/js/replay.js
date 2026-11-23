@@ -123,8 +123,20 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
     return { e, m };
   });
 
+  // Toggle flips: the Toggle lights up in the colour of the robot that flipped it, and that
+  // robot's label says so for a moment. Only flips we actually saw are in the data.
+  const TOG = { N: [0, -1.759, 0], S: [0, 1.759, 0], E: [1.759, 0, 1], W: [-1.759, 0, 1] };
+  const barGeo = new THREE.BoxGeometry(0.68, 0.075, 0.085);
+  const flipEvents = R.events.filter((e) => e.type === "flip" && TOG[e.q] && robots[e.robot]);
+  const flipGlows = flipEvents.map((e) => {
+    const m = new THREE.Mesh(barGeo, new THREE.MeshBasicMaterial({ color: e.alliance === "blue" ? 0x4c86ff : 0xff4550, transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
+    const [x, z, rot] = TOG[e.q]; m.position.set(x, 0.065, z); if (rot) m.rotation.y = Math.PI / 2; m.renderOrder = 4; F.world.add(m);
+    return { e, m };
+  });
+  const FLIP_SHOW = 2.6;
+
   // labels
-  labels.innerHTML = robots.map((r) => `<div class="pin ${r.side}"><b>${esc(r.label)}</b></div>`).join("");
+  labels.innerHTML = robots.map((r) => `<div class="pin ${r.side}"><b>${esc(r.label)}<span class="tg">Toggled</span></b></div>`).join("");
   pipMarks.innerHTML = robots.map((r) => `<i class="${r.side}"></i>`).join("");
   const pins = [...labels.children], pmarks = [...pipMarks.children];
 
@@ -144,6 +156,8 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
   const ticks = $(".rp-ticks");
   const a0 = Math.max(0, -t0), a1 = Math.max(a0, AUTON - t0);   // the autonomous band, kept inside the bar
   ticks.innerHTML = a1 > a0 ? `<span class="auton" style="left:${(a0 / span) * 100}%;width:${((Math.min(a1, span) - a0) / span) * 100}%"></span>` : "";
+  ticks.insertAdjacentHTML("beforeend", flipEvents.filter((e) => e.t >= t0 && e.t <= t1)
+    .map((e) => `<span class="flip ${e.alliance}" style="left:${((e.t - t0) / span) * 100}%"></span>`).join(""));
   const range = $(".rp-range");
   range.min = t0; range.max = t1; range.step = 0.1;
 
@@ -221,6 +235,14 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
     drawTrails(t);
     heatA += ((heatOn ? 1 : 0) - heatA) * Math.min(1, dt * 6); heat.material.opacity = heatA;
     flashes.forEach(({ e, m }) => { const a = t - e.t; m.material.opacity = a >= 0 && a < 1.2 ? 1 - a / 1.2 : 0; m.scale.setScalar(1 + Math.max(0, a) * 1.6); });
+    const flipping = new Set();
+    flipGlows.forEach(({ e, m }) => {
+      const a = t - e.t, on = a >= 0 && a < FLIP_SHOW;
+      m.material.opacity = on ? (a < 0.25 ? a / 0.25 : a > FLIP_SHOW - 0.8 ? (FLIP_SHOW - a) / 0.8 : 1) * 0.95 : 0;
+      m.scale.set(1, on && a < 0.6 ? 1 + (0.6 - a) * 0.8 : 1, 1);
+      if (on) flipping.add(e.robot);
+    });
+    pins.forEach((p, i) => p.classList.toggle("flipped", flipping.has(i)));
 
     // camera
     const target = mode === "broadcast" ? F.photoView(frameFor(camAt(R.cams, t)), F.size[1] > F.size[0] * 0.7) : (!dragging && !reduced && (orbit.az += 0.0006 * (playing ? 1 : 0.3)), orbitView());

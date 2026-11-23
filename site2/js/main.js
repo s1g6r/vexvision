@@ -396,7 +396,8 @@ function watchouts(R) {
   const d = S.defence || {};
   if (d.other_side >= 0.55 && d.near_opp_their_side >= 0.15) out.push("Expect them on your side for much of driver control");
   const tg = S.toggles || {};
-  if (tg.opp >= 0.19) out.push("Comes for your Toggles");
+  if ((tg.opp_flips || 0) >= 2) out.push("Comes for your Toggles");
+  if ((tg.late || 0) >= 2 && tg.late * 2 >= (tg.flips || 0)) out.push("Goes for a Toggle late in the match");
   const fav = S.scoring?.favourites?.[0];
   if (fav && fav[1] >= 1) out.push(`Goes to ${fav[0].replace(/^its own/, "their own")} most`);
   if (S.endgame?.midfield >= 0.5) out.push("Ends in the Midfield");
