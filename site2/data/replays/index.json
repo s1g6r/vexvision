@@ -45,7 +45,7 @@
 "uXTJGJ-eFLU",
 3
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "id": "Kx4bKVNEpjA",
@@ -64,7 +64,7 @@
 "calibrated": 0.95,
 "seen": 0.95,
 "named": 4,
-"sure": 0,
+"sure": 4,
 "replay": true,
 "yt": [
 "Kx4bKVNEpjA",
@@ -89,7 +89,7 @@
 "calibrated": 0.94,
 "seen": 0.97,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "yt": [
 "Zh_v1mk7ZLI",
@@ -114,13 +114,13 @@
 "calibrated": 0.95,
 "seen": 0.93,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "yt": [
 "xqY55iGJpOE",
 3
 ],
-"pack": "p13"
+"pack": "p15"
 },
 {
 "id": "n11q-B1Fzz0",
@@ -139,13 +139,13 @@
 "calibrated": 0.93,
 "seen": 0.85,
 "named": 4,
-"sure": 0,
+"sure": 4,
 "replay": true,
 "yt": [
 "n11q-B1Fzz0",
 3
 ],
-"pack": "p12"
+"pack": "p15"
 },
 {
 "id": "Z-tTl-u1H7w",
@@ -164,7 +164,7 @@
 "calibrated": 0.83,
 "seen": 0.9,
 "named": 4,
-"sure": 0,
+"sure": 4,
 "replay": true,
 "yt": [
 "Z-tTl-u1H7w",
@@ -189,13 +189,13 @@
 "calibrated": 0.94,
 "seen": 0.93,
 "named": 4,
-"sure": 0,
+"sure": 4,
 "replay": true,
 "yt": [
 "lt4lZLVAeWU",
 2
 ],
-"pack": "p12"
+"pack": "p15"
 },
 {
 "id": "XQm4iQ1-USA",
@@ -214,7 +214,7 @@
 "calibrated": 0.95,
 "seen": 0.9,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "yt": [
 "XQm4iQ1-USA",
@@ -239,7 +239,7 @@
 "calibrated": 0.94,
 "seen": 0.82,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "yt": [
 "EA3kR3YaUxg",
@@ -270,7 +270,7 @@
 "hILmQMxBN60",
 3
 ],
-"pack": "p12"
+"pack": "p15"
 },
 {
 "id": "TtPqLKFAym8",
@@ -289,36 +289,11 @@
 "calibrated": 0.94,
 "seen": 0.9,
 "named": 4,
-"sure": 0,
+"sure": 2,
 "replay": true,
 "yt": [
 "TtPqLKFAym8",
 3
-],
-"pack": "p12"
-},
-{
-"id": "e2-dbeV-7ws",
-"event": "Highlander Summit Signature",
-"match": "Qual 12",
-"red": [
-"9909M",
-"10702X"
-],
-"blue": [
-"66556Z",
-"7405A"
-],
-"video": "e2-dbeV-7ws",
-"seconds": 457,
-"calibrated": 1.0,
-"seen": 0.93,
-"named": 4,
-"sure": 0,
-"replay": true,
-"yt": [
-"e2-dbeV-7ws",
-1
 ],
 "pack": "p12"
 },
@@ -339,7 +314,7 @@
 "calibrated": 0.95,
 "seen": 0.95,
 "named": 4,
-"sure": 2,
+"sure": 4,
 "replay": true,
 "yt": [
 "-T4mfTU4CUw",
@@ -820,7 +795,7 @@
 "T0EeRxvtOS8",
 0
 ],
-"pack": "p21"
+"pack": "p23"
 },
 {
 "id": "vWGDT1S9Z1Q",
@@ -845,7 +820,7 @@
 "vWGDT1S9Z1Q",
 4
 ],
-"pack": "p21"
+"pack": "p23"
 },
 {
 "id": "sQXLaXF469Y",
@@ -870,7 +845,7 @@
 "sQXLaXF469Y",
 6
 ],
-"pack": "p42"
+"pack": "p44"
 },
 {
 "id": "-bXlVMTj8Ng",
@@ -970,7 +945,7 @@
 "3ewUQFU8J9M",
 0
 ],
-"pack": "p21"
+"pack": "p23"
 },
 {
 "id": "SyF45yHVpTU",
@@ -1012,7 +987,7 @@
 "_3ooER9wOl4",
 1
 ],
-"pack": "p42"
+"pack": "p44"
 },
 {
 "id": "aelhzLIgKNg",
@@ -1037,7 +1012,7 @@
 "aelhzLIgKNg",
 2
 ],
-"pack": "p42"
+"pack": "p44"
 },
 {
 "id": "bDkINvmThVw",
@@ -1062,7 +1037,7 @@
 "bDkINvmThVw",
 2
 ],
-"pack": "p42"
+"pack": "p44"
 },
 {
 "id": "PfJe0ZkNvHU",
@@ -1087,7 +1062,7 @@
 "PfJe0ZkNvHU",
 5
 ],
-"pack": "p42"
+"pack": "p44"
 },
 {
 "id": "mzrqSKqmVCg",
@@ -1112,7 +1087,7 @@
 "mzrqSKqmVCg",
 1
 ],
-"pack": "p42"
+"pack": "p44"
 },
 {
 "id": "0-5sAtgWImo",
@@ -1137,7 +1112,7 @@
 "0-5sAtgWImo",
 3
 ],
-"pack": "p42"
+"pack": "p44"
 },
 {
 "id": "1r-POswEj74",
@@ -1162,7 +1137,7 @@
 "1r-POswEj74",
 2
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "id": "H4TVbcDyd1s",
@@ -1187,7 +1162,7 @@
 "H4TVbcDyd1s",
 3
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "id": "-k32ORRyM6s",
@@ -1212,7 +1187,7 @@
 "-k32ORRyM6s",
 3
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "id": "2mhnQNIcuAA",
@@ -1237,7 +1212,7 @@
 "2mhnQNIcuAA",
 3
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "id": "YQOnyagi2SI",
@@ -1287,7 +1262,7 @@
 "Z2keejXtF6w",
 3
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "id": "5_-_k1Ni4K8",
@@ -1312,7 +1287,7 @@
 "5_-_k1Ni4K8",
 3
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "id": "bP2U2ud1a6w",
@@ -1337,7 +1312,7 @@
 "bP2U2ud1a6w",
 3
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "id": "CXVFEZx2cjk",
@@ -1362,7 +1337,7 @@
 "CXVFEZx2cjk",
 3
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "id": "oVvGarZ_Nus",
@@ -1387,7 +1362,7 @@
 "oVvGarZ_Nus",
 2
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "id": "gGUtG7EqS2Y",
@@ -1412,7 +1387,7 @@
 "gGUtG7EqS2Y",
 3
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "id": "YMpwouE94q4",
@@ -1437,7 +1412,7 @@
 "YMpwouE94q4",
 3
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "id": "r2f9HOsQR6c",
@@ -1462,7 +1437,7 @@
 "r2f9HOsQR6c",
 3
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "id": "4NooGAaRqRU",
@@ -1487,7 +1462,7 @@
 "4NooGAaRqRU",
 7
 ],
-"pack": "p43"
+"pack": "p45"
 },
 {
 "id": "cc-early-3210",
@@ -1511,7 +1486,7 @@
 "9H4powqTyUA",
 3163
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "id": "cc-qf3-1",
@@ -1535,7 +1510,7 @@
 "9H4powqTyUA",
 23727
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "id": "cc-sf2-1",
@@ -1559,7 +1534,7 @@
 "9H4powqTyUA",
 24695
 ],
-"pack": "p19"
+"pack": "p21"
 },
 {
 "id": "cc-qual13",
@@ -1583,7 +1558,7 @@
 "9H4powqTyUA",
 4807
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "id": "cc-qual26",
@@ -1607,7 +1582,7 @@
 "9H4powqTyUA",
 11587
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "id": "cc-qual40",
@@ -1631,7 +1606,7 @@
 "9H4powqTyUA",
 15328
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "id": "cc-qual50",
@@ -1655,7 +1630,7 @@
 "9H4powqTyUA",
 17646
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "id": "cc-qual34",
@@ -1679,7 +1654,7 @@
 "9H4powqTyUA",
 13667
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "id": "cc-qual44",
@@ -1703,7 +1678,7 @@
 "9H4powqTyUA",
 16292
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "id": "cc-early-5610",
@@ -1727,7 +1702,7 @@
 "9H4powqTyUA",
 5546
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "id": "kxSY83THpHw",
@@ -1752,7 +1727,7 @@
 "kxSY83THpHw",
 3
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "id": "LcmEbXvS0Yg",
@@ -1777,7 +1752,7 @@
 "LcmEbXvS0Yg",
 2
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "id": "cc-sf1-1",
@@ -1801,7 +1776,7 @@
 "9H4powqTyUA",
 24489
 ],
-"pack": "p19"
+"pack": "p21"
 },
 {
 "id": "cc-qf4-1",
@@ -1825,7 +1800,7 @@
 "9H4powqTyUA",
 23963
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "id": "cc-qual52",
@@ -1849,7 +1824,7 @@
 "9H4powqTyUA",
 18152
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "id": "gl-qual64",
@@ -1969,7 +1944,7 @@
 "9H4powqTyUA",
 16044
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "id": "cc-qf2-1",
@@ -1993,7 +1968,7 @@
 "9H4powqTyUA",
 23258
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "id": "cc-qf1-1",
@@ -2017,7 +1992,7 @@
 "9H4powqTyUA",
 22853
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "id": "cc-qual51",
@@ -2041,7 +2016,7 @@
 "9H4powqTyUA",
 17812
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "id": "cc-r168-1",
@@ -2065,7 +2040,7 @@
 "9H4powqTyUA",
 22401
 ],
-"pack": "p19"
+"pack": "p21"
 },
 {
 "id": "cc-r166-1",
@@ -2089,7 +2064,7 @@
 "9H4powqTyUA",
 22031
 ],
-"pack": "p19"
+"pack": "p21"
 },
 {
 "id": "cc-r164-1",
@@ -2113,7 +2088,7 @@
 "9H4powqTyUA",
 21669
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "id": "cc-qual1",
@@ -2137,7 +2112,7 @@
 "9H4powqTyUA",
 2012
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "id": "cc-qual3",
@@ -2161,7 +2136,7 @@
 "9H4powqTyUA",
 2340
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "id": "cc-qual5",
@@ -2201,7 +2176,7 @@
 "9H4powqTyUA",
 2128
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "id": "cc-qual4",
@@ -2225,7 +2200,7 @@
 "9H4powqTyUA",
 2476
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "id": "cc-qual6",
@@ -2249,7 +2224,7 @@
 "9H4powqTyUA",
 2994
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "id": "cc-r162-1",
@@ -2273,7 +2248,7 @@
 "9H4powqTyUA",
 21441
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "id": "gl-qual15",
@@ -2345,7 +2320,7 @@
 "9H4powqTyUA",
 18570
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "id": "gl-qual36",
@@ -2417,7 +2392,7 @@
 "9H4powqTyUA",
 3540
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "id": "gl-qual49",
@@ -2465,7 +2440,7 @@
 "9H4powqTyUA",
 4017
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "id": "cc-qual49",
@@ -2489,7 +2464,7 @@
 "9H4powqTyUA",
 17492
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "id": "cc-qual53",
@@ -2513,7 +2488,7 @@
 "9H4powqTyUA",
 18374
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "id": "cc-qual48",
@@ -2537,7 +2512,7 @@
 "9H4powqTyUA",
 17100
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "id": "cc-qual47",
@@ -2561,7 +2536,7 @@
 "9H4powqTyUA",
 16921
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "id": "cc-qual46",
@@ -2585,7 +2560,7 @@
 "9H4powqTyUA",
 16703
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "id": "cc-final1-1",
@@ -2609,7 +2584,7 @@
 "9H4powqTyUA",
 25432
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "id": "cc-qual45",
@@ -2633,7 +2608,7 @@
 "9H4powqTyUA",
 16480
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "event": "Great Lakes #1",
@@ -3161,7 +3136,7 @@
 "sgnpkyrQgVA",
 1
 ],
-"pack": "p20"
+"pack": "p22"
 },
 {
 "event": "Lake Park",
@@ -3185,7 +3160,7 @@
 "FP5f82usTmE",
 5
 ],
-"pack": "p20"
+"pack": "p22"
 },
 {
 "event": "Great Lakes #1",
@@ -3353,7 +3328,7 @@
 "aarbU3BLe5A",
 64
 ],
-"pack": "p20"
+"pack": "p22"
 },
 {
 "event": "Great Lakes #1",
@@ -3473,7 +3448,7 @@
 "h4Pg18iPkIM",
 35
 ],
-"pack": "p20"
+"pack": "p22"
 },
 {
 "event": "Great Lakes #1",
@@ -3665,7 +3640,7 @@
 "ME5jv9cAaJg",
 153
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "event": "Lake Park",
@@ -3689,7 +3664,7 @@
 "ZTWAkN6Lzlo",
 0
 ],
-"pack": "p20"
+"pack": "p22"
 },
 {
 "event": "Great Lakes #1",
@@ -4409,7 +4384,7 @@
 "9H4powqTyUA",
 4319
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4433,7 +4408,7 @@
 "9H4powqTyUA",
 4553
 ],
-"pack": "p14"
+"pack": "p16"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4457,7 +4432,7 @@
 "9H4powqTyUA",
 5269
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4481,7 +4456,7 @@
 "9H4powqTyUA",
 6031
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4505,7 +4480,7 @@
 "9H4powqTyUA",
 3764
 ],
-"pack": "p18"
+"pack": "p20"
 },
 {
 "event": "Great Lakes #1",
@@ -4577,7 +4552,7 @@
 "9H4powqTyUA",
 5082
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4601,7 +4576,7 @@
 "9H4powqTyUA",
 5802
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4625,7 +4600,7 @@
 "9H4powqTyUA",
 6298
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4649,7 +4624,7 @@
 "9H4powqTyUA",
 6507
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4673,7 +4648,7 @@
 "9H4powqTyUA",
 6818
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4697,7 +4672,7 @@
 "9H4powqTyUA",
 7035
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4721,7 +4696,7 @@
 "9H4powqTyUA",
 7435
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4745,7 +4720,7 @@
 "9H4powqTyUA",
 7634
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4769,7 +4744,7 @@
 "9H4powqTyUA",
 11961
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "id": "cc-qual41",
@@ -4793,7 +4768,7 @@
 "9H4powqTyUA",
 15598
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "id": "cc-qual39",
@@ -4817,7 +4792,7 @@
 "9H4powqTyUA",
 15131
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "id": "cc-qual42",
@@ -4841,7 +4816,7 @@
 "9H4powqTyUA",
 15806
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4865,7 +4840,7 @@
 "9H4powqTyUA",
 7884
 ],
-"pack": "p15"
+"pack": "p17"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4889,7 +4864,7 @@
 "9H4powqTyUA",
 12201
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4913,7 +4888,7 @@
 "9H4powqTyUA",
 12441
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4937,7 +4912,7 @@
 "9H4powqTyUA",
 12765
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4961,7 +4936,7 @@
 "9H4powqTyUA",
 12949
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -4985,7 +4960,7 @@
 "9H4powqTyUA",
 13191
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -5009,7 +4984,7 @@
 "9H4powqTyUA",
 13430
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -5033,7 +5008,7 @@
 "9H4powqTyUA",
 14001
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -5057,7 +5032,7 @@
 "9H4powqTyUA",
 14224
 ],
-"pack": "p16"
+"pack": "p18"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -5081,7 +5056,7 @@
 "9H4powqTyUA",
 14585
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "event": "Illini Cornfield Clash Jr. (Fall 2026)",
@@ -5105,7 +5080,7 @@
 "9H4powqTyUA",
 14737
 ],
-"pack": "p17"
+"pack": "p19"
 },
 {
 "event": "Speedway Signature",
@@ -5129,7 +5104,7 @@
 "zhGs-5gah_Y",
 6556
 ],
-"pack": "p23"
+"pack": "p25"
 },
 {
 "event": "Speedway Signature",
@@ -5153,7 +5128,7 @@
 "zhGs-5gah_Y",
 6875
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -5177,7 +5152,7 @@
 "zhGs-5gah_Y",
 11601
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5201,7 +5176,7 @@
 "zhGs-5gah_Y",
 7074
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5225,7 +5200,7 @@
 "zhGs-5gah_Y",
 14046
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -5249,7 +5224,7 @@
 "zhGs-5gah_Y",
 19942
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -5273,7 +5248,7 @@
 "zhGs-5gah_Y",
 22823
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -5297,7 +5272,7 @@
 "zhGs-5gah_Y",
 7536
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -5321,7 +5296,7 @@
 "zhGs-5gah_Y",
 7317
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -5345,7 +5320,7 @@
 "zhGs-5gah_Y",
 7926
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -5369,7 +5344,7 @@
 "zhGs-5gah_Y",
 8114
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -5393,7 +5368,7 @@
 "zhGs-5gah_Y",
 8343
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -5417,7 +5392,7 @@
 "zhGs-5gah_Y",
 8833
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -5441,7 +5416,7 @@
 "zhGs-5gah_Y",
 9129
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -5465,7 +5440,7 @@
 "zhGs-5gah_Y",
 8532
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "event": "Speedway Signature",
@@ -5489,7 +5464,7 @@
 "zhGs-5gah_Y",
 9385
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -5513,7 +5488,7 @@
 "zhGs-5gah_Y",
 9790
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -5537,7 +5512,7 @@
 "zhGs-5gah_Y",
 9948
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -5561,7 +5536,7 @@
 "zhGs-5gah_Y",
 10131
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -5585,7 +5560,7 @@
 "zhGs-5gah_Y",
 10312
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -5609,7 +5584,7 @@
 "zhGs-5gah_Y",
 10476
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -5633,7 +5608,7 @@
 "zhGs-5gah_Y",
 10707
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "id": "nw-qual22",
@@ -5657,7 +5632,7 @@
 "y2UAPPhcfEY",
 0
 ],
-"pack": "p22"
+"pack": "p24"
 },
 {
 "event": "Speedway Signature",
@@ -5681,7 +5656,7 @@
 "zhGs-5gah_Y",
 10877
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -5705,7 +5680,7 @@
 "zhGs-5gah_Y",
 11047
 ],
-"pack": "p24"
+"pack": "p26"
 },
 {
 "event": "Speedway Signature",
@@ -5729,7 +5704,7 @@
 "zhGs-5gah_Y",
 11285
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5753,7 +5728,7 @@
 "zhGs-5gah_Y",
 11444
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5777,7 +5752,7 @@
 "zhGs-5gah_Y",
 12121
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5801,7 +5776,7 @@
 "zhGs-5gah_Y",
 11806
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5825,7 +5800,7 @@
 "zhGs-5gah_Y",
 12287
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5849,7 +5824,7 @@
 "zhGs-5gah_Y",
 12533
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5873,7 +5848,7 @@
 "zhGs-5gah_Y",
 12707
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5897,7 +5872,7 @@
 "zhGs-5gah_Y",
 12889
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5921,7 +5896,7 @@
 "zhGs-5gah_Y",
 13098
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5945,7 +5920,7 @@
 "zhGs-5gah_Y",
 13300
 ],
-"pack": "p25"
+"pack": "p27"
 },
 {
 "event": "Speedway Signature",
@@ -5969,7 +5944,7 @@
 "zhGs-5gah_Y",
 13503
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -5993,7 +5968,7 @@
 "zhGs-5gah_Y",
 13679
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -6017,7 +5992,7 @@
 "zhGs-5gah_Y",
 13860
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -6041,7 +6016,7 @@
 "zhGs-5gah_Y",
 14284
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -6065,7 +6040,7 @@
 "zhGs-5gah_Y",
 14660
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -6089,7 +6064,7 @@
 "zhGs-5gah_Y",
 14873
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -6113,7 +6088,7 @@
 "zhGs-5gah_Y",
 15054
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -6137,7 +6112,7 @@
 "zhGs-5gah_Y",
 15234
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -6161,7 +6136,7 @@
 "zhGs-5gah_Y",
 15416
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -6185,7 +6160,7 @@
 "zhGs-5gah_Y",
 15755
 ],
-"pack": "p26"
+"pack": "p28"
 },
 {
 "event": "Speedway Signature",
@@ -6209,7 +6184,7 @@
 "zhGs-5gah_Y",
 15932
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -6233,7 +6208,7 @@
 "zhGs-5gah_Y",
 16119
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -6257,7 +6232,7 @@
 "zhGs-5gah_Y",
 16300
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -6281,7 +6256,7 @@
 "zhGs-5gah_Y",
 16628
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -6305,7 +6280,7 @@
 "zhGs-5gah_Y",
 16821
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -6329,7 +6304,7 @@
 "zhGs-5gah_Y",
 17111
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -6353,7 +6328,7 @@
 "zhGs-5gah_Y",
 17288
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -6377,7 +6352,7 @@
 "zhGs-5gah_Y",
 17478
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -6401,7 +6376,7 @@
 "zhGs-5gah_Y",
 17662
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -6425,7 +6400,7 @@
 "zhGs-5gah_Y",
 17831
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -6449,7 +6424,7 @@
 "zhGs-5gah_Y",
 18008
 ],
-"pack": "p27"
+"pack": "p29"
 },
 {
 "event": "Speedway Signature",
@@ -6473,7 +6448,7 @@
 "zhGs-5gah_Y",
 18260
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -6497,7 +6472,7 @@
 "zhGs-5gah_Y",
 18474
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -6521,7 +6496,7 @@
 "zhGs-5gah_Y",
 18657
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -6545,7 +6520,7 @@
 "zhGs-5gah_Y",
 18851
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -6569,7 +6544,7 @@
 "zhGs-5gah_Y",
 19025
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -6593,7 +6568,7 @@
 "zhGs-5gah_Y",
 19203
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -6617,7 +6592,7 @@
 "zhGs-5gah_Y",
 19482
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -6641,7 +6616,7 @@
 "zhGs-5gah_Y",
 19736
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -6665,7 +6640,7 @@
 "zhGs-5gah_Y",
 20221
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -6689,7 +6664,7 @@
 "zhGs-5gah_Y",
 20387
 ],
-"pack": "p28"
+"pack": "p30"
 },
 {
 "event": "Speedway Signature",
@@ -6713,7 +6688,7 @@
 "zhGs-5gah_Y",
 20907
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -6737,7 +6712,7 @@
 "zhGs-5gah_Y",
 21083
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -6761,7 +6736,7 @@
 "zhGs-5gah_Y",
 21506
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -6785,7 +6760,7 @@
 "zhGs-5gah_Y",
 21669
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -6809,7 +6784,7 @@
 "zhGs-5gah_Y",
 21978
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -6833,7 +6808,7 @@
 "zhGs-5gah_Y",
 22184
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -6857,7 +6832,7 @@
 "zhGs-5gah_Y",
 22614
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -6881,7 +6856,7 @@
 "zhGs-5gah_Y",
 22393
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -6905,7 +6880,7 @@
 "zhGs-5gah_Y",
 23005
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "event": "Speedway Signature",
@@ -6929,7 +6904,7 @@
 "zhGs-5gah_Y",
 23231
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -6953,7 +6928,7 @@
 "zhGs-5gah_Y",
 23429
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -6977,7 +6952,7 @@
 "zhGs-5gah_Y",
 23658
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -7001,7 +6976,7 @@
 "zhGs-5gah_Y",
 23833
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -7025,7 +7000,7 @@
 "zhGs-5gah_Y",
 24035
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -7049,7 +7024,7 @@
 "zhGs-5gah_Y",
 24233
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -7073,7 +7048,7 @@
 "zhGs-5gah_Y",
 24426
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -7097,7 +7072,7 @@
 "zhGs-5gah_Y",
 24591
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -7121,7 +7096,7 @@
 "zhGs-5gah_Y",
 24827
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -7145,7 +7120,7 @@
 "zhGs-5gah_Y",
 25241
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -7169,7 +7144,7 @@
 "zhGs-5gah_Y",
 25489
 ],
-"pack": "p30"
+"pack": "p32"
 },
 {
 "event": "Speedway Signature",
@@ -7193,7 +7168,7 @@
 "zhGs-5gah_Y",
 25721
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "event": "Speedway Signature",
@@ -7217,7 +7192,7 @@
 "zhGs-5gah_Y",
 25935
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "event": "Speedway Signature",
@@ -7241,7 +7216,7 @@
 "zhGs-5gah_Y",
 26440
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "event": "Speedway Signature",
@@ -7265,7 +7240,7 @@
 "zhGs-5gah_Y",
 26858
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "event": "Speedway Signature",
@@ -7289,7 +7264,7 @@
 "zhGs-5gah_Y",
 27234
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "event": "Speedway Signature",
@@ -7313,7 +7288,7 @@
 "zhGs-5gah_Y",
 26212
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "event": "Speedway Signature",
@@ -7337,7 +7312,7 @@
 "zhGs-5gah_Y",
 26681
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "event": "Speedway Signature",
@@ -7361,7 +7336,7 @@
 "zhGs-5gah_Y",
 27065
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "event": "Speedway Signature",
@@ -7385,7 +7360,7 @@
 "zhGs-5gah_Y",
 27448
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "id": "e64359-2-qual154",
@@ -7409,7 +7384,7 @@
 "KiElXboeVVc",
 18927
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual102",
@@ -7433,7 +7408,7 @@
 "KiElXboeVVc",
 4750
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "id": "e64359-2-qual185",
@@ -7457,7 +7432,7 @@
 "KiElXboeVVc",
 25773
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual128",
@@ -7481,7 +7456,7 @@
 "KiElXboeVVc",
 10447
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "id": "e64359-1-qual68",
@@ -7505,7 +7480,7 @@
 "zhGs-5gah_Y",
 21262
 ],
-"pack": "p29"
+"pack": "p31"
 },
 {
 "id": "e64359-2-qual194",
@@ -7529,7 +7504,7 @@
 "KiElXboeVVc",
 27836
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "id": "e64359-2-qual129",
@@ -7553,7 +7528,7 @@
 "KiElXboeVVc",
 10607
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "id": "e64359-2-qual198",
@@ -7577,7 +7552,7 @@
 "KiElXboeVVc",
 28631
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "id": "e64359-2-qual200",
@@ -7601,7 +7576,7 @@
 "KiElXboeVVc",
 29048
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "e64359-2-qual98",
@@ -7625,7 +7600,7 @@
 "KiElXboeVVc",
 3938
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "id": "e64359-2-qual144",
@@ -7649,7 +7624,7 @@
 "KiElXboeVVc",
 14122
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual178",
@@ -7673,7 +7648,7 @@
 "KiElXboeVVc",
 24228
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual204",
@@ -7697,7 +7672,7 @@
 "KiElXboeVVc",
 29805
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "e64359-2-qual208",
@@ -7721,7 +7696,7 @@
 "KiElXboeVVc",
 30599
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "e64359-2-qual112",
@@ -7745,7 +7720,7 @@
 "KiElXboeVVc",
 6944
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "id": "e64359-2-qual117",
@@ -7769,7 +7744,7 @@
 "KiElXboeVVc",
 7957
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "id": "e64359-2-qual146",
@@ -7793,7 +7768,7 @@
 "KiElXboeVVc",
 14571
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual125",
@@ -7817,7 +7792,7 @@
 "KiElXboeVVc",
 9811
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "id": "e64359-2-qual149",
@@ -7841,7 +7816,7 @@
 "KiElXboeVVc",
 17965
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual174",
@@ -7881,7 +7856,7 @@
 "KiElXboeVVc",
 25167
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual183",
@@ -7905,7 +7880,7 @@
 "KiElXboeVVc",
 25359
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual124",
@@ -7929,7 +7904,7 @@
 "KiElXboeVVc",
 9569
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "id": "e64359-2-qual107",
@@ -7953,7 +7928,7 @@
 "KiElXboeVVc",
 5831
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "id": "e64359-2-qual108",
@@ -7977,7 +7952,7 @@
 "KiElXboeVVc",
 6007
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "id": "e64359-2-qual130",
@@ -8001,7 +7976,7 @@
 "KiElXboeVVc",
 10877
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "id": "e64359-2-qual145",
@@ -8025,7 +8000,7 @@
 "KiElXboeVVc",
 14334
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual137",
@@ -8049,7 +8024,7 @@
 "KiElXboeVVc",
 12454
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "id": "e64359-2-qual158",
@@ -8073,7 +8048,7 @@
 "KiElXboeVVc",
 19750
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual156",
@@ -8097,7 +8072,7 @@
 "KiElXboeVVc",
 19317
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual159",
@@ -8121,7 +8096,7 @@
 "KiElXboeVVc",
 19964
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual168",
@@ -8145,7 +8120,7 @@
 "KiElXboeVVc",
 22139
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "id": "e64359-2-qual169",
@@ -8169,7 +8144,7 @@
 "KiElXboeVVc",
 22139
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "id": "e64359-2-qual136",
@@ -8193,7 +8168,7 @@
 "KiElXboeVVc",
 12280
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "id": "e64359-2-qual171",
@@ -8217,7 +8192,7 @@
 "KiElXboeVVc",
 22573
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "id": "e64359-2-qual175",
@@ -8241,7 +8216,7 @@
 "KiElXboeVVc",
 23618
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual97",
@@ -8265,7 +8240,7 @@
 "KiElXboeVVc",
 3742
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "id": "e64359-2-qual104",
@@ -8289,7 +8264,7 @@
 "KiElXboeVVc",
 5238
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "id": "e64359-2-qual106",
@@ -8313,7 +8288,7 @@
 "KiElXboeVVc",
 5602
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "id": "e64359-2-qual116",
@@ -8337,7 +8312,7 @@
 "KiElXboeVVc",
 7752
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "id": "e64359-2-qual110",
@@ -8361,7 +8336,7 @@
 "KiElXboeVVc",
 6532
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "id": "e64359-2-qual140",
@@ -8385,7 +8360,7 @@
 "KiElXboeVVc",
 13141
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual126",
@@ -8409,7 +8384,7 @@
 "KiElXboeVVc",
 10057
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "id": "e64359-2-qual152",
@@ -8433,7 +8408,7 @@
 "KiElXboeVVc",
 18598
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual143",
@@ -8457,7 +8432,7 @@
 "KiElXboeVVc",
 13897
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual163",
@@ -8481,7 +8456,7 @@
 "KiElXboeVVc",
 20758
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "id": "e64359-2-qual157",
@@ -8505,7 +8480,7 @@
 "KiElXboeVVc",
 19545
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "id": "e64359-2-qual170",
@@ -8529,7 +8504,7 @@
 "KiElXboeVVc",
 22302
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "id": "e64359-2-qual187",
@@ -8553,7 +8528,7 @@
 "KiElXboeVVc",
 26163
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "id": "e64359-2-qual165",
@@ -8577,7 +8552,7 @@
 "KiElXboeVVc",
 21206
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "id": "e64359-2-qual202",
@@ -8601,7 +8576,7 @@
 "KiElXboeVVc",
 29641
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "e64359-2-qual179",
@@ -8625,7 +8600,7 @@
 "KiElXboeVVc",
 24432
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "id": "e64359-2-qual197",
@@ -8649,7 +8624,7 @@
 "KiElXboeVVc",
 28424
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "id": "e64359-2-qual210",
@@ -8673,7 +8648,7 @@
 "KiElXboeVVc",
 31268
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "e64359-2-qual105",
@@ -8697,7 +8672,7 @@
 "KiElXboeVVc",
 5407
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "id": "e64359-2-qual203",
@@ -8721,7 +8696,7 @@
 "KiElXboeVVc",
 29641
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "e64359-2-qual113",
@@ -8745,7 +8720,7 @@
 "KiElXboeVVc",
 7142
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "id": "e64359-2-qual213",
@@ -8769,7 +8744,7 @@
 "KiElXboeVVc",
 32020
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "id": "e64359-2-qual188",
@@ -8793,7 +8768,7 @@
 "KiElXboeVVc",
 32353
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "id": "e64359-2-qual212",
@@ -8817,7 +8792,7 @@
 "KiElXboeVVc",
 31852
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "event": "Speedway Signature",
@@ -8841,7 +8816,7 @@
 "KiElXboeVVc",
 4138
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "event": "Speedway Signature",
@@ -8865,7 +8840,7 @@
 "KiElXboeVVc",
 4342
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "event": "Speedway Signature",
@@ -8889,7 +8864,7 @@
 "KiElXboeVVc",
 4520
 ],
-"pack": "p31"
+"pack": "p33"
 },
 {
 "event": "Speedway Signature",
@@ -8913,7 +8888,7 @@
 "KiElXboeVVc",
 5003
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "event": "Speedway Signature",
@@ -8937,7 +8912,7 @@
 "KiElXboeVVc",
 6282
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "event": "Speedway Signature",
@@ -8961,7 +8936,7 @@
 "KiElXboeVVc",
 6789
 ],
-"pack": "p32"
+"pack": "p34"
 },
 {
 "event": "Speedway Signature",
@@ -8985,7 +8960,7 @@
 "KiElXboeVVc",
 7559
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "event": "Speedway Signature",
@@ -9009,7 +8984,7 @@
 "KiElXboeVVc",
 8637
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "event": "Speedway Signature",
@@ -9033,7 +9008,7 @@
 "KiElXboeVVc",
 7360
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "event": "Speedway Signature",
@@ -9057,7 +9032,7 @@
 "KiElXboeVVc",
 8239
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "event": "Speedway Signature",
@@ -9081,7 +9056,7 @@
 "KiElXboeVVc",
 8412
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "event": "Speedway Signature",
@@ -9105,7 +9080,7 @@
 "KiElXboeVVc",
 9319
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "event": "Speedway Signature",
@@ -9129,7 +9104,7 @@
 "KiElXboeVVc",
 8942
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "event": "Speedway Signature",
@@ -9153,7 +9128,7 @@
 "KiElXboeVVc",
 11231
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "event": "Speedway Signature",
@@ -9177,7 +9152,7 @@
 "KiElXboeVVc",
 9151
 ],
-"pack": "p33"
+"pack": "p35"
 },
 {
 "event": "Speedway Signature",
@@ -9201,7 +9176,7 @@
 "KiElXboeVVc",
 10243
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "event": "Speedway Signature",
@@ -9225,7 +9200,7 @@
 "KiElXboeVVc",
 12114
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "id": "e64359-2-qual211",
@@ -9249,7 +9224,7 @@
 "KiElXboeVVc",
 31464
 ],
-"pack": "p41"
+"pack": "p43"
 },
 {
 "id": "e64359-2-qual209",
@@ -9273,7 +9248,7 @@
 "KiElXboeVVc",
 30772
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "event": "Speedway Signature",
@@ -9297,7 +9272,7 @@
 "KiElXboeVVc",
 11040
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "event": "Speedway Signature",
@@ -9321,7 +9296,7 @@
 "KiElXboeVVc",
 11629
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "event": "Speedway Signature",
@@ -9345,7 +9320,7 @@
 "KiElXboeVVc",
 11804
 ],
-"pack": "p34"
+"pack": "p36"
 },
 {
 "event": "Speedway Signature",
@@ -9369,7 +9344,7 @@
 "KiElXboeVVc",
 13343
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "event": "Speedway Signature",
@@ -9393,7 +9368,7 @@
 "KiElXboeVVc",
 13720
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "event": "Speedway Signature",
@@ -9417,7 +9392,7 @@
 "KiElXboeVVc",
 14948
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual195",
@@ -9441,7 +9416,7 @@
 "KiElXboeVVc",
 28016
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "id": "e64359-2-qual206",
@@ -9465,7 +9440,7 @@
 "KiElXboeVVc",
 30182
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "e64359-2-qual201",
@@ -9489,7 +9464,7 @@
 "KiElXboeVVc",
 29263
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "e64359-2-qual199",
@@ -9513,7 +9488,7 @@
 "KiElXboeVVc",
 28877
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "e64359-2-qual205",
@@ -9537,7 +9512,7 @@
 "KiElXboeVVc",
 29984
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "id": "e64359-2-qual196",
@@ -9561,7 +9536,7 @@
 "KiElXboeVVc",
 28246
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "id": "e64359-2-qual138",
@@ -9585,7 +9560,7 @@
 "KiElXboeVVc",
 12644
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "id": "e64359-2-qual207",
@@ -9609,7 +9584,7 @@
 "KiElXboeVVc",
 30404
 ],
-"pack": "p40"
+"pack": "p42"
 },
 {
 "event": "Speedway Signature",
@@ -9633,7 +9608,7 @@
 "KiElXboeVVc",
 12848
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "event": "Speedway Signature",
@@ -9657,7 +9632,7 @@
 "KiElXboeVVc",
 18161
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "event": "Speedway Signature",
@@ -9681,7 +9656,7 @@
 "KiElXboeVVc",
 18763
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "event": "Speedway Signature",
@@ -9705,7 +9680,7 @@
 "KiElXboeVVc",
 14758
 ],
-"pack": "p35"
+"pack": "p37"
 },
 {
 "event": "Speedway Signature",
@@ -9729,7 +9704,7 @@
 "KiElXboeVVc",
 19132
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "event": "Speedway Signature",
@@ -9753,7 +9728,7 @@
 "KiElXboeVVc",
 20393
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "event": "Speedway Signature",
@@ -9777,7 +9752,7 @@
 "KiElXboeVVc",
 20561
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "event": "Speedway Signature",
@@ -9801,7 +9776,7 @@
 "KiElXboeVVc",
 18338
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "event": "Speedway Signature",
@@ -9825,7 +9800,7 @@
 "KiElXboeVVc",
 21397
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "event": "Speedway Signature",
@@ -9849,7 +9824,7 @@
 "KiElXboeVVc",
 21612
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "event": "Speedway Signature",
@@ -9873,7 +9848,7 @@
 "KiElXboeVVc",
 23071
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "event": "Speedway Signature",
@@ -9897,7 +9872,7 @@
 "KiElXboeVVc",
 23815
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "event": "Speedway Signature",
@@ -9921,7 +9896,7 @@
 "KiElXboeVVc",
 20165
 ],
-"pack": "p36"
+"pack": "p38"
 },
 {
 "event": "Speedway Signature",
@@ -9945,7 +9920,7 @@
 "KiElXboeVVc",
 24627
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "event": "Speedway Signature",
@@ -9969,7 +9944,7 @@
 "KiElXboeVVc",
 21032
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "event": "Speedway Signature",
@@ -9993,7 +9968,7 @@
 "KiElXboeVVc",
 22820
 ],
-"pack": "p37"
+"pack": "p39"
 },
 {
 "event": "Speedway Signature",
@@ -10017,7 +9992,7 @@
 "KiElXboeVVc",
 24985
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "event": "Speedway Signature",
@@ -10041,7 +10016,7 @@
 "KiElXboeVVc",
 24041
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "event": "Speedway Signature",
@@ -10065,7 +10040,7 @@
 "KiElXboeVVc",
 26722
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "event": "Speedway Signature",
@@ -10089,7 +10064,7 @@
 "KiElXboeVVc",
 25610
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "event": "Speedway Signature",
@@ -10113,7 +10088,7 @@
 "KiElXboeVVc",
 26722
 ],
-"pack": "p38"
+"pack": "p40"
 },
 {
 "event": "Speedway Signature",
@@ -10137,7 +10112,7 @@
 "KiElXboeVVc",
 27396
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "event": "Speedway Signature",
@@ -10161,7 +10136,7 @@
 "KiElXboeVVc",
 26960
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "event": "Speedway Signature",
@@ -10185,7 +10160,7 @@
 "KiElXboeVVc",
 27166
 ],
-"pack": "p39"
+"pack": "p41"
 },
 {
 "event": "Speedway Signature",
@@ -10209,6 +10184,646 @@
 "KiElXboeVVc",
 27571
 ],
-"pack": "p39"
+"pack": "p41"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 2",
+"red": [
+"16099C",
+"7405C"
+],
+"blue": [
+"1862X",
+"88288A"
+],
+"id": "e64246-1-qual2",
+"video": "e64246-1-qual2",
+"calibrated": 0.98,
+"seen": 1.0,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 4",
+"red": [
+"16099B",
+"16689G"
+],
+"blue": [
+"96138A",
+"7405B"
+],
+"id": "e64246-1-qual4",
+"video": "e64246-1-qual4",
+"calibrated": 1.0,
+"seen": 0.9,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 10",
+"red": [
+"2982Z",
+"3866F"
+],
+"blue": [
+"2899A",
+"2982B"
+],
+"id": "e64246-1-qual10",
+"video": "e64246-1-qual10",
+"calibrated": 0.77,
+"seen": 0.95,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p12"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 3",
+"red": [
+"4478N",
+"4610W"
+],
+"blue": [
+"91725A",
+"1523A"
+],
+"id": "e64246-1-qual3",
+"video": "e64246-1-qual3",
+"calibrated": 0.85,
+"seen": 1.0,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 11",
+"red": [
+"169A",
+"4610T"
+],
+"blue": [
+"2502A",
+"2145Y"
+],
+"id": "e64246-1-qual11",
+"video": "e64246-1-qual11",
+"calibrated": 0.81,
+"seen": 0.95,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p12"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 12",
+"red": [
+"9909M",
+"10702X"
+],
+"blue": [
+"66556Z",
+"7405A"
+],
+"id": "e64246-1-qual12",
+"video": "e64246-1-qual12",
+"calibrated": 0.93,
+"seen": 0.95,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p12"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 5",
+"red": [
+"2982X",
+"295A"
+],
+"blue": [
+"62880C",
+"2702R"
+],
+"id": "e64246-1-qual5",
+"video": "e64246-1-qual5",
+"calibrated": 1.0,
+"seen": 0.92,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p15"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 7",
+"red": [
+"5150D",
+"93375B"
+],
+"blue": [
+"11753B",
+"2145Z"
+],
+"id": "e64246-1-qual7",
+"video": "e64246-1-qual7",
+"calibrated": 0.97,
+"seen": 0.97,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p15"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 13",
+"red": [
+"99209X",
+"295Y"
+],
+"blue": [
+"197E",
+"62880D"
+],
+"id": "e64246-1-qual13",
+"video": "e64246-1-qual13",
+"calibrated": 0.84,
+"seen": 1.0,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p12"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 14",
+"red": [
+"16099D",
+"26767P"
+],
+"blue": [
+"9909D",
+"3151X"
+],
+"id": "e64246-1-qual14",
+"video": "e64246-1-qual14",
+"calibrated": 0.77,
+"seen": 0.75,
+"named": 4,
+"sure": 0,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 15",
+"red": [
+"20850G",
+"5249Z"
+],
+"blue": [
+"2145V",
+"255H"
+],
+"id": "e64246-1-qual15",
+"video": "e64246-1-qual15",
+"calibrated": 0.93,
+"seen": 0.92,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 8",
+"red": [
+"4610S",
+"66300A"
+],
+"blue": [
+"16099E",
+"7405M"
+],
+"id": "e64246-1-qual8",
+"video": "e64246-1-qual8",
+"calibrated": 0.93,
+"seen": 0.92,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p15"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 16",
+"red": [
+"2502V",
+"169R"
+],
+"blue": [
+"20850X",
+"3760X"
+],
+"id": "e64246-1-qual16",
+"video": "e64246-1-qual16",
+"calibrated": 0.92,
+"seen": 0.9,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 19",
+"red": [
+"96Z",
+"3150Z"
+],
+"blue": [
+"4610J",
+"169C"
+],
+"id": "e64246-1-qual19",
+"video": "e64246-1-qual19",
+"calibrated": 0.94,
+"seen": 1.0,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 20",
+"red": [
+"20850V",
+"11753A"
+],
+"blue": [
+"1769A",
+"16099A"
+],
+"id": "e64246-1-qual20",
+"video": "e64246-1-qual20",
+"calibrated": 0.9,
+"seen": 0.85,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 21",
+"red": [
+"9364E",
+"12125A"
+],
+"blue": [
+"62880A",
+"59218C"
+],
+"id": "e64246-1-qual21",
+"video": "e64246-1-qual21",
+"calibrated": 0.67,
+"seen": 0.93,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 18",
+"red": [
+"96138E",
+"81390E"
+],
+"blue": [
+"1862A",
+"20850T"
+],
+"id": "e64246-1-qual18",
+"video": "e64246-1-qual18",
+"calibrated": 0.93,
+"seen": 0.92,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 24",
+"red": [
+"88288A",
+"16099E"
+],
+"blue": [
+"3866F",
+"16099B"
+],
+"id": "e64246-1-qual24",
+"video": "e64246-1-qual24",
+"calibrated": 0.91,
+"seen": 0.88,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 22",
+"red": [
+"2982A",
+"169X"
+],
+"blue": [
+"12914Y",
+"119X"
+],
+"id": "e64246-1-qual22",
+"video": "e64246-1-qual22",
+"calibrated": 0.75,
+"seen": 1.0,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 23",
+"red": [
+"2145X",
+"7405B"
+],
+"blue": [
+"2627E",
+"91725A"
+],
+"id": "e64246-1-qual23",
+"video": "e64246-1-qual23",
+"calibrated": 0.94,
+"seen": 0.95,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 26",
+"red": [
+"255H",
+"1523A"
+],
+"blue": [
+"2982B",
+"119B"
+],
+"id": "e64246-1-qual26",
+"video": "e64246-1-qual26",
+"calibrated": 0.86,
+"seen": 0.93,
+"named": 4,
+"sure": 0,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 25",
+"red": [
+"9039J",
+"7405C"
+],
+"blue": [
+"16689G",
+"295A"
+],
+"id": "e64246-1-qual25",
+"video": "e64246-1-qual25",
+"calibrated": 0.78,
+"seen": 0.95,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p13"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 27",
+"red": [
+"169R",
+"2145Z"
+],
+"blue": [
+"66300A",
+"1698A"
+],
+"id": "e64246-1-qual27",
+"video": "e64246-1-qual27",
+"calibrated": 0.91,
+"seen": 1.0,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 33",
+"red": [
+"59218C",
+"7405A"
+],
+"blue": [
+"2982A",
+"96Z"
+],
+"id": "e64246-1-qual33",
+"video": "e64246-1-qual33",
+"calibrated": 0.76,
+"seen": 0.97,
+"named": 4,
+"sure": 0,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 29",
+"red": [
+"20850Z",
+"20850X"
+],
+"blue": [
+"1584A",
+"16099C"
+],
+"id": "e64246-1-qual29",
+"video": "e64246-1-qual29",
+"calibrated": 0.96,
+"seen": 1.0,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 30",
+"red": [
+"62880C",
+"2982Z"
+],
+"blue": [
+"16099D",
+"119P"
+],
+"id": "e64246-1-qual30",
+"video": "e64246-1-qual30",
+"calibrated": 0.77,
+"seen": 0.8,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 34",
+"red": [
+"66556Z",
+"2145X"
+],
+"blue": [
+"2502V",
+"11753A"
+],
+"id": "e64246-1-qual34",
+"video": "e64246-1-qual34",
+"calibrated": 0.8,
+"seen": 0.9,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 31",
+"red": [
+"2145Y",
+"2498B"
+],
+"blue": [
+"7405M",
+"3760X"
+],
+"id": "e64246-1-qual31",
+"video": "e64246-1-qual31",
+"calibrated": 0.88,
+"seen": 0.97,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 32",
+"red": [
+"4610P",
+"3150Z"
+],
+"blue": [
+"4610S",
+"99209X"
+],
+"id": "e64246-1-qual32",
+"video": "e64246-1-qual32",
+"calibrated": 0.7,
+"seen": 0.9,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 35",
+"red": [
+"4610J",
+"9909D"
+],
+"blue": [
+"1862A",
+"10702X"
+],
+"id": "e64246-1-qual35",
+"video": "e64246-1-qual35",
+"calibrated": 0.89,
+"seen": 0.95,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 37",
+"red": [
+"1862X",
+"197E"
+],
+"blue": [
+"96138E",
+"93375B"
+],
+"id": "e64246-1-qual37",
+"video": "e64246-1-qual37",
+"calibrated": 0.82,
+"seen": 0.97,
+"named": 4,
+"sure": 4,
+"replay": true,
+"pack": "p14"
+},
+{
+"event": "Highlander Summit Signature",
+"match": "Qual 41",
+"red": [
+"62880A",
+"48730A"
+],
+"blue": [
+"4610Z",
+"26767P"
+],
+"id": "e64246-1-qual41",
+"video": "e64246-1-qual41",
+"calibrated": 1.0,
+"seen": 0.9,
+"named": 4,
+"sure": 2,
+"replay": true,
+"pack": "p15"
 }
 ]
