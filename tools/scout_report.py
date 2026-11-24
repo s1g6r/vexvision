@@ -91,8 +91,10 @@ def match_features(r, rb, meta):
         if at.any() and k not in gfirst:
             gfirst[k] = float(t[np.argmax(at)])
     # Toggle flips this robot was seen making (a colour change while it touched the Toggle, that stayed)
-    fl = [e for e in FLIPS.get(meta["id"], []) if e.get("team") == rb["team"]]
-    flips = {"own": sum(not e["theirs"] for e in fl), "opp": sum(e["theirs"] for e in fl), "late": sum(e["t"] >= 90 for e in fl)}
+    mine = [e for e in FLIPS.get(meta["id"], []) if e.get("team") == rb["team"]]
+    fl = [e for e in mine if e.get("type", "flip") == "flip"]
+    flips = {"own": sum(not e["theirs"] for e in fl), "opp": sum(e["theirs"] for e in fl), "late": sum(e["t"] >= 90 for e in fl),
+             "half": sum(e.get("type") == "half" for e in mine)}
     tfirst = {}
     for e in fl:
         tfirst.setdefault("opp" if e["theirs"] else "own", e["t"])
@@ -334,7 +336,11 @@ def summarise(team, ms):
                     f"Seen flipping a Toggle in {km} of {n} {'match' if n == 1 else 'matches'}{','+theirs if theirs else ''}.").replace(",.", "."))
         if late >= 2 and late * 2 >= nf:
             out.append("Usually goes for a Toggle in the last 30 seconds.")
-    sec["toggles"] = {"flips": nf, "matches": km, "opp_flips": nopp, "late": late}
+    # Toggles it touched and left half turned (two colours showing, counts for no one)
+    nh = sum(m["flips"].get("half", 0) for m in ms)
+    if nh >= 2 and nh * 3 >= nh + nf:
+        out.append(f"Has trouble controlling Toggles: left {nh} of its {nh + nf} Toggle tries half turned, which doesn't count.")
+    sec["toggles"] = {"flips": nf, "matches": km, "opp_flips": nopp, "late": late, "half": nh}
     # --- endgame
     mid = np.mean([m["midfield_end"] for m in ms])
     if mid >= 0.5:

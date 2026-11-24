@@ -2,20 +2,24 @@
 "-T4mfTU4CUw": [
 {
 "t": 69.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "20850Z",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 83.0,
+"until": 121.0,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "2982X",
 "alliance": "red",
+"to": "yellow",
 "theirs": false
 }
 ],
@@ -23,20 +27,24 @@
 "-k32ORRyM6s": [
 {
 "t": 34.0,
+"until": 71.67,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "9364E",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 108.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "11101B",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
@@ -45,29 +53,35 @@
 "2mhnQNIcuAA": [
 {
 "t": 12.0,
+"until": 54.0,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "2145X",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 40.0,
+"until": 111.33,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "3150V",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 62.0,
+"until": 90.0,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "10666A",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -77,11 +91,13 @@
 "4i26nf-cwCA": [
 {
 "t": 30.0,
-"type": "flip",
+"until": null,
+"type": "half",
 "q": "E",
 "robot": 2,
 "team": "2982Z",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
@@ -92,11 +108,13 @@
 "CDlAGT8gd0s": [
 {
 "t": 82.67,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 2,
 "team": "2145X",
 "alliance": "blue",
+"to": "red",
 "theirs": true
 }
 ],
@@ -105,20 +123,24 @@
 "EA3kR3YaUxg": [
 {
 "t": 35.0,
+"until": 86.0,
 "type": "flip",
 "q": "S",
 "robot": 3,
 "team": "1862A",
 "alliance": "blue",
+"to": "yellow",
 "theirs": true
 },
 {
 "t": 40.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "12125A",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -126,51 +148,61 @@
 "H4TVbcDyd1s": [
 {
 "t": 119.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "54010A",
 "alliance": "red",
+"to": "yellow",
 "theirs": true
 }
 ],
 "Kx4bKVNEpjA": [
 {
 "t": 58.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "12125A",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 82.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "12125A",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 92.0,
-"type": "flip",
+"until": 117.0,
+"type": "half",
 "q": "S",
 "robot": 0,
 "team": "12125A",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
 "LcmEbXvS0Yg": [
 {
 "t": 41.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "2011F",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -178,38 +210,46 @@
 "MPt4G9oxWk8": [
 {
 "t": 32.0,
+"until": 48.0,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "8062A",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 48.0,
+"until": 60.0,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "6546C",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 75.0,
+"until": 99.0,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "8062A",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 105.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "8062A",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -218,11 +258,13 @@
 "SwwxtP-eWlM": [
 {
 "t": 80.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "1698Z",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -230,53 +272,63 @@
 "TOJ_e6C-dPM": [
 {
 "t": 24.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 3,
 "team": "58676S",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "TtPqLKFAym8": [
 {
 "t": 38.0,
+"until": 111.0,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "1862A",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 52.0,
+"until": 80.0,
 "type": "flip",
 "q": "S",
 "robot": 3,
 "team": "2145V",
 "alliance": "blue",
+"to": "yellow",
 "theirs": true
 }
 ],
 "W3tB4duDNoo": [
 {
 "t": 114.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 3,
 "team": "62880A",
 "alliance": "blue",
+"to": "yellow",
 "theirs": true
 }
 ],
 "XQm4iQ1-USA": [
 {
 "t": 2.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "1862A",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -302,38 +354,46 @@
 "cc-qual10": [
 {
 "t": 35.0,
+"until": 111.0,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "2360V",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 79.0,
+"until": 111.0,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "99766D",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 111.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 2,
 "team": "2360S",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 111.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "2360V",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -359,11 +419,13 @@
 "cc-qual3": [
 {
 "t": 75.67,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "99766D",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -380,11 +442,13 @@
 "cc-qual4": [
 {
 "t": 71.33,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "2827S",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -399,29 +463,35 @@
 "cc-qual48": [
 {
 "t": 78.0,
+"until": 112.0,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "3695A",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 112.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "2827S",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 116.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "2360S",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -443,20 +513,24 @@
 "crEey8qMuqA": [
 {
 "t": 29.0,
+"until": 82.0,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "2145V",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 82.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "2145V",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
@@ -469,44 +543,52 @@
 "e64359-1-qual13": [
 {
 "t": 91.0,
+"until": 105.0,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "8292Z",
 "alliance": "red",
+"to": "yellow",
 "theirs": true
 }
 ],
 "e64359-1-qual14": [
 {
 "t": 68.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "7368M",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-1-qual15": [
 {
 "t": 79.0,
+"until": 91.0,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "7410A",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
 "e64359-1-qual16": [
 {
 "t": 106.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "12914X",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -515,11 +597,13 @@
 "e64359-1-qual19": [
 {
 "t": 90.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "99904A",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -527,33 +611,39 @@
 "e64359-1-qual20": [
 {
 "t": 7.67,
+"until": 60.0,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "471B",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
 "e64359-1-qual21": [
 {
 "t": 73.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "32C",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
 "e64359-1-qual22": [
 {
 "t": 84.33,
-"type": "flip",
+"until": null,
+"type": "half",
 "q": "N",
 "robot": 2,
 "team": "252W",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -561,40 +651,48 @@
 "e64359-1-qual24": [
 {
 "t": 33.0,
+"until": 53.0,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "6210M",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 83.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "7447X",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 89.0,
+"until": 103.0,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "210K",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
 "e64359-1-qual25": [
 {
 "t": 92.67,
-"type": "flip",
+"until": 110.67,
+"type": "half",
 "q": "N",
 "robot": 1,
 "team": "7700R",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -604,11 +702,13 @@
 "e64359-1-qual29": [
 {
 "t": 43.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 2,
 "team": "7701S",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -616,20 +716,24 @@
 "e64359-1-qual30": [
 {
 "t": 80.0,
+"until": 90.0,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "3946W",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 90.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "3946W",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -640,40 +744,48 @@
 "e64359-1-qual35": [
 {
 "t": 5.67,
+"until": 106.0,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "471B",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 106.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "34543M",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
 "e64359-1-qual36": [
 {
 "t": 17.67,
-"type": "flip",
+"until": null,
+"type": "half",
 "q": "E",
 "robot": 2,
 "team": "11101B",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 84.33,
-"type": "flip",
+"until": null,
+"type": "half",
 "q": "N",
 "robot": 1,
 "team": "663D",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -685,11 +797,13 @@
 "e64359-1-qual42": [
 {
 "t": 38.67,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 3,
 "team": "6210H",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -698,20 +812,24 @@
 "e64359-1-qual45": [
 {
 "t": 57.0,
+"until": 113.0,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "3946Z",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 113.0,
-"type": "flip",
+"until": null,
+"type": "half",
 "q": "N",
 "robot": 2,
 "team": "3946Z",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
@@ -721,20 +839,24 @@
 "e64359-1-qual49": [
 {
 "t": 71.33,
-"type": "flip",
+"until": 79.33,
+"type": "half",
 "q": "W",
 "robot": 0,
 "team": "7368G",
 "alliance": "red",
+"to": "yellow",
 "theirs": false
 },
 {
 "t": 79.33,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "9364E",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -742,31 +864,37 @@
 "e64359-1-qual50": [
 {
 "t": 6.67,
+"until": 99.0,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "2145V",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 99.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "2011F",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-1-qual51": [
 {
 "t": 99.67,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "3946E",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -774,11 +902,13 @@
 "e64359-1-qual53": [
 {
 "t": 108.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 2,
 "team": "2577X",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -786,11 +916,13 @@
 "e64359-1-qual55": [
 {
 "t": 114.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "5690X",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
@@ -801,20 +933,24 @@
 "e64359-1-qual6": [
 {
 "t": 64.33,
+"until": 107.33,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "18799M",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 107.33,
+"until": 117.33,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "54010A",
 "alliance": "blue",
+"to": "red",
 "theirs": true
 }
 ],
@@ -822,84 +958,100 @@
 "e64359-1-qual61": [
 {
 "t": 77.67,
+"until": 106.0,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "10B",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 106.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "10B",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-1-qual62": [
 {
 "t": 11.67,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "10666A",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-1-qual63": [
 {
 "t": 112.0,
-"type": "flip",
+"until": null,
+"type": "half",
 "q": "W",
 "robot": 1,
 "team": "355T",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
 "e64359-1-qual64": [
 {
 "t": 96.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "8682A",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
 "e64359-1-qual65": [
 {
 "t": 118.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "99904A",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-1-qual66": [
 {
 "t": 39.33,
+"until": 61.67,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "99209X",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 61.67,
+"until": 119.67,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "7701Z",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -910,11 +1062,13 @@
 "e64359-1-qual70": [
 {
 "t": 32.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "3150U",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -923,11 +1077,13 @@
 "e64359-1-qual73": [
 {
 "t": 108.33,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "10102Z",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -935,91 +1091,109 @@
 "e64359-1-qual75": [
 {
 "t": 34.0,
+"until": 76.0,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "3946E",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 76.0,
+"until": 90.0,
 "type": "flip",
 "q": "E",
 "robot": 3,
 "team": "355T",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 },
 {
 "t": 104.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 3,
 "team": "355T",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-1-qual76": [
 {
 "t": 58.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "1082M",
 "alliance": "red",
+"to": "yellow",
 "theirs": true
 },
 {
 "t": 82.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "1082M",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
 "e64359-1-qual77": [
 {
 "t": 28.33,
-"type": "flip",
+"until": 90.33,
+"type": "half",
 "q": "W",
 "robot": 0,
 "team": "55760V",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 90.33,
+"until": 98.33,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "3150A",
 "alliance": "red",
+"to": "yellow",
 "theirs": false
 }
 ],
 "e64359-1-qual78": [
 {
 "t": 42.0,
+"until": 68.0,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "16610G",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-1-qual79": [
 {
 "t": 67.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "1028A",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -1027,31 +1201,37 @@
 "e64359-1-qual80": [
 {
 "t": 71.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "34543M",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-1-qual81": [
 {
 "t": 56.0,
+"until": 104.0,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "11101B",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 104.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "1323C",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
@@ -1060,11 +1240,13 @@
 "e64359-1-qual84": [
 {
 "t": 85.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "5069Y",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -1074,51 +1256,61 @@
 "e64359-1-qual88": [
 {
 "t": 115.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "2055X",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-1-qual89": [
 {
 "t": 40.67,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "32K",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 76.67,
+"until": 93.0,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "2567U",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 },
 {
 "t": 93.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "2567U",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
 "e64359-1-qual9": [
 {
 "t": 14.67,
+"until": 40.67,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "68699A",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -1127,11 +1319,13 @@
 "e64359-1-qual92": [
 {
 "t": 37.0,
+"until": 55.0,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "3150U",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -1139,31 +1333,37 @@
 "e64359-1-qual94": [
 {
 "t": 110.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "2011F",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
 "e64359-1-qual95": [
 {
 "t": 31.0,
+"until": 99.0,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "1233A",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 99.0,
+"until": 119.0,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "99904C",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -1174,31 +1374,37 @@
 "e64359-2-qual103": [
 {
 "t": 111.33,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "10102Z",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-2-qual104": [
 {
 "t": 33.33,
+"until": 59.33,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "7700R",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 59.33,
+"until": 120.0,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "7700R",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -1209,29 +1415,35 @@
 "e64359-2-qual109": [
 {
 "t": 49.33,
+"until": 69.33,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "34543M",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 69.33,
+"until": 87.33,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "6741R",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 },
 {
 "t": 87.33,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "34543M",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -1242,42 +1454,50 @@
 "e64359-2-qual114": [
 {
 "t": 95.0,
+"until": 119.67,
 "type": "flip",
 "q": "W",
 "robot": 2,
 "team": "32K",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
 "e64359-2-qual115": [
 {
 "t": 62.67,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "12914X",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
 "e64359-2-qual116": [
 {
 "t": 37.67,
+"until": 86.0,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "2568Z",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 86.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "1233B",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -1285,22 +1505,26 @@
 "e64359-2-qual118": [
 {
 "t": 55.33,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "5069Y",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-2-qual119": [
 {
 "t": 78.33,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 2,
 "team": "252H",
 "alliance": "blue",
+"to": "red",
 "theirs": true
 }
 ],
@@ -1310,11 +1534,13 @@
 "e64359-2-qual123": [
 {
 "t": 11.33,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "1082M",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -1324,31 +1550,37 @@
 "e64359-2-qual127": [
 {
 "t": 5.33,
+"until": 111.33,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "8737M",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 },
 {
 "t": 111.33,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "45434M",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
 "e64359-2-qual128": [
 {
 "t": 77.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "3150V",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
@@ -1356,11 +1588,13 @@
 "e64359-2-qual130": [
 {
 "t": 26.0,
+"until": 78.33,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "1028A",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -1372,11 +1606,13 @@
 "e64359-2-qual136": [
 {
 "t": 99.67,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "3150Y",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
@@ -1385,40 +1621,48 @@
 "e64359-2-qual139": [
 {
 "t": 50.33,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "99904A",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-2-qual140": [
 {
 "t": 26.0,
+"until": 70.0,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "7700R",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 36.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "6741R",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 70.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "2011B",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -1429,11 +1673,13 @@
 "e64359-2-qual145": [
 {
 "t": 102.67,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "99209X",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
@@ -1442,11 +1688,13 @@
 "e64359-2-qual148": [
 {
 "t": 77.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "5069Y",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -1455,38 +1703,46 @@
 "e64359-2-qual151": [
 {
 "t": 51.0,
+"until": 66.0,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "18799M",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 66.0,
+"until": 100.0,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "1082M",
 "alliance": "red",
+"to": "yellow",
 "theirs": false
 },
 {
 "t": 100.0,
+"until": 114.0,
 "type": "flip",
 "q": "W",
 "robot": 2,
 "team": "1028A",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 114.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "1082M",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -1495,31 +1751,37 @@
 "e64359-2-qual154": [
 {
 "t": 110.67,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "1590A",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-2-qual155": [
 {
 "t": 30.67,
+"until": 60.67,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "3946Z",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 66.67,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "2011F",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -1527,20 +1789,24 @@
 "e64359-2-qual157": [
 {
 "t": 32.67,
+"until": 100.33,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "55760R",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 100.33,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "1412J",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -1548,31 +1814,37 @@
 "e64359-2-qual159": [
 {
 "t": 45.33,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "7410D",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-2-qual160": [
 {
 "t": 81.67,
+"until": 99.67,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "2393S",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 99.67,
-"type": "flip",
+"until": 119.67,
+"type": "half",
 "q": "N",
 "robot": 2,
 "team": "2145Y",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -1580,49 +1852,59 @@
 "e64359-2-qual162": [
 {
 "t": 5.67,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "11101B",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 100.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "471B",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-2-qual163": [
 {
 "t": 72.0,
+"until": 102.0,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "4610Z",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 102.0,
+"until": 114.0,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "1233A",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 114.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "1233A",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -1634,29 +1916,35 @@
 "e64359-2-qual169": [
 {
 "t": 45.67,
+"until": 75.67,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "2055X",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 75.67,
+"until": 111.67,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "210K",
 "alliance": "blue",
+"to": "yellow",
 "theirs": false
 },
 {
 "t": 111.67,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "210K",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -1665,42 +1953,50 @@
 "e64359-2-qual172": [
 {
 "t": 111.67,
-"type": "flip",
+"until": null,
+"type": "half",
 "q": "N",
 "robot": 2,
 "team": "1082M",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
 "e64359-2-qual173": [
 {
 "t": 15.0,
+"until": 45.0,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "1211X",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 45.0,
+"until": 119.33,
 "type": "flip",
 "q": "W",
 "robot": 2,
 "team": "6210P",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
 "e64359-2-qual175": [
 {
 "t": 80.67,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "3150Y",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -1709,11 +2005,13 @@
 "e64359-2-qual178": [
 {
 "t": 33.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "55760V",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -1722,49 +2020,59 @@
 "e64359-2-qual181": [
 {
 "t": 26.67,
-"type": "flip",
+"until": 78.67,
+"type": "half",
 "q": "W",
 "robot": 0,
 "team": "4610Z",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 66.67,
+"until": 98.67,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "2145Y",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 94.67,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "2145Y",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 98.67,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "4610Z",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
 "e64359-2-qual182": [
 {
 "t": 111.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 2,
 "team": "1233B",
 "alliance": "blue",
+"to": "red",
 "theirs": true
 }
 ],
@@ -1772,11 +2080,13 @@
 "e64359-2-qual184": [
 {
 "t": 109.67,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "3150V",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -1787,40 +2097,48 @@
 "e64359-2-qual189": [
 {
 "t": 84.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "2011A",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "e64359-2-qual190": [
 {
 "t": 38.0,
+"until": 94.33,
 "type": "flip",
 "q": "W",
 "robot": 2,
 "team": "18799M",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 94.33,
+"until": 104.33,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "5069Y",
 "alliance": "blue",
+"to": "yellow",
 "theirs": true
 },
 {
 "t": 114.33,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "7368M",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -1829,40 +2147,48 @@
 "e64359-2-qual193": [
 {
 "t": 103.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "9364E",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
 "e64359-2-qual194": [
 {
 "t": 6.0,
+"until": 51.0,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "2055X",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 },
 {
 "t": 64.0,
+"until": 82.0,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "2567U",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 88.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "2567U",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -1871,38 +2197,46 @@
 "e64359-2-qual197": [
 {
 "t": 15.0,
+"until": 33.33,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "10702Y",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 33.33,
+"until": 104.33,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "99209X",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 55.33,
+"until": 73.33,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "76316J",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 73.33,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "10702Y",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -1910,11 +2244,13 @@
 "e64359-2-qual199": [
 {
 "t": 80.33,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "5690X",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -1924,11 +2260,13 @@
 "e64359-2-qual203": [
 {
 "t": 89.33,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "2567M",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -1936,11 +2274,13 @@
 "e64359-2-qual205": [
 {
 "t": 54.0,
+"until": 109.67,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "3150U",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -1949,11 +2289,13 @@
 "e64359-2-qual208": [
 {
 "t": 110.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "2145V",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
@@ -1965,11 +2307,13 @@
 "e64359-2-qual97": [
 {
 "t": 86.33,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "99209X",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -1982,20 +2326,24 @@
 "gl-qf1-1": [
 {
 "t": 43.0,
+"until": 67.0,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "355Z",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 67.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 3,
 "team": "8995E",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -2003,20 +2351,24 @@
 "gl-qf3-1": [
 {
 "t": 53.67,
+"until": 70.67,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "355J",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 58.67,
+"until": 77.67,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "2360C",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -2025,20 +2377,24 @@
 "gl-qual10": [
 {
 "t": 55.0,
+"until": 109.0,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "2827P",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 109.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "12543E",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -2048,49 +2404,59 @@
 "gl-qual14": [
 {
 "t": 33.0,
+"until": 79.0,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "60156A",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 69.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "99371B",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 79.0,
+"until": 99.0,
 "type": "flip",
 "q": "W",
 "robot": 2,
 "team": "60172T",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 99.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "60156A",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "gl-qual15": [
 {
 "t": 119.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "2360A",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -2098,98 +2464,118 @@
 "gl-qual17": [
 {
 "t": 29.67,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 2,
 "team": "8995E",
 "alliance": "blue",
+"to": "red",
 "theirs": true
 },
 {
 "t": 45.67,
+"until": 102.0,
 "type": "flip",
 "q": "E",
 "robot": 3,
 "team": "41638B",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "gl-qual18": [
 {
 "t": 91.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "99371V",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
 "gl-qual19": [
 {
 "t": 6.67,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "355V",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 73.0,
+"until": 93.0,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "355J",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 93.0,
+"until": 105.0,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "355J",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 105.0,
+"until": 113.0,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "355J",
 "alliance": "red",
+"to": "yellow",
 "theirs": true
 },
 {
 "t": 113.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 3,
 "team": "8780A",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "gl-qual2": [
 {
 "t": 50.0,
+"until": 116.0,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "59575M",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 116.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "2360C",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -2197,51 +2583,61 @@
 "gl-qual21": [
 {
 "t": 81.0,
+"until": 99.0,
 "type": "flip",
 "q": "S",
 "robot": 2,
 "team": "12543M",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 99.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "59575M",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "gl-qual22": [
 {
 "t": 82.0,
+"until": 96.0,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "60172U",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 114.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "2360S",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
 "gl-qual23": [
 {
 "t": 68.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 3,
 "team": "8995E",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -2249,49 +2645,59 @@
 "gl-qual25": [
 {
 "t": 41.67,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "43946A",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 45.67,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "60172T",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 81.67,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "43946A",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 89.67,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "60172T",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
 "gl-qual26": [
 {
 "t": 38.67,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 2,
 "team": "60156A",
 "alliance": "blue",
+"to": "red",
 "theirs": true
 }
 ],
@@ -2300,31 +2706,37 @@
 "gl-qual29": [
 {
 "t": 65.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "60172S",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "gl-qual3": [
 {
 "t": 52.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "3695D",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 70.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "3695D",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -2332,20 +2744,24 @@
 "gl-qual31": [
 {
 "t": 42.0,
+"until": 100.0,
 "type": "flip",
 "q": "S",
 "robot": 2,
 "team": "60172X",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 100.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "99371V",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -2353,78 +2769,94 @@
 "gl-qual33": [
 {
 "t": 42.0,
+"until": 72.0,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "60156A",
 "alliance": "blue",
+"to": "yellow",
 "theirs": false
 },
 {
 "t": 72.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "60156A",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
 "gl-qual34": [
 {
 "t": 34.67,
+"until": 74.67,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "99371D",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 42.67,
+"until": 64.67,
 "type": "flip",
 "q": "W",
 "robot": 2,
 "team": "99371D",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 64.67,
+"until": 86.67,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "99371B",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 94.67,
+"until": 112.67,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "99371D",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 94.67,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "8995E",
 "alliance": "blue",
+"to": "red",
 "theirs": true
 }
 ],
 "gl-qual35": [
 {
 "t": 68.67,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 2,
 "team": "12543M",
 "alliance": "blue",
+"to": "red",
 "theirs": true
 }
 ],
@@ -2432,22 +2864,26 @@
 "gl-qual37": [
 {
 "t": 46.0,
+"until": 118.0,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "8780G",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
 "gl-qual38": [
 {
 "t": 52.33,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "60156B",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -2457,83 +2893,101 @@
 "gl-qual41": [
 {
 "t": 8.67,
+"until": 32.67,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "60172X",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 32.67,
+"until": 85.0,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "60172X",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 38.67,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "3695C",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 50.67,
+"until": 73.0,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "3695C",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 75.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "3695C",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 85.0,
+"until": 101.0,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "3695C",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 89.0,
+"until": 113.0,
 "type": "flip",
 "q": "S",
 "robot": 3,
 "team": "355J",
 "alliance": "blue",
+"to": "red",
 "theirs": true
 },
 {
 "t": 101.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "3695C",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 113.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "3695C",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -2541,127 +2995,153 @@
 "gl-qual43": [
 {
 "t": 39.67,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "8780E",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 45.67,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "8780E",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
 "gl-qual44": [
 {
 "t": 111.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "8995E",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
 "gl-qual45": [
 {
 "t": 93.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 0,
 "team": "2360C",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 111.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "2360C",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
 "gl-qual46": [
 {
 "t": 4.67,
+"until": 52.67,
 "type": "flip",
 "q": "E",
 "robot": 3,
 "team": "355R",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 46.67,
+"until": 62.67,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "99371V",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 52.67,
+"until": 68.67,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "2360S",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 62.67,
+"until": 87.0,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "2360S",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 68.67,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 3,
 "team": "355R",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 87.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "355R",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
 "gl-qual47": [
 {
 "t": 20.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "41638B",
 "alliance": "blue",
+"to": "yellow",
 "theirs": false
 },
 {
 "t": 76.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 3,
 "team": "60172U",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
@@ -2669,51 +3149,61 @@
 "gl-qual49": [
 {
 "t": 53.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "355J",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 69.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "355J",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
 "gl-qual5": [
 {
 "t": 82.33,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "41638B",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 90.33,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "14153M",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
 "gl-qual50": [
 {
 "t": 56.67,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "60156B",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -2722,42 +3212,50 @@
 "gl-qual54": [
 {
 "t": 4.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "60172X",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "gl-qual55": [
 {
 "t": 4.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "3695A",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "gl-qual56": [
 {
 "t": 41.0,
+"until": 93.0,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "355R",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 93.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "355R",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
@@ -2765,42 +3263,50 @@
 "gl-qual58": [
 {
 "t": 117.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "2827B",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 }
 ],
 "gl-qual59": [
 {
 "t": 71.0,
+"until": 93.0,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "60172X",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 93.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "99371A",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
 "gl-qual6": [
 {
 "t": 86.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "60172U",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -2808,40 +3314,48 @@
 "gl-qual61": [
 {
 "t": 78.0,
+"until": 110.0,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "2360C",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 110.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 2,
 "team": "8780G",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
 "gl-qual62": [
 {
 "t": 40.67,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "3695B",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 84.67,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 1,
 "team": "3695B",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -2849,87 +3363,105 @@
 "gl-qual64": [
 {
 "t": 90.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "3695C",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 111.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 3,
 "team": "3695C",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 }
 ],
 "gl-qual65": [
 {
 "t": 11.67,
+"until": 41.67,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "99371F",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 33.67,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "355K",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 49.67,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "99371F",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 116.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "355K",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
 "gl-qual7": [
 {
 "t": 40.0,
+"until": 62.0,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "3695E",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 62.0,
+"until": 96.0,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "60172X",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 96.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "8780G",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 }
 ],
@@ -2937,22 +3469,26 @@
 "gl-qual9": [
 {
 "t": 84.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 3,
 "team": "99371B",
 "alliance": "blue",
+"to": "red",
 "theirs": true
 }
 ],
 "gl-r161-1": [
 {
 "t": 71.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 0,
 "team": "99371V",
 "alliance": "red",
+"to": "red",
 "theirs": true
 }
 ],
@@ -2961,38 +3497,46 @@
 "gl-r165-1": [
 {
 "t": 39.0,
+"until": 58.0,
 "type": "flip",
 "q": "S",
 "robot": 2,
 "team": "2827P",
 "alliance": "blue",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 58.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "2360C",
 "alliance": "red",
+"to": "red",
 "theirs": false
 },
 {
 "t": 61.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 1,
 "team": "2360C",
 "alliance": "red",
+"to": "red",
 "theirs": true
 },
 {
 "t": 113.0,
+"until": null,
 "type": "flip",
 "q": "W",
 "robot": 1,
 "team": "2360C",
 "alliance": "red",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -3000,49 +3544,59 @@
 "gl-r167-1": [
 {
 "t": 26.0,
+"until": 78.0,
 "type": "flip",
 "q": "N",
 "robot": 0,
 "team": "14153M",
 "alliance": "red",
+"to": "blue",
 "theirs": true
 },
 {
 "t": 58.0,
+"until": null,
 "type": "flip",
 "q": "E",
 "robot": 2,
 "team": "8780A",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 78.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "99371A",
 "alliance": "blue",
+"to": "red",
 "theirs": false
 },
 {
 "t": 120.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 0,
 "team": "14153M",
 "alliance": "red",
+"to": "red",
 "theirs": false
 }
 ],
 "gl-r168-1": [
 {
 "t": 94.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "3695B",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 }
 ],
@@ -3051,11 +3605,13 @@
 "hILmQMxBN60": [
 {
 "t": 81.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 1,
 "team": "295A",
 "alliance": "red",
+"to": "yellow",
 "theirs": false
 }
 ],
@@ -3069,20 +3625,24 @@
 "lt4lZLVAeWU": [
 {
 "t": 15.0,
+"until": null,
 "type": "flip",
 "q": "N",
 "robot": 3,
 "team": "4610W",
 "alliance": "blue",
+"to": "blue",
 "theirs": false
 },
 {
 "t": 110.0,
+"until": null,
 "type": "flip",
 "q": "S",
 "robot": 3,
 "team": "4610W",
 "alliance": "blue",
+"to": "yellow",
 "theirs": true
 }
 ],

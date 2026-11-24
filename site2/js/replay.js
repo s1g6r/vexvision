@@ -123,13 +123,15 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
     return { e, m };
   });
 
-  // Toggle flips: the Toggle lights up in the colour of the robot that flipped it, and that
-  // robot's label says so for a moment. Only flips we actually saw are in the data.
+  // Toggle flips: from a seen flip the Toggle shows the colour it was set to, until we see it
+  // change again; the robot that flipped it says so on its label for a moment. A Toggle we
+  // haven't seen fully set keeps the plain look. Only flips we actually saw are in the data.
   const TOG = { N: [0, -1.759, 0], S: [0, 1.759, 0], E: [1.759, 0, 1], W: [-1.759, 0, 1] };
   const barGeo = new THREE.BoxGeometry(0.68, 0.075, 0.085);
   const flipEvents = R.events.filter((e) => e.type === "flip" && TOG[e.q] && robots[e.robot]);
   const flipGlows = flipEvents.map((e) => {
-    const m = new THREE.Mesh(barGeo, new THREE.MeshBasicMaterial({ color: e.alliance === "blue" ? 0x4c86ff : 0xff4550, transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
+    const col = { red: 0xff4550, blue: 0x4c86ff, yellow: 0xf2c230 }[e.to] ?? (e.alliance === "blue" ? 0x4c86ff : 0xff4550);
+    const m = new THREE.Mesh(barGeo, new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
     const [x, z, rot] = TOG[e.q]; m.position.set(x, 0.065, z); if (rot) m.rotation.y = Math.PI / 2; m.renderOrder = 4; F.world.add(m);
     return { e, m };
   });
@@ -237,10 +239,10 @@ export async function mountReplay(root, url, { reduced = false, autoplay = false
     flashes.forEach(({ e, m }) => { const a = t - e.t; m.material.opacity = a >= 0 && a < 1.2 ? 1 - a / 1.2 : 0; m.scale.setScalar(1 + Math.max(0, a) * 1.6); });
     const flipping = new Set();
     flipGlows.forEach(({ e, m }) => {
-      const a = t - e.t, on = a >= 0 && a < FLIP_SHOW;
-      m.material.opacity = on ? (a < 0.25 ? a / 0.25 : a > FLIP_SHOW - 0.8 ? (FLIP_SHOW - a) / 0.8 : 1) * 0.95 : 0;
-      m.scale.set(1, on && a < 0.6 ? 1 + (0.6 - a) * 0.8 : 1, 1);
-      if (on) flipping.add(e.robot);
+      const a = t - e.t, held = a >= 0 && (e.until == null || t < e.until);
+      m.material.opacity = held ? (a < 0.25 ? a / 0.25 : 0.92) : 0;
+      m.scale.set(1, held && a < 0.6 ? 1 + (0.6 - a) * 1.2 : 1, 1);
+      if (a >= 0 && a < FLIP_SHOW) flipping.add(e.robot);
     });
     pins.forEach((p, i) => p.classList.toggle("flipped", flipping.has(i)));
 

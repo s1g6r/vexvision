@@ -205,3 +205,14 @@
 - **Replay:** a seen flip lights that Toggle in the flipper's colour for about 2.5 s, the robot's label says "Toggled", and the play bar gets a mark.
 - **Open question for Sagar:** the Toggle shows two colours from above (top face and the face toward the field). Which one is its set colour? Until that is answered the replay shows flips only, not which colour a Toggle is on.
 - The old colour-change events in the replays (which also fired before and after the match during field reset) are replaced by these flips.
+
+### Nov 23 (evening) — half-turned Toggles don't count
+
+- Sagar: a Toggle only counts when the side facing the field is all one colour; a two-colour (half-turned) Toggle counts for no one.
+- The Toggle reader already looks at the field-facing side and measures how much of it is one colour. A set Toggle reads 90–100%; half-turned ones read 50–70% (checked on the crops). Under 80% is now "split".
+- **Old flips re-checked on video:** frames 3, 5 and 7 s after each flip, for the 175 flips whose video I could get (Speedway streams from the Mac, single-match uploads here). 143 ended fully set, 13 ended half turned and were dropped (`data/toggle_split.json`), 3 changed again, the rest couldn't be read. 267 flips remain.
+- **Not re-checked:** the 105 Great Lakes flips. Their YouTube videos embed fine but would not download, and the downloader setting that might work was refused here, so they keep the earlier rule.
+- **Future readings** store "split" instead of a colour (`readers.toggle_state`), and a change ending split is never a flip; the end-of-match Toggle owner also ignores split.
+- **Replay:** after a seen flip the Toggle stays in the colour it was set to (red, blue or yellow) until the next seen change; Toggles never seen fully set keep the plain look.
+- Toggle runner is still 13 teams (the dropped half-turns did not change who has it).
+- **Half turns as a scouting signal** (Sagar's point: a team that leaves Toggles half turned can't control its toggling). Each "half" is kept per robot (`type: "half"` in the replays and `data/toggle_flips.json`). A report says "Has trouble controlling Toggles: left N of its M Toggle tries half turned" once N is at least 2 and at least a third of its tries. Today no team reaches that: the 13 half turns found so far are 13 different teams. Readings from now on record every half turn on a visible Toggle, so this will fill in.

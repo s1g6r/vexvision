@@ -133,8 +133,15 @@ def read_toggle(img, H, cam, quad, band_mm=(250.0, 340.0), min_px=25):
     best = vals[np.argmax(cnt)]
     return NAMES[int(best)], float(cnt.max() / len(cls))
 
+# A Toggle counts only when the side facing the field is all one colour. Less than this share of
+# one colour on that side is a half-turned ("split") Toggle, which doesn't count for anyone.
+SPLIT = 0.8
+
+def toggle_state(col, share):
+    return col if col is None or share >= SPLIT else "split"
+
 def read_frame(img, H, cam=None):
     cam = cam or C.camera_from_h(H, img.shape[1::-1])
     stacks = {g.name: read_stack(img, H, cam, g)[0] for g in F.GOALS}
-    toggles = {q: read_toggle(img, H, cam, q)[0] for q in F.TOGGLES}
+    toggles = {q: toggle_state(*read_toggle(img, H, cam, q)) for q in F.TOGGLES}
     return stacks, toggles

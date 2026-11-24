@@ -5,6 +5,8 @@ A flip is counted only when all three hold:
     are one flip, ending on the last colour),
   - a robot is touching it: its centre within half a metre of the Toggle from 2 s before the change
     to half a second after (the closest one gets the credit),
+  - it ends fully on one colour as seen from the field (a half-turned, two-colour Toggle counts for
+    no one; flips checked on the video that ended like that are in data/toggle_split.json),
   - the new colour stays: once robots have moved away (over 0.7 m), at least 80% of the next 15 s
     of readings show it, or, with nobody clear of it, it is read at least twice more.
 
@@ -31,7 +33,7 @@ def _pos(path, t):
     return np.interp(t, p[:, 0], p[:, 1]) * 1000, np.interp(t, p[:, 0], p[:, 2]) * 1000
 
 
-def flips(perc, robots):
+def flips(perc, robots, split_end=frozenset()):
     """robots: replay robots (team, alliance, path in metres, t after the match starts)."""
     ts = perc.get("t_start")
     if ts is None:
@@ -61,6 +63,11 @@ def flips(perc, robots):
             t1, c_from, c_to = g[0][0], g[0][1], g[-1][2]
             if c_from == c_to:
                 continue
+            # ending half turned ("split", or found so on the video) is not a flip; it is kept as a
+            # "half" so a robot that keeps leaving Toggles half turned can be spotted
+            half = c_to == "split" or (q, round(t1 - ts, 2)) in split_end
+            if not half and c_to not in ("red", "blue", "yellow"):
+                continue
             near = [d for tt in np.arange(t1 - 2, g[-1][0] + 0.6, 1 / 3) for d in dists(tt)]
             if not near or min(near)[0] > TOUCH:
                 continue
@@ -72,12 +79,18 @@ def flips(perc, robots):
                     continue
             elif sum(c == c_to for _, c in after) < 2:
                 continue
-            out.append({"t": round(t1 - ts, 2), "type": "flip", "q": q, "robot": wi, "team": who.get("team"), "alliance": who["alliance"],
+            nxt = [t for t, c in ser if t > g[-1][0] and c != c_to]
+            until = round(nxt[0] - ts, 2) if nxt else None
+            out.append({"t": round(t1 - ts, 2), "until": until, "type": "half" if half else "flip", "q": q, "robot": wi, "team": who.get("team"), "alliance": who["alliance"], "to": c_to,
                         "theirs": F.QUADRANT_COLOR[q] != who["alliance"]})
     return sorted(out, key=lambda e: e["t"])
 
 
+SPLIT = {}   # flips checked on the video that ended half turned (data/toggle_split.json)
+
 def main(raw, rdir, out_path):
+    sp = os.path.join(os.path.dirname(out_path), "toggle_split.json")
+    SPLIT.update(json.load(open(sp)) if os.path.exists(sp) else {})
     allf, n = {}, 0
     for f in sorted(glob.glob(os.path.join(rdir, "*.json"))):
         mid = os.path.basename(f)[:-5]
@@ -87,14 +100,15 @@ def main(raw, rdir, out_path):
         R = json.load(open(f))
         if not isinstance(R, dict) or "robots" not in R:
             continue
-        fl = flips(json.load(open(pp)), R["robots"])
+        fl = flips(json.load(open(pp)), R["robots"], {(x["q"], x["t"]) for x in SPLIT.get(mid, [])})
         # the old colour-change events were unreliable and unused; flips replace them
-        R["events"] = [e for e in R["events"] if e.get("type") not in ("toggle", "flip")] + fl
+        R["events"] = [e for e in R["events"] if e.get("type") not in ("toggle", "flip", "half")] + fl
         R["events"].sort(key=lambda e: e["t"])
         json.dump(R, open(f, "w"), separators=(",", ":"))
-        allf[mid] = fl; n += len(fl)
+        allf[mid] = fl; n += sum(e["type"] == "flip" for e in fl)
     json.dump(allf, open(out_path, "w"), indent=0)
-    print(f"{n} Toggle flips in {sum(1 for v in allf.values() if v)} of {len(allf)} matches")
+    print(f"{n} Toggle flips in {sum(1 for v in allf.values() if any(e['type'] == 'flip' for e in v))} of {len(allf)} matches,"
+          f" {sum(e['type'] == 'half' for v in allf.values() for e in v)} left half turned")
 
 
 if __name__ == "__main__":

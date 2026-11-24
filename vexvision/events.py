@@ -2,7 +2,8 @@
 
 Inputs per frame (from detection and the goal / Toggle readers):
 - goal_obs[goal] = [(t, {"red": n, "blue": n, "yellow": n}), ...] visible pin halves on that goal
-- toggle_obs[quad] = [(t, "red" | "blue" | "yellow" | None), ...]
+- toggle_obs[quad] = [(t, "red" | "blue" | "yellow" | "split" | None), ...]  ("split": half turned, counts for no one;
+  readings made before Nov 23 have no "split")
 - robot paths from track.py: {tid: [(t, x, y, seen), ...]} plus {tid: alliance}
 
 Events:
@@ -90,6 +91,8 @@ def toggle_flips(toggle_obs, paths, alliances, hold=0.75, auton_end=15.0):
         ser = stable_series([(t, c) for t, c in obs if c], hold)
         tx, ty = F.TOGGLES[q]
         for (t0, c0), (t1, c1) in zip(ser, ser[1:]):
+            if c1 == "split":
+                continue
             who = nearest_robot(paths, alliances, (tx, ty), t1, prefer=c1 if c1 in ("red", "blue") else None, max_dist=1100)
             events.append({"type": "toggle", "t": t1, "quadrant": q, "from": c0, "to": c1,
                            "robot": who[0] if who else None, "auton": t1 <= auton_end})

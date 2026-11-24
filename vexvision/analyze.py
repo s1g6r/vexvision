@@ -195,7 +195,7 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
                 goal_obs[g.name].append((t, c))
             for q in F.TOGGLES:
                 col, share = readers.read_toggle(img, H, cam, q)
-                toggle_obs[q].append((t, col))
+                toggle_obs[q].append((t, readers.toggle_state(col, share)))
     perception = {"det_log": det_log, "plate_log": plate_log, "goal_obs": goal_obs, "toggle_obs": toggle_obs,
                   "running": running, "overlay_reads": overlay_reads, "teams": teams, "t_start": t_start,
                   "cal_log": cal_log, "frames": n, "seconds": round(time.time() - t0w, 1)}
