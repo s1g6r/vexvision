@@ -144,6 +144,7 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
     n = 0
     t0w = time.time()
     clock_ok, t_end, k = False, None, 0
+    given = set((teams or {}).get("red", []) + (teams or {}).get("blue", []))
     for t, img in frames:
         k += 1
         if t - last_ov >= (1.5 if quick and t_start is None else every_overlay):
@@ -156,9 +157,13 @@ def analyze(frames, detector, teams=None, official=None, valid_teams=None, fps_h
                 teams = {"red": r.red, "blue": r.blue}
             if r.period is not None or len(r.red) == 2:
                 clock_ok = True               # this stream's overlay can be read
-            if t_start is None and r.period == "auton" and r.clock is not None:
+            # a stream that cuts between fields can show another match's clock: when the overlay's teams
+            # are readable and share fewer than two with this match's schedule, that clock isn't ours
+            seen = set(r.red) | set(r.blue)
+            ours = not (given and len(seen) >= 3 and len(seen & given) < 2)
+            if t_start is None and ours and r.period == "auton" and r.clock is not None:
                 t_start = t - (15 - r.clock)
-            if r.period == "driver" and r.clock is not None and t_start is not None and t > t_start + 15:
+            if ours and r.period == "driver" and r.clock is not None and t_start is not None and t > t_start + 15:
                 t_end = max(t_end or 0, t + r.clock + 3)   # a misread clock can only make it look later
         if quick and clock_ok:
             end = t_end if t_end is not None else (t_start + 150 if t_start is not None else None)
@@ -297,6 +302,7 @@ def reason(P, official=None, looks=None, hint=None):
     goal_obs, toggle_obs, running, teams, t_start = P["goal_obs"], P["toggle_obs"], P["running"] or [], P["teams"], P["t_start"]
     looks = looks or P.get("looks")
     overlay_reads, cal_log, n, t0w = P["overlay_reads"], P["cal_log"], P["frames"], time.time()
+    overlay_reads = own_reads(overlay_reads, teams)
     tracker, assigns = run_tracker(P["det_log"])
     looked = {}                                    # team -> (tid, agreement) for teams with a known look
     if looks and teams:
@@ -518,6 +524,20 @@ def resolve_look(pair, assigns, det_log, look, t0=None, t1=None, near=800.0):
         else:
             i += 1
     return a.tid, agree
+
+def own_reads(overlay_reads, teams):
+    """Drop overlay reads that belong to another field's match: three or more teams read and fewer
+    than two of them in this match (streams that cut between fields show other matches' clocks)."""
+    given = set((teams or {}).get("red", []) + (teams or {}).get("blue", []))
+    if not given:
+        return overlay_reads
+    out = []
+    for t, r in overlay_reads:
+        seen = set(r.get("red") or []) | set(r.get("blue") or [])
+        if len(seen) >= 3 and len(seen & given) < 2:
+            continue
+        out.append((t, r))
+    return out
 
 def driver_start(overlay_reads, t_start):
     """Driver control doesn't start when autonomous ends: the field is reset and

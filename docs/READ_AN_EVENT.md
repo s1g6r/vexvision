@@ -71,3 +71,23 @@ When the Mac job isn't running, the cloud machine can read the clips itself, mor
    `tools/cloud_worker.sh 0 2 <dir>` and `tools/cloud_worker.sh 1 2 <dir>`. Each one reads its clips with quick reading
    as they arrive, works out the robot looks, and deletes the staged copy.
 4. Every couple of hours: `rebuild.sh`, then `post.sh "message"`.
+
+## Streams that cut between fields (Highlander, 23–24 Nov)
+
+Highlander's stream switched between fields, so a match's window often shows the clock of a match on another field.
+Three things guard against it:
+
+- **Downloads land whole.** Clips are written to a hidden `.part` file next to the target and renamed when done, and
+  every clip's length is checked against its window (90% or more). Before this, the Mac sometimes read a file that was
+  still being copied and found no field.
+- **The match start ignores other matches.** When the overlay's teams can be read (three or more) and fewer than two
+  of them are in this match, that clock is not used for the start or for driver control (`own_reads` in
+  `vexvision/analyze.py`, and the same check while reading).
+- **Readings are checked after finishing.** During the 2 minutes of the match, the overlay must name this match at
+  least 60% of the time it names any match. Readings that fail are dropped from the site and listed in a `bad.txt`.
+
+A match whose autonomous never appears on the stream can't be recovered this way: it was not shown.
+
+**The queue.** `macjob/mac_queue.py` rereads `jobs_queue.txt` on every pass, so new matches can be appended while it
+runs. A small loop on the Mac's shell keeps about 9 clips waiting, deletes clips once their reading is finished here,
+and, once the readings are done, keeps the 1080p cuts coming for the plate reader.
