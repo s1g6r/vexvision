@@ -8,7 +8,9 @@ SHORT = {v: k for k, v in EVENTS.items()}
 MANS = {"gl-": ("/home/claude/work/gl/matches.json", "/home/claude/work/gl/clips"),
         "cc-": ("/home/claude/work/cc/matches2.json", "/home/claude/work/cc/clips")}
 # whole-event streams read on the Mac queue: id prefix -> (manifest, staged clips)
-STREAMS = {"e64246-": ("/home/claude/work/hl/matches.json", "/mnt/user-data/uploads/vexvisionstuff/hl/clips")}
+STREAMS = {"e64246-": ("/home/claude/work/hl/matches.json", "/mnt/user-data/uploads/vexvisionstuff/hl/clips"),
+           "e64813-": ("/home/claude/work/gp/matches.json", "/mnt/user-data/uploads/vexvisionstuff/gp/clips"),
+           "e65564-": ("/home/claude/work/ut/matches.json", "/mnt/user-data/uploads/vexvisionstuff/ut/clips")}
 
 def main():
     raw, rep = sys.argv[1:3]
