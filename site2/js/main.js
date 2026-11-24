@@ -700,7 +700,11 @@ function drawRoutes(c, R) {
 
 function showTeam(id) {
   const t = T.get(id), out = $("#result");
-  if (!t && OFF.teams[id]) { out.innerHTML = `<h3 class="tname disp">${esc(id)}</h3>${officialBlock(id)}<p class="scout-note">No Override video names ${esc(id)} yet.</p>${noteBox(id)}`; return; }
+  if (!t && (OFF.teams[id] || TS[id])) {
+    // teams seen only in event streams have replays and a report but no video named after them
+    out.innerHTML = `<h3 class="tname disp">${esc(id)}</h3>${OFF.teams[id] ? officialBlock(id) : ""}${TS[id] ? "" : `<p class="scout-note">No Override video names ${esc(id)} yet.</p>`}${noteBox(id)}${scoutBlock(id)}`;
+    return;
+  }
   if (!t) {
     const near = [...T.keys()].filter((k) => k.startsWith(id.replace(/[A-Z]+$/, ""))).slice(0, 8);
     out.innerHTML = `<div class="empty"><p><b>No Override video names ${esc(id)} yet.</b> A team shows up once a match, reveal or skills video title includes its number.</p>${near.length ? `<div class="picks"><span>Same club</span>${near.map((k) => `<a href="#team-${k}">${k}</a>`).join("")}</div>` : ""}</div>`;
