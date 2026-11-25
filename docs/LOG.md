@@ -238,3 +238,12 @@
 - **Highlander half-turn re-check:** 199 Highlander flips were read before the half-turn rule reached the Mac. I re-checked them on stream frames 3, 5 and 7 s after each flip. The far Toggle (N) and the side ones read cleanly: 70 set, 0 half turned. The near Toggle (S) shows two faces to this camera, so its share can't separate "half turned" from "set". So the half-turn rule can't be applied to the near Toggle at Highlander, and nothing was dropped. This is the same open question as before (which face is the set colour).
 - **Mac:** the reading code on the Mac was behind (half-turn rule, other-field clock fix). It's synced now, and the queue runs for 3 days instead of 12 hours. Stream addresses are refreshed after 4 hours (an expired one silently stopped the 1080p downloads for a while).
 - **Feeding script** `vexvisionstuff/feed.sh` now feeds several events at once (event folders with `prefix`, `windowsN.txt`, `streamN.txt`, `noplates`), and `newids.sh` lists finished Mac readings. On this side, `work/ev_finish.sh DIR PREFIX` finishes them and runs the other-field check, which now also covers cloud readings.
+
+### Nov 25 — Aiming at Worlds: the Signature events
+
+- **The goal is Worlds.** Most Worlds teams play Signature events, and those are almost always streamed, so the plan is to read every Signature event with a stream. Upcoming Signature events are already in `tools/official.py` and `tools/catalog.py` (WAVE at WPI, Slugger, St. Andrews Bangkok, iSTEMn, PAS-VEX, LAUNCH, Sunshine Showdown, Sugar Rush), so each one can be read as soon as its stream goes up.
+- **One World Signature @ UC Berkeley (Nov 21, 64 teams):** both days read, and 133 replays are live. The camera calibrates well (about 0.99), but its robots are small and far away, so plates almost never read (98 of 140 matches had none). Naming leans on looks: 138 of 266 alliances are named for sure. Dropped by the other-field check: Qual 10, 38, 58, 114; R16 3-1, 7-1, 8-1. The Final isn't in the stream window.
+- **GHOST Halloween:** all 81 windows read, about 70 live.
+- **Great Planes:** all readings in. The day-2 plates were stuck for a while (an expired stream address and the 1080p fetches losing their turn to newer events) and are being read now.
+- **Not available:** Mall of America only has partial fan restreams, Harbor Havoc's stream is gone, and Smoky Mountain Forge's camera is low and far. Hong Kong may be in a "Hong Kong Open" stream (not checked yet).
+- **Site now:** 952 replays, 421 teams with scouting reports.
