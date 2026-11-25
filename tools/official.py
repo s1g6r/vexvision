@@ -18,6 +18,11 @@ EVENTS = {  # our event names -> official event id
     "Cornfield Clash Winter": 64756,
     "Niles": 65760, "Glenbrook South": 64352, "Great Lakes #2": 65015, "Great Lakes #3": 65016,
     "Illinois State Championship": 65018,
+    "One World Signature": 64557, "Hong Kong Signature": 64288,
+    # coming Signature events (the Worlds field plays these; read them as their streams go up)
+    "WAVE at WPI Signature": 65280, "Slugger Signature": 64727, "St. Andrews Bangkok Signature": 64498,
+    "iSTEMn Signature": 64435, "PAS-VEX Signature": 64562, "LAUNCH Signature": 64247,
+    "Sunshine Showdown Signature": 64952, "Sugar Rush Signature": 64671,
 }
 ROUND = {"Qual": 2, "QF": 3, "SF": 4, "Final": 5, "R16": 6}
 

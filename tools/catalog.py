@@ -74,6 +74,9 @@ EVENT_HINTS = [
     ("Hong Kong Signature", "Hong Kong Signature"), ("HK SIG", "Hong Kong Signature"),
     ("Silk Road Link", "The Silk Road Link"), ("GHOST", "GHOST Halloween Spotlight"),
     ("Tri-Valley", "Tri-Valley"), ("War Eagle", "War Eagle"),
+    ("One World", "One World Signature"), ("WAVE at WPI", "WAVE at WPI Signature"), ("Slugger", "Slugger Signature"),
+    ("iSTEMn", "iSTEMn Signature"), ("LAUNCH", "LAUNCH Signature"), ("Sunshine Showdown", "Sunshine Showdown Signature"),
+    ("Sugar Rush", "Sugar Rush Signature"),
 ]
 
 def event(title):
