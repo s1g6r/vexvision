@@ -5848,7 +5848,7 @@
 "type": "flip",
 "q": "N",
 "robot": 3,
-"team": "2154A",
+"team": "10102C",
 "alliance": "blue",
 "to": "blue",
 "theirs": false
@@ -6573,7 +6573,7 @@
 "type": "flip",
 "q": "N",
 "robot": 0,
-"team": "2499A",
+"team": "90696C",
 "alliance": "red",
 "to": "yellow",
 "theirs": true
@@ -6584,7 +6584,7 @@
 "type": "flip",
 "q": "W",
 "robot": 1,
-"team": "90696C",
+"team": "2499A",
 "alliance": "red",
 "to": "yellow",
 "theirs": false
@@ -6606,7 +6606,7 @@
 "type": "flip",
 "q": "W",
 "robot": 0,
-"team": "2499A",
+"team": "90696C",
 "alliance": "red",
 "to": "blue",
 "theirs": false
@@ -6650,7 +6650,7 @@
 "type": "flip",
 "q": "S",
 "robot": 0,
-"team": "2499A",
+"team": "90696C",
 "alliance": "red",
 "to": "yellow",
 "theirs": false
@@ -6808,7 +6808,7 @@
 "type": "half",
 "q": "E",
 "robot": 2,
-"team": "5327S",
+"team": "85869E",
 "alliance": "blue",
 "to": "split",
 "theirs": false
@@ -6819,7 +6819,7 @@
 "type": "flip",
 "q": "E",
 "robot": 2,
-"team": "5327S",
+"team": "85869E",
 "alliance": "blue",
 "to": "blue",
 "theirs": false
@@ -6830,7 +6830,7 @@
 "type": "flip",
 "q": "E",
 "robot": 3,
-"team": "85869E",
+"team": "5327S",
 "alliance": "blue",
 "to": "red",
 "theirs": false
@@ -6841,7 +6841,7 @@
 "type": "half",
 "q": "S",
 "robot": 3,
-"team": "85869E",
+"team": "5327S",
 "alliance": "blue",
 "to": "split",
 "theirs": true
@@ -6852,7 +6852,7 @@
 "type": "flip",
 "q": "E",
 "robot": 2,
-"team": "5327S",
+"team": "85869E",
 "alliance": "blue",
 "to": "blue",
 "theirs": false
