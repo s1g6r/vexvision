@@ -18,7 +18,7 @@ jobs:
       - name: Assemble
         run: |
           mkdir -p out
-          cp -r site2/index.html site2/sw.js site2/js site2/data site2/fonts site2/models site2/ort out/
+          cp -r site2/index.html site2/options.html site2/options site2/sw.js site2/js site2/data site2/fonts site2/models site2/ort out/
           rm -rf out/data/thumbs out/data/replays/index_*.json
           touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v3
