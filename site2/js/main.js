@@ -8,6 +8,11 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const STILL = new URLSearchParams(location.search).has("still"), SKIP = new URLSearchParams(location.search).has("rest");
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+/* layout options under trial: ?prep=b&team=c ... picks another version of one area; no switch means the site as it is */
+const UI_AREAS = ["prep", "pick", "team", "rp", "read", "evpick"];
+const UI = (() => { const q = new URLSearchParams(location.search), o = {}; UI_AREAS.forEach((k) => { const v = (q.get(k) || "").toLowerCase(); if (/^[b-d]$/.test(v)) o[k] = v; }); return o; })();
+const ALT = {};
+const alt = (area) => ALT[area]?.[UI[area]];
 const ft = (m) => (m * 3.28084).toFixed(1);
 const where = (r) => {
   const d = Math.hypot(r.x, r.y);
@@ -434,7 +439,8 @@ function officialBlock(id) {
 }
 /* ---------- event prep ---------- */
 const evList = Object.entries(OFF.events).sort((a, b) => b[1].date.localeCompare(a[1].date));
-$("#prep-ev").innerHTML = evList.map(([k, e]) => `<option value="${k}">${esc(e.short.replace(/ \(Fall 2026\)$/, ""))} · ${esc(e.date)}${e.matches.length ? "" : " · no schedule yet"}</option>`).join("");
+const fillEvents = () => { $("#prep-ev").innerHTML = alt("evpick") ? alt("evpick")(evList) : evList.map(([k, e]) => `<option value="${k}">${esc(e.short.replace(/ \(Fall 2026\)$/, ""))} · ${esc(e.date)}${e.matches.length ? "" : " · no schedule yet"}</option>`).join(""); };
+fillEvents();
 const cornfield = evList.find(([, e]) => /Cornfield/.test(e.short) && e.matches.length);
 if (cornfield) $("#prep-ev").value = cornfield[0];
 $("#prep-team").value = "2360A";
@@ -561,6 +567,7 @@ const TAKEN = (() => { try { return JSON.parse(localStorage.getItem("vv-taken") 
 const saveTaken = () => { try { localStorage.setItem("vv-taken", JSON.stringify(TAKEN)); } catch {} };
 const evId = (ev) => Object.keys(OFF.events).find((k) => OFF.events[k] === ev);
 const curSort = () => document.querySelector(".pick-sort button[aria-pressed=true]")?.dataset.sort || "rating";
+const pickList = (ev, me, key) => (alt("pick") || pickTable)(ev, me, key);
 function pickTable(ev, me, key) {
   const tk = new Set(TAKEN[evId(ev)] || []);
   const val = { rating: (t) => t.rating ?? -1, avg: (t) => t.avg ?? -1, skills: (t) => t.skills ?? -1, video: (t) => REP[t.n] ? (REP[t.n].n ?? 0) : -1,
@@ -570,7 +577,7 @@ function pickTable(ev, me, key) {
   const list = [...ev.teams].sort((a, b) => tk.has(a.n) - tk.has(b.n) || val(b) - val(a));
   let rank = 0;
   return `<table class="pick"><thead><tr><th class="n">#</th><th>Team</th><th class="n">Rating</th><th class="n">Record</th><th class="n">Points</th><th class="n">Skills</th>${MS ? '<th class="n">Mix</th>' : ""}<th>How it plays</th>${me && REP[me] ? "<th>With you</th>" : ""}<th><span class="sr">Picked</span></th></tr></thead><tbody>
-    ${list.map((t) => { const f = pickFit(me, t.n), gone = tk.has(t.n); return `<tr class="${t.n === me ? "me" : ""}${gone ? " taken" : ""}"><td class="n">${gone ? "–" : ++rank}</td><td><b><a href="#team-${esc(t.n)}">${esc(t.n)}</a></b><small style="display:block;color:var(--mute)">${esc(t.name || "")}</small></td><td class="n">${t.rating != null ? Math.round(t.rating) : "–"}</td><td class="n">${esc(t.record || "–")}</td><td class="n">${t.avg != null ? Math.round(t.avg) : "–"}</td><td class="n">${t.skills ?? "–"}</td>${MS ? `<td class="n">${MS[t.n].score >= 0 ? Math.round(MS[t.n].score * 100) + (MS[t.n].part ? "<small>*</small>" : "") : "–"}</td>` : ""}
+    ${list.map((t) => { const f = pickFit(me, t.n), gone = tk.has(t.n); return `<tr data-pick-n="${esc(t.n)}" class="${t.n === me ? "me" : ""}${gone ? " taken" : ""}"><td class="n">${gone ? "–" : ++rank}</td><td><b><a href="#team-${esc(t.n)}">${esc(t.n)}</a></b><small style="display:block;color:var(--mute)">${esc(t.name || "")}</small></td><td class="n">${t.rating != null ? Math.round(t.rating) : "–"}</td><td class="n">${esc(t.record || "–")}</td><td class="n">${t.avg != null ? Math.round(t.avg) : "–"}</td><td class="n">${t.skills ?? "–"}</td>${MS ? `<td class="n">${MS[t.n].score >= 0 ? Math.round(MS[t.n].score * 100) + (MS[t.n].part ? "<small>*</small>" : "") : "–"}</td>` : ""}
       <td>${REP[t.n] ? `<div class="tags">${(REP[t.n].tags.length ? REP[t.n].tags : ["Scouted"]).map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : `<span class="role" style="color:var(--mute);font-size:13px">Not on video yet</span>`}</td>${me && REP[me] ? `<td>${f ? `<span class="fit ${f.ok ? "ok" : "no"}">${f.text}</span>` : `<span class="role" style="color:var(--mute);font-size:13px">–</span>`}</td>` : ""}<td>${t.n === me ? "" : `<button type="button" class="take" data-n="${esc(t.n)}" aria-pressed="${gone}">${gone ? "Picked" : "Mark picked"}</button>`}</td></tr>`; }).join("")}
     </tbody></table>`;
 }
@@ -580,14 +587,14 @@ document.addEventListener("click", (e) => {
   if (b.classList.contains("take-clear")) delete TAKEN[eid];
   else { const set = new Set(TAKEN[eid] || []); set.has(b.dataset.n) ? set.delete(b.dataset.n) : set.add(b.dataset.n); TAKEN[eid] = [...set]; }
   saveTaken();
-  w.innerHTML = pickTable(OFF.events[eid], w.dataset.me || null, curSort());
+  w.innerHTML = pickList(OFF.events[eid], w.dataset.me || null, curSort());
   const c = document.querySelector(".take-clear"); if (c) c.hidden = !(TAKEN[eid] || []).length;
 });
 document.addEventListener("click", (e) => {
   const b = e.target.closest(".pick-sort button"); if (!b) return;
   const w = document.getElementById("pick-wrap"), ev = OFF.events[w.dataset.ev];
   b.parentNode.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
-  w.innerHTML = pickTable(ev, w.dataset.me || null, b.dataset.sort);
+  w.innerHTML = pickList(ev, w.dataset.me || null, b.dataset.sort);
   const mp = document.getElementById("pick-mix-slot"); if (mp) mp.innerHTML = b.dataset.sort === "mix" ? mixPanel() : "";
 });
 /* the pick list as it is sorted now, with your notes, as a CSV any spreadsheet opens */
@@ -596,7 +603,7 @@ document.addEventListener("click", (e) => {
   const w = document.getElementById("pick-wrap"), ev = OFF.events[w.dataset.ev], me = w.dataset.me || null;
   const key = document.querySelector(".pick-sort button[aria-pressed=true]")?.dataset.sort || "rating";
   const MS = key === "mix" ? mixScores(ev) : null;
-  const order = [...w.querySelectorAll("tbody tr td:nth-child(2) a")].map((a) => a.textContent);
+  const order = [...w.querySelectorAll("[data-pick-n]")].map((a) => a.dataset.pickN);
   const byN = Object.fromEntries(ev.teams.map((t) => [t.n, t]));
   const q = (v) => { v = v == null ? "" : String(v); return /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v; };
   const head = ["Rank", "Team", "Name", "Rating", "Record", "Points a match", "Skills", ...(MS ? ["Your mix"] : []), "How it plays", "Matches on video", ...(me && REP[me] ? ["With " + me] : []), "Picked", "Your notes"];
@@ -612,7 +619,7 @@ document.addEventListener("input", (e) => {
   const r = e.target.closest?.("input[data-mix]"); if (!r) return;
   MIX[r.dataset.mix] = +r.value; r.previousElementSibling.textContent = ["Off", "A little", "Some", "A lot"][+r.value];
   try { localStorage.setItem("vv-mix", JSON.stringify(MIX)); } catch {}
-  const w = document.getElementById("pick-wrap"); w.innerHTML = pickTable(OFF.events[w.dataset.ev], w.dataset.me || null, "mix");
+  const w = document.getElementById("pick-wrap"); w.innerHTML = pickList(OFF.events[w.dataset.ev], w.dataset.me || null, "mix");
 });
 /* a row of your matches to jump between; the first one without a score is marked as next */
 function jumpStrip(mine, me) {
@@ -630,38 +637,53 @@ document.addEventListener("click", (e) => {
   const b = e.target.closest(".pm-jump button"); if (!b) return;
   document.getElementById("pm-" + b.dataset.pm)?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
 });
-function showEvent(eid, me) {
-  const ev = OFF.events[eid], out = $("#prep-out");
-  if (!ev) { out.innerHTML = `<div class="empty"><p><b>We don't have that event yet.</b></p></div>`; return; }
-  $("#prep-ev").value = eid; if (me) $("#prep-team").value = me;
-  const mine = me ? ev.matches.filter((m) => m.r.includes(me) || m.b.includes(me)) : [];
+function evHeader(ev, eid, me) {
   const onVideo = ev.teams.filter((t) => REP[t.n]).length;
-  const list = [...ev.teams].sort((a, b) => (b.rating ?? -1) - (a.rating ?? -1));
-  const known = list.filter((t) => t.n !== me && REP[t.n]?.sections?.auton).slice(0, 6);
-  out.innerHTML = `<h3 class="tname disp" style="font-size:clamp(48px,7vw,96px)">${esc(ev.short.replace(/ \(Fall 2026\)$/, ""))}</h3>
+  return `<h3 class="tname disp" style="font-size:clamp(48px,7vw,96px)">${esc(ev.short.replace(/ \(Fall 2026\)$/, ""))}</h3>
     <div class="tstats"><span>${esc(ev.date)}</span><span><b>${ev.teams.length}</b> teams</span><span><b>${onVideo}</b> scouted on video</span>${OFF.fetched ? `<span>Results checked ${esc(new Date(OFF.fetched).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }))}</span>` : ""}</div>
     <div class="ev-acts"><button type="button" class="btn ghost" onclick="print()">Print this page</button>${ev.teams.some((t) => NOTES[t.n]) ? `<button type="button" class="btn ghost copy-notes" data-ev="${esc(eid)}">Copy my notes for this event</button>` : ""}</div>
-    ${me && !ev.teams.some((t) => t.n === me) ? `<p class="scout-note">${esc(me)} isn't on this event's team list.</p>` : ""}
-    ${me && ev.teams.some((t) => t.n === me) ? (mine.length ? `<div class="pm-sec"><h4 class="disp" style="font-size:34px;margin:30px 0 4px">${esc(me)}'s matches</h4>` + jumpStrip(mine, me) + mine.map((m, mi) => {
-      const red = m.r.includes(me), al = red ? m.r : m.b, op = red ? m.b : m.r, side = red ? "r" : "b", oside = red ? "b" : "r";
-      const partner = al.filter((x) => x !== me);
-      const done = m.rs != null && (m.rs || m.bs);
-      const my = red ? m.rs : m.bs, th = red ? m.bs : m.rs;
-      const win = m.p != null ? (red ? m.p : 1 - m.p) : null;
-      return `<div class="pm" id="pm-${mi}"><div class="pm-head"><b>${esc(m.m)}</b><span>${red ? "Red" : "Blue"} alliance${win != null ? ` · ${Math.round(win * 100)}% to win going in` : ""}</span>${done ? `<span class="res">${my > th ? "Won" : my < th ? "Lost" : "Tied"} ${my}–${th}</span>` : ""}</div>
-        ${planBlock(me, partner[0], op)}
-        <div class="pm-grid">${partner.map((p) => teamCard(p, side, ev, me, true)).join("")}${op.map((o) => teamCard(o, oside, ev, me, false)).join("")}</div></div>`;
-    }).join("") + "</div>" : `<p class="scout-note">The match schedule for this event isn't out yet.${known.length ? "" : " The pick list below is ready now."}</p>`) : ""}
-    ${!mine.length && known.length ? `<h4 class="disp" style="font-size:34px;margin:30px 0 4px">Teams to know</h4>
-      <p class="scout-note">The strongest teams here that we've watched, so you know their autons before the schedule comes out.</p>
-      <div class="pm-grid know">${known.map((t) => teamCard(t.n, "", ev, me && ev.teams.some((x) => x.n === me) ? me : null, false)).join("")}</div>` : ""}
-    <h4 class="disp" style="font-size:34px;margin:40px 0 12px">Pick list</h4>
+    ${me && !ev.teams.some((t) => t.n === me) ? `<p class="scout-note">${esc(me)} isn't on this event's team list.</p>` : ""}`;
+}
+/* one match from one team's point of view */
+function matchView(m, me) {
+  const red = m.r.includes(me), al = red ? m.r : m.b, op = red ? m.b : m.r;
+  const done = m.rs != null && (m.rs || m.bs), my = red ? m.rs : m.bs, th = red ? m.bs : m.rs;
+  return { red, side: red ? "r" : "b", oside: red ? "b" : "r", partner: al.filter((x) => x !== me), op, done, my, th,
+    win: m.p != null ? (red ? m.p : 1 - m.p) : null, res: done ? (my > th ? "Won" : my < th ? "Lost" : "Tied") : "" };
+}
+function evMatches(ev, me, mine) {
+  return `<div class="pm-sec"><h4 class="disp" style="font-size:34px;margin:30px 0 4px">${esc(me)}'s matches</h4>` + jumpStrip(mine, me) + mine.map((m, mi) => {
+    const v = matchView(m, me);
+    return `<div class="pm" id="pm-${mi}"><div class="pm-head"><b>${esc(m.m)}</b><span>${v.red ? "Red" : "Blue"} alliance${v.win != null ? ` · ${Math.round(v.win * 100)}% to win going in` : ""}</span>${v.done ? `<span class="res">${v.res} ${v.my}–${v.th}</span>` : ""}</div>
+      ${planBlock(me, v.partner[0], v.op)}
+      <div class="pm-grid">${v.partner.map((p) => teamCard(p, v.side, ev, me, true)).join("")}${v.op.map((o) => teamCard(o, v.oside, ev, me, false)).join("")}</div></div>`;
+  }).join("") + "</div>";
+}
+function evPick(ev, eid, me) {
+  return `<h4 class="disp" style="font-size:34px;margin:40px 0 12px">Pick list</h4>
     <p class="scout-note">Every team here. Rating is from going into the event; tags come from the matches we've watched.${me && REP[me] ? ` "With you" compares each team's most-run auton with ${esc(me)}'s.` : ""}</p>
     <div class="pick-sort" role="group" aria-label="Sort the pick list">${PICK_SORTS.filter(([k]) => k !== "fit" || (me && REP[me])).map(([k, label]) => `<button type="button" data-sort="${k}" aria-pressed="${k === "rating"}">${label}</button>`).join("")}</div>
     <div id="pick-mix-slot"></div>
     <p class="scout-note pick-help">During alliance selection, mark each team as it's picked: the best teams left move to the top. <button type="button" class="take-clear" ${(TAKEN[eid] || []).length ? "" : "hidden"}>Clear picks</button></p>
-    <div class="scroll" id="pick-wrap" data-ev="${esc(eid)}" data-me="${esc(me || "")}">${pickTable(ev, me, "rating")}</div>
+    <div class="scroll" id="pick-wrap" data-ev="${esc(eid)}" data-me="${esc(me || "")}">${pickList(ev, me, "rating")}</div>
     <button type="button" class="btn ghost pick-csv" style="margin-top:16px">Download the pick list as a spreadsheet</button>`;
+}
+function showEvent(eid, me) {
+  const ev = OFF.events[eid], out = $("#prep-out");
+  if (!ev) { out.innerHTML = `<div class="empty"><p><b>We don't have that event yet.</b></p></div>`; return; }
+  $("#prep-ev").value = eid; if (me) $("#prep-team").value = me;
+  const here = me && ev.teams.some((t) => t.n === me);
+  const mine = me ? ev.matches.filter((m) => m.r.includes(me) || m.b.includes(me)) : [];
+  const list = [...ev.teams].sort((a, b) => (b.rating ?? -1) - (a.rating ?? -1));
+  const known = list.filter((t) => t.n !== me && REP[t.n]?.sections?.auton).slice(0, 6);
+  const matches = alt("prep")?.matches || evMatches;
+  out.innerHTML = evHeader(ev, eid, me)
+    + (here ? (mine.length ? matches(ev, me, mine) : `<p class="scout-note">The match schedule for this event isn't out yet.${known.length ? "" : " The pick list below is ready now."}</p>`) : "")
+    + (!mine.length && known.length ? `<h4 class="disp" style="font-size:34px;margin:30px 0 4px">Teams to know</h4>
+      <p class="scout-note">The strongest teams here that we've watched, so you know their autons before the schedule comes out.</p>
+      <div class="pm-grid know">${known.map((t) => teamCard(t.n, "", ev, here ? me : null, false)).join("")}</div>` : "")
+    + evPick(ev, eid, me);
+  alt("prep")?.after?.(out, ev, me, mine);
 }
 /* ---------- full scouting report ---------- */
 const mmss2 = (s) => { s = Math.max(0, Math.round(s)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
@@ -680,9 +702,10 @@ const sentenceFor = (R) => {
 };
 const lead = (xs) => xs.length ? `<div class="lead">${xs.map((x) => `<p>${esc(x)}</p>`).join("")}</div>` : "";
 const fromN = (k, what = "matches") => `<span class="from">from ${k} ${k === 1 ? what.replace(/^matches/, "match") : what}</span>`;
-function showReport(id) {
-  const R = REP[id], st = TS[id], out = $("#result");
-  if (!R) { out.innerHTML = `<div class="empty"><p><b>No scouting report for ${esc(id)} yet.</b> A report needs at least one match where we can tell which robot is ${esc(id)}.</p><a class="btn ghost" href="#team-${esc(id)}">Back to ${esc(id)}</a></div>`; return; }
+/* the report's sections, built once, so every layout of the team page shows the same sentences and numbers */
+function reportParts(id) {
+  const R = REP[id], st = TS[id];
+  if (!R) return null;
   const ms = R.matches, S = R.sections, L = sentenceFor(R), n = ms.length;
   const events = [...new Set(ms.map((m) => evName(m.event)))];
   const many = events.length > 1;
@@ -719,35 +742,46 @@ function showReport(id) {
     st?.midfield != null ? ["In the Midfield", st.midfield, "Inside the diamond"] : null,
     ["Ends in the Midfield", S.endgame?.midfield ?? avg((m) => (m.midfield_end ? 1 : 0)), "Share of matches, last 10 seconds"],
   ].filter(Boolean);
-  out.innerHTML = `<div class="report">
-    <a class="back" href="#team-${esc(id)}">Back to ${esc(id)}</a>
-    <div class="rep-head"><span class="kicker">Scouting report</span><h3 class="tname disp">${esc(id)}</h3>${OFF.teams[id]?.name ? `<p class="rep-sub">${esc(OFF.teams[id].name)}</p>` : ""}</div>
-    <section class="rep-sec basis-sec"><h4>What this is based on</h4>${cov.html}
+  return { R, n, A, cov, events, cards, autonLead, kinds, ktot,
+    basis: `<section class="rep-sec basis-sec"><h4>What this is based on</h4>${cov.html}
       <details class="used"><summary>The ${n} match${n === 1 ? "" : "es"} used${events.length ? `, at ${events.map((e) => esc(shortEv(e))).join(", ")}` : ""}</summary><ul class="ml cards">${cards}</ul></details>
-      <p class="cap">Everything below comes from where the robot drove and what it carried in these matches, so it says how ${esc(id)} plays rather than what it scores.</p></section>
-    ${A ? `<section class="rep-sec rep-grid">
+      <p class="cap">Everything below comes from where the robot drove and what it carried in these matches, so it says how ${esc(id)} plays rather than what it scores.</p></section>`,
+    auton: A ? `<section class="rep-sec rep-grid">
       <div><h4>Autonomous</h4>${fromN(A.seen, "matches where we saw it")}${lead(autonLead)}<canvas class="heat auton big" width="360" height="360" data-team="${esc(id)}" aria-label="${esc(id)}'s autonomous routes"></canvas>
         <p class="cap">Its own side is at the bottom left. A filled dot is where it starts.${st?.auton_ft ? ` Moves about ${Math.round(st.auton_ft)} ft in the first 15 seconds.` : ""}</p></div>
       <div class="variants">${autonHtml}</div>
-    </section>` : ""}
-    <section class="rep-sec rep-grid">
+    </section>` : "",
+    goals: `<section class="rep-sec rep-grid">
       <div><h4>Which Goals it goes to</h4>${fromN(n)}${lead(L.goals.filter((x) => !/colour|yellow|gambler/i.test(x)))}
         <div class="meters">${["own", "neutral", "center", "opp"].map((k) => { const v = (kinds[k] ?? 0) / ktot; return `<div class="meter"><span class="k">${KN[k]}<small>${v >= 0.45 ? "Most of the time" : v >= 0.25 ? "Often" : v >= 0.1 ? "Sometimes" : v > 0.02 ? "Rarely" : "Hardly ever"}</small></span>${bar(v, "", false)}</div>`; }).join("")}</div>
         <p class="cap">From where it parks next to a Goal. The video shows where it goes, not what it scores.</p></div>
       <div><h4>What it carries</h4>${lead(L.goals.filter((x) => /colour|yellow|gambler/i.test(x)))}${cm ? `<div class="colours"><span class="c-own" style="flex:${cm.own}"></span><span class="c-yel" style="flex:${cm.yellow}"></span><span class="c-oth" style="flex:${cm.other}"></span></div>
         <div class="meters"><div class="meter"><span class="k">Its own colour</span>${bar(cm.own, "own")}</div><div class="meter"><span class="k">Yellow</span>${bar(cm.yellow, "yel")}</div><div class="meter"><span class="k">The other alliance's colour</span>${bar(cm.other, "oth")}</div></div>
         <p class="cap">A rough read of the colour on and around the robot. Plates and flags still count a little.</p>` : `<p class="cap">Not enough clear views of the robot yet.</p>`}</div>
-    </section>
-    <section class="rep-sec rep-grid">
+    </section>`,
+    driver: `<section class="rep-sec rep-grid">
       <div><h4>Driver control</h4>${fromN(n)}${lead(L.driver)}<div class="meters">${drive.map(([k, v, d]) => `<div class="meter"><span class="k">${k}<small>${d}</small></span>${bar(v)}</div>`).join("")}</div></div>
       <div>${st && st.heat ? `<canvas class="heat big" width="360" height="360" data-team="${esc(id)}" aria-label="Where ${esc(id)} drives"></canvas><p class="cap">Where it drives during driver control, with its own side at the bottom left.</p>` : ""}</div>
-    </section>
-    <section class="rep-sec"><h4>The robot</h4>${fromN(n)}${lead(L.robot)}<div class="meters two">
+    </section>`,
+    robot: `<section class="rep-sec"><h4>The robot</h4>${fromN(n)}${lead(L.robot)}<div class="meters two">
       ${rankLine("top_fps", "Top speed", "Faster than this share of robots we tracked")}
       ${rankLine("visits", "Busy at the Goals", "Busier than this share of robots we tracked")}
       ${rankLine("cycle", "Quick between Goals", "Quicker than this share of robots we tracked")}
       ${RB.moving != null ? `<div class="meter"><span class="k">Time spent moving<small>Share of driver control</small></span>${bar(RB.moving)}</div>` : ""}</div>
-      ${RB.ft ? `<p class="cap">Drives about ${Math.round(RB.ft)} ft a match.</p>` : ""}</section>
+      ${RB.ft ? `<p class="cap">Drives about ${Math.round(RB.ft)} ft a match.</p>` : ""}</section>` };
+}
+function showReport(id) {
+  if (alt("team")?.report) return alt("team").report(id);
+  const P = reportParts(id), out = $("#result");
+  if (!P) { out.innerHTML = `<div class="empty"><p><b>No scouting report for ${esc(id)} yet.</b> A report needs at least one match where we can tell which robot is ${esc(id)}.</p><a class="btn ghost" href="#team-${esc(id)}">Back to ${esc(id)}</a></div>`; return; }
+  out.innerHTML = `<div class="report">
+    <a class="back" href="#team-${esc(id)}">Back to ${esc(id)}</a>
+    <div class="rep-head"><span class="kicker">Scouting report</span><h3 class="tname disp">${esc(id)}</h3>${OFF.teams[id]?.name ? `<p class="rep-sub">${esc(OFF.teams[id].name)}</p>` : ""}</div>
+    ${P.basis}
+    ${P.auton}
+    ${P.goals}
+    ${P.driver}
+    ${P.robot}
   </div>`;
 }
 function drawRoutes(c, R) {
@@ -766,6 +800,7 @@ function drawRoutes(c, R) {
 }
 
 function showTeam(id) {
+  if (alt("team")?.team) return alt("team").team(id);
   const t = T.get(id), out = $("#result");
   if (!t && !OFF.teams[id] && !TS[id]) {
     const near = [...T.keys()].filter((k) => k.startsWith(id.replace(/[A-Z]+$/, ""))).slice(0, 8);
@@ -837,6 +872,14 @@ function route() {
   if (h.startsWith("report-")) { const id = h.slice(7).toUpperCase(); q.value = id; showReport(id); land($("#result")); return; }
   if (h.startsWith("team-")) { const id = h.slice(5).toUpperCase(); q.value = id; sugg.classList.remove("open"); showTeam(id); land($("#result")); }
 }
+if (Object.keys(UI).length || new URLSearchParams(location.search).has("try")) {
+  window.VV = { UI, UI_AREAS, ALT, $, esc, OFF, REP, TS, IDX, IDXM, NOREP, NOTES, TAKEN, T, frames, evList, ord, pct, bar, tlink, shortEv, evName, evDate, rank, nOn, thumb, watchSpr,
+    teamRows, coverage, reportParts, matchList, sideLine, scoutBlock, officialBlock, noteBox, watchouts, teamCard, planBlock, jumpStrip, matchView, evMatches, pickTable, pickFit, mixScores, autonClash,
+    showTeam, showReport, sentenceFor, lead, fromN, watchBtn, repAvg, GKEY, PICK_SORTS, fillEvents, pickMatch, where, statsLink, yt, ytAt, drawNew: () => drawNew(), loadReplay: (...a) => loadReplay(...a), rpThumb: (x) => thumb(TH?.map?.[x.id] ? x.id : x.video) };
+  try { await import("./options.js"); } catch (e) { console.error(e); }
+  alt("read")?.();
+  fillEvents(); if (cornfield && !location.hash.startsWith("#event-")) $("#prep-ev").value = cornfield[0];
+}
 addEventListener("hashchange", route); route();
 if (!location.hash.startsWith("#event-") && cornfield) showEvent(cornfield[0], "2360A");
 const rpRoot = document.getElementById("rp");
@@ -887,6 +930,7 @@ Promise.resolve(IDX).then((idx) => {
   const first = list[0].id;
   loadReplay(first).catch((e) => console.error(e));
   const el = document.getElementById("rp-list");
+  if (alt("rp")) { alt("rp")(el, list, loadReplay, first); return; }
   if (list.length > 1) {
     el.innerHTML = list.map((x) => `<button type="button" data-id="${x.id}" aria-pressed="${x.id === first}">${thumb(TH?.map?.[x.id] ? x.id : x.video)}<span><b>${esc(x.match || "Match")}</b><span>${esc((x.event || "").replace(/ Signature$/, "").replace(/^Illini /, "").replace(/ \(Fall 2026\)$/, ""))}</span></span></button>`).join("");
     el.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => loadReplay(b.dataset.id, true)));
