@@ -12,6 +12,24 @@ headings made of two short statements.
 | Broken image (`#h-photo`, `#s-photo`) | False positive: both get their `src` from script once a frame is picked. |
 | Auto-scrolling marquee (`.ticker`) | Kept for the home page's results ticker. It stops for anyone with reduced motion turned on. |
 
+## Phone layouts chosen (26 Nov)
+
+The owner picked one option per area for phones; laptops keep the original layout (A) until those are decided.
+`PHONE_PICK` in main.js holds the picks, and they apply at 640 px wide and below:
+
+- Event prep matches: C (one match at a time, opening on the next one)
+- Pick list: C (short rows that open; the table already stays on wider screens)
+- Team page and report: C (one page, fold-out sections; the report link opens them all)
+- Replay picker: B (team search and event list)
+- Frame reader: C (folded behind one button)
+- Event list: B (grouped into played and coming up)
+
+options.js now always loads, since phones need it. The switcher button shows only with `?try=1` or an explicit choice,
+and `?prep=a` (and so on) forces the original on a phone. Crossing the 640 px line re-renders event prep, the pick list
+and the team page in place. The replay picker and frame reader are set when the page loads.
+Checked at 390 px and 1360 px: phones get every pick, laptops get none, no script errors and no sideways scrolling.
+Narrowing a laptop window swaps the team page to C and back.
+
 ## Layout options under trial (26 Nov)
 
 Brief: show every area two or three ways so the owner can choose, cutting repeats and length, mostly on phones.

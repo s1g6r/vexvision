@@ -265,3 +265,7 @@
 - No plate reading: the stream has no 1080p version. Naming relies on looks: 199 of 360 alliances named for sure.
 - Qual 125 appears at the end of day 1 and again at the start of day 2; only the day 1 window is used.
 - Hong Kong Signature has only short finals videos on YouTube (no full stream), so it stays out for now.
+
+### Nov 26 — Phone layouts switched on
+
+- Phones now use the chosen layouts: one match at a time in event prep, short pick-list rows, fold-out sections on the team page, a search for replays, the frame reader folded away and a grouped event list. Laptops are unchanged for now, and options.html shows which option each device uses.
