@@ -276,7 +276,7 @@ for (const v of videos) for (const t of v.tm || []) {
 const top = [...T.values()].sort((a, b) => b.vids.length - a.vids.length).slice(0, 6).map((t) => t.id);
 $("#picks").innerHTML = `<span>Most filmed so far</span>` + top.map((t) => `<a href="#team-${t}">${t}</a>`).join("");
 const yt = (id) => `https://www.youtube.com/watch?v=${id}`;
-const rank = (m) => { const x = (m || "").match(/^(R16|QF|SF|Final) (\d+)-(\d+)/); if (x) return { R16: 1, QF: 2, SF: 3, Final: 4 }[x[1]] * 100 + +x[2]; const q = (m || "").match(/Qual (\d+)/); return q ? -1000 + +q[1] : 900; };
+const rank = (m) => { const x = (m || "").match(/^(R16|QF|SF|Final) (\d+)-(\d+)/); if (x) return { R16: 1, QF: 2, SF: 3, Final: 4 }[x[1]] * 1000 + +x[2] * 10 + +x[3]; const q = (m || "").match(/Qual (\d+)/); return q ? -1000 + +q[1] : 900; };
 const tlink = (t, me) => `<a href="#team-${t}"${t === me ? ' style="color:var(--gold)"' : ""}>${t}</a>`;
 const pct = (v) => `${Math.round(v * 100)}%`;
 /* ---------- your own notes, kept on this device ---------- */
@@ -295,32 +295,82 @@ document.addEventListener("input", (e) => {
   const t = e.target.closest?.("textarea[data-note]"); if (!t) return;
   const v = t.value.trim(); if (v) NOTES[t.dataset.note] = t.value; else delete NOTES[t.dataset.note]; saveNotes();
 });
+/* ---------- which matches we have for a team: one list for 3D replays and YouTube ---------- */
+const IDXM = new Map(IDX.map((x) => [x.id, x]));
+const evKey = (s) => (s || "").replace(/ \(Fall 2026\)$/, "").replace(/ Signature$/, "").trim().toLowerCase();
+const evName = (s) => (s || "").replace(/ \(Fall 2026\)$/, "");
+const ytAt = (v, t) => `https://www.youtube.com/watch?v=${v}${t ? `&t=${Math.max(0, Math.floor(t))}s` : ""}`;
+const EVD = new Map(Object.values(OFF.events).map((x) => [evKey(x.short), x.date]));
+const evDate = (e) => EVD.get(evKey(e)) || "9";
+function teamRows(id) {
+  // one row per match, keyed by event and match name, whether we have a 3D replay, a YouTube video or both
+  const rows = new Map();
+  const get = (event, match) => { const k = evKey(event) + "|" + match; if (!rows.has(k)) rows.set(k, { event: evName(event) || "Other videos", match }); return rows.get(k); };
+  for (const m of TS[id]?.matches || []) {
+    const x = IDXM.get(m.id) || {}, r = get(m.event, m.match);
+    Object.assign(r, { red: x.red || r.red, blue: x.blue || r.blue, yt: r.yt || (x.yt ? ytAt(x.yt[0], x.yt[1]) : null), replay: NOREP.has(m.id) ? null : m.id, named: !!m.named, tracked: true });
+  }
+  for (const v of T.get(id)?.vids || []) if (v.k === "match") {
+    const r = get(v.e, v.m || "Match");
+    r.yt = r.yt || v.u || yt(v.id); r.red = r.red || v.r; r.blue = r.blue || v.b;
+  }
+  return [...rows.values()].sort((a, b) => evDate(a.event).localeCompare(evDate(b.event)) || a.event.localeCompare(b.event) || rank(a.match) - rank(b.match));
+}
+function coverage(id) {
+  const rows = teamRows(id), played = OFF.teams[id]?.season?.matches;
+  const used = new Set((REP[id]?.matches || []).map((m) => m.id));
+  const named = used.size || TS[id]?.n || 0;
+  for (const r of rows) r.used = !!(r.replay && used.has(r.replay)) || (!!r.tracked && r.named && !REP[id]);
+  const cnt = (f) => rows.filter(f).length;
+  const unread = cnt((r) => !r.tracked), unnamed = cnt((r) => r.tracked && !r.named), unclear = cnt((r) => r.tracked && r.named && !r.used);
+  const s = (k, one, many) => `${k} ${k === 1 ? one : many}`;
+  const gaps = [];
+  if (played && played > rows.length) gaps.push(s(played - rows.length, "wasn't filmed", "weren't filmed"));
+  if (unread) gaps.push(s(unread, "is on YouTube but we haven't read it yet", "are on YouTube but we haven't read them yet"));
+  if (unnamed) gaps.push(`in ${unnamed} we couldn't tell which robot was ${id}`);
+  if (unclear) gaps.push(s(unclear, "was too unclear on video to use", "were too unclear on video to use"));
+  const nums = [played && played >= rows.length ? [played, "played this season"] : null, [rows.length, "on video"], [named, `used for scouting`]].filter(Boolean);
+  return { rows, named, html: `<div class="basis">${nums.map(([v, k]) => `<div><b>${v}</b><span>${esc(k)}</span></div>`).join("")}</div>${gaps.length ? `<p class="basis-note">${named ? `Scouting uses the ${named} where we could tell which robot is ${esc(id)}. Of the rest, ` : "None can be used for scouting yet: "}${gaps.join(", ").replace(/, ([^,]*)$/, " and $1")}.</p>` : ""}` };
+}
+const sideLine = (r, id) => {
+  const mine = r.red?.includes(id) ? ["r", r.red, r.blue] : r.blue?.includes(id) ? ["b", r.blue, r.red] : null;
+  if (!mine) return "";
+  return `<span class="side-${mine[0]}">${mine[0] === "r" ? "Red" : "Blue"}</span> with ${mine[1].filter((x) => x !== id).map((x) => tlink(x)).join(" & ") || "partner not named"} <span class="mute">vs</span> ${(mine[2] || []).map((x) => tlink(x)).join(" & ")}`;
+};
+function matchList(id, rows, show = 6) {
+  if (!rows.length) return "";
+  let i = 0, ev = null, html = "";
+  for (const r of rows) {
+    const more = i >= show ? " more" : "";
+    if (r.event !== ev) { ev = r.event; html += `<li class="ml-ev${more}">${esc(ev)}</li>`; }
+    html += `<li class="ml-row${more}"><div class="ml-m"><b>${esc(r.match)}</b><span class="ml-al">${sideLine(r, id)}</span>${r.tracked && !r.named ? `<small>Couldn't tell which robot was ${esc(id)}</small>` : r.tracked && !r.used ? `<small>Too unclear to use for scouting</small>` : !r.tracked ? `<small>Not read yet</small>` : ""}</div>
+      <div class="ml-a">${r.replay ? `<button type="button" class="watch" data-replay="${esc(r.replay)}">3D replay</button>` : ""}${r.yt ? `<a class="watch" href="${esc(r.yt)}" target="_blank" rel="noopener">YouTube</a>` : ""}</div></li>`;
+    i++;
+  }
+  return `<ul class="ml${rows.length > show ? " clip" : ""}">${html}</ul>${rows.length > show ? `<button type="button" class="btn ghost ml-all" aria-expanded="false">Show all ${rows.length} matches</button>` : ""}`;
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".ml-all"); if (!b) return;
+  const ul = b.previousElementSibling, open = ul.classList.toggle("clip") === false;
+  b.setAttribute("aria-expanded", open); b.textContent = open ? "Show fewer" : `Show all ${ul.querySelectorAll(".ml-row").length} matches`;
+});
+/* numbers the team page and the report share, so they always agree */
+const repAvg = (R, f) => R.matches.reduce((a, m) => a + f(m), 0) / Math.max(1, R.matches.length);
 function scoutBlock(id) {
   const st = TS[id];
   if (!st) return "";
-  const watch = `<div class="scout-replays">${st.matches.filter((m) => !NOREP.has(m.id)).map((m) => `<button type="button" class="btn ghost" data-replay="${esc(m.id)}">Watch ${esc(m.match || "match")} in 3D</button>`).join("")}</div>`;
   if (!st.n) {
-    return `<div class="scout"><div class="scout-head"><b>Tracked by vexvision</b><span>in ${st.matches.length} match${st.matches.length === 1 ? "" : "es"}</span></div>
-    <p class="scout-note">We follow both robots on ${esc(id)}'s alliance in these matches, but the stream is too small to read robot plates, so we can't yet say which one is ${esc(id)}. Driving stats show up once a match names it.</p>${watch}</div>`;
+    return `<div class="scout"><div class="scout-head"><b>Scouting</b></div>
+    <p class="scout-note">We follow both robots on ${esc(id)}'s alliance in ${st.matches.length} match${st.matches.length === 1 ? "" : "es"}, but the stream is too small to read robot plates, so we can't yet say which one is ${esc(id)}. Scouting shows up once a match names it.</p></div>`;
   }
-  const tiles = [
-    ["Driven per match", `${Math.round(st.ft_per_match)} ft`, "Distance along its tracked path"],
-    ["On the other side", pct(st.opp_side), "Of driver control past the Autonomous Line"],
-    ["In the Midfield", pct(st.midfield), "Of driver control inside the diamond"],
-    ["Autonomous", `${Math.round(st.auton_ft)} ft`, "Moved in the first 15 seconds"],
-  ];
-  const rep = REP[id];
-  const W = rep ? watchouts(rep) : [];
-  const brief = rep ? `${rep.tags?.length ? `<div class="tags" style="margin-bottom:12px">${rep.tags.map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : ""}<ul class="brief">${rep.summary.slice(0, 3).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-    ${W.length ? `<p class="scout-note" style="margin:0 0 6px"><b style="color:var(--ink)">Watch for</b></p><ul class="watch-list" style="margin-bottom:18px">${W.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
-    <a class="btn solid report-btn" href="#report-${esc(id)}">Full scouting report</a>` : "";
-  return `<div class="scout"><div class="scout-head"><b>Scouted by vexvision</b><span>from ${st.n} match${st.n === 1 ? "" : "es"} where we could name it</span></div>${brief}
-    <div class="scout-grid"><div class="scout-maps">
-      <figure><canvas class="heat" width="240" height="240" data-team="${esc(id)}" aria-label="Where ${esc(id)} drives"></canvas><figcaption>Where it drives</figcaption></figure>
-      ${st.autons?.length ? `<figure><canvas class="heat auton" width="240" height="240" data-team="${esc(id)}" aria-label="${esc(id)}'s autonomous routes"></canvas><figcaption>Autonomous routes, ${st.autons.length} match${st.autons.length === 1 ? "" : "es"}</figcaption></figure>` : ""}
-      <p class="scout-note small">Turned so its own side is always bottom left.</p></div>
-    <div class="scout-tiles">${tiles.map(([k, v, d]) => `<div class="fact"><div class="k">${k}</div><b>${v}</b><span>${d}</span></div>`).join("")}</div></div>
-    ${watch}</div>`;
+  const R = REP[id];
+  if (!R) return "";
+  const W = watchouts(R);
+  return `<div class="scout"><div class="scout-head"><b>Scouting</b><span>from ${nOn(R)} where we could tell which robot is ${esc(id)}</span></div>
+    ${R.tags?.length ? `<div class="tags">${R.tags.map((x) => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : ""}
+    ${W.length ? `<ul class="watch-list">${W.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+    <a class="btn solid report-btn" href="#report-${esc(id)}">Full scouting report</a>
+    <p class="scout-note small">The report has its autonomous routes, where it drives, which Goals it goes to and every match it's based on.</p></div>`;
 }
 function fieldLines(g, W) {
   g.strokeStyle = "rgba(239,233,221,.55)"; g.lineWidth = 1.5;
@@ -365,7 +415,7 @@ function drawHeat(c, st) {
 /* ---------- official results ---------- */
 const ord = (n) => { const s = ["th", "st", "nd", "rd"], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); };
 const statsLink = (id) => OFF.teams[id]?.id ? `https://stats.2360arachnid.com/#/team/${OFF.teams[id].id}` : "https://stats.2360arachnid.com";
-const shortEv = (n) => (n || "").replace(/:.*$/, "").replace(/ VEX V5 Robotics Competition.*$/, "");
+const shortEv = (n) => (n || "").replace(/:.*$/, "").replace(/ VEX V5 Robotics Competition.*$/, "").replace(/ \(Fall 2026\)$/, "").replace(/ Signature( Event)?$/, "");
 function officialBlock(id) {
   const o = OFF.teams[id]; if (!o) return "";
   const s = o.season || {}, evs = o.events.filter((e) => e.played);
@@ -378,8 +428,8 @@ function officialBlock(id) {
   ];
   return `<div class="off"><div class="off-head"><b>Official results</b><span>${esc(o.name || "")}${s.region ? ` · ${esc(s.region)}` : ""}</span><a href="${statsLink(id)}">More on stats.2360arachnid.com</a></div>
     <div class="off-tiles">${tiles.map(([k, v, d]) => `<div class="fact"><div class="k">${k}</div><b>${v}</b><span>${d}</span></div>`).join("")}</div>
-    ${o.events.length ? `<div class="scroll"><table class="cmp"><thead><tr><th>Event</th><th class="n">Rank</th><th class="n">Record</th><th class="n">Scored</th><th class="n">Allowed</th></tr></thead><tbody>
-    ${o.events.map((e) => `<tr><td>${OFF.events[e.event_id] ? `<a href="#event-${e.event_id}-${esc(id)}">${esc(shortEv(e.event))}</a>` : esc(shortEv(e.event))}<small style="display:block;color:var(--mute)">${esc(e.date)}</small></td><td class="n">${e.rank ? `${ord(e.rank)} of ${e.teams}` : "–"}</td><td class="n">${esc(e.record || "–")}</td><td class="n">${e.avg_scored != null ? Math.round(e.avg_scored) : "–"}</td><td class="n">${e.avg_allowed != null ? Math.round(e.avg_allowed) : "–"}</td></tr>`).join("")}
+    ${o.events.length ? `<div class="scroll"><table class="cmp off-ev"><thead><tr><th>Event</th><th class="n">Rank</th><th class="n">Record</th><th class="n">Scored</th><th class="n">Allowed</th></tr></thead><tbody>
+    ${o.events.map((e) => `<tr><td>${OFF.events[e.event_id] ? `<a href="#event-${e.event_id}-${esc(id)}">${esc(shortEv(e.event))}</a>` : esc(shortEv(e.event))}<small style="display:block;color:var(--mute)">${esc(e.date)}</small></td><td class="n" data-k="Rank">${e.rank ? `${ord(e.rank)} of ${e.teams}` : "–"}</td><td class="n" data-k="Record">${esc(e.record || "–")}</td><td class="n" data-k="Scored">${e.avg_scored != null ? Math.round(e.avg_scored) : "–"}</td><td class="n" data-k="Allowed">${e.avg_allowed != null ? Math.round(e.avg_allowed) : "–"}</td></tr>`).join("")}
     </tbody></table></div>` : ""}</div>`;
 }
 /* ---------- event prep ---------- */
@@ -392,15 +442,19 @@ $("#prep-form").addEventListener("submit", (e) => { e.preventDefault(); location
 function watchouts(R) {
   const S = R.sections || {}, out = [];
   const r0 = S.auton?.routes?.[0];
-  if (r0?.steps?.crosses) out.push("Their auton crosses the Autonomous Line");
+  if (r0 && r0.steps.moved_m >= 0.6) {
+    const goal = [...r0.steps.stops.map(([, p]) => p), r0.steps.end].find((p) => GKEY[p]);
+    out.push(`Auton${r0.count >= 2 ? " usually" : ""} goes to ${goal ? goal.replace(/^its own/, "their own") : r0.steps.end.replace(/^its own/, "their own")}${r0.steps.crosses ? " and crosses the Autonomous Line" : ""}`);
+  }
   const d = S.defence || {};
   if (d.other_side >= 0.55 && d.near_opp_their_side >= 0.15) out.push("Expect them on your side for much of driver control");
+  else if (d.other_side >= 0.45) out.push("Spends a lot of driver control on your side");
+  else if (d.other_side <= 0.15) out.push("Hardly ever crosses to your side");
   const tg = S.toggles || {};
   if ((tg.opp_flips || 0) >= 2) out.push("Comes for your Toggles");
-  if ((tg.late || 0) >= 2 && tg.late * 2 >= (tg.flips || 0)) out.push("Goes for a Toggle late in the match");
-  const fav = S.scoring?.favourites?.[0];
-  if (fav && fav[1] >= 1) out.push(`Goes to ${fav[0].replace(/^its own/, "their own")} most`);
+  else if ((tg.late || 0) >= 2 && tg.late * 2 >= (tg.flips || 0)) out.push("Goes for a Toggle late in the match");
   if (S.endgame?.midfield >= 0.5) out.push("Ends in the Midfield");
+  else if (S.scoring?.carry?.yellow >= 0.4) out.push("Goes for yellows");
   return out.slice(0, 3);
 }
 /* how two autonomous routes meet: partners share a start or a Goal, opponents race to the same neutral Goal */
@@ -613,74 +667,87 @@ function showEvent(eid, me) {
 const mmss2 = (s) => { s = Math.max(0, Math.round(s)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
 const watchBtn = (m, t, label) => NOREP.has(m.id) ? "" : `<button type="button" class="watch" data-replay="${esc(m.id)}" ${t != null ? `data-t="${(+t).toFixed(1)}"` : ""}>${esc(label)}</button>`;
 const bar = (v, cls = "", label = true) => `<span class="bar ${cls}"><i style="width:${Math.min(100, Math.round(v * 100))}%"></i></span>${label ? `<b class="num">${pct(v)}</b>` : ""}`;
+/* which report section a summary sentence belongs to, so each sentence is said once, next to its detail */
+const sentenceFor = (R) => {
+  const by = { auton: [], goals: [], robot: [], driver: [] };
+  for (const x of R.summary || []) {
+    if (/autonomous/i.test(x)) by.auton.push(x);
+    else if (/speed|fastest|faster|quicker|slower/i.test(x)) by.robot.push(x);
+    else if (/Goal|colour|yellow|gambler/i.test(x) && !/Toggle/.test(x)) by.goals.push(x);
+    else by.driver.push(x);
+  }
+  return by;
+};
+const lead = (xs) => xs.length ? `<div class="lead">${xs.map((x) => `<p>${esc(x)}</p>`).join("")}</div>` : "";
+const fromN = (k, what = "matches") => `<span class="from">from ${k} ${k === 1 ? what.replace(/^matches/, "match") : what}</span>`;
 function showReport(id) {
   const R = REP[id], st = TS[id], out = $("#result");
   if (!R) { out.innerHTML = `<div class="empty"><p><b>No scouting report for ${esc(id)} yet.</b> A report needs at least one match where we can tell which robot is ${esc(id)}.</p><a class="btn ghost" href="#team-${esc(id)}">Back to ${esc(id)}</a></div>`; return; }
-  const ms = R.matches, S = R.sections;
-  const events = [...new Set(ms.map((m) => (m.event || "").replace(/ \(Fall 2026\)$/, "")))];
-  const typical = S.auton ? ms.find((m) => m.id === S.auton.typical) : null;
-  const sum = (m) => m.goals.own + m.goals.neutral + m.goals.center + m.goals.opp;
-  const avg = (f, list = ms) => list.reduce((a, m) => a + f(m), 0) / Math.max(1, list.length);
-  const q = ms.filter((m) => !m.elim), e = ms.filter((m) => m.elim);
-  const rows = [
-    ["On the other side", (m) => m.other_side, "Share of driver control past the Autonomous Line"],
-    ["Up against an opponent there", (m) => m.near_opp_their_side, "On their side and within a robot's length of one of them"],
-    ["At a Goal", sum, "Parked right next to a Goal"],
-    ["Ends in the Midfield", (m) => (m.midfield_end ? 1 : 0), "Where it is in the last 10 seconds"],
-  ];
+  const ms = R.matches, S = R.sections, L = sentenceFor(R), n = ms.length;
+  const events = [...new Set(ms.map((m) => evName(m.event)))];
+  const many = events.length > 1;
+  const avg = (f) => repAvg(R, f);
   const RC = ["#f2c230", "#4c86ff", "#5fd08a", "#c792ea", "#ff9e57", "#ef3b45"];
   const A = S.auton, SC = S.scoring || {}, RB = S.robot || {}, RK = S.ranks || {};
   const byId = Object.fromEntries(ms.map((m) => [m.id, m]));
+  const mLabel = (m) => many ? `${m.match} · ${shortEv(evName(m.event))}` : m.match;
+  const cov = coverage(id);
+  const routeOf = (m) => A ? A.routes.findIndex((r) => r.members.includes(m.id)) : -1;
+  const score = (m) => { const o = OFF.matches[m.id]; if (!o || o.rs == null) return ""; const my = m.alliance === "red" ? o.rs : o.bs, th = m.alliance === "red" ? o.bs : o.rs; return `<span class="sc ${my > th ? "won" : my < th ? "lost" : ""}">${my > th ? "Won" : my < th ? "Lost" : "Tied"} ${my}–${th}</span>`; };
+  // the matches this report is built from, grouped by event, each with its own numbers and moments to jump to
+  let evPrev = null;
+  const cards = [...ms].sort((a, b) => evDate(a.event).localeCompare(evDate(b.event)) || a.event.localeCompare(b.event) || rank(a.match) - rank(b.match)).map((m) => {
+    const ri = routeOf(m), head = evName(m.event) !== evPrev ? `<li class="ml-ev">${esc(evPrev = evName(m.event))}</li>` : "";
+    return `${head}<li class="mc"><div class="mc-top"><b>${esc(m.match)}</b>${score(m)}</div>
+      <div class="mc-al"><span class="side-${m.alliance[0]}">${m.alliance === "red" ? "Red" : "Blue"}</span>${m.partner ? ` with ${tlink(m.partner)}` : ""}</div>
+      <div class="mc-n">${ri >= 0 ? `<span class="rt"><i style="background:${RC[ri % 6]}"></i>Route ${A.routes[ri].label}</span>` : ""}<span>${pct(m.other_side)} on the other side</span><span>${Math.round(m.ft)} ft driven</span></div>
+      <div class="watches">${watchBtn(m, -1, "Auton")}${watchBtn(m, m.driver_at, "Driver control")}${m.defence_len >= 4 ? watchBtn(m, m.defence_t, "Crossing over") : ""}${m.toggle_first.opp != null ? watchBtn(m, m.toggle_first.opp, "Their Toggle") : ""}</div></li>`;
+  }).join("");
   const autonHtml = A ? A.routes.map((r, i) => `<div class="variant">
-      <div class="v-head"><i style="background:${RC[i % 6]}"></i><b>Route ${r.label}</b><span>${r.count === 1 ? "run once" : `run in ${r.count} of ${A.seen} matches`}${i === 0 && r.count > 1 ? " · most run" : ""}</span></div>
+      <div class="v-head"><i style="background:${RC[i % 6]}"></i><b>Route ${r.label}</b><span>${r.count === 1 ? "run once" : `run in ${r.count} of ${A.seen}`}</span></div>
       <ol class="steps"><li>Starts at ${esc(r.steps.start)}</li>${r.steps.moved_m < 0.6 ? "<li>Barely moves</li>" : r.steps.stops.map(([t, p]) => `<li>Stops at ${esc(p)} <small>${t.toFixed(0)} s</small></li>`).join("") + `<li>Ends at ${esc(r.steps.end)}</li>`}${r.steps.crosses ? "<li>Crosses the Autonomous Line</li>" : ""}</ol>
-      <div class="watches">${r.members.map((mid) => byId[mid] ? watchBtn(byId[mid], -1, byId[mid].match) : "").join("")}</div></div>`).join("") : `<p class="cap">Not seen yet.</p>`;
+      <div class="watches">${r.members.map((mid) => byId[mid] ? watchBtn(byId[mid], -1, mLabel(byId[mid])) : "").join("")}</div></div>`).join("") : "";
+  // the auton sentence just restates Route A, so say how often instead
+  const autonLead = A ? [A.seen === 1 ? "Seen once." : A.routes[0].count >= 2 ? `Runs Route ${A.routes[0].label} in ${A.routes[0].count} of them.` : "Ran a different autonomous every time."] : [];
   const kinds = SC.by_kind || {}, ktot = Object.values(kinds).reduce((a, v) => a + v, 0) || 1;
   const KN = { own: "Its own Alliance Goals", neutral: "Neutral Goals", center: "Center Goal", opp: "The other alliance's Goals" };
   const cm = SC.carry;
   const rankLine = (k, label, sub) => RK[k] != null ? `<div class="meter"><span class="k">${label}<small>${sub}</small></span>${bar(RK[k])}</div>` : "";
+  const drive = [
+    ["On the other side", S.defence?.other_side ?? avg((m) => m.other_side), "Past the Autonomous Line"],
+    ["Up against an opponent there", S.defence?.near_opp_their_side ?? avg((m) => m.near_opp_their_side), "Within a robot's length of one of them"],
+    st?.midfield != null ? ["In the Midfield", st.midfield, "Inside the diamond"] : null,
+    ["Ends in the Midfield", S.endgame?.midfield ?? avg((m) => (m.midfield_end ? 1 : 0)), "Share of matches, last 10 seconds"],
+  ].filter(Boolean);
   out.innerHTML = `<div class="report">
     <a class="back" href="#team-${esc(id)}">Back to ${esc(id)}</a>
-    <div class="rep-head"><span class="kicker">Scouting report</span><h3 class="tname disp">${esc(id)}</h3>
-      <p class="rep-sub">From ${ms.length} match${ms.length === 1 ? "" : "es"} where we could tell which robot is ${esc(id)}${events.length ? `, at ${events.map(esc).join(", ")}` : ""}${q.length && e.length ? ` (${q.length} qualification${q.length === 1 ? "" : "s"}, ${e.length} elimination${e.length === 1 ? "" : "s"})` : e.length ? " (eliminations)" : ""}. It comes from where the robot drove and what it carried, so it says how a team plays rather than its exact score.</p></div>
-    ${noteBox(id)}
-    ${OFF.teams[id] ? `<section class="rep-sec">${officialBlock(id).replace('<div class="off">', '<div>')}</section>` : ""}
-    <section class="rep-sec"><h4>How they play</h4><ul class="plays">${R.summary.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>
-    <section class="rep-sec rep-grid">
-      <div><h4>Autonomous routes</h4><canvas class="heat auton big" width="360" height="360" data-team="${esc(id)}" aria-label="${esc(id)}'s autonomous routes"></canvas>
-        <p class="cap">Drawn with its own side at the bottom left. A filled dot is where it starts.</p></div>
+    <div class="rep-head"><span class="kicker">Scouting report</span><h3 class="tname disp">${esc(id)}</h3>${OFF.teams[id]?.name ? `<p class="rep-sub">${esc(OFF.teams[id].name)}</p>` : ""}</div>
+    <section class="rep-sec basis-sec"><h4>What this is based on</h4>${cov.html}
+      <details class="used"><summary>The ${n} match${n === 1 ? "" : "es"} used${events.length ? `, at ${events.map((e) => esc(shortEv(e))).join(", ")}` : ""}</summary><ul class="ml cards">${cards}</ul></details>
+      <p class="cap">Everything below comes from where the robot drove and what it carried in these matches, so it says how ${esc(id)} plays rather than what it scores.</p></section>
+    ${A ? `<section class="rep-sec rep-grid">
+      <div><h4>Autonomous</h4>${fromN(A.seen, "matches where we saw it")}${lead(autonLead)}<canvas class="heat auton big" width="360" height="360" data-team="${esc(id)}" aria-label="${esc(id)}'s autonomous routes"></canvas>
+        <p class="cap">Its own side is at the bottom left. A filled dot is where it starts.${st?.auton_ft ? ` Moves about ${Math.round(st.auton_ft)} ft in the first 15 seconds.` : ""}</p></div>
       <div class="variants">${autonHtml}</div>
-    </section>
+    </section>` : ""}
     <section class="rep-sec rep-grid">
-      <div><h4>Which Goals it goes to</h4>
+      <div><h4>Which Goals it goes to</h4>${fromN(n)}${lead(L.goals.filter((x) => !/colour|yellow|gambler/i.test(x)))}
         <div class="meters">${["own", "neutral", "center", "opp"].map((k) => { const v = (kinds[k] ?? 0) / ktot; return `<div class="meter"><span class="k">${KN[k]}<small>${v >= 0.45 ? "Most of the time" : v >= 0.25 ? "Often" : v >= 0.1 ? "Sometimes" : v > 0.02 ? "Rarely" : "Hardly ever"}</small></span>${bar(v, "", false)}</div>`; }).join("")}</div>
-        ${SC.favourites?.length ? `<p class="cap">Keeps going back to ${SC.favourites.slice(0, 3).map(([g]) => esc(g)).join(", ")}.</p>` : ""}
-        <p class="cap">From where the robot parks next to a Goal. The video shows where it goes, not what it scores.</p></div>
-      <div><h4>Cone colours on the robot</h4>${cm ? `<div class="colours"><span class="c-own" style="flex:${cm.own}"></span><span class="c-yel" style="flex:${cm.yellow}"></span><span class="c-oth" style="flex:${cm.other}"></span></div>
+        <p class="cap">From where it parks next to a Goal. The video shows where it goes, not what it scores.</p></div>
+      <div><h4>What it carries</h4>${lead(L.goals.filter((x) => /colour|yellow|gambler/i.test(x)))}${cm ? `<div class="colours"><span class="c-own" style="flex:${cm.own}"></span><span class="c-yel" style="flex:${cm.yellow}"></span><span class="c-oth" style="flex:${cm.other}"></span></div>
         <div class="meters"><div class="meter"><span class="k">Its own colour</span>${bar(cm.own, "own")}</div><div class="meter"><span class="k">Yellow</span>${bar(cm.yellow, "yel")}</div><div class="meter"><span class="k">The other alliance's colour</span>${bar(cm.other, "oth")}</div></div>
-        <p class="cap">A rough read of the colour on and around the robot during driver control. Its own paint is removed, but plates and flags still count a little.</p>` : `<p class="cap">Not enough clear views of the robot yet.</p>`}
-        <h4 class="mt">The robot</h4><div class="meters">
-        ${rankLine("top_fps", "Top speed", "Faster than this share of the robots we tracked")}
-        ${rankLine("visits", "Busy at the Goals", "Busier than this share of the robots we tracked")}
-        ${rankLine("cycle", "Quick between Goals", "Quicker than this share of the robots we tracked")}
-        ${RB.moving != null ? `<div class="meter"><span class="k">Time spent moving<small>Share of driver control</small></span>${bar(RB.moving)}</div>` : ""}</div>
-        ${RB.ft ? `<p class="cap">Drives about ${Math.round(RB.ft)} ft a match.</p>` : ""}</div>
+        <p class="cap">A rough read of the colour on and around the robot. Plates and flags still count a little.</p>` : `<p class="cap">Not enough clear views of the robot yet.</p>`}</div>
     </section>
     <section class="rep-sec rep-grid">
-      <div><h4>Where it drives</h4>${st && st.heat ? `<canvas class="heat big" width="360" height="360" data-team="${esc(id)}" aria-label="Where ${esc(id)} drives"></canvas><p class="cap">Every second of driver control it was seen, drawn with its own side at the bottom left.</p>` : ""}</div>
-      <div><h4>Driver control, on average</h4><div class="meters">${rows.map(([k, f, d]) => `<div class="meter"><span class="k">${k}${d ? `<small>${d}</small>` : ""}</span>${bar(avg(f))}</div>`).join("")}</div></div>
+      <div><h4>Driver control</h4>${fromN(n)}${lead(L.driver)}<div class="meters">${drive.map(([k, v, d]) => `<div class="meter"><span class="k">${k}<small>${d}</small></span>${bar(v)}</div>`).join("")}</div></div>
+      <div>${st && st.heat ? `<canvas class="heat big" width="360" height="360" data-team="${esc(id)}" aria-label="Where ${esc(id)} drives"></canvas><p class="cap">Where it drives during driver control, with its own side at the bottom left.</p>` : ""}</div>
     </section>
-    ${q.length && e.length ? `<section class="rep-sec"><h4>Qualifications vs eliminations</h4><div class="scroll"><table class="cmp"><thead><tr><th></th><th>Quals (${q.length})</th><th>Elims (${e.length})</th></tr></thead><tbody>
-      ${rows.slice(0, 5).map(([k, f]) => `<tr><td>${k}</td><td class="n">${pct(avg(f, q))}</td><td class="n">${pct(avg(f, e))}</td></tr>`).join("")}
-      <tr><td>Driven per match</td><td class="n">${Math.round(avg((m) => m.ft, q))} ft</td><td class="n">${Math.round(avg((m) => m.ft, e))} ft</td></tr></tbody></table></div></section>` : ""}
-    <section class="rep-sec"><h4>Match by match</h4><div class="scroll"><table class="mtab"><thead><tr><th>Match</th><th>With</th><th>Auton</th><th class="n">Score</th><th class="n">Other side</th><th class="n">Driven</th><th>Watch</th></tr></thead><tbody>
-      ${ms.map((m) => { const ri = A ? A.routes.findIndex((r) => r.members.includes(m.id)) : -1; return `<tr><td><b>${esc(m.match)}</b><small>${esc((m.event || "").replace(/ Signature$| \(Fall 2026\)$/, ""))}</small></td>
-        <td><span class="side-${m.alliance[0]}">${m.alliance === "red" ? "Red" : "Blue"}</span> ${esc(m.partner || "")}</td>
-        <td>${ri >= 0 ? `<span class="rt"><i style="background:${RC[ri % 6]}"></i>${A.routes[ri].label}</span>` : "–"}</td>
-        <td class="n">${(() => { const o = OFF.matches[m.id]; if (!o || o.rs == null) return "–"; const my = m.alliance === "red" ? o.rs : o.bs, th = m.alliance === "red" ? o.bs : o.rs; return `<span style="color:${my > th ? "#7fd99a" : my < th ? "#f08a8a" : "inherit"}">${my}–${th}</span>`; })()}</td>
-        <td class="n">${pct(m.other_side)}</td><td class="n">${Math.round(m.ft)} ft</td>
-        <td class="w">${watchBtn(m, -1, "Auton")}${watchBtn(m, m.driver_at, "Driver")}${m.defence_len >= 4 ? watchBtn(m, m.defence_t, "Crossing over") : ""}${m.toggle_first.opp != null ? watchBtn(m, m.toggle_first.opp, "Their Toggle") : ""}</td></tr>`; }).join("")}
-    </tbody></table></div></section>
+    <section class="rep-sec"><h4>The robot</h4>${fromN(n)}${lead(L.robot)}<div class="meters two">
+      ${rankLine("top_fps", "Top speed", "Faster than this share of robots we tracked")}
+      ${rankLine("visits", "Busy at the Goals", "Busier than this share of robots we tracked")}
+      ${rankLine("cycle", "Quick between Goals", "Quicker than this share of robots we tracked")}
+      ${RB.moving != null ? `<div class="meter"><span class="k">Time spent moving<small>Share of driver control</small></span>${bar(RB.moving)}</div>` : ""}</div>
+      ${RB.ft ? `<p class="cap">Drives about ${Math.round(RB.ft)} ft a match.</p>` : ""}</section>
   </div>`;
 }
 function drawRoutes(c, R) {
@@ -700,31 +767,23 @@ function drawRoutes(c, R) {
 
 function showTeam(id) {
   const t = T.get(id), out = $("#result");
-  if (!t && (OFF.teams[id] || TS[id])) {
-    // teams seen only in event streams have replays and a report but no video named after them
-    out.innerHTML = `<h3 class="tname disp">${esc(id)}</h3>${OFF.teams[id] ? officialBlock(id) : ""}${TS[id] ? "" : `<p class="scout-note">No Override video names ${esc(id)} yet.</p>`}${noteBox(id)}${scoutBlock(id)}`;
-    return;
-  }
-  if (!t) {
+  if (!t && !OFF.teams[id] && !TS[id]) {
     const near = [...T.keys()].filter((k) => k.startsWith(id.replace(/[A-Z]+$/, ""))).slice(0, 8);
     out.innerHTML = `<div class="empty"><p><b>No Override video names ${esc(id)} yet.</b> A team shows up once a match, reveal or skills video title includes its number.</p>${near.length ? `<div class="picks"><span>Same club</span>${near.map((k) => `<a href="#team-${k}">${k}</a>`).join("")}</div>` : ""}</div>`;
     return;
   }
-  const matches = t.vids.filter((v) => v.k === "match").sort((a, b) => (a.e || "").localeCompare(b.e || "") || rank(a.m) - rank(b.m));
-  const other = t.vids.filter((v) => v.k !== "match");
-  const partners = [...t.with].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k]) => k);
+  const cov = coverage(id), other = (t?.vids || []).filter((v) => v.k !== "match");
+  const pc = new Map();
+  for (const r of cov.rows) { const mine = r.red?.includes(id) ? r.red : r.blue?.includes(id) ? r.blue : []; for (const p of mine) if (p !== id) pc.set(p, (pc.get(p) || 0) + 1); }
+  const partners = [...pc].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k]) => k);
   out.innerHTML = `<h3 class="tname disp">${esc(id)}</h3>
-    <div class="tstats"><span><b>${matches.length}</b> match${matches.length === 1 ? "" : "es"} on video</span><span><b>${t.events.size}</b> event${t.events.size === 1 ? "" : "s"}</span>${partners.length ? `<span>Partnered with ${partners.map((p) => tlink(p)).join(", ")}</span>` : ""}</div>
+    ${partners.length ? `<div class="tstats"><span>Partnered with ${partners.map((p) => tlink(p)).join(", ")}</span></div>` : ""}
     ${officialBlock(id)}
     ${noteBox(id)}
     ${scoutBlock(id)}
-    ${matches.map((v) => {
-      const mine = v.r?.includes(id) ? ["r", v.r, v.b] : v.b?.includes(id) ? ["b", v.b, v.r] : null;
-      return `<div class="mrow"><a class="th" href="${v.u || yt(v.id)}">${thumb(v.id)}</a><div><div class="ev">${esc(v.e || "")}</div><div class="rd">${esc(v.m || "Match")}</div>
-      ${mine ? `<div class="al"><span class="side-${mine[0]}">${mine[0] === "r" ? "Red" : "Blue"}</span> with ${mine[1].filter((x) => x !== id).map((x) => tlink(x)).join(" & ") || "partner not named"} <span class="mute">vs</span> ${mine[2].map((x) => tlink(x)).join(" & ")}</div>` : ""}</div>
-      <a class="w" href="${v.u || yt(v.id)}">Watch${v.l ? " · " + v.l : ""}</a></div>`;
-    }).join("")}
-    ${other.length ? `<div class="vids">${other.map((v) => `<a class="vid" href="${v.u || yt(v.id)}"><span class="th">${thumb(v.id)}</span>${esc(v.t)}<br><small>${esc(v.c)}</small></a>`).join("")}</div>` : ""}`;
+    <section class="tm-matches"><div class="scout-head"><b>Matches on video</b></div>${cov.html}
+    ${cov.rows.length ? matchList(id, cov.rows) : `<p class="scout-note">No Override video of ${esc(id)} yet.</p>`}</section>
+    ${other.length ? `<div class="scout-head" style="margin-top:34px"><b>Other videos</b></div><div class="vids">${other.map((v) => `<a class="vid" href="${v.u || yt(v.id)}"><span class="th">${thumb(v.id)}</span>${esc(v.t)}<br><small>${esc(v.c)}</small></a>`).join("")}</div>` : ""}`;
 }
 document.addEventListener("click", (e) => {
   const b = e.target.closest("[data-replay]"); if (!b) return;
