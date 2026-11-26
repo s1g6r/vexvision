@@ -12,6 +12,25 @@ headings made of two short statements.
 | Broken image (`#h-photo`, `#s-photo`) | False positive: both get their `src` from script once a frame is picked. |
 | Auto-scrolling marquee (`.ticker`) | Kept for the home page's results ticker. It stops for anyone with reduced motion turned on. |
 
+## Layout options under trial (26 Nov)
+
+Brief: show every area two or three ways so the owner can choose, cutting repeats and length, mostly on phones.
+The current site is always option A. The others live in `site2/js/options.js`, which only loads when the address
+has `?prep=b`, `?pick=c`, `?team=c`, `?rp=b`, `?read=c`, `?evpick=b` or `?try=1`. Nobody else sees them. A yellow
+"Layout options" button switches between them, and `site2/options.html` shows them side by side with phone pictures.
+
+- **main.js changes made for this:** the event page is split into `evHeader`, `evMatches`, `evPick` and `matchView`, the
+  report into `reportParts` (one set of sections that every team-page layout uses), and the CSV export reads team
+  order from `data-pick-n` so any pick-list layout can be exported. With no switch the output is byte-for-byte the
+  same text as before (checked on 2360A's event, team and report pages).
+- **Once options are chosen:** move the chosen code into main.js and its CSS into index.html, then delete
+  options.js, options.html and `site2/options/`.
+- **Scanner:** index.html shows the same findings as before, and options.html has only "Overused font (Geist)", kept for
+  the same reason. The CSS injected by options.js isn't seen by the scanner. Its only accent border is the alliance
+  colour on the left of `.who` rows in event prep B, used on purpose the same way as `.tc`.
+- **Checks:** every option at 390 px and 1360 px: no script errors and no sideways scrolling. Prep C prints every match,
+  not just the one on screen. No independent reviewer was used.
+
 ## Team page and report on phones (25 Nov)
 
 Brief, from a friend testing on his phone: the deeper pages repeated the same things, some matches seemed to go

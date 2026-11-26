@@ -252,3 +252,8 @@
 
 - A friend tried the site on his phone and said the "go deeper" pages repeated the same things, some data seemed to be missing, and it wasn't clear which matches were used. The team page is now a short overview with one list of matches, and the report opens with what it's based on: matches played, on video and used, plus a line explaining every match left out. Each fact is said once, in the section it belongs to. Details in `docs/DESIGN.md`.
 - Fixed a long-standing phone bug: the page could be dragged sideways because a table on the event prep page pushed the page wider than the screen.
+
+### Nov 26 — Layout options to choose from
+
+- Every area of the site was looked at for repeats and length on a phone. Six areas got other versions: event prep matches (each team once / one match at a time), the pick list (cards / short rows on phones), the team page (tabs / fold-out sections), the replay picker (search by team and event instead of a strip of 901), the frame reader (plainer robot list / folded away) and the event list (grouped). They're only switched on by the address (`?prep=c` and so on), so the normal site is unchanged. Comparison page: `options.html`.
+- Left alone on purpose: the top of the home page, the ticker, the menu, the replay controls, the official results card, the notes box and the print layout.
