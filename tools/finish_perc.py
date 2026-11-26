@@ -11,7 +11,8 @@ MANS = {"gl-": ("/home/claude/work/gl/matches.json", "/home/claude/work/gl/clips
 STREAMS = {"e64246-": ("/home/claude/work/hl/matches.json", "/mnt/user-data/uploads/vexvisionstuff/hl/clips"),
            "e64813-": ("/home/claude/work/gp/matches.json", "/mnt/user-data/uploads/vexvisionstuff/gp/clips"),
            "e65564-": ("/home/claude/work/ut/matches.json", "/mnt/user-data/uploads/vexvisionstuff/ut/clips"),
-           "e64557-": ("/home/claude/work/ow/matches.json", "/mnt/user-data/uploads/vexvisionstuff/ow/clips")}
+           "e64557-": ("/home/claude/work/ow/matches.json", "/mnt/user-data/uploads/vexvisionstuff/ow/clips"),
+           "e64846-": ("/home/claude/work/sm/matches.json", "/mnt/user-data/uploads/vexvisionstuff/sm/clips")}
 
 def main():
     raw, rep = sys.argv[1:3]
