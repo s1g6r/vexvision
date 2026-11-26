@@ -10,7 +10,14 @@ const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 /* layout options under trial: ?prep=b&team=c ... picks another version of one area; no switch means the site as it is */
 const UI_AREAS = ["prep", "pick", "team", "rp", "read", "evpick"];
-const UI = (() => { const q = new URLSearchParams(location.search), o = {}; UI_AREAS.forEach((k) => { const v = (q.get(k) || "").toLowerCase(); if (/^[b-d]$/.test(v)) o[k] = v; }); return o; })();
+/* phones get the layouts chosen on Nov 26; laptops keep the original ones (option A) until those are chosen too */
+const PHONE = matchMedia("(max-width: 640px)");
+const PHONE_PICK = { prep: "c", pick: "c", team: "c", rp: "b", read: "c", evpick: "b" };
+const UI_SET = (() => { const q = new URLSearchParams(location.search), o = {}; UI_AREAS.forEach((k) => { const v = (q.get(k) || "").toLowerCase(); if (/^[a-d]$/.test(v)) o[k] = v; }); return o; })();
+const TRY = Object.keys(UI_SET).length > 0 || new URLSearchParams(location.search).has("try");
+const UI = {};
+const setUI = () => UI_AREAS.forEach((k) => { const v = UI_SET[k] || (PHONE.matches ? PHONE_PICK[k] : ""); if (v && v !== "a") UI[k] = v; else delete UI[k]; });
+setUI();
 const ALT = {};
 const alt = (area) => ALT[area]?.[UI[area]];
 const ft = (m) => (m * 3.28084).toFixed(1);
@@ -872,8 +879,8 @@ function route() {
   if (h.startsWith("report-")) { const id = h.slice(7).toUpperCase(); q.value = id; showReport(id); land($("#result")); return; }
   if (h.startsWith("team-")) { const id = h.slice(5).toUpperCase(); q.value = id; sugg.classList.remove("open"); showTeam(id); land($("#result")); }
 }
-if (Object.keys(UI).length || new URLSearchParams(location.search).has("try")) {
-  window.VV = { UI, UI_AREAS, ALT, $, esc, OFF, REP, TS, IDX, IDXM, NOREP, NOTES, TAKEN, T, frames, evList, ord, pct, bar, tlink, shortEv, evName, evDate, rank, nOn, thumb, watchSpr,
+{
+  window.VV = { UI, UI_SET, TRY, PHONE, UI_AREAS, ALT, $, esc, OFF, REP, TS, IDX, IDXM, NOREP, NOTES, TAKEN, T, frames, evList, ord, pct, bar, tlink, shortEv, evName, evDate, rank, nOn, thumb, watchSpr,
     teamRows, coverage, reportParts, matchList, sideLine, scoutBlock, officialBlock, noteBox, watchouts, teamCard, planBlock, jumpStrip, matchView, evMatches, pickTable, pickFit, mixScores, autonClash,
     showTeam, showReport, sentenceFor, lead, fromN, watchBtn, repAvg, GKEY, PICK_SORTS, fillEvents, pickMatch, where, statsLink, yt, ytAt, drawNew: () => drawNew(), loadReplay: (...a) => loadReplay(...a), rpThumb: (x) => thumb(TH?.map?.[x.id] ? x.id : x.video) };
   try { await import("./options.js"); } catch (e) { console.error(e); }
@@ -882,6 +889,12 @@ if (Object.keys(UI).length || new URLSearchParams(location.search).has("try")) {
 }
 addEventListener("hashchange", route); route();
 if (!location.hash.startsWith("#event-") && cornfield) showEvent(cornfield[0], "2360A");
+/* turning a tablet or narrowing a window across the phone width swaps the event prep, pick list and team layouts in place */
+PHONE.addEventListener("change", () => {
+  setUI(); const ev = $("#prep-ev").value, me = $("#prep-team").value.trim().toUpperCase(); fillEvents(); $("#prep-ev").value = ev;
+  const h = location.hash.slice(1);
+  if (/^(event|team|report)-/.test(h)) route(); else if (OFF.events[ev] && $("#prep-out").innerHTML) showEvent(ev, me || null);
+});
 const rpRoot = document.getElementById("rp");
 /* the original YouTube video in place of the 3D view, from the same moment of the match */
 function showReal(on) {

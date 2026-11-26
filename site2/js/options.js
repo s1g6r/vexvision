@@ -1,6 +1,7 @@
-/* Layout options under trial. Loaded only when the address has ?prep=b, ?team=c and so on (or ?try).
-   Each area keeps its current version as option A; this file adds the others. Once one option per area is chosen,
-   it moves into main.js and the rest of this file goes. */
+/* Layouts for each area beyond the original one (option A). Phones use the picks in PHONE_PICK (main.js):
+   event prep C, pick list C, team page C, replay picker B, frame reader C, event list B. Laptops keep option A for now.
+   Any option can still be tried on any screen with ?prep=b, ?team=c and so on (plus ?try=1 for the switcher);
+   ?prep=a forces the original. Options nobody picks get deleted once laptops are decided. */
 const V = window.VV;
 const { $, esc, OFF, REP, TS, ALT, UI } = V;
 
@@ -269,14 +270,16 @@ reg("evpick", "b", (evList) => {
 
 /* ---------- a small panel to switch options while comparing ---------- */
 const bar = document.createElement("div");
+if (V.TRY) {
 bar.className = "opt-bar";
-const url = (area, k) => { const q = new URLSearchParams(location.search); if (k === "a") q.delete(area); else q.set(area, k); q.set("try", "1"); return `?${q}${location.hash}`; };
+const url = (area, k) => { const q = new URLSearchParams(location.search); q.set(area, k); q.set("try", "1"); return `?${q}${location.hash}`; };
 bar.innerHTML = `<button type="button" class="opt-toggle" aria-expanded="false">Layout options</button><div class="opt-panel" hidden>
-  ${Object.entries(AREAS).map(([area, { name, opts }]) => `<div class="opt-area"><span>${esc(name)}</span><div class="seg">${Object.entries(opts).map(([k, l]) => `<a href="${url(area, k)}" aria-current="${(UI[area] || "a") === k}" title="${esc(l)}">${k.toUpperCase()}<small>${esc(l)}</small></a>`).join("")}</div></div>`).join("")}
-  <a class="opt-all" href="options.html">See every option side by side</a></div>`;
+  ${Object.entries(AREAS).map(([area, { name, opts }]) => `<div class="opt-area"><span>${esc(name)}</span><div class="seg">${Object.entries(opts).map(([k, l]) => `<a href="${url(area, k)}" aria-current="${(V.UI[area] || "a") === k}" title="${esc(l)}">${k.toUpperCase()}<small>${esc(l)}</small></a>`).join("")}</div></div>`).join("")}
+  <p class="opt-ph">Without a choice here, phones get each area's pick and laptops get A.</p><a class="opt-all" href="options.html">See every option side by side</a></div>`;
 document.body.append(bar);
 bar.querySelector(".opt-toggle").addEventListener("click", (e) => { const p = bar.querySelector(".opt-panel"); p.hidden = !p.hidden; e.currentTarget.setAttribute("aria-expanded", !p.hidden); });
 addEventListener("hashchange", () => bar.querySelectorAll(".opt-area a").forEach((a) => { const h = a.getAttribute("href").split("#")[0]; a.setAttribute("href", h + location.hash); }));
+}
 
 /* ---------- styles for the options above ---------- */
 const css = document.createElement("style");
@@ -361,7 +364,7 @@ css.textContent = `
 .opt-area .seg a{flex:1 1 0;min-width:84px;text-decoration:none;color:var(--mute);padding:8px 10px;border-radius:12px;display:grid;gap:2px;font-weight:700}
 .opt-area .seg a small{font-weight:500;font-size:11.5px;line-height:1.3}
 .opt-area .seg a[aria-current=true]{background:var(--ink);color:#0c0b0a}
-.opt-all{color:var(--ink);font-size:14px}
+.opt-all{color:var(--ink);font-size:14px}.opt-ph{color:var(--mute);font-size:12.5px;margin:0}
 @media print{.opt-bar,.pc-tabs,.pc-step{display:none!important}}
 `;
 document.head.append(css);
