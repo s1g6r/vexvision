@@ -257,3 +257,11 @@
 
 - Every area of the site was looked at for repeats and length on a phone. Six areas got other versions: event prep matches (each team once / one match at a time), the pick list (cards / short rows on phones), the team page (tabs / fold-out sections), the replay picker (search by team and event instead of a strip of 901), the frame reader (plainer robot list / folded away) and the event list (grouped). They're only switched on by the address (`?prep=c` and so on), so the normal site is unchanged. Comparison page: `options.html`.
 - Left alone on purpose: the top of the home page, the ticker, the menu, the replay controls, the official results card, the notes box and the print layout.
+
+### Nov 26 — Smoky Mountain Forge Signature read
+
+- Both days of the stream (Alchemy Global STEM Institute, 720p only) were scanned: 218 of the event's 219 matches were found on the overlay, and 211 were read on the Mac queue in about 6 hours.
+- 123 replays are live. The stream cuts between two fields, and one of them is filmed from a low camera with referees standing in front, so many matches on that field don't calibrate well enough (below 0.6) and stay off the site. The other-field check dropped nothing.
+- No plate reading: the stream has no 1080p version. Naming relies on looks: 199 of 360 alliances named for sure.
+- Qual 125 appears at the end of day 1 and again at the start of day 2; only the day 1 window is used.
+- Hong Kong Signature has only short finals videos on YouTube (no full stream), so it stays out for now.
