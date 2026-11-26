@@ -247,3 +247,8 @@
 - **Great Planes:** all readings in. The day-2 plates were stuck for a while (an expired stream address and the 1080p fetches losing their turn to newer events) and are being read now.
 - **Not available:** Mall of America only has partial fan restreams, Harbor Havoc's stream is gone, and Smoky Mountain Forge's camera is low and far. Hong Kong may be in a "Hong Kong Open" stream (not checked yet).
 - **Site now:** 952 replays, 421 teams with scouting reports.
+
+### Nov 25 — Team pages and reports reworked for phones
+
+- A friend tried the site on his phone and said the "go deeper" pages repeated the same things, some data seemed to be missing, and it wasn't clear which matches were used. The team page is now a short overview with one list of matches, and the report opens with what it's based on: matches played, on video and used, plus a line explaining every match left out. Each fact is said once, in the section it belongs to. Details in `docs/DESIGN.md`.
+- Fixed a long-standing phone bug: the page could be dragged sideways because a table on the event prep page pushed the page wider than the screen.
