@@ -1,30 +1,82 @@
-# Publish the scouting site (site2/) to GitHub Pages on every push to main.
+# Publishes the scouting site (site2/) to GitHub Pages.
+# - Every push that touches the site: check it, then publish.
+# - Every 20 minutes: refresh the official results from stats.2360arachnid.com when a refresh is due
+#   (every run around a tracked event, otherwise four times a day; see tools/refresh_due.py),
+#   commit them if any result, schedule or rating changed, then check and publish.
+# Nothing is published unless tests/site_check.py passes on phone and laptop sizes.
 name: Publish site
 on:
   push:
     branches: [main]
-    paths: ["site2/**", ".github/workflows/pages.yml"]
+    paths: ["site2/**", ".github/workflows/pages.yml", "tests/**"]
+  schedule:
+    - cron: "7,27,47 * * * *"
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
-concurrency: { group: pages, cancel-in-progress: true }
+concurrency: { group: pages, cancel-in-progress: false }
 jobs:
+  refresh:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: when
+        run: python3 tools/refresh_due.py
+      - name: Refresh official results
+        if: steps.when.outputs.due == 'true'
+        run: |
+          python3 -m tools.fetch_official
+          python3 -m tools.official
+      - id: commit
+        if: steps.when.outputs.due == 'true'
+        run: |
+          if python3 tools/results_changed.py; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/official site2/data/official.json
+            git commit -qm "Refresh official results"
+            git pull -q --rebase origin main
+            git push -q origin HEAD:main
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No result, schedule or rating changed, so nothing to publish."
+          fi
   build:
+    needs: refresh
+    if: ${{ always() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || needs.refresh.outputs.changed == 'true') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with: { ref: main }
       - name: Assemble
         run: |
           mkdir -p out
           cp -r site2/index.html site2/options.html site2/options site2/sw.js site2/js site2/data site2/fonts site2/models site2/ort out/
           rm -rf out/data/thumbs out/data/replays/index_*.json
           touch out/.nojekyll
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install the browser for the site check
+        run: |
+          pip install -q playwright
+          python -m playwright install --with-deps chromium
+      - name: Check the site on phone and laptop sizes
+        env:
+          ALLOW_DROP: ${{ contains(github.event.head_commit.message, '[allow-drop]') && '1' || '0' }}
+        run: |
+          (cd out && python -m http.server 8080 > /dev/null 2>&1 &)
+          sleep 2
+          python tests/site_check.py http://localhost:8080/ https://s1g6r.github.io/vexvision/
       - uses: actions/upload-pages-artifact@v3
         with: { path: out }
   deploy:
     needs: build
+    if: ${{ always() && needs.build.result == 'success' }}
     runs-on: ubuntu-latest
     environment: { name: github-pages, url: "${{ steps.d.outputs.page_url }}" }
     steps:

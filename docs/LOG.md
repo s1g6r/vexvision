@@ -269,3 +269,9 @@
 ### Nov 26 — Phone layouts switched on
 
 - Phones now use the chosen layouts: one match at a time in event prep, short pick-list rows, fold-out sections on the team page, a search for replays, the frame reader folded away and a grouped event list. Laptops are unchanged for now, and options.html shows which option each device uses.
+
+### Nov 27 — Automations
+
+- **Results refresh:** `.github/workflows/pages.yml` now wakes every 20 minutes. Around a tracked event (the day before it starts through two days after) it refreshes the official results from stats.2360arachnid.com every time; otherwise four times a day. It only commits and publishes when a result, schedule or rating actually changed (`tools/refresh_due.py`, `tools/results_changed.py`). Those commits come from github-actions[bot], so pull before pushing (post.sh does).
+- **Site check before every publish:** `tests/site_check.py` opens the home page, an event prep page, a team page and a report on phone and laptop sizes, and stops the deploy on a script error, sideways scrolling, an empty page, or a drop of more than 2% in replays or scouting reports compared with the live site. Put `[allow-drop]` in the commit message when a drop is intended.
+- **Always-on reading queue on the Mac:** `macjob/Install always-on queue.command` installs a background service (`com.vexvision.queue`, running `queue_service.sh`). It starts at login, restarts workers that stop, and keeps the Mac awake only while a match is waiting (`pending.py`). `Stop always-on queue.command` removes it. `Start queue.command` now does nothing if the service is installed.
